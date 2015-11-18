@@ -343,7 +343,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider',function (
 /*定义主机地址和接口地址*/
 app.host1="http://120.24.175.151:9000/";
 app.host2="http://120.25.60.19:9000/";
-app.host=app.host2;
+app.host=app.host1;
 
 
 //app.gameHost='http://120.24.175.151:9004';//游戏服务器
