@@ -2605,6 +2605,7 @@ a.icon-mb-link{
 .list{
     margin-bottom:20px;
     overflow:hidden;
+    min-height:800px;
 }
 .banner-s{
     width:1200px;

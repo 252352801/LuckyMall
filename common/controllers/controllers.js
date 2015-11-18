@@ -1,6 +1,7 @@
 angular.module('LuckyCat.controllers',['LuckyCat.services'])
 
 .controller('AppCtrl',function($scope,$timeout,CartSer,LoginSer,$cookieStore,$rootScope,$state,MyOrdersSer){
+     console.log('auth:'+$cookieStore.get('Authorization'));
      $scope.imgHost='http://image.luckyec.com/';
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
@@ -68,6 +69,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
    /* 授权*/
     function authorization(){
         if($cookieStore.get('Token')==null){
+            console.log('未找到cookie');
             return;
         }
         LoginSer.authorization(function(response,status){
@@ -235,9 +237,9 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
                             console.log('设置了自动登录！');
                             var expireDate = new Date();
                             expireDate.setDate(expireDate.getDate() + 7);
-                            console.log(expireDate);
-                            $cookieStore.put('Authorization','Basic '+response,{'expires': expireDate}); //设置auth cookie
-                            $cookieStore.put('Token',response,{'expires': expireDate}); //设置token cookie
+                            //expireDate=expireDate.toGMTString();
+                            $cookieStore.put('Authorization','Basic '+response,{"expires": expireDate}); //设置auth cookie
+                            $cookieStore.put('Token',response,{"expires": expireDate}); //设置token cookie
                         }else{
                             $cookieStore.put('Authorization','Basic '+response); //设置auth cookie
                             $cookieStore.put('Token',response); //设置token cookie
