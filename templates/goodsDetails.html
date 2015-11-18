@@ -1,0 +1,96 @@
+<header></header>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+<aside-right></aside-right>
+<!--中部 start-->
+<div class="G-details container">
+    <div class="content">
+        <div class="page-location">
+            <a>幸运猫</a>
+            <a ng-bind="data_category.categoryName" href="/list/{{data_category.categoryId}}/all"></a>
+            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{data_category.categoryId}}/{{item.itemId}}"></a>
+        </div>
+        <div class="box-goodsDetails">
+            <div class="box-goods-img" slide-box-img>
+                <div class="big-goods-img">
+                    <img  id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png"/>
+                </div>
+                <div class="small-goods-img">
+                    <ul class="goods-index" id="details_goods_index">
+                        <li ng-class="{'cur': index==$index}" ng-repeat="sImg in data_goods.SmallImages"  ng-click="showBigImg($index)">
+                            <img  real-src={{imgHost+sImg}} alt="" temp-src="./res/images/default.png" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="s-index">
+                    <a class="prev txtUnSelect" ng-click="prevImg(0)"></a>
+                    <a class="next txtUnSelect" ng-click="nextImg(data_goods.SmallImages.length-1)"></a>
+                </div>
+            </div>
+            <form class="pro-info">
+                <h1 ng-bind="data_goods.CommodityName"></h1>
+                <small ng-bind="data_goods.Description"></small>
+                <div class="pro-price">
+                    <!--<span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MaxDiscount)+'~'"></span>-->
+                    <!--<span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>-->
+                    <!--<span class="icon-discount" ng-bind="'低至'+data_goods.MaxDiscount*10+'折'"></span>-->
+                   <!-- <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>-->
+                    <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
+                    <span class="icon-discount" ng-bind="data_goods.MinDiscount*10+'折'"></span>
+                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
+                </div>
+                <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">
+                    <p class="tips">请勾选您需要的商品选项：</p>
+                        <li ng-repeat="property in data_goods.Property">
+                            <label ng-bind="property.name"></label>
+
+                            <p>
+                                <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled&&!isNoSelection()}"
+                                   ng-repeat="attributes in property.attributes" ng-bind="attributes.value"
+                                   ng-click="selectAttr(property.name,attributes.value,$parent.$index,$index,attributes.disabled)"></a>
+                            </p>
+                        </li>
+
+                </ul>
+                <div class="bar-amount">
+                    <label>数量</label>
+                    <div class="div-btn">
+                        <span class="btn-reduce txtUnSelect" ng-click="reduce()">-</span>
+                        <input type="text" ng-model="amount" ng-disabled="!finishSelect" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
+                        <span class="btn-add txtUnSelect" ng-click="add()">+</span>
+                        <p ng-show="inventory>=0&&inventory!=null">库存剩余<span ng-bind="inventory"></span>件</p>
+                    </div>
+                </div>
+                <div class="bar-btn">
+                    <input class="btn-buy" type="button" value="立即购买" ng-if="data_goods.IsCanFree==false"/>
+                    <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true" ng-click="playForDiscount(data_goods.Id)">免费试玩</a>
+                    <input class="btn-add" ng-if="data_goods.IsCanFree==false" type="button" value="加入购物车"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart/>
+                </div>
+            </form>
+        </div>
+        <div class="box-proIntro tabs">
+            <div class="tab-item">
+                <span ng-class="{'cur':showingTab=='tab1'}" ng-click="showTab('tab1')">详细信息</span>
+                <span ng-class="{'cur':showingTab=='tab2'}" ng-click="showTab('tab2')">商品咨询</span>
+            </div>
+            <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
+                <ul class="pro-showing-images">
+                    <li ng-repeat="images in data_goods.BigImages">
+                        <img lazy-src="{{imgHost+images}}" alt="" />
+                    </li>
+                </ul>
+                <div class="box-pro-show">
+                </div>
+            </div>
+            <div class="tab-content tab-cont2" ng-show="showingTab=='tab2'">
+                <p class="tx-center">敬请期待</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--中部 end-->
+<introduction></introduction>
+
+<sub-footer></sub-footer>
+<footer></footer>

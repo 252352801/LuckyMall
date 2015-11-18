@@ -1,0 +1,143 @@
+<header></header>
+<aside-right></aside-right>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+
+<!--中部 start-->
+<div class="cart container">
+    <div class="content">
+        <div class="cart-top">
+            <div class="pull-left">
+                <h1>购物车</h1>
+                <p class="cart-tips" ng-if="data_cart.length>0">请在<span class="color-org">29分15秒</span>内结算订单，时间结束后商品会清空</p>
+            </div>
+            <div class="shopping-steps pull-right" >
+                <span class="cur ">我的购物车</span>
+                <span class="has-arrow-org">核对订单信息</span>
+                <span class="has-arrow-white">提交订单</span>
+            </div>
+        </div>
+        <div class="cart-th" ng-if="data_cart.length>0">
+            <span class="th1">商品信息</span>
+            <span class="th2">原价</span>
+            <span class="th3">折后价</span>
+            <span class="th4">待支付</span>
+            <span class="th5">操作</span>
+        </div>
+        <div class="cart-list" ng-repeat="list in data_cart" ng-if="data_cart.length>0">
+            <div class="cart-list-top">
+                <img src="./res/test/test_login_big_img.jpg" alt=""/>
+                <a href="#" ng-bind="list.BrandName"></a>
+                <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
+                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list.Id,list.cost)">赢折扣</a>
+            </div>
+            <div class="cart-list-cont">
+                <div class="cont1">
+                    <a class="a-cart-goodsImg" href="/goodsDetails/{{list.CommodityId}}" title="">
+                        <img  ng-src={{imgHost+list.imageUrl}} alt=""/>
+                    </a>
+                    <div class="goods-name">
+                        <h2>
+                                <a href="/goodsDetails/{{list.CommodityId}}" title="" ng-bind="list.CommodityName"></a>
+                        </h2>
+                        <small ng-bind="'×'+list.Count"></small>
+                    </div>
+<!--                    <h2 class="goods-name">
+                        <a href="#" title="" ng-bind="list.CommodityName"></a>
+                    </h2>
+                    <small ng-bind="list.Count"></small>-->
+                    <p ng-bind="property.name+'：'+property.value" ng-repeat="property in list.Specifications"></p>
+                </div>
+                <div class="cont2">
+                    <p ng-bind="'￥'+list.UnitPrice*list.Count"></p>
+                </div>
+                <div class="cont3">
+                    <p class="price" ng-bind="'￥'+list.cost.toFixed(2)"></p>
+                    <p>
+                        已享用折扣卡
+                        <span class="icon-discount" ng-bind="(list.DiscountVal*10).toFixed(1)+'折'"></span>
+                    </p>
+                </div>
+                <div class="cont4">
+                    <p class="wait-to-pay" ng-bind="'￥'+list.needToPay.toFixed(2)"></p>
+                    <p ng-if="list.EarnestMoney>0">
+                        已付定金：
+                        <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
+                    </p>
+                </div>
+                <div class="cont5">
+                    <span class="icon-remove" title="从购物车移除该商品" ng-click="removeOrder(list.Id)"></span>
+                </div>
+            </div>
+        </div>
+        <div class="tips" ng-if="data_cart.length<=0">
+            <p>您的购物车空空如也</p>
+        </div>
+        <div class="cart-finally" ng-if="data_cart.length>0">
+            <p>共有<span class="color-org" ng-bind="data_cart.totalAmount"></span>件商品</p>
+            <p class="cart-sum-cost">合计（免运费）：<span ng-bind="'￥'+data_cart.totalCost.toFixed(2)"></span></p>
+            <p>
+                <input id="btn_sure_pay" type="submit" value="确认结算" ng-click="goConfirm()">
+            </p>
+        </div>
+    </div>
+</div>
+<!--中部 end-->
+
+<div class="modal-before-game" ng-show="isModal1show">
+    <div class="modal-content" ng-class="{'modal1-show':isModal1show,'modal1-hide':!isModal1show}">
+        <div class="luckyEnergy-info">
+            <img src="./res/logo/logo_cat.png" alt=""/>
+
+            <h2>喵喵幸运物</h2>
+
+            <p class="level">体力级： <span ng-class="'icon icon-energy-level icon-lucky-energy-level'+luckyEnergy.level"></span></p>
+
+            <p class="box-energy">
+                <span class="energy-value" style={{'width:'+luckyEnergy.percent+'%;'}} ></span>
+            </p>
+        </div>
+        <div class="tips">
+            <p ng-bind="energy.tips"></p>
+        </div>
+        <div class="bar-btn">
+            <a class="btn btn-org" ng-click="showModal2()">支付定金</a>
+            <a ng-class="{'btn btn-balanced':energy.isEnough,'btn btn-gray':!energy.isEnough}" ng-href="{{gameUrl}}">进入游戏</a>
+        </div>
+        <span class="btn-close" title="取消"  ng-click="closeModal1()">×</span>
+    </div>
+
+</div>
+
+<div class="modal-protocol-payForEnergy" ng-show="isModal2show">
+    <div class="modal-content" ng-class="{'modal2-show':isModal2show,'modal2-hide':!isModal2show}">
+            <h1>支付须知条款</h1>
+            <p class="warning">进入支付定金页面前请先认真阅读以下条款！</p>
+            <div class="protocol-content">
+                <p>① 定金的作用主要是用来确认用户的购买意向。</p>
+
+                <p>② 若事后产生退货或者取消订单问题，如果是因商品质量原因而退货的，已支付的定金随同商品退款一同退还；否则已支付的定金在订单取消或退货后将退回到定金钱包里，不随同商品退款一同退还。</p>
+
+                <p>③ 定金钱包里的钱只可用于支付商品的定金，不可提现，且使用定金钱包的钱支付定金时不再赠送幸运能量</p>
+
+                <p>④ 当定金钱包里有余额时，首先默认使用定金钱包的余额支付定金，直到定金钱包的余额为零时才能使用其他方式支付定金；</p>
+
+                <p>⑤ 为保证用户利益，防止用户无意识地去支付大量的定金导致定金钱包余额过多，我们会为用户在一定时期内所支付的定金设定一个上限值。当所支付的定金总额达到钱该上限值时，用户将暂时无法进行支付定金操作。</p>
+            </div>
+        <p class="bar-agree">
+            <input type="checkbox" id="ckb-protocol-payForEnergy" ng-model="agree" />
+            <label for="ckb-protocol-payForEnergy">我已阅读并同意上述条款</label>
+        </p>
+
+        <div class="bar-btn">
+            <a class="btn btn-outline" ng-click="returnModal1()">取消</a>
+            <a ng-class="{'btn btn-org':agree,'btn btn-gray':!agree}" ng-click="payForEnergy()">支付定金</a>
+        </div>
+        <span class="btn-close" title="取消"  ng-click="closeModal2()">×</span>
+    </div>
+</div>
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>

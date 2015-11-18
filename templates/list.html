@@ -1,0 +1,83 @@
+<header></header>
+<aside-right></aside-right>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+
+<!--中部 start-->
+<div class="list content">
+    <div class="filters">
+        <div class="page-location">
+            <a>全部商品</a>
+            <a class="category-name" ng-bind="data_filter.CategoryName" class="cur" href="/list/{{cate_id}}/all" ng-click="searchThisCategory()"></a>
+        </div>
+        <div class="choices">
+            <p ng-repeat="choice in data_filter.FilterModels" ng-if="hasSelectedItem(choice.FilterItemModels)">
+                <span ng-bind="choice.FilterName+'：'"></span>
+                <a  ng-repeat="item in choice.FilterItemModels|filter:{isSelected:true}">
+                    <span ng-bind="item.ItemValue"></span>
+                    <b class="icon-delete" title="删除选项" ng-click="cancelSelect(item.Id)">×</b>
+                </a>
+            </p>
+        </div>
+        <ul>
+            <li ng-repeat="category in data_filter.FilterModels" ng-if="!hasSelectedItem(category.FilterItemModels)">
+                <span ng-bind="category.FilterName+'：'"></span>
+                <p>
+                    <a  ng-class="{'cur':sub_c.isSelected==true}" ng-repeat="sub_c in category.FilterItemModels" ng-bind="sub_c.ItemValue" title={{sub_c.Value}} ng-click="select(sub_c.Id)">
+                    </a>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="pro-list-top">
+        <h3 class="color-org">新品</h3>
+        <span class="label-condition" ng-click="searchWidthPrice()">价格</span>
+        <span class="icon-double-arrow up" ng-class="{'icon-double-arrow up':sortByPrice,'icon-double-arrow down':!sortByPrice}"></span>
+        <div class="pull-right">
+            <p>共<span class="color-org" ng-bind="totalAmount"></span>件商品</p>
+            <span class="arrow txtUnselect" title="上一页" ng-click="prevPage()"><</span>
+            <span class="color-org" ng-bind="pageIndex"></span>/
+            <span ng-bind="totalPage"></span>
+            <span class="arrow txtUnselect" title="下一页" ng-click="nextPage()">></span>
+        </div>
+    </div>
+    <ul class="pro-list-cont">
+        <li ng-repeat="list in data_list">
+            <a class="a-goodsImg" href="/goodsDetails/{{list.Id}}" title="">
+                <img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>
+            </a>
+            <div class="goods-info">
+                <a href="/goodsDetails/{{list.Id}}" title="">
+                    <h2 ng-bind="list.CommodityName"></h2>
+                </a>
+                <p class="price">
+                    <!--<span ng-bind="'￥'+(list.RetailPrice*list.MaxDiscount).toFixed(1)+'-￥'+(list.RetailPrice*list.MinDiscount).toFixed(1)"></span>
+                    <span class="old-price" ng-bind="list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
+                    <span class="icon-discount" ng-bind="'低至'+list.MaxDiscount*10+'折'"></span>-->
+                    <span ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)"></span>
+                    <span class="old-price" ng-bind="list.RetailPrice"></span>
+                    <span class="icon-discount" ng-bind="list.MinDiscount*10+'折'"></span>
+                </p>
+            </div>
+        </li>
+    </ul>
+    <div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+    <div class="tips-no-pro" ng-if="data_list.length<=0">
+        暂时没有符合条件的商品喔！
+    </div>
+    <div class="page-index">
+        <div class="prev" ng-click="prevPage()" btn-page-up><</div>
+        <div class="indexes">
+            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-page-up></span>
+        </div>
+        <div class="next" ng-click="nextPage()" btn-page-up>></div>
+    </div>
+</div>
+<!--中部 end-->
+
+
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>

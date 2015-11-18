@@ -1,0 +1,246 @@
+<header></header>
+<aside-right></aside-right>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+
+<!--中部 start-->
+<div class="content">
+    <div class="shopping-status-top">
+        <div class="pull-left">
+            <h1>核对订单信息</h1>
+        </div>
+        <div class="shopping-steps pull-right">
+            <span>我的购物车</span>
+            <span class="has-arrow-white cur">核对订单信息</span>
+            <span class="has-arrow-org">提交订单</span>
+        </div>
+    </div>
+</div>
+<form class="form-confirm-order">
+    <div class="content box-confirmOrder">
+        <p class="label-cont-name">
+            <label>收货地址</label>
+        </p>
+        <ul class="address-list">
+            <li ng-class="{'cur':selected_address.Id==address.Id}" ng-repeat="address in data_addresses|orderBy:'Selected':true" ng-click="changeConsignee(address)">
+                <h3><span ng-bind="address.ConsigneeName"></span>{{address.ConsigneeMobile}}</h3>
+
+                <p class="address-info" ng-bind="address.Area+' '+address.ConsigneeAddress"></p>
+
+                <p class="take-delivery-time">收货时间：不限</p>
+            </li>
+            <li class="btn-addAddress" ng-click="showAddressModal()">
+                <h5>+</h5>
+                <small>添加地址</small>
+            </li>
+        </ul>
+        <div class="part-line"></div>
+        <p class="label-cont-name"><label>商品信息</label><a href="/shoppingCart" class="a-returnCart">返回购物车修改</a></p>
+
+        <div class="confirmOrder-th">
+            <span>商品信息</span>
+            <span>原价</span>
+            <span>折后价</span>
+            <span>待支付</span>
+        </div>
+        <div class="goods-list" ng-repeat="order in data_orders">
+            <div class="bar-sellerInfo">
+                <img src="./res/test/logo_xiaomi.jpg" alt=""/>
+                <p ng-bind="order.BrandName"></p>
+            </div>
+            <div class="goods-list-cont">
+                <div class="cont1">
+                    <div class="img-container">
+                        <img  ng-src={{imgHost+order.imageUrl}} alt=""/>
+                    </div>
+                    <a class="goods-name" href="/goodsDetails/{{order.CommodityId}}">
+                        <h2 ng-bind="order.CommodityName"></h2>
+                        <small ng-bind="'×'+order.Count"></small>
+                    </a>
+                    <p ng-bind="property.name+'：'+property.value" ng-repeat="property in order.Specifications"></p>
+                </div>
+                <div class="cont2">
+                    <div class="cont-container">
+                        <p ng-bind="'￥'+order.UnitPrice*order.Count"></p>
+                    </div>
+                </div>
+                <div class="cont3">
+                    <div class="cont-container">
+                        <p class="discount-price"  ng-bind="'￥'+order.cost.toFixed(2)"></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="order.DiscountVal*10+'折'"></span></p>
+                    </div>
+                </div>
+                <div class="cont4">
+                    <div class="cont-container">
+                        <p class="unPay" ng-bind="'￥'+order.needToPay.toFixed(2)"></p>
+                        <p ng-if="order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+order.EarnestMoney"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <p class="label-cont-name">
+            <label>支付方式</label>
+        </p>
+
+        <p class="s-label">
+            <small>在线支付</small>
+        </p>
+        <ul class="btn-pay-models">
+            <li ng-class="{'cur':pay_type=='zhifubao'}" ng-click="changePayType('zhifubao')">
+                <span>√</span>
+                <div class="img-container">
+                    <img src="./res/test/zhifubao.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='weixin'}" ng-click="changePayType('weixin')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/weixinpay.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='caifutong'}" ng-click="changePayType('caifutong')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/cft.png" alt=""/>
+                </div>
+            </li>
+        </ul>
+      <!--  <p class="s-label">
+            <small>网银支付</small>
+        </p>-->
+  <!--      <ul class="btn-pay-models">
+            <li ng-class="{'cur':pay_type=='bank_1'}" ng-click="changePayType('bank_1')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_nongye.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_2'}" ng-click="changePayType('bank_2')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_pingan.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_3'}" ng-click="changePayType('bank_3')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_icbc.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_4'}" ng-click="changePayType('bank_4')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_zhaoshang.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_5'}" ng-click="changePayType('bank_5')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_xingye.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_6'}" ng-click="changePayType('bank_6')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_zhongguo.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_7'}" ng-click="changePayType('bank_7')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/test/bank_youzheng.png" alt=""/>
+                </div>
+            </li>
+        </ul>-->
+        <p class="label-cont-name">
+            <label>发票信息</label>
+        </p>
+        <ul class="receipt-list">
+            <li class="cur">电子发票</li>
+          <!--  <li>纸质发票</li>-->
+        </ul>
+        <div class="receipt-tips">
+                <div class="receipt-tips-cont">电子发票目前仅对个人用户开具，不可用于单位报销！</div>
+                <div class="receipt-tips-cont color-org hover-tips">什么是电子发票<span class="icon">?</span>
+                    <p class="pop-box">电子发票是指在购销商品、提供或者接受
+                        服务以及从事其他经营活动中，开具、收取的
+                        以电子方式存储的收付款凭证，与传统纸质发
+                        票具有同等法律效力，可作为用户维权、保修
+                        的有效凭据。</p>
+                </div>
+        </div>
+    </div>
+    <div class="content confirmOrder-bottom">
+        <div>
+            <label>收货地址信息：</label>
+            {{selected_address.ConsigneeName+' '+selected_address.ConsigneeMobile+'  '+selected_address.Area+''+selected_address.ConsigneeAddress}}
+        </div>
+        <div>
+            <label>支付方式：</label>
+            <p ng-bind="showPayType()">微信支付</p>
+        </div>
+        <div>
+            <label>商品数量：</label>
+            <p ng-bind="total_amount"></p>
+        </div>
+        <div>
+            <label>合计金额：</label>
+            <p><span class="cost" ng-bind="'￥'+total_cost.toFixed(2)"></span>元</p>
+        </div>
+        <div>
+            <button class="btn-submitOrder" ng-click="submitOrder()">提交订单</button>
+        </div>
+    </div>
+</form>
+<!--中部 end-->
+
+<div class="modal-overlay" ng-show="isModalAddressShow==true">
+    <div class="modal-add-address">
+        <h4>添加收货地址</h4>
+        <p class="input-tips" ng-show="inputTips!=''" ng-bind="inputTips"></p>
+        <p>
+            <label>姓名</label>
+            <input type="text" placeholder="收货人姓名" ng-model="modal_consignee" require-name="showInputTips"/>
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <label>手机</label>
+            <input type="text" placeholder="手机号码" ng-model="modal_mobile" require-mobile="showInputTips" />
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <label>地址</label>
+            <select id="s_province" my-change="modal_province"></select>
+            <select id="s_city"  my-change="modal_city"></select>
+            <select id="s_county"  my-change="modal_county"></select>
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <textarea ng-model="modal_address"></textarea>
+            <span class="symbol">*</span>
+        </p>
+
+<!--        <p>
+            <label class="label-receive-time">收货时间</label>
+            <a class="selected-time cur">不限</a>
+            <a class="selected-time">周一至周五</a>
+            <a class="selected-time">周六至周日</a>
+            <span class="symbol">*</span>
+        </p>-->
+
+        <p>
+            <button ng-click="addAddress()" ng-bind="value_btn_save"></button>
+        </p>
+        <span class="btn-close" ng-click="closeAddressModal()">×</span>
+    </div>
+</div>
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>

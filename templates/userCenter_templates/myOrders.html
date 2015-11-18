@@ -1,0 +1,91 @@
+    <div class="tabs" ng-show="!showLoading">
+        <div class="tab-item">
+        <!--    <span ng-class="{'cur':curTab=='tab1'}" ng-click="changeTab('tab1')">所有订单</span>-->
+            <span ng-class="{'cur':curTab=='tab1'}" ng-click="changeTab('tab1')">待付款{{'（'+data_orders_upPay.length+'）'}}</span>
+            <span ng-class="{'cur':curTab=='tab2'}" ng-click="changeTab('tab2')">已付款{{'（'+data_orders_paid.length+'）'}}</span>
+            <span ng-class="{'cur':curTab=='tab3'}" ng-click="changeTab('tab3')">待收货{{'（'+data_orders_upReceive.length+'）'}}</span>
+            <span ng-class="{'cur':curTab=='tab4'}" ng-click="changeTab('tab4')">已完成{{'（'+data_orders_finish.length+'）'}}</span>
+            <span ng-class="{'cur':curTab=='tab5'}" ng-click="changeTab('tab5')">退款售后</span>
+        </div>
+   </div>
+    <div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+    <div class="th" ng-show="data_orders.curPage.length>0">
+        <span>商品信息</span>
+        <span>原价</span>
+        <span>付款总额</span>
+        <span>状态</span>
+        <span>操作</span>
+    </div>
+    <div class="order-list" ng-repeat="list in data_orders.curPage">
+        <div class="order-list-top">
+            <img src="./res/test/test_brand6.jpg" alt=""/>
+
+            <p class="seller-name"><a href="/login" title="" ng-bind="list.BrandName"></a></p>
+
+            <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
+
+            <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
+        </div>
+        <div class="order-list-cont">
+            <div class="cont1 pull-left">
+                <div class="cont-img">
+                    <a href="/goodsDetails/{{list.CommodityId}}">
+                        <img real-src={{imgHost+list.imageUrl}} temp-src="./res/images/default.png" alt=""/>
+                    </a>
+                </div>
+                <a class="goods-name" href="/goodsDetails/{{list.CommodityId}}">
+                    <h2 ng-bind="list.CommodityName"></h2>
+                    <small ng-bind="'×'+list.Count"></small>
+                </a>
+
+                <p ng-repeat="property in list.Specifications" ng-bind="property.name+'：'+property.value"></p>
+            </div>
+            <div class="cont2 pull-left" ng-bind="'￥'+list.UnitPrice">
+            </div>
+            <div class="cont3 pull-left">
+                <p class="cost" ng-bind="'￥'+(list.cost+list.EarnestMoney).toFixed(2)"></p>
+
+                <p ng-bind="'（含定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestMoney>0"></p>
+
+                <p class="discount">已享用折扣卡<span class="icon-discount" ng-bind="(list.DiscountVal*10).toFixed(2)+'折'"></span></p>
+            </div>
+            <div class="cont4 pull-left">
+                <div>
+                    <p class="color-org" ng-if="list.OrderStatus==1">等待付款</p>
+
+                    <p><a href="#">订单详情</a></p>
+
+                    <p ng-if="list.OrderStatus==3">已发货</p>
+
+                    <p ng-if="list.OrderStatus==5">退换中</p>
+
+                </div>
+            </div>
+            <div class="cont5 pull-left">
+                <div>
+                    <p><a href="#" class="btn btn-org" ng-if="list.OrderStatus==1">立即支付</a></p>
+
+                    <p><a href="#" class="btn" ng-if="list.OrderStatus==1">取消订单</a></p>
+
+                    <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus==3">查看物流</a></p
+
+                    <p><a href="#" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
+                    
+                    <p><a href="#" class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
+
+                    <p><a href="#" class="btn" ng-if="list.OrderStatus==4">申请售后</a></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="UC page-index" ng-show="data_orders.curPage.length>0">
+        <div class="prev" ng-click="prevPage()"><</div>
+        <div class="indexes">
+            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1)></span>
+        </div>
+        <div class="next" ng-click="nextPage()" >></div>
+    </div>
+
+

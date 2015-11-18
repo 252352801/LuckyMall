@@ -1,0 +1,155 @@
+<header></header>
+<aside-right></aside-right>
+<sub-header nav="1">
+    <category></category>
+</sub-header>
+
+
+<!--banner图  begin-->
+<div class="banner" id="banner" banner>
+    <div class="spinner spinner1" ng-show="!ready"></div>
+    <ul class="test" id="banner_ul">
+        <li ng-repeat="img in data_banner">
+            <a href="#" title="">
+                <img ng-src={{'http://image.luckyec.com/'+img.ImageData}} alt="" />
+                <!--<img ng-src={{img.ImageData}} alt="" />-->
+            </a>
+        </li>
+
+    </ul>
+    <a class="prev" id="prev_banner"></a>
+    <a class="next" id="next_banner"></a>
+    <div class="banner-index">
+        <a ng-class="{'cur-banner-index':banner_index==$index}" ng-repeat="index in data_banner" data-index={{$index}}></a>
+    </div>
+</div>
+
+
+ </div>
+<!--banner图  end-->
+<!--中部 start-->
+<div class="container">
+    <div class="content">
+        <div class="today-update">
+            <div class="today-top">
+                <h3>每日上新</h3>
+                <p>每天上午<span class="color-org">10:00</span>准时上新</p>
+            </div>
+            <p class="loading-tips" ng-show="loadingToday==true">正在加载...</p>
+            <div class="today-content" ng-repeat="li_today in data_todayList">
+                <div class="today-list-l">
+                    <div class="info1">
+                        <a class="today-pro-logo" href="#" title="">
+                            <img  ng-src="./res/logo/logo.png"  alt=""/>
+                        </a>
+                        <a href="#" title={{li_today.Description}}>
+                            <p class="today-pro-font" ng-bind="li_today.Description"></p>
+                        </a>
+                    </div>
+                    <div class="info2">
+                        <p  class="today-pro-discount"><span>1</span>折起</p>
+                        <!--<p class="today-pro-sold">120人已购买</p>-->
+                    </div>
+                </div>
+                <div class="today-list-r">
+                    <a href="/goodsDetails/{{li_today.TypeId}}" title={{li_today.Description}}>
+                        <img  class="lazy"  src="./res/images/default.png"  alt="{{li_today.Description}}" real-src="{{imgHost+li_today.ImageData}}"  />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="tomorrow-advance-notice">
+            <div class="tomorrow-top">
+                <h3>明天预告</h3>
+            </div>
+            <ul class="tomorrow-content">
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand1.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand2.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand3.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand4.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand5.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand6.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand7.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand8.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand1.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand2.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand3.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand4.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand5.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand6.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand7.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="">
+                        <img src="./res/test/test_brand8.jpg" alt="" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--中部 end-->
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>
+<scroll-load-img ng-if="ready"></scroll-load-img>

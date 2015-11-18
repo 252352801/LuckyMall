@@ -1,0 +1,28 @@
+<div class="category">
+    <div class="category-top">
+        <h4 class="category-title"><a href="/home">全部商品</a></h4>
+    </div>
+    <ul ng-if="showSubCategory" ng-class="{'category-cont':showMoreCategory==false,'full-height category-cont':showMoreCategory==true}">
+        <li ng-repeat="category in data_category">
+            <h3  data-id="{{category.Id}}">
+                <a href="/list/{{category.Id}}/all" ng-bind="category.CategoryName"></a>
+            </h3>
+            <p>
+                <a href="/list/{{category.Id}}/{{sub_c1.Id}}" title="" ng-repeat="sub_c1 in category.FilterModels[0].FilterItemModels" ng-bind="sub_c1.ItemValue"></a>
+            </p>
+
+            <div class="hide-category">
+                <div class="category-filters" ng-repeat="sub_c in category.FilterModels">
+                    <h4 class="pull-left" ng-bind="sub_c.FilterName"></h4>
+                    <p class="pull-left">
+                        <a href="/list/{{category.Id}}/{{filter.Id}}" ng-repeat="filter in sub_c.FilterItemModels" ng-bind="filter.ItemValue"></a>
+                    </p>
+                </div>
+            </div>
+        </li>
+    </ul>
+<!--    <p class="category-more" ng-if="showSubCategory">
+        <a title="" ng-click="showMore()" ng-show="!showMoreCategory">查看更多</a>
+        <a title="" ng-click="hideMore()" ng-show="showMoreCategory">收起</a>
+    </p>-->
+</div>
