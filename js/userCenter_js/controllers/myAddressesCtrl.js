@@ -134,6 +134,7 @@ angular.module('LuckyCat.controllers')
                     });
                 }
                 $scope.value_btn_edit='保存';
+                $scope.hideEditForm();
                 loadData();
             })
         };
