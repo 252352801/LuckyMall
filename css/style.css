@@ -1041,12 +1041,15 @@ input:focus{
 }
 .btn-handle .icon-user,.btn-handle .icon-shoppingCart{
     display:block;
-    margin-top:5px;
-    margin-left:8px;
+    margin-top:3px;
+    margin-left:10px;
     width:26px;
     height:26px;
     float:left;
 }
+.btn-cart .icon-user, .btn-handle .icon-shoppingCart{
+    margin-left:15px;
+	}
 .btn-handle .icon-user{
     background: url(../res/icon/icon_user.png);
 }
