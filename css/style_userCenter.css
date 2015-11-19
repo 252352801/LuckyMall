@@ -276,6 +276,22 @@
     height:40px;
     line-height:40px;
     background:#f5f5f5;
+    position:relative;
+}
+.order-list-top .icon-delete{
+    display:block;
+    width:32px;
+    height:32px;
+    position: absolute;
+    left:100%;
+    top:4px;
+    margin-left:-50px;
+    background:url(../res/icon/icon_delete.png);
+    opacity:0.5;
+    cursor:pointer;
+}
+.order-list-top .icon-delete:hover{
+    opacity:1;
 }
 .order-list-top img,.order-list-top p{
     display:inline-block;

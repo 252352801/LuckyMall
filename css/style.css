@@ -2130,6 +2130,7 @@ margin-left: 70px;
     color:#499946;
     text-align:center;
     float: right;
+    cursor:pointer;
 }
 .cart-list-cont{
     min-height:120px;
@@ -2258,11 +2259,14 @@ margin-left: 70px;
     display:block;
     width:32px;
     height:32px;
-    background:url(../res/icon/icon_remove.png);
+    background:url(../res/icon/icon_delete.png);
     position:relative;
     left:50%;
     top:35px;
-
+    opacity:0.5;
+}
+.cart-list .icon-remove:hover{
+    opacity:1;
 }
 .cart-finally{
     margin-top:20px;

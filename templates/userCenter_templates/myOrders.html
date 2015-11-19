@@ -25,6 +25,7 @@
             <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
 
             <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
+            <span class="icon-delete" ng-if="list.OrderStatus==4"></span>
         </div>
         <div class="order-list-cont">
             <div class="cont1 pull-left">
