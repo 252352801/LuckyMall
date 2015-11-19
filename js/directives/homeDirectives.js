@@ -18,23 +18,36 @@ angular.module('LuckyCat')
                     var rep_timeout=3000;//切换一次间隔时间
                     li[ $scope.banner_index].style.opacity='1';
                     changeSelf($scope.banner_index,$scope.banner_index+1);
+
+
                     function gradualChange(hide_index,show_index,callback){
-                        tweenMove({
-                            element:li[hide_index],
-                            attr: 'opacity',//需要改变的属性
-                            value:-1,//改变的值 可以为正负
+                        tweenMultiFixAnimate({
+                            obj: [
+                                {
+                                    element: li[hide_index],
+                                    object: [
+                                        {
+                                            attr: 'opacity',//需要改变的属性
+                                            value: -1,//改变的值 可以为正负
+                                            moveName: 'Linear',//动画名，默认为Linear
+                                            moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                        }
+                                    ]
+                                },
+                                {
+                                    element: li[show_index],
+                                    object: [
+                                        {
+                                            attr: 'opacity',//需要改变的属性
+                                            value: 1,//改变的值 可以为正负
+                                            moveName: 'Linear',//动画名，默认为Linear
+                                            moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                        }
+                                    ]
+                                }
+                            ],
                             time: rep_speed,//执行动画的时间
-                            moveName: 'Linear',//动画名，默认为Linear
-                            moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                        });
-                        tweenMove({
-                            element:li[show_index],
-                            attr: 'opacity',//需要改变的属性
-                            value:1,//改变的值 可以为正负
-                            time: rep_speed,//执行动画的时间
-                            moveName: 'Linear',//动画名，默认为Linear
-                            moveType: 'easeIn',//动画的缓动方式，默认为easeIn
-                            callback:callback
+                            callback: callback
                         });
                     }
                     function changeSelf(h_index,s_index) {
@@ -111,17 +124,6 @@ angular.module('LuckyCat')
                             });
                         }
                     };
-
-
-
-
-
-
-
-
-
-
-
                 }
                 $scope.$on('bannerReady',function(){
                     $timeout(function(){

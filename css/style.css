@@ -1846,9 +1846,10 @@ margin-left: 70px;
     min-height:500px;
     padding-left:100px;
     border-left:1px solid #f1f1f1;
+    position:relative;
 }
 .login .tab-items{
-	margin-bottom:40px;
+	margin-bottom:25px;
     width:100%;
     overflow:hidden;
 }
@@ -1870,10 +1871,13 @@ margin-left: 70px;
     border-bottom:2px solid #ff6700;
 }
 .form-login p{
-    margin-top:25px;
+    margin-bottom:25px;
 }
 .form-login p:first-child{
-    margin-top:35px;
+    margin-bottom:10px;
+}
+.form-login p.bar-lost-pw{
+    margin-top:-10px;
 }
 .form-login .label-ck{
     color:#666;
@@ -1931,6 +1935,8 @@ margin-left: 70px;
     padding:0px;
     width:auto;
     height:auto;
+    position:relative;
+    top:2px;
 }
 .a-lost-pw{
     float:right;
@@ -2443,7 +2449,7 @@ margin-left: 70px;
 }
 .pro-info .icon-discount{
     margin-left:15px;
-    min-width:30px;
+    min-width:40px;
     height:20px;
     position:relative;
     left:2px;
@@ -2984,6 +2990,8 @@ margin-left: 70px;
     text-align:center;
     font-family:"新宋体","Microsoft YaHei";
     cursor:pointer;
+    position:relative;
+    top:2px;
 }
 .page-index .prev{
      margin-right:13px;

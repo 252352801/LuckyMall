@@ -1,7 +1,7 @@
 angular.module('LuckyCat.controllers',['LuckyCat.services'])
 
-.controller('AppCtrl',function($scope,$timeout,CartSer,LoginSer,$cookieStore,$rootScope,$state,MyOrdersSer){
-     console.log('auth:'+$cookieStore.get('Authorization'));
+.controller('AppCtrl',function($scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer){
+     console.log('auth:'+$cookies.get('Token'));
      $scope.imgHost='http://image.luckyec.com/';
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
@@ -68,7 +68,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
 
    /* 授权*/
     function authorization(){
-        if($cookieStore.get('Token')==null){
+        if($cookies.get('Token')==null){
             console.log('未找到cookie');
             return;
         }
@@ -187,7 +187,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
 })
 
    /*登录controller*/
-.controller('LoginCtrl',function($scope,LoginSer,$state,$rootScope,$stateParams,$timeout,$cookieStore){
+.controller('LoginCtrl',function($scope,LoginSer,$state,$rootScope,$stateParams,$timeout,$cookies){
        $scope.username='';
        $scope.password='';
      $scope.keepLogin=false;//是否自动登录
@@ -235,14 +235,11 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
                     case 1:
                         if($scope.keepLogin){
                             console.log('设置了自动登录！');
-                            var expireDate = new Date();
-                            expireDate.setDate(expireDate.getDate() + 7);
-                            //expireDate=expireDate.toGMTString();
-                            $cookieStore.put('Authorization','Basic '+response,{"expires": expireDate}); //设置auth cookie
-                            $cookieStore.put('Token',response,{"expires": expireDate}); //设置token cookie
+                            var expire = new Date();
+                            expire.setMinutes(expire.getMinutes() + 30);//cookie时间30分钟
+                            $cookies.put('Token',response,{"expires": expire }); //设置token cookie
                         }else{
-                            $cookieStore.put('Authorization','Basic '+response); //设置auth cookie
-                            $cookieStore.put('Token',response); //设置token cookie
+                            $cookies.put('Token',response); //设置token cookie
                         }
                         $rootScope.$broadcast("user-login");
                         if($state.current.name=='login'){

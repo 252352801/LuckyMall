@@ -226,6 +226,7 @@
     position:relative;
 }
 .UC-menu-cont .tab-item span{
+    padding:0px 50px;
     position:relative;
     left:4px;
     font-size:14px;
@@ -400,7 +401,7 @@
 }
 .order-list .cont3 .icon-discount{
     height:20px;
-    width:40px;
+    min-width:50px;
     font-size:12px;
     margin-left:5px;
 }

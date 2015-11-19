@@ -1,15 +1,14 @@
 angular.module('LuckyCat.services',[])
-    .factory('TokenSer',function($http,$timeout,$cookieStore) {
+    .factory('TokenSer',function($http,$timeout,$cookies) {
         return {
             getAuth:function(){
-                return  $cookieStore.get('Authorization');
+                return  'Basic '+$cookies.get('Token');
              },
             getToken:function(){
-                return  $cookieStore.get('Token');
+                return  $cookies.get('Token');
             },
             remove:function(){
-                $cookieStore.remove('Authorization');
-                $cookieStore.remove('Token');
+                $cookies.remove('Token');
             }
         };
     })

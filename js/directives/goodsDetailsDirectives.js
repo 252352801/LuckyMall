@@ -28,7 +28,6 @@ angular.module('LuckyCat')
                         moveGoods();
                     });
                 });
-
                 function moveGoods(){
                     var img=document.createElement('IMG');
                     img.src=attrs.img;
@@ -42,24 +41,24 @@ angular.module('LuckyCat')
                     var x=e_poi.left-s_poi.left;
                     var y=e_poi.top-(s_poi.top-scroll_y);
                     var time=600;
-                    tweenMove({
+
+                    tweenAnimate({
                         element:img,
-                        attr:'left',
-                        value:x,
-                        time:time,
-                        moveName:'Quadratic',
-                        moveType:'easeOut'
-                    });
-                    tweenMove({
-                        element:img,
-                        attr:'top',
-                        value:y,
-                        time:time,
-                        moveName:'Back',
-                        moveType:y>0?'easeIn':'easeOut',
-                        callback:function(){
+                        obj:[{
+                                attr: 'left',
+                                value: x,
+                                moveName: 'Quadratic',
+                                moveType: 'easeOut'
+                            },{
+                                attr: 'top',
+                                value: y,
+                                moveName:'Back',
+                                moveType:y>0?'easeIn':'easeOut'
+                            }],
+                         time:time,
+                         callback:function(){
                             document.body.removeChild(img);
-                        }
+                         }
                     });
                 }
             }
