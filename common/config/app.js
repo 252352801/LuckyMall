@@ -348,6 +348,36 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 ])
             }
         })
+        /*安全中心*/
+        .state('UCIndex.safeAccount', {
+            url: '/safeAccount',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/safeAccount.html",
+                    controller:'SafeAccountCtrl'
+                }
+            },
+            resolve:{
+                loadFiles:load([
+                    './js/userCenter_js/controllers/safeAccountCtrl.js'
+                ])
+            }
+        })
+        /*我的消息*/
+        .state('UCIndex.myMessage', {
+            url: '/myMessage',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/myMessage.html",
+                    controller:'MyMessageCtrl'
+                }
+            },
+            resolve:{
+                loadFiles:load([
+                    './js/userCenter_js/controllers/myMessageCtrl.js'
+                ])
+            }
+        })
 
 }]);
 
