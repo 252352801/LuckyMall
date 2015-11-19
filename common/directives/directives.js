@@ -566,6 +566,15 @@ angular.module('LuckyCat')
         }
     })
 
+    /* loading*/
+    .directive('loading', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/loading.html',
+            replace: true
+        }
+    })
+
     /*图片滚动出现时加载*/
     .directive('lazySrc', ['$window', '$document', function($window, $document){
         var doc = $document[0],

@@ -7,6 +7,7 @@ angular.module('LuckyCat.controllers')
     $scope.finishSelect=false;
     loadGoodsDetailsData();//加载本页数据
     $scope.amount=1;//当前数量
+    $scope.loading=true;
     $scope.discount=function(cur_price,old_price){
         return ((cur_price/old_price)*10).toFixed(1);
     };
@@ -207,9 +208,13 @@ angular.module('LuckyCat.controllers')
     };
     /*加载本页数据*/
     function loadGoodsDetailsData(){
+            $scope.loading=true;
+            var loaded=0;
             GoodsDetailsSer.requestData(goods_id,function(){ //加载商品详细信息数据
                     $scope.data_goods=GoodsDetailsSer.getData();//产品数据
                     $scope.choice=new Array();//产品规格选择器，存放被选的属性的下标（索引）
+                    loaded++;
+                   isFinishLoad();
                 if(GoodsDetailsSer.getData().StockKeepingUnitModels!=null){
                     /*根据sku产品属性的长度初始化选择器choice*/
                     var len=GoodsDetailsSer.getData().StockKeepingUnitModels[0].Specifications.split(',').length;
@@ -225,8 +230,17 @@ angular.module('LuckyCat.controllers')
                     $scope.data_category=response;
                     console.log(angular.toJson($scope.data_category));
                 }
+                loaded++;
+                isFinishLoad();
             });
+
+        function isFinishLoad(){
+            if(loaded>=2){
+                $timeout(function(){ $scope.loading=false;},300)
+                $scope.initLoading=true;//加载完成标志
+            }
         }
+     }
     /*清空选择*/
     function clearChecked(){
         GoodsDetailsSer.clearSelections();//重置所有isSelected属性

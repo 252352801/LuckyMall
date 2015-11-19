@@ -10,45 +10,45 @@ angular.module('LuckyCat')
                     var ul=document.getElementById("banner_ul");
                     var li=ul.getElementsByTagName("li");
                     var count=li.length;
-                    var w=obj.offsetWidth;
                     var bar_index=getByClass('banner-index',obj)[0];//索引按钮
                     var lock=true;
-                    var des='R';
                     var rep_speed=300;//切换一次所需时间
                     var rep_timeout=3000;//切换一次间隔时间
                     li[ $scope.banner_index].style.opacity='1';
                     changeSelf($scope.banner_index,$scope.banner_index+1);
-
-
                     function gradualChange(hide_index,show_index,callback){
-                        tweenMultiFixAnimate({
-                            obj: [
-                                {
-                                    element: li[hide_index],
-                                    object: [
-                                        {
-                                            attr: 'opacity',//需要改变的属性
-                                            value: -1,//改变的值 可以为正负
-                                            moveName: 'Linear',//动画名，默认为Linear
-                                            moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                                        }
-                                    ]
-                                },
-                                {
-                                    element: li[show_index],
-                                    object: [
-                                        {
-                                            attr: 'opacity',//需要改变的属性
-                                            value: 1,//改变的值 可以为正负
-                                            moveName: 'Linear',//动画名，默认为Linear
-                                            moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                                        }
-                                    ]
-                                }
-                            ],
-                            time: rep_speed,//执行动画的时间
-                            callback: callback
-                        });
+                       try { //万恶的IE，真想“踹”你
+                           tweenMultiFixAnimate({
+                               obj: [
+                                   {
+                                       element: li[hide_index],
+                                       object: [
+                                           {
+                                               attr: 'opacity',//需要改变的属性
+                                               value: -1,//改变的值 可以为正负
+                                               moveName: 'Linear',//动画名，默认为Linear
+                                               moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                           }
+                                       ]
+                                   },
+                                   {
+                                       element: li[show_index],
+                                       object: [
+                                           {
+                                               attr: 'opacity',//需要改变的属性
+                                               value: 1,//改变的值 可以为正负
+                                               moveName: 'Linear',//动画名，默认为Linear
+                                               moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                           }
+                                       ]
+                                   }
+                               ],
+                               time: rep_speed,//执行动画的时间
+                               callback: callback
+                           });
+                       }catch (err){
+
+                       }
                     }
                     function changeSelf(h_index,s_index) {
                         if(obj.timer){
