@@ -1,5 +1,5 @@
 var app = angular.module('LuckyCat', ['LuckyCat.controllers', 'ui.router','oc.lazyLoad','ngCookies']);
-app.config(['$stateProvider','$urlRouterProvider','$locationProvider',function ($stateProvider, $urlRouterProvider,$locationProvider) {
+app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProvider','$cookiesProvider',function ($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider, $cookiesProvider) {
 
     function load(url){
         return ['$ocLazyLoad', function($ocLazyLoad) {
@@ -7,6 +7,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider',function (
           }]
     }
     $locationProvider.html5Mode(true);
+
     /*默认路由*/
     $urlRouterProvider.otherwise('home');
     $stateProvider
@@ -187,6 +188,16 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider',function (
             views: {
                 '': {
                     templateUrl: "templates/help.html"
+                }
+            }
+
+        })
+        /*活动页*/
+        .state('activity', {
+            url: '/activity',
+            views: {
+                '': {
+                    templateUrl: "templates/activity.html"
                 }
             }
 

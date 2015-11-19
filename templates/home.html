@@ -11,8 +11,8 @@
     <ul class="test" id="banner_ul">
         <li ng-repeat="img in data_banner">
             <a href="#" title="">
-                <img ng-src={{'http://image.luckyec.com/'+img.ImageData}} alt="" />
-                <!--<img ng-src={{img.ImageData}} alt="" />-->
+               <!-- <img ng-src={{'http://image.luckyec.com/'+img.ImageData}} alt="" />-->
+                <img ng-src={{img.ImageData}} alt="" />
             </a>
         </li>
 
@@ -23,7 +23,7 @@
         <a ng-class="{'cur-banner-index':banner_index==$index}" ng-repeat="index in data_banner" data-index={{$index}}></a>
     </div>
 </div>
-
+<div ng-include="test"></div>
 
  </div>
 <!--banner图  end-->
