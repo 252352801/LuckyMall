@@ -7,7 +7,7 @@ angular.module('LuckyCat.controllers')
         $scope.simpleMobile=hideSomeStr($scope.data_user.UserModel.Mobile,3,8,'*');
     }else{
         $scope.data_user=null;
-        $state.go('login');
+        //$state.go('login');
     }
     $scope.$on('changeMenu',function(e,menu_index){
         $scope.curMenu=menu_index;
