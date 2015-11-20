@@ -2229,7 +2229,7 @@ margin-left: 70px;
     display:inline-block;
     height:22px;
     line-height:20px;
-    padding:0px 0px;
+    padding:0px 8px;
     background:#ff6700;
     text-align:center;
     color:#fff;
@@ -2898,7 +2898,7 @@ margin-left: 70px;
     margin-left:5px;
 }
 .list .icon-discount{
-    width:70px;
+    width:50px;
     height:18px;
     line-height:18px;
     position:absolute;

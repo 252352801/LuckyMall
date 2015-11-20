@@ -1,6 +1,6 @@
 angular.module('LuckyCat.controllers')
  .controller('EditPasswordCtrl',function($scope,$state,$stateParams,LoginSer,EditPasswordSer,$timeout){
-        $scope.$emit('changeMenu',8);
+        $scope.$emit('changeMenu',13);
         initPostData();//初始化数据
         $scope.input_tips='';
         $scope.show_update_success=false;

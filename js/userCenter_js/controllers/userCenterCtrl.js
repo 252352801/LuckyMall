@@ -19,8 +19,13 @@ angular.module('LuckyCat.controllers')
             $scope.isMTXXShow=false;
         },5);
     };
-    
-    
+        /*监听打开头像编辑*/
+     $scope.$on("showMTXX",function(){
+          $timeout(function(){
+              $scope.isMTXXShow=true;
+              console.log($scope.isMTXXShow);
+         },5);
+     });
     
     
     

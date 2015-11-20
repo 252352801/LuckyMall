@@ -1,3 +1,53 @@
 <p class="menu-cont-title">
     <label>安全中心</label>
 </p>
+<div class="box-userInfo">
+    <div class="user-head-img">
+        <img src="./res/test/headimg.jpg" alt="" />
+        <div class="btn-edit-img" btn-edit-img ng-click="showMTXX()">编辑头像</div>
+    </div>
+    <div>
+        <p class="bar-nick-name">
+            <span ng-bind="data_user.UserModel.NickName" ng-show="!nickName_editing"></span>
+            <input type="text" ng-value="data_user.UserModel.NickName" ng-show="nickName_editing==true"/>
+        </p>
+        <span class="btn-edit" ng-click="handleNickName()" ng-bind="(nickName_editing?'保存':'修改')"></span>
+        <p class="user-mobile" ng-bind="simpleMobile"></p>
+    </div>
+</div>
+
+<ul class="account-details">
+    <li class="before-icon-lock">
+        <div class="cont1">
+            <h2>账号密码</h2>
+            <p class="tips">定期修改密码，保护账户安全</p>
+        </div>
+        <div class="cont2">
+            <p>
+                <a  class="color-org" href="/UCIndex/editPassword">修改</a>
+            </p>
+        </div>
+    </li>
+    <li class="before-icon-email">
+        <div class="cont1">
+            <h2>绑定邮箱<span>252***801@qq.com</span></h2>
+            <p class="tips">邮箱可以用于重置密码或其他安全验证</p>
+        </div>
+        <div class="cont2">
+            <p>
+                <a  class="color-org" href="#">修改</a>
+            </p>
+        </div>
+    </li>
+    <li class="before-icon-mobile">
+        <div class="cont1">
+            <h2>绑定手机<span>18420***601</span></h2>
+            <p class="tips">手机可以用于登录幸运猫，重置密码或其他安全验证</p>
+        </div>
+        <div class="cont2">
+            <p>
+                <a  class="color-org" href="#">修改</a>
+            </p>
+        </div>
+    </li>
+</ul>
