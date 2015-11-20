@@ -2779,7 +2779,7 @@ margin-left: 70px;
     border-bottom:1px solid #eaeaea;
     line-height:48px;
 }
-.tabs .tab-item span{
+.tabs .tab-item .item{
     margin-left:-4px;
     display:inline-block;
     border-top:2px solid transparent;
@@ -2793,7 +2793,7 @@ margin-left: 70px;
     left:3px;
     cursor:pointer;
 }
-.tabs .tab-item span.cur{
+.tabs .tab-item .item.cur{
     border-top-color:#ff6700;
     border-bottom-color:#fff;
     border-left-color:#eaeaea;

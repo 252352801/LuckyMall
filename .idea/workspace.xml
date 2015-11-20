@@ -4,7 +4,8 @@
     <bookmark url="file://$PROJECT_DIR$/js/userCenter_js/controllers/myAddressesCtrl.js" line="75" />
     <bookmark url="file://$PROJECT_DIR$/common/controllers/controllers.js" line="235" />
     <bookmark url="file://$PROJECT_DIR$/common/controllers/controllers.js" />
-    <bookmark url="file://$PROJECT_DIR$/css/style_userCenter.css" line="861" mnemonic="5" />
+    <bookmark url="file://$PROJECT_DIR$/css/style_userCenter.css" line="871" mnemonic="5" />
+    <bookmark url="file://$PROJECT_DIR$/templates/goodsDetails.html" line="74" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1bc9e23d-4508-4d2f-b4ec-b8d72c786333" name="Default" comment="" />
@@ -29,51 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="myOrders.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/myOrders.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.035715" vertical-offset="0" max-vertical-offset="760">
-              <caret line="31" column="49" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/config/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6400" max-vertical-offset="8151">
-              <caret line="148" column="17" selection-start-line="148" selection-start-column="17" selection-end-line="148" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4592" max-vertical-offset="5510">
-              <caret line="282" column="8" selection-start-line="282" selection-start-column="8" selection-end-line="282" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="aside-right.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/templates/aside-right.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.857142" vertical-offset="0" max-vertical-offset="532">
-              <caret line="16" column="82" selection-start-line="16" selection-start-column="63" selection-end-line="16" selection-end-column="82" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="directives.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/directives/directives.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.72" vertical-offset="3351" max-vertical-offset="13642">
-              <caret line="201" column="52" selection-start-line="201" selection-start-column="52" selection-end-line="201" selection-end-column="52" />
+            <state vertical-scroll-proportion="-0.6785714" vertical-offset="0" max-vertical-offset="1843">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -92,20 +53,60 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.8" vertical-offset="18031" max-vertical-offset="74651">
-              <caret line="954" column="1" selection-start-line="954" selection-start-column="1" selection-end-line="954" selection-end-column="1" />
+            <state vertical-scroll-proportion="-28.92" vertical-offset="52458" max-vertical-offset="74651">
+              <caret line="2799" column="31" selection-start-line="2799" selection-start-column="31" selection-end-line="2799" selection-end-column="31" />
               <folding>
-                <marker date="1448019305403" expanded="true" signature="756:775" placeholder="{...}" />
+                <marker date="1448021135535" expanded="true" signature="756:775" placeholder="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userCenterCtrl.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="userCenterCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/userCenterCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18627451" vertical-offset="0" max-vertical-offset="1121">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1121">
               <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UCIndex.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/UCIndex.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.071428" vertical-offset="583" max-vertical-offset="1501">
+              <caret line="47" column="77" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="77" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="myOrdersCtrl.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/myOrdersCtrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="70" max-vertical-offset="3040">
+              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="editPassword.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/editPassword.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.714285" vertical-offset="285" max-vertical-offset="1178">
+              <caret line="47" column="60" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style_userCenter.css" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/css/style_userCenter.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.23995407" vertical-offset="0" max-vertical-offset="22762">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -121,11 +122,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shoppingCart.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/shoppingCart.html">
+      <file leaf-file-name="goodsDetails.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/goodsDetails.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.285714" vertical-offset="1253" max-vertical-offset="2812">
-              <caret line="87" column="29" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="29" />
+            <state vertical-scroll-proportion="-18.321428" vertical-offset="912" max-vertical-offset="1938">
+              <caret line="75" column="81" selection-start-line="75" selection-start-column="81" selection-end-line="75" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -141,11 +142,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/templates/long-header.html" />
         <option value="$PROJECT_DIR$/templates/help.html" />
         <option value="$PROJECT_DIR$/templates/register.html" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/myDiscountCards.html" />
-        <option value="$PROJECT_DIR$/js/userCenter_js/controllers/myOrdersCtrl.js" />
         <option value="$PROJECT_DIR$/js/userCenter_js/services/myOrdersSer.js" />
         <option value="$PROJECT_DIR$/js/controllers/listCtrl.js" />
         <option value="$PROJECT_DIR$/templates/list.html" />
@@ -167,20 +166,17 @@
         <option value="$PROJECT_DIR$/js/directives/goodsDetailsDirectives.js" />
         <option value="$USER_HOME$/Desktop/收货地址.html" />
         <option value="$PROJECT_DIR$/common/templates/loading.html" />
-        <option value="$PROJECT_DIR$/templates/goodsDetails.html" />
         <option value="$PROJECT_DIR$/common/templates/sub-footer.html" />
         <option value="$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js" />
         <option value="$PROJECT_DIR$/lib/myfuntion/base.js" />
         <option value="$PROJECT_DIR$/js/directives/homeDirectives.js" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/myWallet.html" />
-        <option value="$PROJECT_DIR$/templates/userCenter_templates/myOrders.html" />
         <option value="$PROJECT_DIR$/js/userCenter_js/controllers/myMessageCtrl.js" />
         <option value="$PROJECT_DIR$/common/config/app.js" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/myMessage.html" />
         <option value="$PROJECT_DIR$/js/userCenter_js/directives/headerImgEditDirectives.js" />
         <option value="$PROJECT_DIR$/templates/confirmOrder.html" />
         <option value="$PROJECT_DIR$/js/userCenter_js/controllers/safeAccountCtrl.js" />
-        <option value="$PROJECT_DIR$/css/style_userCenter.css" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/safeAccount.html" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/UCIndex.html" />
         <option value="$PROJECT_DIR$/js/userCenter_js/controllers/editPasswordCtrl.js" />
@@ -190,8 +186,13 @@
         <option value="$PROJECT_DIR$/common/controllers/controllers.js" />
         <option value="$PROJECT_DIR$/common/templates/modal-feedback.html" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/js/userCenter_js/controllers/userCenterCtrl.js" />
+        <option value="$PROJECT_DIR$/css/style.css" />
+        <option value="$PROJECT_DIR$/templates/goodsDetails.html" />
+        <option value="$PROJECT_DIR$/templates/userCenter_templates/myOrders.html" />
+        <option value="$PROJECT_DIR$/js/userCenter_js/controllers/myOrdersCtrl.js" />
+        <option value="$PROJECT_DIR$/templates/userCenter_templates/editPassword.html" />
+        <option value="$PROJECT_DIR$/css/style_userCenter.css" />
       </list>
     </option>
   </component>
@@ -702,13 +703,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/sweetAlert/sweetalert.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="17879">
-          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/cartCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="665" max-vertical-offset="2755">
@@ -796,14 +790,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/myOrdersCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3287">
-          <caret line="14" column="82" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/services/homeSer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="1026">
@@ -886,14 +872,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/myOrders.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.285715" vertical-offset="57" max-vertical-offset="1862">
-          <caret line="27" column="65" selection-start-line="27" selection-start-column="65" selection-end-line="27" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/myMessageCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="190">
@@ -950,14 +928,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/style_userCenter.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.72" vertical-offset="21394" max-vertical-offset="22553">
-          <caret line="1148" column="13" selection-start-line="1148" selection-start-column="13" selection-end-line="1148" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/safeAccount.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.571428" vertical-offset="114" max-vertical-offset="1102">
@@ -966,26 +936,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/UCIndex.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.75" vertical-offset="611" max-vertical-offset="1501">
-          <caret line="48" column="16" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="98" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/editPasswordCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1577">
           <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/goodsDetails.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.285715" vertical-offset="684" max-vertical-offset="1938">
-          <caret line="60" column="126" selection-start-line="60" selection-start-column="112" selection-end-line="60" selection-end-column="126" />
           <folding />
         </state>
       </provider>
@@ -1054,10 +1008,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/modal-before-game.css">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.4339623" vertical-offset="301" max-vertical-offset="3382">
-          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="32" selection-end-column="30" />
+        <state vertical-scroll-proportion="-21.035715" vertical-offset="0" max-vertical-offset="760">
+          <caret line="31" column="49" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/userCenterCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1121">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1070,28 +1032,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/templates/goodsDetails.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.035715" vertical-offset="0" max-vertical-offset="760">
-          <caret line="31" column="49" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="49" />
+        <state vertical-scroll-proportion="-18.321428" vertical-offset="912" max-vertical-offset="1938">
+          <caret line="75" column="81" selection-start-line="75" selection-start-column="81" selection-end-line="75" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/myOrders.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6785714" vertical-offset="0" max-vertical-offset="1843">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.8" vertical-offset="18031" max-vertical-offset="74651">
-          <caret line="954" column="1" selection-start-line="954" selection-start-column="1" selection-end-line="954" selection-end-column="1" />
+        <state vertical-scroll-proportion="-28.92" vertical-offset="52458" max-vertical-offset="74651">
+          <caret line="2799" column="31" selection-start-line="2799" selection-start-column="31" selection-end-line="2799" selection-end-column="31" />
           <folding>
-            <marker date="1448019305403" expanded="true" signature="756:775" placeholder="{...}" />
+            <marker date="1448021135535" expanded="true" signature="756:775" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/userCenterCtrl.js">
+    <entry file="file://$PROJECT_DIR$/css/modal-before-game.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18627451" vertical-offset="0" max-vertical-offset="1121">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        <state vertical-scroll-proportion="-5.4339623" vertical-offset="301" max-vertical-offset="3382">
+          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="32" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/userCenter_js/controllers/myOrdersCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="70" max-vertical-offset="3040">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/UCIndex.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.071428" vertical-offset="583" max-vertical-offset="1501">
+          <caret line="47" column="77" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/editPassword.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.714285" vertical-offset="285" max-vertical-offset="1178">
+          <caret line="47" column="60" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style_userCenter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23995407" vertical-offset="0" max-vertical-offset="22762">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
           <folding />
         </state>
       </provider>

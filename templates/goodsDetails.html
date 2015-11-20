@@ -72,8 +72,8 @@
         </div>
         <div class="box-proIntro tabs">
             <div class="tab-item">
-                <span ng-class="{'cur':showingTab=='tab1'}" ng-click="showTab('tab1')">详细信息</span>
-                <span ng-class="{'cur':showingTab=='tab2'}" ng-click="showTab('tab2')">商品咨询</span>
+                <span ng-class="{'item cur':showingTab=='tab1','item':showingTab!='tab1'}" ng-click="showTab('tab1')">详细信息</span>
+                <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">商品咨询</span>
             </div>
             <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
                 <ul class="pro-showing-images">

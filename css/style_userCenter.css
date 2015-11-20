@@ -1,6 +1,5 @@
 .bar-userInfo{
     min-width:1200px;
-    background:rgba(255,120,1,0.9);
     overflow:hidden;
     color:#fff;
 }
@@ -10,6 +9,7 @@
     padding-bottom:24px;
     overflow:hidden;
 /*    background:#ff7801;*/
+    background:rgba(255,120,1,0.9);
 }
 .bar-userInfo .left{
     min-height:136px;
@@ -225,14 +225,14 @@
     background:#fff;
     position:relative;
 }
-.UC-menu-cont .tab-item span{
+.UC-menu-cont .tab-item .item{
     padding:0px 50px;
     position:relative;
     left:4px;
     font-size:14px;
     color:#333;
 }
-.UC-menu-cont .tab-item span.cur{
+.UC-menu-cont .tab-item .item.cur{
     color:#ff6700;
 }
 .UC-menu-cont .th{
@@ -674,6 +674,16 @@
     color:#fff;
     text-align:center;
     margin-left:120px;
+}
+.form-editPassword p a.btn-outline {
+    box-sizing: border-box;
+    width: 120px;
+    line-height: 32px;
+    border: 1px solid #DDD;
+    color: #666;
+    text-align: center;
+    margin-left: 20px;
+    display: inline-block;
 }
 .discount-card-tabs{
     margin:20px auto;
@@ -1167,6 +1177,7 @@
     line-height: 60px;
     text-align:center;
     float: left;
+    font-size: 14px;
 }
 .account-details .cont1 h2{
     font-size: 18px;

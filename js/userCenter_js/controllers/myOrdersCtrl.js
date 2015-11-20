@@ -15,19 +15,6 @@ angular.module('LuckyCat.controllers')
         case 'finish':$scope.curTab='tab4';$scope.$emit('changeMenu',4);loadTab(4);break;
         case 'refund':$scope.curTab='tab5';$scope.$emit('changeMenu',5);break;
     }
-    /*切换tab同时加载数据*/
-    $scope.changeTab=function(tab_name){
-        $scope.curTab=tab_name;
-        var menu_index=parseInt(tab_name.replace(/[^0-9]/ig,''));
-        $scope.$emit('changeMenu',menu_index);
-        switch(menu_index){
-                case 1:loadTab(1);break;
-                case 2:loadTab(2);break;
-                case 3:loadTab(3);break;
-                case 4:loadTab(4);break;
-                case 5:unKnow();break;
-        }
-    };
     /*请求订单数据*/
     $scope.loadData=function(){
         $scope.loaded=0;//已加载数据数量
