@@ -25,6 +25,15 @@ angular.module('LuckyCat')
             }
         };
     })
+    /*登陆弹出框*/
+    .directive('modalFeedback', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/modal-feedback.html',
+            replace: true,
+            controller: 'FeedbackCtrl'
+        };
+    })
     /*页头*/
     .directive('header', function () {
         return {
@@ -188,6 +197,10 @@ angular.module('LuckyCat')
             replace: true,
             transclude: true,
             link: function (scope, element, attrs) {
+                /*隐藏反馈窗口*/
+                scope.showFeedbackModal=function(){
+                    scope.$emit('show-feedback-modal');
+                };
             }
         };
     })

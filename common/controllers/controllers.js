@@ -5,10 +5,11 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
      $scope.imgHost='http://image.luckyec.com/';
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
+     $scope.isFeedbackModalShow=false;//反馈框是否显示
      $scope.isLogin=false;//是否已经登陆
      authorization();//授权登录
      $scope.welcome_word=setWelcomeWord();//设置欢迎词
-        /* 监听显示模态框*/
+        /* 监听显示登陆模态框*/
      $scope.$on('show-login-modal',function(){
          $timeout(function(){
              $scope.isLoginModalShow=true;
@@ -34,7 +35,14 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
           loadSomeUserData();//用户登录之后初始化和加载一些必要数据
           loadOrdersData();//加载部分订单数目
       });
-
+        /* 监听反馈框显示消息*/
+        $scope.$on('show-feedback-modal',function(){
+            $scope.isFeedbackModalShow=true;
+        });
+        /* 监听反馈框关闭消息*/
+        $scope.$on('close-feedback-modal',function(){
+            $scope.isFeedbackModalShow=false;
+        });
       /*监听购物车数据改变*/
         $scope.$on('cart-update',function(){
             console.log("购物车有变动！");
@@ -266,3 +274,11 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
     };
 })
 
+
+
+.controller('FeedbackCtrl',function($scope) {
+        /*隐藏反馈窗口*/
+      $scope.hideFeedbackModal=function(){
+        $scope.$emit('close-feedback-modal');
+      };
+    })
