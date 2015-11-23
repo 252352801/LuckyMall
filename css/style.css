@@ -2195,7 +2195,7 @@ margin-left: 70px;
     line-height:50px;
 }
 .cart-th .th1{
-    margin-left:178px;
+    margin-left:188px;
 }
 .cart-th .th2{
     margin-left:254px;
@@ -3620,6 +3620,9 @@ margin-left: 70px;
     min-width:140px;
     color:#ff6700;
 }
+.confirmOrder-bottom div p.final-address{
+    color:#333;
+}
 .confirmOrder-bottom div p .cost{
     font-size: 24px;
     color:#ff542b;
@@ -3910,6 +3913,86 @@ margin-left: 70px;
 }
 /*帮助中心 end*/
 
+
+/*===================
+  支付页面 begin
+====================*/
+.pay.container.content{
+    min-height:650px;
+    margin-top:25px;
+    margin-bottom:30px;
+    background:#fff;
+    box-sizing:border-box;
+    padding:25px;
+}
+.pay .bar-pay-top{
+    margin-bottom:85px;
+}
+.pay .bar-pay-top a{
+    color:#509f0d;
+    display:inline-block;
+    font-size:14px;
+ }
+.pay .bar-pay-top a:before{
+    content:'<';
+    margin-right:5px;
+    font-family:"新宋体","Microsoft YaHei";
+}
+.pay .bar-pay-top .tips{
+    display:inline-block;
+    margin-left:275px;
+    font-size:14px;
+
+}
+.pay .bar-weixin-cost{
+    padding-left:80px;
+    min-height:65px;
+    margin-left:420px;
+    margin-bottom:40px;
+    position:relative;
+}
+.pay .bar-weixin-cost:before{
+    content:'';
+    display:block;
+    width:64px;
+    height:64px;
+    background:url(../res/icon/icon_wx_pay.png);
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+.pay .bar-weixin-cost span{
+    font-size: 30px;
+}
+.pay .box-barcode{
+    box-sizing:border-box;
+   width:284px;
+    height:284px;
+    border:1px solid #f1f1f1;
+    padding:15px;
+    position:relative;
+    margin:0 auto;
+}
+.pay .box-barcode img{
+    width:100%;
+    height:100%;
+    background:#f1f1f1;
+}
+.pay .box-barcode .tips-time-over{
+    width:100%;
+    height:100%;
+    color:#ff6700;
+    background:rgba(255,255,255,0.5);
+    text-align:center;
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+.pay .box-barcode .tips-time-over p:first-child{
+    margin-top:100px;
+    margin-bottom:5px;
+}
+/*支付页面 end*/
 /*--------------------------------------------------------------------------------------*/
 /*文本不被选中*/
 .txtUnSelect{

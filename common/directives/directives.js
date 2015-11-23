@@ -545,7 +545,7 @@ angular.module('LuckyCat')
                 });
                 element.bind('keyup', function () {
                     var max = parseInt(attrs.max);
-                    if (element.val() >= max) {
+                    if (element.val() > max) {
                         scope.overMax(max);
                     } else {
                         if (element.val() === 0) {

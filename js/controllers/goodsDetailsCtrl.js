@@ -1,6 +1,7 @@
 angular.module('LuckyCat.controllers')
  .controller('GoodsDetailsCtrl',function($scope,GoodsDetailsSer,$state,$stateParams,LoginSer,$rootScope,$timeout,TokenSer){
     var goods_id=$stateParams.goods_id;
+    $scope.loaded=false;
     $scope.isLogin=LoginSer.isLogin;//是否应经登录
     $scope.showingTab='tab1';//当前显示的tab
     $scope.showTips=false;//开始默认不显示提示
@@ -237,7 +238,7 @@ angular.module('LuckyCat.controllers')
         function isFinishLoad(){
             if(loaded>=2){
                 $timeout(function(){ $scope.loading=false;},300)
-                $scope.initLoading=true;//加载完成标志
+                $scope.loaded=true;//加载完成标志
             }
         }
      }

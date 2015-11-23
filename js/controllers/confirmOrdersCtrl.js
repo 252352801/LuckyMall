@@ -1,5 +1,5 @@
 angular.module('LuckyCat.controllers')
- .controller('ConfirmOrdersCtrl',function($scope,CartSer,LoginSer,$state,AddressSer,$timeout){
+ .controller('ConfirmOrdersCtrl',function($rootScope,$scope,CartSer,LoginSer,$state,AddressSer,$timeout,PaySer){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
@@ -14,10 +14,17 @@ angular.module('LuckyCat.controllers')
         };
        /* 支付方式显示*/
         $scope.showPayType=function(){
-            switch( $scope.pay_type){
+            switch($scope.pay_type){
                 case 'zhifubao':return '支付宝';break;
                 case 'weixin':return '微信支付';break;
-                case 'caifutong':return '财付通';break;
+                case 'bank_icbc':return '中国工商银行网银支付';break;
+                case 'bank_jianshe':return '中国建设银行网银支付';break;
+                case 'bank_nongye':return '中国农业银行网银支付';break;
+                case 'bank_zhaoshang':return '中国招商银行网银支付';break;
+                case 'bank_zhongguo':return '中国银行网银支付';break;
+                case 'bank_xingye':return '兴业银行网银支付';break;
+                case 'bank_pingan':return '平安银行网银支付';break;
+                case 'bank_youzheng':return '中国邮政储蓄银行银行网银支付';break;
             }
         };
         /*收货地址切换*/
@@ -89,23 +96,68 @@ angular.module('LuckyCat.controllers')
         };
         /*提交订单*/
         $scope.submitOrder=function(){
+            if($scope.selected_address==null){
+                swal('请选择收货地址！');
+                return;
+            }
             var order_id=new Array();
             for(var o in $scope.data_orders){
-                order_id.push({"Id":$scope.data_orders[o].Id});
+                order_id.push($scope.data_orders[o].Id);
             }
             console.log('收货地址id:'+$scope.selected_address.Id+'\n'+'订单id:'+angular.toJson(order_id)+'\n'+'支付方式：'+$scope.pay_type+'\n'+'交易总额：'+$scope.total_cost);
+            var pay_method=($scope.pay_type=='weixin')?1:0;//1：微信支付，0：支付宝支付
+            var pay_type=(pay_method==1)?0:($scope.pay_type=='zhifubao')?0:1;
+            var post_data=(pay_method==0)?{"ShowUrl":'',"BankSimpleCode":initBankSimpleCode($scope.pay_type)}
+                :{"ProductId":$scope.data_orders[0].Commodity.Id};
             var param={
                 "AddressId":$scope.selected_address.Id,
-                "OrderInfos":order_id,
-                "Method":2,
-                "Amount":$scope.total_cost
+                "Orders":order_id,
+                "Method":pay_method,
+                "Type":pay_type,
+                "Data":angular.toJson(post_data)
             };
+            console.log(angular.toJson(param));
+            PaySer.setTotalCost($scope.total_cost);
             CartSer.purchaseOrders(param,function(response,status){
                 if(status==1){
-                    $scope.$emit('cart-update');
-                    setTimeout(function(){
-                        $state.go('orderSubmitSuccess');
-                    },1000)
+                    if(response.Code=='0X00') {
+                        $scope.$emit('cart-update');
+                        $rootScope.$broadcast('orders-update');
+                        if ($scope.pay_type== 'weixin') { //如果是微信支付
+                           // var path = 'pay/' + response.Data.OutTradeNo;
+                            console.log(response.Data.OutTradeNo);
+                            $state.go('pay',{trade_id:response.Data.OutTradeNo});
+                        }else{
+                            location.href=app.interface.aliPaySubmit+response.Data.OutTradeNo;
+                        }
+                    }else if(response.Code=='0X01'){
+                        swal({
+                            title: "地址信息有误!",
+                            type: "error",
+                            confirmButtonText: "确定"
+                        });
+
+                    }else if(response.Code=='0X02'){
+                        swal({
+                            title: "确认订单失败！",
+                            type: "error",
+                            confirmButtonText: "确定"
+                        });
+
+                    }else if(response.Code=='0X03'){
+                        swal({
+                            title: "创建交易失败！",
+                            type: "error",
+                            confirmButtonText: "确定"
+                        });
+                    }else{
+                        swal({
+                            title: "未知错误！",
+                            type: "error",
+                            text:'错误码：0XXX',
+                            confirmButtonText: "确定"
+                        });
+                    }
                 }
             });
         };
@@ -122,6 +174,7 @@ angular.module('LuckyCat.controllers')
       /*初始化提交数据*/
      function initPostData(){
         $scope.pay_type='zhifubao';//支付方式
+         $scope.selected_address=null;//选择的地址
         for(var o in $scope.data_addresses){
             if($scope.data_addresses[o].Selected==true){
                 $scope.selected_address=$scope.data_addresses[o];//地址
@@ -146,5 +199,18 @@ angular.module('LuckyCat.controllers')
                 area=_province+' '+_city+' '+_county;
             }
             return area;
+        }
+        /*银行简码对应*/
+        function initBankSimpleCode(str){
+            switch(str){
+                case 'bank_icbc':return 'ICBCB2C';break;
+                case 'bank_jianshe':return 'CCB';break;
+                case 'bank_nongye':return 'ABC';break;
+                case 'bank_zhaoshang':return 'CMB';break;
+                case 'bank_zhongguo':return 'BOCB2C';break;
+                case 'bank_xingye':return 'CIB';break;
+                case 'bank_pingan':return 'SPABANK';break;
+                case 'bank_youzheng':return 'POSTGC';break;
+            }
         }
 });

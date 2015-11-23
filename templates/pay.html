@@ -1,0 +1,29 @@
+<header></header>
+<aside-right></aside-right>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+
+<!--中部 start-->
+<div class="pay container content">
+    <div class="bar-pay-top">
+        <a href="/confirmOrder">返回其他支付方式</a>
+        <p class="tips">距离二维码过期还剩<span class="color-org">90</span>秒，过期后请<span class="color-org">刷新</span>本页面获取二维码</p>
+    </div>
+    <div class="bar-weixin-cost">
+        <p class="color-org">付款金额：<span ng-bind="'￥'+data.totalCost"></span></p>
+        <small>请使用微信扫一扫 完成付款</small>
+    </div>
+    <div class="box-barcode">
+        <img ng-src="{{QRCodeUrl}}" alt="" />
+        <div class="tips-time-over" ng-show="time_over==true">
+            <p>二维码已经过期</p>
+            <p>请刷新页面重新获取</p>
+        </div>
+    </div>
+</div>
+<!--中部 end-->
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>

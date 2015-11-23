@@ -92,66 +92,72 @@
             <li ng-class="{'cur':pay_type=='zhifubao'}" ng-click="changePayType('zhifubao')">
                 <span>√</span>
                 <div class="img-container">
-                    <img src="./res/test/zhifubao.png" alt=""/>
+                    <img src="./res/images/zhifubao.png" alt=""/>
                 </div>
             </li>
             <li ng-class="{'cur':pay_type=='weixin'}" ng-click="changePayType('weixin')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/weixinpay.png" alt=""/>
+                    <img src="./res/images/weixinpay.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='caifutong'}" ng-click="changePayType('caifutong')">
+<!--            <li ng-class="{'cur':pay_type=='caifutong'}" ng-click="changePayType('caifutong')">
                 <span></span>
                 <div class="img-container">
                     <img src="./res/test/cft.png" alt=""/>
                 </div>
-            </li>
+            </li>-->
         </ul>
         <p class="s-label">
             <small>网银支付</small>
         </p>
         <ul class="btn-pay-models">
-            <li ng-class="{'cur':pay_type=='bank_1'}" ng-click="changePayType('bank_1')">
+            <li ng-class="{'cur':pay_type=='bank_icbc'}" ng-click="changePayType('bank_icbc')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_nongye.png" alt=""/>
+                    <img src="./res/images/bank_icbc.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='bank_2'}" ng-click="changePayType('bank_2')">
+            <li ng-class="{'cur':pay_type=='bank_jianshe'}" ng-click="changePayType('bank_jianshe')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_pingan.png" alt=""/>
+                    <img src="./res/images/bank_jianshe.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='bank_3'}" ng-click="changePayType('bank_3')">
+            <li ng-class="{'cur':pay_type=='bank_nongye'}" ng-click="changePayType('bank_nongye')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_icbc.png" alt=""/>
+                    <img src="./res/images/bank_nongye.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='bank_4'}" ng-click="changePayType('bank_4')">
+            <li ng-class="{'cur':pay_type=='bank_zhaoshang'}" ng-click="changePayType('bank_zhaoshang')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_zhaoshang.png" alt=""/>
+                    <img src="./res/images/bank_zhaoshang.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='bank_5'}" ng-click="changePayType('bank_5')">
+            <li ng-class="{'cur':pay_type=='bank_zhongguo'}" ng-click="changePayType('bank_zhongguo')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_xingye.png" alt=""/>
+                    <img src="./res/images/bank_zhongguo.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='bank_6'}" ng-click="changePayType('bank_6')">
+            <li ng-class="{'cur':pay_type=='bank_xingye'}" ng-click="changePayType('bank_xingye')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_zhongguo.png" alt=""/>
+                    <img src="./res/images/bank_xingye.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='bank_7'}" ng-click="changePayType('bank_7')">
+            <li ng-class="{'cur':pay_type=='bank_pingan'}" ng-click="changePayType('bank_pingan')">
                 <span></span>
                 <div class="img-container">
-                    <img src="./res/test/bank_youzheng.png" alt=""/>
+                    <img src="./res/images/bank_pingan.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_youzheng'}" ng-click="changePayType('bank_youzheng')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/images/bank_youzheng.png" alt=""/>
                 </div>
             </li>
         </ul>
@@ -176,11 +182,11 @@
     <div class="content confirmOrder-bottom">
         <div>
             <label>收货地址信息：</label>
-            {{selected_address.ConsigneeName+' '+selected_address.ConsigneeMobile+'  '+selected_address.Area+''+selected_address.ConsigneeAddress}}
+            <p class="final-address" ng-bind="selected_address.ConsigneeName+' '+selected_address.ConsigneeMobile+'  '+selected_address.Area+''+selected_address.ConsigneeAddress"></p>
         </div>
         <div>
             <label>支付方式：</label>
-            <p ng-bind="showPayType()">微信支付</p>
+            <p ng-bind="showPayType()"></p>
         </div>
         <div>
             <label>商品数量：</label>
@@ -191,7 +197,7 @@
             <p><span class="cost" ng-bind="'￥'+total_cost.toFixed(2)"></span>元</p>
         </div>
         <div>
-            <button class="btn-submitOrder" ng-click="submitOrder()">提交订单</button>
+            <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>
         </div>
     </div>
 </form>

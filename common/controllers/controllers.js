@@ -45,7 +45,6 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
         });
       /*监听购物车数据改变*/
         $scope.$on('cart-update',function(){
-            console.log("购物车有变动！");
             CartSer.requestCartData(function(respnose,status){ //加载购物车数据
                 if(status==1){
                     $timeout(function(){
@@ -60,7 +59,10 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
                 }
             });
         });
-       /* 授权登陆*/
+      /*监听订单数据改变*/
+        $scope.$on('orders-update',function(){
+            loadOrdersData();
+        });
 
      /*拦截未登录时的跳转*/
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -84,6 +86,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             if(status==1){
                 $scope.isLogin=true;
                 loadSomeUserData();//加载一些必要数据
+                loadOrdersData();//加载部分订单数目
             }else{
                 console.log('未设置自动登录/到达自动登录期限/授权失效==>>无法自动登录');
             }

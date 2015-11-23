@@ -509,7 +509,62 @@ angular.module('LuckyCat.services',[])
                 }).error(function(data,status,headers,config){
 
                 });
+            },
+            cancelOrder:function(order_id,order_type,callback){
+                $http({
+                    method: 'get',
+                    url: app.interface.cancelOrder+order_id,
+                    headers: {
+                        'Authorization': TokenSer.getAuth()
+                    }
+                }).success(function (response) {
+                    if (response) {
+                        switch(order_type){
+                            case 1:orders_unPay=initData(response);break;
+                            case 2:orders_paid=initData(response);break;
+                            case 3:orders_unRecieve=initData(response);break;
+                            case 4:orders_finish=initData(response);break;
+                        }
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                });
             }
 
         };
+    })
+
+
+    /*支付服务*/
+    .factory('PaySer',function($http,TokenSer){
+        var data={
+            totalCost:-1
+        };
+        return {
+            getData:function(){
+                return data;
+            },
+            setTotalCost:function(new_cost){
+                data.totalCost=new_cost;
+            },
+            getQRCodeData:function(trade_id,callback){
+                $http({
+                    method:'get',
+                    url:app.interface.getQRCodeData+trade_id,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(data,status,headers,config){
+
+                });
+            }
+        };
+
     })

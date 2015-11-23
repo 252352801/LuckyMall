@@ -145,6 +145,24 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             }
 
         })
+
+        /*支付页*/
+        .state('pay', {
+            url: '/pay/:trade_id',
+            views: {
+                '': {
+                    templateUrl: "templates/pay.html",
+                    controller:'PayCtrl'
+                }
+            },
+            resolve: {
+                loadFiles:load([
+                    './js/controllers/payCtrl.js'
+                ])
+            }
+
+        })
+
         /*订单提交成功页*/
         .state('orderSubmitSuccess', {
             url: '/orderSubmitSuccess',
@@ -219,7 +237,8 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                     './js/userCenter_js/controllers/userCenterCtrl.js',
                     './js/userCenter_js/directives/headerImgEditDirectives.js',
                     './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './lib/sweetAlert/sweetAlert.min.js',
+                    'http://open.web.meitu.com/sources/xiuxiu.js'
                     
                 ])
             }
@@ -420,5 +439,8 @@ app.interface={
         setDefaultAddress:app.host+'api/user/address/setdefault/',//设置默认地址 后接id
         cartDeadline:app.host+'api/user/sctime/', //购物车时间（期限）后接id
         purchaseOrders:app.host+'api/order/purchase',//确认订单
-        updatePassword:app.host+'api/user/password/'//修改密码 后接用户id
+        updatePassword:app.host+'api/user/password/',//修改密码 后接用户id
+        getQRCodeData:app.host+'api/wxpay/b/qrcodedata/', //获取微信支付二维码数据 后接交易单号
+        QRCodeUrl:app.host+'api/wxpay/qrcode?data=',//支付二维码图片地址，后接文件名
+        aliPaySubmit:app.host+'api/alipay/submit/'//支付宝支付提交  后接交易单号
 };

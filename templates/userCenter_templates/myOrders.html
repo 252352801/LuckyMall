@@ -65,9 +65,9 @@
                 <div>
                     <p><a href="#" class="btn btn-org" ng-if="list.OrderStatus==1">立即支付</a></p>
 
-                    <p><a href="#" class="btn" ng-if="list.OrderStatus==1">取消订单</a></p>
+                    <p><a href="#" class="btn" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)">取消订单</a></p>
 
-                    <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus==3">查看物流</a></p
+                    <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus==3">查看物流</a></p>
 
                     <p><a href="#" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
                     
