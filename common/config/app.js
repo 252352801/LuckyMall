@@ -211,12 +211,19 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
 
         })
         /*活动页*/
-        .state('activity', {
-            url: '/activity',
+        .state('market', {
+            url: '/market',
             views: {
                 '': {
-                    templateUrl: "templates/activity.html"
+                    templateUrl: "templates/market.html",
+                    controller:'MarketCtrl'
                 }
+            },
+            resolve: {
+                loadFiles:load([
+                    './js/controllers/marketCtrl.js',
+                    './js/services/marketSer.js'
+                ])
             }
 
         })
@@ -410,39 +417,41 @@ app.host=app.host1;
 //app.gameHost='http://120.24.175.151:9004';//游戏服务器
 app.gameHost='http://120.25.60.19:9004';//游戏服务器
 app.gameOverPage='http://www.xingyunmao.cn/shoppingCart';//游戏服务器
-app.interface={
-        login:app.host+'api/user/login',//登陆
-        ImgHost:app.host+'api/upload/imagecloudurl',//获取图片服务器地址
-        refreshUserData:app.host+'api/user/refresh',//获取最新的用户数据
-        authorization:app.host+'api/user/auth/',//授权
-        bannerList:app.host+'api/promotion/query/0',//banner轮播图
-        todayData:app.host+'api/promotion/query/1',//今日推广商品
-        getAllCategory:app.host+'api/category/all2',//获取所有分类
-        goodsDetailsData:app.host+'api/commodity/',//商品详情页数据 后接商品id
-        getCategoryByGoodsId:app.host+'api/filterby/',//根据商品id获取分类数据，后接商品id
-        search:app.host+'api/commodity/search',//商品详情页数据
-        getVerifyCode:app.host+'api/user/verificationcode/',//获取手机验证码
-        register:app.host+'api/user/register',//注册
-        addToCart:app.host+'api/order/add', //加入购物车
-        cartList:app.host+'api/order/all/0', //购物车列表
-        orderList_unPay:app.host+'api/order/all/1', //待付款订单     {"PageIndex": 1,"PageSize": 2,"TotalSize": 3, "TotalPage": 4}<==>{当前第几页，每页大小，总条数，总页数}
-        orderList:app.host+'api/order/all/', //根据状态查询订单数据  后接状态 ：0-已预选 1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
-        orderList_paid:app.host+'api/order/all/2', //已付款订单
-        orderList_sentOut:app.host+'api/order/all/3', //已发货订单
-        orderList_finish:app.host+'api/order/all/4', //已完成订单
-        orderList_cancel:app.host+'api/order/all/5', //已取消订单
-        cancelOrder:app.host+'api/order/cancel/',//取消单个订单操作 后接id
-        cancelOrders:app.host+'api/order/cancels',//取消多个订单操作
-        confirmReceive:app.host+'api/order/complete/{id}',//确认收货
-        addressList:app.host+'api/user/address/all/',//收货地址列表，后接id
-        addAddress:app.host+'api/user/address/add',//添加收货地址
-        updateAddress:app.host+'api/user/address/update',//修改收货地址
-        removeAddress:app.host+'api/user/address/delete/',//删除收货地址 后接id
-        setDefaultAddress:app.host+'api/user/address/setdefault/',//设置默认地址 后接id
-        cartDeadline:app.host+'api/user/sctime/', //购物车时间（期限）后接id
-        purchaseOrders:app.host+'api/order/purchase',//确认订单
-        updatePassword:app.host+'api/user/password/',//修改密码 后接用户id
-        getQRCodeData:app.host+'api/wxpay/b/qrcodedata/', //获取微信支付二维码数据 后接交易单号
-        QRCodeUrl:app.host+'api/wxpay/qrcode?data=',//支付二维码图片地址，后接文件名
-        aliPaySubmit:app.host+'api/alipay/submit/'//支付宝支付提交  后接交易单号
+app.interface = {
+    login: app.host + 'api/user/login',//登陆
+    ImgHost: app.host + 'api/upload/imagecloudurl',//获取图片服务器地址
+    refreshUserData: app.host + 'api/user/refresh',//获取最新的用户数据
+    authorization: app.host + 'api/user/auth/',//授权
+    bannerList: app.host + 'api/promotion/query/0',//banner轮播图
+    todayData: app.host + 'api/promotion/query/1',//今日推广商品
+    marketOnline: app.host + 'api/market/online',//当前上线的市场活动列表
+    marketView:app.host+'api/market/view',//获取多个市场活动页面
+    getAllCategory: app.host + 'api/category/all2',//获取所有分类
+    goodsDetailsData: app.host + 'api/commodity/',//商品详情页数据 后接商品id
+    getCategoryByGoodsId: app.host + 'api/filterby/',//根据商品id获取分类数据，后接商品id
+    search: app.host + 'api/commodity/search',//商品详情页数据
+    getVerifyCode: app.host + 'api/user/verificationcode/',//获取手机验证码
+    register: app.host + 'api/user/register',//注册
+    addToCart: app.host + 'api/order/add', //加入购物车
+    cartList: app.host + 'api/order/all/0', //购物车列表
+    orderList_unPay: app.host + 'api/order/all/1', //待付款订单     {"PageIndex": 1,"PageSize": 2,"TotalSize": 3, "TotalPage": 4}<==>{当前第几页，每页大小，总条数，总页数}
+    orderList: app.host + 'api/order/all/', //根据状态查询订单数据  后接状态 ：0-已预选 1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
+    orderList_paid: app.host + 'api/order/all/2', //已付款订单
+    orderList_sentOut: app.host + 'api/order/all/3', //已发货订单
+    orderList_finish: app.host + 'api/order/all/4', //已完成订单
+    orderList_cancel: app.host + 'api/order/all/5', //已取消订单
+    cancelOrder: app.host + 'api/order/cancel/',//取消单个订单操作 后接id
+    cancelOrders: app.host + 'api/order/cancels',//取消多个订单操作
+    confirmReceive: app.host + 'api/order/complete/{id}',//确认收货
+    addressList: app.host + 'api/user/address/all/',//收货地址列表，后接id
+    addAddress: app.host + 'api/user/address/add',//添加收货地址
+    updateAddress: app.host + 'api/user/address/update',//修改收货地址
+    removeAddress: app.host + 'api/user/address/delete/',//删除收货地址 后接id
+    setDefaultAddress: app.host + 'api/user/address/setdefault/',//设置默认地址 后接id
+    cartDeadline: app.host + 'api/user/sctime/', //购物车时间（期限）后接id
+    purchaseOrders: app.host + 'api/order/purchase',//确认订单
+    updatePassword: app.host + 'api/user/password/',//修改密码 后接用户id
+    getQRCodeData: app.host + 'api/wxpay/b/qrcodedata/', //获取微信支付二维码数据 后接交易单号
+    QRCodeUrl: app.host + 'api/wxpay/qrcode?data=',//支付二维码图片地址，后接文件名
+    aliPaySubmit: app.host + 'api/alipay/submit/'//支付宝支付提交  后接交易单号
 };

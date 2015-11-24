@@ -137,26 +137,6 @@ angular.module('LuckyCat.services',[])
                 res[o].isSelected=false;
             }
         };
-       /* 通过id获取选项对象*/
-        var getFilterItemById=function(id){
-           for(var i=0;i<data.FilterModels.length;i++){
-                for(var j=0;j<data.FilterModels[i].FilterItemModels.length;j++){
-                    if(id==data.FilterModels[i].FilterItemModels[j].Id){
-                        return data.FilterModels[i].FilterItemModels[j]
-                    }
-                }
-            }
-        };
-       /* 通过选项id获取其父类对象*/
-        var getFilterByItemId=function(id){
-            for(var i=0;i<data.FilterModels.length;i++){
-                for(var j=0;j<data.FilterModels[i].FilterItemModels.length;j++){
-                    if(id==data.FilterModels[i].FilterItemModels[j].Id){
-                        return data.FilterModels[i].FilterItemModels;
-                    }
-                }
-            }
-        }
         return {
             getCategoryData:function(){
                 return data_category;

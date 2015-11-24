@@ -8,8 +8,8 @@
     <div class="content">
         <div class="page-location">
             <a>幸运猫</a>
-            <a ng-bind="data_category.categoryName" href="/list/{{data_category.categoryId}}/all"></a>
-            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{data_category.categoryId}}/{{item.itemId}}"></a>
+            <a ng-bind="data_category.categoryName" href="/list/{{'category='+data_category.categoryId}}"></a>
+            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId+'_item='+item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
             <div class="box-goods-img" slide-box-img >

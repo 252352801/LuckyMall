@@ -710,3 +710,22 @@ angular.module('LuckyCat')
         };
     }])
 
+
+    /*绑定内容*/
+    .directive('innerHtml', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                testLoad();
+                function testLoad(){
+                    if(scope[attrs.innerHtml]==undefined){
+                        console.log("112");
+                        setTimeout(testLoad,100);
+                    }else{
+                        element.html(scope[attrs.innerHtml]);
+                    }
+                }
+            }
+        };
+    })
+

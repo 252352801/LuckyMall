@@ -250,7 +250,7 @@
     text-align:center;
 }
 .UC-menu-cont .th span:nth-child(1) {
-    width:320px;
+    width:310px;
 }
 .UC-menu-cont .th span:nth-child(2) {
     width:120px;
@@ -853,12 +853,12 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: 310px;
-    margin-top: -245px;
+    margin-left: 340px;
+    margin-top: -280px;
     font-size: 36px;
-    color: #ddd;
+    color: #DDD;
     z-index: 999;
-    cursor: pointer
+    cursor: pointer;
 }
 .MTXXContainer .btn-close:hover{
     color:#999;

@@ -69,7 +69,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             if (toState.name == 'login') return; // 如果是进入登录界面则允许
             // 如果用户未登录
             if (!LoginSer.isLogin()) {
-                if (toState.name == 'shoppingCart') {
+                if (toState.name == 'confirmOrders') {
                     event.preventDefault();
                     $state.go('login');
                 }

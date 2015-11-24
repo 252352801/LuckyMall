@@ -137,28 +137,28 @@ angular.module('LuckyCat.controllers')
                      $scope.data_orders.all=MyOrdersSer.getUnPayOrders();
                      $scope.data_orders.curPage=getFirstPage(MyOrdersSer.getUnPayOrders());
                      createPage(MyOrdersSer.getUnPayOrders());
-                 },5);
+                 },50);
                  break;
              case 2:
                  $timeout(function(){
                      $scope.data_orders.all=MyOrdersSer.getPaidOrders();
                      $scope.data_orders.curPage=getFirstPage(MyOrdersSer.getPaidOrders());
                      createPage(MyOrdersSer.getPaidOrders());
-                 },5);
+                 },50);
                  break;
              case 3:
                  $timeout(function(){
                      $scope.data_orders.all=MyOrdersSer.getUnReceiveOrders();
                      $scope.data_orders.curPage=getFirstPage(MyOrdersSer.getUnReceiveOrders());
                      createPage(MyOrdersSer.getUnReceiveOrders());
-                 },5);
+                 },50);
                  break;
              case 4:
                  $timeout(function(){
                      $scope.data_orders.all=MyOrdersSer.getFinishOrders();
                      $scope.data_orders.curPage=getFirstPage(MyOrdersSer.getFinishOrders());
                      createPage(MyOrdersSer.getFinishOrders());
-                 },5);
+                 },50);
                  break;
          }
     }
