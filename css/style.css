@@ -384,11 +384,13 @@ input:focus{
     background-image:url(../res/icon/icon_asideR_arrowU.png);
 }
 .aside-r-menu1 .icon-amount-cart{
-    position:absolute;
-    left:20px;
-    top:3px;
-	border-radius:50px !important;
-	line-height: 15px;
+    border-radius: 50px !important;
+    line-height: 15px;
+    float: right;
+    margin-right: 1px;
+    position: relative;
+    top: 3px;
+    left: 0px;
 }
 .aside-r-menu1 .icon-amount-cart:after{
 	border-top: 0px solid #ff7800 !important;}
@@ -1669,12 +1671,14 @@ a.icon-mb-link{
    首页begin
 ===============*/
 .banner{
-    min-width:1200px;
-    width:100%;
-    height:486px;
-    overflow:hidden;
-    position:relative;
-    background:#fff;
+    min-width: 1200px;
+    width: 100%;
+    height: 486px;
+    overflow: hidden;
+    position: relative;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    background-image: url("../res/images/default.png");
+    background-size: auto 250px;
 }
 .banner .spinner{
     margin-top:200px;
@@ -2934,6 +2938,7 @@ margin-left: 70px;
     margin-left:15px;
     margin-top:15px;
     position:relative;
+    top:0px;
 	transition:all .3s;
 	-webkit-transition:all .3s;
 	-moz-transition:all .3s;
@@ -2975,6 +2980,7 @@ margin-left: 70px;
     margin-left:17px;
 }
 .list .pro-list-cont li:hover{
+    transition:top 0.3s;
    top: -5px;
 }
 .list .pro-list-cont li:hover img{

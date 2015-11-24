@@ -122,8 +122,8 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
         MyOrdersSer.requestData(1,function(response,status){//请求未支付订单
             $scope.simpleData_unPay_count=(MyOrdersSer.getUnPayOrders()==null)?0:MyOrdersSer.getUnPayOrders().length;
         });
-        MyOrdersSer.requestData(3,function(response,status){//请求待收货订单
-            $scope.simpleData_unReceive_count=(MyOrdersSer.getUnReceiveOrders()==null)?0:MyOrdersSer.getUnReceiveOrders().length;
+        MyOrdersSer.requestData(2,function(response,status){//请求待收货订单
+            $scope.simpleData_paid_count=(MyOrdersSer.getPaidOrders()==null)?0:MyOrdersSer.getPaidOrders().length;
         });
     }
      /* 根据当前时间设置欢迎词*/

@@ -1,8 +1,8 @@
     <div class="tabs" ng-show="!showLoading">
         <div class="tab-item">
             <a ng-class="{'item cur':curTab=='tab1','item':curTab!='tab1'}"  href="/UCIndex/myOrders/unPay">待付款{{'（'+data_orders_upPay.length+'）'}}</a>
-            <a ng-class="{'item cur':curTab=='tab2','item':curTab!='tab2'}" href="/UCIndex/myOrders/paid">已付款{{'（'+data_orders_paid.length+'）'}}</a>
-            <a ng-class="{'item cur':curTab=='tab3','item':curTab!='tab3'}" href="/UCIndex/myOrders/unReceive">待收货{{'（'+data_orders_upReceive.length+'）'}}</a>
+            <a ng-class="{'item cur':curTab=='tab2','item':curTab!='tab2'}" href="/UCIndex/myOrders/paid">待收货{{'（'+data_orders_paid.length+'）'}}</a>
+          <!--  <a ng-class="{'item cur':curTab=='tab3','item':curTab!='tab3'}" href="/UCIndex/myOrders/unReceive">待收货{{'（'+data_orders_upReceive.length+'）'}}</a>-->
             <a ng-class="{'item cur':curTab=='tab4','item':curTab!='tab4'}" href="/UCIndex/myOrders/finish">已完成{{'（'+data_orders_finish.length+'）'}}</a>
             <a ng-class="{'item cur':curTab=='tab5','item':curTab!='tab5'}" href="/UCIndex/myOrders/refund">退款售后</a>
         </div>
@@ -67,7 +67,7 @@
 
                     <p><a href="#" class="btn" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)">取消订单</a></p>
 
-                    <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus==3">查看物流</a></p>
+                    <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
                     <p><a href="#" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
                     

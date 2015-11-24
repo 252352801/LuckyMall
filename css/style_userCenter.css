@@ -834,32 +834,34 @@
     left:0px;
     top:0px;
     z-index:999;
+    overflow-y:scroll;
 }
 #xiuxiuEditor{
-    position:absolute;
+    position:relative;
     left:50%;
     top:50%;
-    margin-left:-400px;
-    margin-top:-300px;
+    margin-left:-350px;
+    margin-top:-245px;
     z-index:998;
 }
 .MTXXContainer .btn-close{
-    display:block;
-    width:50px;
-    height:50px;
-    text-align:center;
-    line-height:50px;
-    position:absolute;
-    left:50%;
-    top:50%;
-    margin-left:400px;
-    margin-top:-350px;
-    font-size:36px;
-    color:#fff;
-    background:rgba(0,0,0,0.5);
-    border-radius:50px;
-    z-index:999;
-    cursor:pointer;
+    display: block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: 310px;
+    margin-top: -245px;
+    font-size: 36px;
+    color: #ddd;
+    z-index: 999;
+    cursor: pointer
+}
+.MTXXContainer .btn-close:hover{
+    color:#999;
 }
 /*============
 定金钱包begin
@@ -1191,3 +1193,16 @@
     color:#8D8E92;
 }
 /*安全中心end*/
+
+.UC .modal-feedback {
+    width: 625px;
+    height: 500px;
+    border: none;
+    background: #FFF none repeat scroll 0% 0% padding-box;
+    left: 0px;
+    top: 0px;
+    overflow: hidden;
+    position: relative;
+    animation: none;
+    margin: 30px auto;
+}

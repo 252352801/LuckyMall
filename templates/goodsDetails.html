@@ -12,7 +12,6 @@
             <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{data_category.categoryId}}/{{item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
-            <loading ng-show="loading"></loading>
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img">
                     <img  id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png"/>
