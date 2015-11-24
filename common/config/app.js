@@ -32,7 +32,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
         })
         /*列表页*/
         .state('list', {
-            url: '/list/:cate_id/:item_id',
+            url: '/list/:params',
             views: {
                 '': {
                     templateUrl: "templates/list.html",
@@ -412,6 +412,7 @@ app.gameHost='http://120.25.60.19:9004';//游戏服务器
 app.gameOverPage='http://www.xingyunmao.cn/shoppingCart';//游戏服务器
 app.interface={
         login:app.host+'api/user/login',//登陆
+        ImgHost:app.host+'api/upload/imagecloudurl',//获取图片服务器地址
         refreshUserData:app.host+'api/user/refresh',//获取最新的用户数据
         authorization:app.host+'api/user/auth/',//授权
         bannerList:app.host+'api/promotion/query/0',//banner轮播图

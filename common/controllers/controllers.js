@@ -1,12 +1,12 @@
 angular.module('LuckyCat.controllers',['LuckyCat.services'])
 
-.controller('AppCtrl',function($scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer){
+.controller('AppCtrl',function($scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer){
      console.log('auth:'+$cookies.get('Token'));
-     $scope.imgHost='http://image.luckyec.com/';
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
      $scope.isFeedbackModalShow=false;//反馈框是否显示
      $scope.isLogin=false;//是否已经登陆
+      getImgHost();//获取图片服务器地址
      authorization();//授权登录
      $scope.welcome_word=setWelcomeWord();//设置欢迎词
         /* 监听显示登陆模态框*/
@@ -76,6 +76,14 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             }
         });
 
+    /*获取阿里云图片服务器地址*/
+     function getImgHost(){
+         ImgSer.requestData(function(response,status){
+             if(status==1){
+                 $scope.imgHost=ImgSer.getData();
+             }
+         });
+     }
    /* 授权*/
     function authorization(){
         if($cookies.get('Token')==null){

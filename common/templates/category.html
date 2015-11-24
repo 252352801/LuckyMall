@@ -5,17 +5,17 @@
     <ul ng-if="showSubCategory" ng-class="{'category-cont':showMoreCategory==false,'full-height category-cont':showMoreCategory==true}">
         <li ng-repeat="category in data_category">
             <h3  data-id="{{category.Id}}">
-                <a href="/list/{{category.Id}}/all" ng-bind="category.CategoryName"></a>
+                <a href="/list/{{'category='+category.Id}}" ng-bind="category.CategoryName"></a>
             </h3>
             <p>
-                <a href="/list/{{category.Id}}/{{sub_c1.Id}}" title="" ng-repeat="sub_c1 in category.FilterModels[0].FilterItemModels" ng-bind="sub_c1.ItemValue"></a>
+                <a href="/list/{{'category='+category.Id+'_'+'item='+sub_c1.Id}}" title="" ng-repeat="sub_c1 in category.FilterModels[0].FilterItemModels" ng-bind="sub_c1.ItemValue"></a>
             </p>
 
             <div class="hide-category">
                 <div class="category-filters" ng-repeat="sub_c in category.FilterModels">
                     <h4 class="pull-left" ng-bind="sub_c.FilterName"></h4>
                     <p class="pull-left">
-                        <a href="/list/{{category.Id}}/{{filter.Id}}" ng-repeat="filter in sub_c.FilterItemModels" ng-bind="filter.ItemValue"></a>
+                        <a href="/list/{{'category='+category.Id+'_'+'item='+filter.Id}}" ng-repeat="filter in sub_c.FilterItemModels" ng-bind="filter.ItemValue"></a>
                     </p>
                 </div>
             </div>

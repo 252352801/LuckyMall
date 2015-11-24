@@ -37,7 +37,7 @@
                     <!--<span class="icon-discount" ng-bind="'低至'+data_goods.MaxDiscount*10+'折'"></span>-->
                    <!-- <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>-->
                     <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
-                    <span class="icon-discount" ng-bind="data_goods.MinDiscount*10+'折'"></span>
+                    <span class="icon-discount" ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></span>
                     <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
                 </div>
                 <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">

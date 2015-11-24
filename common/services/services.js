@@ -12,6 +12,27 @@ angular.module('LuckyCat.services',[])
             }
         };
     })
+
+     /*获取阿里云图片服务器ser*/
+    .factory('ImgSer',function($http) {
+        var data;
+        return {
+            getData:function(){
+                return data;
+            },
+            requestData:function(callback){
+                $http({
+                    method:'get',
+                    url:app.interface.ImgHost
+                }).success(function(response){
+                    if(response!=null){
+                        data=response;
+                        callback(response,1);
+                    }
+                });
+            }
+        };
+    })
     /*登陆服务*/
     .factory('LoginSer',function($http,$timeout,TokenSer){
         var data=null;
@@ -105,7 +126,11 @@ angular.module('LuckyCat.services',[])
 
     /*列表页筛选器*/
 .factory('FilterSer',function($http,$timeout){
-        var data=null;
+        var data_select={
+            category:null,
+            items:new Array()
+        };
+        var data_category=null;
         /*清除与res下的所有选项*/
         var clearSelections=function(res){
             for(var o in res){
@@ -133,44 +158,51 @@ angular.module('LuckyCat.services',[])
             }
         }
         return {
-            getData:function(){
-                return data;
+            getCategoryData:function(){
+                return data_category;
             },
-            setData:function(category){
-                data=category;
+            setCategoryData:function(new_data){
+                data_category=new_data;
             },
-            select:function(val_id){
-                if(data==null){
-                    console.log("FilterSer筛选数据未加载");
-                    return;
-                }
-                clearSelections(getFilterByItemId(val_id));
-                getFilterItemById(val_id).isSelected=true;
+            getSelectData:function(){
+                return data_select;
             },
-            cancelSelect:function(val_id){
-                getFilterItemById(val_id).isSelected=false;
+            setSelectData:function(new_data){
+                data_select=new_data;
             },
-            /*清除所有已选状态*/
-            clearSelect:function(){
-                for(var i=0;i<data.FilterModels.length;i++){
-                    for(var j=0;j<data.FilterModels[i].FilterItemModels.length;j++){
-                        data.FilterModels[i].FilterItemModels[j].isSelected=false;
+            addSelection:function(item_id){
+                data_select.items.push(item_id);
+            },
+            removeSelection:function(item_id){
+                for(var o in data_select.items){
+                    if(item_id==data_select.items[o]){
+                        data_select.items.splice(o,1);
                     }
-                }   
+                }
             },
-            search:function(params){
-                var c_id=data.Id;//品类id
-                var f_items=new Array();//筛选器id
-                for(var o in data.FilterModels){
-                    for(var i in data.FilterModels[o].FilterItemModels){
-                        if(data.FilterModels[o].FilterItemModels[i].isSelected==true){
-                            f_items.push(data.FilterModels[o].FilterItemModels[i].Id);
+            select:function(){
+                for(var i=0;i<data_category.FilterModels.length;i++){
+                    for(var j=0;j<data_category.FilterModels[i].FilterItemModels.length;j++){
+                        for(var o in data_select.items){
+                            if(data_select.items[o]==data_category.FilterModels[i].FilterItemModels[j].Id){
+                                data_category.FilterModels[i].FilterItemModels[j].isSelected=true;
+                            }
                         }
                     }
                 }
+            },
+            /*清除所有已选状态*/
+            clearSelect:function(){
+                for(var i=0;i<data_category.FilterModels.length;i++){
+                    for(var j=0;j<data_category.FilterModels[i].FilterItemModels.length;j++){
+                        data_category.FilterModels[i].FilterItemModels[j].isSelected=false;
+                    }
+                }
+            },
+            search:function(params){
                 var post_data={
-                    "CategoryId":""+c_id,
-                    "FilterItems":f_items,
+                    "CategoryId":""+params.category,
+                    "FilterItems":params.items,
                     "Keyword": "",
                     "MinPrice":0,
                     "MaxPrice":0,

@@ -1,20 +1,24 @@
 angular.module('LuckyCat.controllers')
- .controller('ListCtrl',function($scope,$stateParams,FilterSer,CategorySer,$timeout,ListSer){
+ .controller('ListCtrl',function($scope,$stateParams,FilterSer,CategorySer,$timeout,ListSer,$state){
     var pageSize=16;//每页大小（个数）
-     $scope.cate_id=$stateParams.cate_id;
-     $scope.item_id=$stateParams.item_id;//筛选项id
+    var params=new initSearchItems($stateParams.params);
+     $scope.cate_id=params.category;
+     $scope.items_id=params.items;//筛选项id
     /*初始化数据*/
-     var initData=function(){
+     function initData(){
          $scope.showLoading=false;
-         FilterSer.setData(CategorySer.getCategoryById($scope.cate_id));
-         FilterSer.clearSelect();//清除所有选择
-         if($scope.item_id!='all'){
-             FilterSer.select($scope.item_id);//选择进入页面时选定的筛选项
-         }
-         $scope.data_filter=FilterSer.getData();
+         var data={
+           category:params.category,
+           items:params.items
+         };
+         FilterSer.setSelectData(data);
+         FilterSer.setCategoryData(CategorySer.getCategoryById(params.category));
+         FilterSer.clearSelect();
+         $scope.data_filter=FilterSer.getCategoryData();
+         FilterSer.select();
          $scope.sortByPrice=true;//价格排序方式 true:升序,false:降序
          search({sort_price:$scope.sortByPrice});//搜索数据
-     };
+     }
      if(CategorySer.getData()==null){
          /*如果分类数据为空则请求数据*/
          CategorySer.requestData(function(){//请求成功后的回调
@@ -23,16 +27,16 @@ angular.module('LuckyCat.controllers')
       }else{
          initData();
      }
-     /* 搜索大类*/
-     $scope.searchThisCategory=function(){
-         FilterSer.clearSelect();//清除所有选择
-         search({sort_price:$scope.sortByPrice});//搜索数据
-     };
       /*选择筛选项*/
      $scope.select=function(val_id){
-         FilterSer.select(val_id);
-         search({sort_price:$scope.sortByPrice});
+         FilterSer.addSelection(val_id);
+         $state.go('list',{params:setUrlParams()});
      };
+        /*取消选择*/
+        $scope.cancelSelect=function(id){
+            FilterSer.removeSelection(id);
+            $state.go('list',{params:setUrlParams()});
+        };
       /*是否有被选的选项*/
      $scope.hasSelectedItem=function(res){
          for(var o in res){
@@ -41,11 +45,6 @@ angular.module('LuckyCat.controllers')
              }
          }
          return false;
-     };
-     /*取消选择*/
-     $scope.cancelSelect=function(id){
-         FilterSer.cancelSelect(id);
-         search({sort_price:$scope.sortByPrice});
      };
      $scope.pageIndex=1;//当前页
     /*前一页*/
@@ -75,12 +74,27 @@ angular.module('LuckyCat.controllers')
         }
         search({sort_price:$scope.sortByPrice});
     };
+
+    /*初始化搜索条件*/
+    function initSearchItems(str){
+        var arr=str.split('_');
+        var items=arr.slice(1);
+        for(var i= 0,len=items.length;i<len;i++){
+            items[i]=items[i].split('=')[1];
+        }
+        this.category=arr[0].split('=')[1];
+        this.items=items;
+    }
+
+
     /*搜索*/
      function search(params){
          $scope.data_list=null;
          $scope.showLoading=true;
          FilterSer.search({
-             sortByPrice:params.sort_price,
+             sortByPrice:params.sort_price,//价格默认排序：从低到高
+             category:$scope.cate_id,
+             items:$scope.items_id,
              callback: function (new_data) {
                  ListSer.setData(new_data);//把请求道的搜索结果存到ListSer服务
                  var data = ListSer.getData();
@@ -100,5 +114,15 @@ angular.module('LuckyCat.controllers')
         for(var i=0;i<len;i++){
             $scope.page.push(i);
         }
+    }
+
+    /*构建url的参数*/
+    function setUrlParams(){
+        var result='category='+params.category;
+        var _items=FilterSer.getSelectData().items;
+        for(var o in _items){
+            result+='_item='+_items[o];
+        }
+        return result;
     }
 });

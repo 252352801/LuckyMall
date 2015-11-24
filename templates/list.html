@@ -9,7 +9,7 @@
     <div class="filters">
         <div class="page-location">
             <a>全部商品</a>
-            <a class="category-name" ng-bind="data_filter.CategoryName" class="cur" href="/list/{{cate_id}}/all" ng-click="searchThisCategory()"></a>
+            <a class="category-name" ng-bind="data_filter.CategoryName" class="cur" href="/list/{{'category='+cate_id}}"></a>
         </div>
         <div class="choices">
             <p ng-repeat="choice in data_filter.FilterModels" ng-if="hasSelectedItem(choice.FilterItemModels)">
@@ -57,7 +57,7 @@
                     <span class="icon-discount" ng-bind="'低至'+list.MaxDiscount*10+'折'"></span>-->
                     <span ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)"></span>
                     <span class="old-price" ng-bind="list.RetailPrice"></span>
-                    <span class="icon-discount" ng-bind="list.MinDiscount*10+'折'"></span>
+                    <span class="icon-discount" ng-bind="(list.MinDiscount*10).toFixed(1)+'折'"></span>
                 </p>
             </div>
         </li>
