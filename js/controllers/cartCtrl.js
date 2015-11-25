@@ -53,7 +53,7 @@ angular.module('LuckyCat.controllers')
     };
         /*跳转订单确认页*/
         $scope.goConfirm = function () {
-            $state.go('confirmOrder');
+            $state.go('confirmOrder',{source:'source=shoppingCart'});
         };
         $scope.showModal1 = function (order_id,total_cost) {
             if(testEnergy($scope.data_user.LuckyEnergy.PaidValue,total_cost)){//如果能量值足够

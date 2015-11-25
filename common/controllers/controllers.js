@@ -121,7 +121,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
         CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
             if(status==1){
                 $scope.cartDeadline=CartSer.getDeadline();
-                console.log('购物车期限：'+$scope.cartDeadline);
+                console.log('购物车时间：'+$scope.cartDeadline);
             }
         });
     }

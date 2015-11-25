@@ -137,7 +137,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
         })
         /*确认订单*/
         .state('confirmOrder', {
-            url: '/confirmOrder',
+            url: '/confirmOrder/:source',
             views: {
                 '': {
                     templateUrl: "templates/confirmOrder.html",
@@ -155,18 +155,18 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
         })
 
         /*支付页*/
-        .state('pay', {
-            url: '/pay/:trade_id',
+        .state('WXPay', {
+            url: '/WXPay/:trade_id',
             views: {
                 '': {
-                    templateUrl: "templates/pay.html",
-                    controller:'PayCtrl'
+                    templateUrl: "templates/WXPay.html",
+                    controller:'WXPayCtrl'
                 }
             },
             resolve: {
                 loadFiles:load([
-                    './css/pay.css',
-                    './js/controllers/payCtrl.js'
+                    './css/WXPay.css',
+                    './js/controllers/WXPayCtrl.js'
                 ])
             }
 
@@ -474,9 +474,11 @@ app.interface = {
     removeAddress: app.host + 'api/user/address/delete/',//删除收货地址 后接id
     setDefaultAddress: app.host + 'api/user/address/setdefault/',//设置默认地址 后接id
     cartDeadline: app.host + 'api/user/sctime/', //购物车时间（期限）后接id
-    purchaseOrders: app.host + 'api/order/purchase',//确认订单
+    purchaseFromShoppingCart: app.host + 'api/order/purchase/0',//确认订单(购物车)
+    purchaseFromUnPayOrders: app.host + 'api/order/purchase/1',//确认订单(待付款订单)
     updatePassword: app.host + 'api/user/password/',//修改密码 后接用户id
     getQRCodeData: app.host + 'api/wxpay/b/qrcodedata/', //获取微信支付二维码数据 后接交易单号
     QRCodeUrl: app.host + 'api/wxpay/qrcode?data=',//支付二维码图片地址，后接文件名
-    aliPaySubmit: app.host + 'api/alipay/submit/'//支付宝支付提交  后接交易单号
+    aliPaySubmit: app.host + 'api/alipay/submit/',//支付宝支付提交  后接交易单号
+    getTradeStatus:app.host+'api/order/gettradestatus/' //获取交易单状态  后接交易单ID
 };

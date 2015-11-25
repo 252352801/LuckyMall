@@ -729,3 +729,25 @@ angular.module('LuckyCat')
         };
     })
 
+    /*倒计时*/
+    .directive('countDown', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+               scope.time=parseInt(attrs.countDown);
+                element.html(parseInt(scope.time/60)+'分'+scope.time%60+'秒');;
+                countDown();
+               function countDown(){
+                   element.timer=$timeout(function(){
+                       scope.time--;
+                       element.html(parseInt(scope.time/60)+'分'+scope.time%60+'秒');
+                       if(scope.time>0){
+                           countDown();
+                       }else{
+                           scope[attrs.timeOver]();
+                       }
+                   },1000);
+               }
+            }
+        };
+    })

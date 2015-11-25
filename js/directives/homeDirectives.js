@@ -12,7 +12,7 @@ angular.module('LuckyCat')
                     var count=li.length;
                     var bar_index=getByClass('banner-index',obj)[0];//索引按钮
                     var lock=true;
-                    var rep_speed=300;//切换一次所需时间
+                    var rep_speed=200;//切换一次所需时间
                     var rep_timeout=3000;//切换一次间隔时间
                     li[ $scope.banner_index].style.opacity='1';
                     changeSelf($scope.banner_index,$scope.banner_index+1);

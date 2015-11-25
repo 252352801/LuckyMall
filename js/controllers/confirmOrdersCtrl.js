@@ -1,16 +1,17 @@
 angular.module('LuckyCat.controllers')
- .controller('ConfirmOrdersCtrl',function($rootScope,$scope,CartSer,LoginSer,$state,AddressSer,$timeout,PaySer){
+ .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,PaymentSer){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
+        $scope.source=$stateParams.source.split('=')[1];
         $scope.isModalAddressShow=false;
+        $scope.isModalWaitingShow=false;
         $scope.inputTips='';
         $scope.value_btn_save='保存';
         loadConfirmOrderData();//加载本页必须的数据
         /*支付方式切换*/
         $scope.changePayType=function(new_type){
             $scope.pay_type=new_type;
-            console.log($scope.pay_type);
         };
        /* 支付方式显示*/
         $scope.showPayType=function(){
@@ -109,6 +110,7 @@ angular.module('LuckyCat.controllers')
             var pay_type=(pay_method==1)?0:($scope.pay_type=='zhifubao')?0:1;
             var post_data=(pay_method==0)?{"ShowUrl":'',"BankSimpleCode":initBankSimpleCode($scope.pay_type)}
                 :{"ProductId":$scope.data_orders[0].Commodity.Id};
+            var type=($scope.source=='shoppingCart')?0:1;
             var param={
                 "AddressId":$scope.selected_address.Id,
                 "Orders":order_id,
@@ -116,19 +118,20 @@ angular.module('LuckyCat.controllers')
                 "Type":pay_type,
                 "Data":angular.toJson(post_data)
             };
-            console.log(angular.toJson(param));
-            PaySer.setTotalCost($scope.total_cost);
-            CartSer.purchaseOrders(param,function(response,status){
+            PaymentSer.purchaseOrders(type,param,function(response,status){
                 if(status==1){
                     if(response.Code=='0X00') {
                         $scope.$emit('cart-update');
                         $rootScope.$broadcast('orders-update');
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
-                           // var path = 'pay/' + response.Data.OutTradeNo;
-                            console.log(response.Data.OutTradeNo);
-                            $state.go('pay',{trade_id:response.Data.OutTradeNo});
+                            WXPaySer.setTotalCost($scope.total_cost);
+                            $state.go('WXPay',{trade_id:response.Data.OutTradeNo});
                         }else{
-                            location.href=app.interface.aliPaySubmit+response.Data.OutTradeNo;
+                            $timeout(function(){
+                                $scope.isModalWaitingShow=true;
+                            },5);
+                            window.open(app.interface.aliPaySubmit+response.Data.OutTradeNo);
+                            pollingTradeStatus(response.Data.OutTradeNo);
                         }
                     }else if(response.Code=='0X01'){
                         swal({
@@ -161,9 +164,26 @@ angular.module('LuckyCat.controllers')
                 }
             });
         };
+        /*支付时间到期*/
+      $scope.payTimeOver=function(){
+        alert("支付超时！");
+          $state.go('UCIndex.myOrders',{status:'unPay'});
+      };
+        /*关闭等待对话框*/
+      $scope.closeWaitingPayModal=function(){
+          $timeout(function(){
+              $scope.isModalWaitingShow=false;
+          },5);
+      };
       /*初始化显示数据*/
      function loadConfirmOrderData(){
-         $scope.data_orders=CartSer.getConfirmData();//取已选择订单
+         if($scope.source=='shoppingCart'){
+             $scope.data_orders=CartSer.getConfirmData();//取已选择订单
+         }else if($scope.source=='unPayOrders'){
+
+         }else if($scope.source=='purchase'){
+
+         }
          AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
              if(status==1){
                  $scope.data_addresses=AddressSer.getData();
@@ -188,7 +208,7 @@ angular.module('LuckyCat.controllers')
             cost+=$scope.data_orders[o].cost;
         }
         $scope.total_amount=amount;//商品总数量
-        $scope.total_cost=cost;//商品总价
+        $scope.total_cost=cost.toFixed(2);//商品总价
      }
         /*格式化地区信息*/
         function formatArea(_province,_city,_county){
@@ -212,5 +232,18 @@ angular.module('LuckyCat.controllers')
                 case 'bank_pingan':return 'SPABANK';break;
                 case 'bank_youzheng':return 'POSTGC';break;
             }
+        }
+
+        function pollingTradeStatus(trade_id){
+            $timeout(function(){
+                PaymentSer.getStatusOfTrade(trade_id,function(response,status){
+                    if(status===1){
+                        $rootScope.$broadcast('orders-update');
+                        $state.go('paySuccess');
+                    }else{
+                        pollingTradeStatus(trade_id);
+                    }
+                });
+            },1000);
         }
 });

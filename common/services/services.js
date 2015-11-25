@@ -331,22 +331,7 @@ angular.module('LuckyCat.services',[])
                         }
                     });
                 },
-                purchaseOrders:function(params,callback){
-                    $http({
-                        method: 'post',
-                        url: app.interface.purchaseOrders,
-                        data:params,
-                        headers: {
-                            'Authorization':TokenSer.getAuth()
-                        }
-                    }) .success(function(response){
-                            if(response){
-                                callback(response,1);
-                            }else{
-                                callback(response,0);
-                            }
-                    })
-                },
+
                 /*根据id删除购物车里的订单*/
                 cancelOrder:function(order_id,callback){
                     $http({
@@ -547,11 +532,73 @@ angular.module('LuckyCat.services',[])
         };
     })
 
-
     /*支付服务*/
-    .factory('PaySer',function($http,TokenSer){
+    .factory('PaymentSer',function($http,TokenSer){
         var data={
-            totalCost:-1
+            addressId:null,
+            orders:null
+        };
+        return {
+            getData:function(){
+                return data;
+            },
+            setData:function(new_data){
+                data=new_data;
+            },
+            clearData:function(){
+                data={
+                    addressId:null,
+                    orders:null
+                };
+            },
+            purchaseOrders:function(type,params,callback){
+                var url=(type==0)?app.interface.purchaseFromShoppingCart:app.interface.purchaseFromUnPayOrders;
+                $http({
+                    method: 'post',
+                    url: url,
+                    data:params,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }) .success(function(response){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                });
+            },
+            getStatusOfTrade:function(trade_id,callback){
+                var url=app.interface.getTradeStatus+trade_id;
+                $http({
+                    method: 'get',
+                    url: url,
+                    timeout: 10000,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }) .success(function(response){
+                    if(response){
+                        if(response=='2'){
+                            callback(response,1);
+                        }else{
+                            callback(response,0);
+                        }
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(){
+                    callback(null,-1);
+                });
+            }
+        };
+
+    })
+
+    /*微信支付*/
+    .factory('WXPaySer',function($http,TokenSer){
+        var data={
+            totalCost:0
         };
         return {
             getData:function(){
