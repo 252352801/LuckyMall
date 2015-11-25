@@ -22,6 +22,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve: {
                 loadFiles: load([
+                    './css/index.css',
                     './js/controllers/homeCtrl.js',
                     './js/services/homeSer.js',
                     './js/directives/homeDirectives.js',
@@ -41,6 +42,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve: {
                 loadFiles: load([
+                    './css/list.css',
                     './js/controllers/listCtrl.js',
                     './js/services/listSer.js'
                 ])
@@ -88,11 +90,10 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve: {
                 loadFiles: load([
+                    './css/cart.css',
                     './js/controllers/cartCtrl.js',
                     './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js',
-
-                    './css/modal-before-game.css'
+                    './lib/sweetAlert/sweetAlert.min.js'
                 ])
             }
         })
@@ -105,6 +106,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 '': {
                     templateUrl: "templates/newProduct.html"
                 }
+            },
+            resolve: {
+                loadFiles: load([
+                    './css/list.css'
+                ])
             }
         })
 
@@ -119,6 +125,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve: {
                 loadFiles:load([
+                    './css/goodsDetails.css',
                     './js/controllers/goodsDetailsCtrl.js',
                     './js/services/goodsDetailsSer.js',
                     './js/directives/goodsDetailsDirectives.js',
@@ -139,6 +146,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve: {
                 loadFiles:load([
+                    './css/confirmOrders.css',
                     './js/controllers/confirmOrdersCtrl.js',
                     './lib/areaSelect/area.js'
                 ])
@@ -157,19 +165,25 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve: {
                 loadFiles:load([
+                    './css/pay.css',
                     './js/controllers/payCtrl.js'
                 ])
             }
 
         })
 
-        /*订单提交成功页*/
-        .state('orderSubmitSuccess', {
-            url: '/orderSubmitSuccess',
+        /*支付成功页*/
+        .state('paySuccess', {
+            url: '/paySuccess',
             views: {
                 '': {
-                    templateUrl: "templates/status_orderSubmitSuccess.html"
+                    templateUrl: "templates/paySuccess.html"
                 }
+            },
+            resolve: {
+                loadFiles:load([
+                    './css/paySuccess.css'
+                ])
             }
 
         })
@@ -180,22 +194,28 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 '': {
                     templateUrl: "templates/about.html"
                 }
+            },
+            resolve: {
+                loadFiles:load([
+                    './css/support.css'
+                ])
             }
 
         })
         /*联系我们*/
-        .state('touchUs', {
-            url: '/touchUs',
+        .state('contact', {
+            url: '/contact',
             views: {
                 '': {
-                    templateUrl: "templates/touchUs.html"
+                    templateUrl: "templates/contact.html"
                 }
             },
             resolve: {
                 loadFiles:load([
+                    './css/support.css',
                     './lib/BDMap/BaiDuMap.js',
                     './lib/BDMap/BaiDuMap.css',
-                    './js/directives/touchUsDirectives.js'
+                    './js/directives/contactDirectives.js'
                 ])
             }
 
@@ -207,6 +227,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 '': {
                     templateUrl: "templates/help.html"
                 }
+            },
+            resolve: {
+                loadFiles:load([
+                    './css/support.css'
+                ])
             }
 
         })
@@ -240,7 +265,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             },
             resolve:{
                 loadFiles:load([
-                    './css/style_userCenter.css',
+                    './css/userCenter_css/userCenter.css',
                     './js/userCenter_js/controllers/userCenterCtrl.js',
                     './js/userCenter_js/directives/headerImgEditDirectives.js',
                     './lib/sweetAlert/sweetAlert.css',

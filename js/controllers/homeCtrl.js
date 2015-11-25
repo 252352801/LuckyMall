@@ -8,10 +8,14 @@ angular.module('LuckyCat.controllers')
     }else{
         $scope.data_category= CategorySer.getData();
     }
-     HomeSer.requestBannerData(function(){
-         $scope.data_banner=HomeSer.getData().banner;
-         $scope.bannerReady=true;
-         $scope.$broadcast('bannerReady');
+     HomeSer.requestBannerData(function(response,status){
+         if(status==1){
+             $scope.data_banner=HomeSer.getData().banner;
+             $scope.bannerReady=true;
+             $scope.$broadcast('bannerReady');
+         }else{
+             $scope.bannerReady=true;
+         }
      });
     HomeSer.requestTodayData(function(){
        $scope.loadingToday=false;

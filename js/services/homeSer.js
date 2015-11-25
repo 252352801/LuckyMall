@@ -32,7 +32,9 @@
             }).success(function(response,status,headers,config){
                 if(response&&response!=null&&response!=''){
                     data.banner=response;
-                    callback();
+                    callback(response,1);
+                }else{
+                    callback(response,0);
                 }
                 /*data.banner=[{
                     ImageData:'./res/test/banner/banner_01.jpg'
