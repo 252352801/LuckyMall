@@ -85,7 +85,7 @@ angular.module('LuckyCat.controllers')
             text: '购买数量已帮您设为最大库存',
             type: "error",
             confirmButtonText: "确定"});
-        $scope.amount=reset_value;
+        $timeout(function(){$scope.amount=reset_value;});
     };
 
         /*赢折扣*/

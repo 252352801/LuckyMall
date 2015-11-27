@@ -36,10 +36,11 @@
             <a href="/shoppingCart">购物车</a>
             <span class="icon-arrow-down"></span>
         </div>
-        <div class="hide-cart" ng-show="isLogin||cartAmount>0">
+        <div class="hide-cart" ng-if="isLogin||cartAmount>0">
             <p class="hide-cart-tips">
                 <span class="icon-time"></span>
-                <span>18分513秒</span>
+                <!--<span ng-bind="cart(cart_time_remain/60)+'分'+cart_time_remain%60+'秒'"></span>-->
+                <span count-down={{initCartTimeRemain(cart_time_create)}} time-over="cartTimeOver"></span>
                 后购物车被清空！
             </p>
             <ul class="cart-simple-list">

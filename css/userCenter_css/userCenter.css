@@ -72,7 +72,7 @@
     display:inline-block;
     width:32px;
     height:32px;
-    background:url(../res/icon/icon_cellPhone.png) no-repeat;
+    background:url(../../res/icon/icon_cellPhone.png) no-repeat;
    position:relative;
     top:10px;
 }
@@ -286,7 +286,7 @@
     left:100%;
     top:4px;
     margin-left:-50px;
-    background:url(../res/icon/icon_delete.png);
+    background:url(../../res/icon/icon_delete.png);
     opacity:0.5;
     cursor:pointer;
 }
@@ -800,7 +800,7 @@
     margin-top:10px;
     width:78px;
     height:28px;
-    background:url(../res/icon/icon_dc_card_label.png) no-repeat;
+    background:url(../../res/icon/icon_dc_card_label.png) no-repeat;
 }
 .card .card-top span{
     float:right;
@@ -985,13 +985,13 @@
 }
 .my-msg-list .icon-msg-type1{
     background-color:#94bb19;
-    background-image: url(../res/icon/icon_msg_type1.png);
+    background-image: url(../../res/icon/icon_msg_type1.png);
     background-repeat:no-repeat;
     background-position:10px 10px;
 }
 .my-msg-list .icon-msg-type2{
     background-color:#f49537;
-    background-image: url(../res/icon/icon_msg_type2.png);
+    background-image: url(../../res/icon/icon_msg_type2.png);
     background-repeat:no-repeat;
     background-position:10px 10px;
 }
@@ -1032,7 +1032,7 @@
     display:inline-block;
     width:32px;
     height:32px;
-    background:url(../res/icon/icon_delete.png);
+    background:url(../../res/icon/icon_delete.png);
     opacity:0.5;
     cursor:pointer;
 }
@@ -1135,7 +1135,7 @@
     display:block;
     width:26px;
     height:26px;
-    background:url(../res/icon/icon_mobile.png);
+    background:url(../../res/icon/icon_mobile.png);
     float:left;
 }
 .account-details{
@@ -1161,13 +1161,13 @@
     top:26px;
 }
 .account-details li.before-icon-lock:before {
-    background: url(../res/icon/icon_lock_org.png);
+    background: url(../../res/icon/icon_lock_org.png);
 }
 .account-details li.before-icon-email:before {
-    background: url(../res/icon/icon_email_org.png);
+    background: url(../../res/icon/icon_email_org.png);
 }
 .account-details li.before-icon-mobile:before {
-    background: url(../res/icon/icon_mobile_org.png);
+    background: url(../../res/icon/icon_mobile_org.png);
 }
 
 .account-details .cont1{

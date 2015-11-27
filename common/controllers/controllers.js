@@ -75,7 +75,6 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
                 }
             }
         });
-
     /*获取阿里云图片服务器地址*/
      function getImgHost(){
          ImgSer.requestData(function(response,status){
@@ -120,12 +119,26 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
         });
         CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
             if(status==1){
-                $scope.cartDeadline=CartSer.getDeadline();
-                console.log('购物车时间：'+$scope.cartDeadline);
+                var time_str=CartSer.getDeadline();
+                $scope.cart_time_create=initCartStartTime(time_str);
             }
         });
     }
-
+     /*计算购物车剩余时间（秒）*/
+     $scope.initCartTimeRemain=function(start_time){
+         var time_now=new Date().getTime();
+         var res=1800-(time_now-start_time)/1000;
+         if(res>0){
+             return res;
+         }else{
+             return 1800;
+         }
+     };
+   /*  购物车时间到时*/
+     $scope.cartTimeOver=function(){
+        $scope.$broadcast('cart-update');
+        console.log("购物车中商品已到达存放期限");
+     };
     function loadOrdersData(){
         MyOrdersSer.requestData(1,function(response,status){//请求未支付订单
             $scope.simpleData_unPay_count=(MyOrdersSer.getUnPayOrders()==null)?0:MyOrdersSer.getUnPayOrders().length;
@@ -203,6 +216,21 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
          }
          return data;
      }
+        /*根据时间字符串设置购物车起始时间*/
+        function initCartStartTime(str){
+            var time_now=new Date();
+            var _str=str.split(' ');
+            var arr1=_str[0].split('-');
+            var arr2=_str[1].split(':');
+            var time=new Date();
+            time.setFullYear(parseInt(arr1[0]));
+            time.setMonth(parseInt(arr1[1])-1);
+            time.setDate(parseInt(arr1[2]));
+            time.setHours(parseInt(arr2[0]));
+            time.setMinutes(parseInt(arr2[1]));
+            time.setSeconds(parseInt(arr2[2]));
+            return time.getTime();
+        }
 })
 
    /*登录controller*/

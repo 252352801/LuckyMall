@@ -205,7 +205,7 @@ angular.module('LuckyCat.controllers')
         }
        /* 初始化新地址数据*/
         function initNewAddressData(){
-            _init_area(["s_province","s_city","s_county"]);//初始化地址选择器
+           // _init_area(["s_province","s_city","s_county"]);//初始化地址选择器
             $scope.new_province="省份";
             $scope.new_city="地级市";
             $scope.new_county="市、县级市";
@@ -217,7 +217,7 @@ angular.module('LuckyCat.controllers')
     
         /* 初始化编辑地址数据*/
         function initEditAddressData(province,city,conty,address,name,mobile,id,is_default){
-            _init_area(["edit_province","edit_city","edit_county"]);
+            //_init_area(["edit_province","edit_city","edit_county"]);
             $scope.edit_province=province;
             $scope.edit_city=city;
             $scope.edit_county=conty;

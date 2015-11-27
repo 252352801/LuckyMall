@@ -21,22 +21,8 @@
 .G-details .page-location a:nth-child(n+2):hover{
     color:#666;
 }
-.page-location a:after{
-    content:'>';
-    font-family:"新宋体","Microsoft YaHei";
-    margin-left:10px;
-	margin-right:5px;
-	color: #C2C2C2;
-	font-size: 13px
-}
 .G-details .page-location a:last-child:after{
     content:'';
-}
-.page-location a.cur:after{
-    content:'';
-}
-.page-location a.cur{
-    color:#333;
 }
 .box-goodsDetails{
     margin-top:15px;
@@ -327,12 +313,14 @@
     margin-top:56px;
     margin-bottom:40px;
 }
-.pro-info .bar-btn input{
+.pro-info .bar-btn input,.pro-info .bar-btn a{
     display:inline-block;
     width:160px;
     height:46px;
     cursor:pointer;
     font-size:18px;
+    text-align:center;
+    line-height:46px;
     outline:none;
 }
 .pro-info .bar-btn input.btn-buy{
@@ -340,7 +328,8 @@
     border:none;
     color:#fff;
 }
-.pro-info .bar-btn input.btn-playGame{
+.pro-info .bar-btn .btn-playGame{
+    display:inline-block;
     color:#fff;
     background:#ff6700;
     border:none;
@@ -400,5 +389,7 @@
 }
 .pro-showing-images img{
     max-width:100%;
+    display: block;
+    margin: 0 auto;
 }
 /*商品详情end*/

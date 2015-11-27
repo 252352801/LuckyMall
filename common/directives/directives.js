@@ -719,7 +719,6 @@ angular.module('LuckyCat')
                 testLoad();
                 function testLoad(){
                     if(scope[attrs.innerHtml]==undefined){
-                        console.log("112");
                         setTimeout(testLoad,100);
                     }else{
                         element.html(scope[attrs.innerHtml]);
@@ -734,20 +733,44 @@ angular.module('LuckyCat')
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-               scope.time=parseInt(attrs.countDown);
-                element.html(parseInt(scope.time/60)+'分'+scope.time%60+'秒');;
-                countDown();
-               function countDown(){
-                   element.timer=$timeout(function(){
-                       scope.time--;
-                       element.html(parseInt(scope.time/60)+'分'+scope.time%60+'秒');
-                       if(scope.time>0){
-                           countDown();
-                       }else{
-                           scope[attrs.timeOver]();
-                       }
-                   },1000);
-               }
+                function polling(){
+                    if(attrs.countDown==''){
+                        $timeout(polling,500);
+                    }else{
+                        start();
+                    }
+                }
+                polling();
+                function start() {
+                    element.time = parseInt(attrs.countDown);
+                    var inner = element.time >= 60 ? parseInt(element.time / 60) + '分' + element.time % 60 + '秒' : element.time % 60 + '秒';
+                    element.html(inner);
+                    countDown();
+                    function countDown() {
+                        element.timer = setInterval(function () {
+                            if (element.time > 0) {
+                                element.time--;
+                                var new_inner = element.time >= 60 ? parseInt(element.time / 60) + '分' + element.time % 60 + '秒' : element.time % 60 + '秒';
+                                element.html(new_inner);
+                            } else {
+                                clearInterval(element.timer);
+                                if (typeof scope[attrs.timeOver] == "function" ){
+                                    scope[attrs.timeOver]();
+                                }
+                            }
+                        }, 1000);
+                    }
+                }
             }
         };
     })
+
+    /*地址选择*/
+    .directive('areaPicker', function ($timeout) {
+        return {
+            link: function (scope, element, attrs) {
+
+              areaPicker(document.getElementById(attrs.id),function(){});
+            }
+        }
+    });

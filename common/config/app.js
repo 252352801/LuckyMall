@@ -350,7 +350,9 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 loadFiles:load([
                     './js/userCenter_js/controllers/myAddressesCtrl.js',
                     './js/userCenter_js/directives/myAddressDirectives.js',
-                    './lib/areaSelect/area.js'
+                    //'./lib/areaSelect/area.js'
+                    './lib/areaPicker/areaPicker.js',
+                    './lib/areaPicker/areaPicker.css'
                 ])
             }
         })
@@ -436,7 +438,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
 app.host1="http://120.24.175.151:9000/"; //开发服务器
 app.host2="http://120.25.60.19:9000/";//测试服务器
 app.host3="http://120.24.225.116:9000/";//运营服务器
-app.host=app.host1;
+app.host=app.host2;
 
 
 //app.gameHost='http://120.24.175.151:9004';//游戏服务器

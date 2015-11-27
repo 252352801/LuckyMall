@@ -10,7 +10,7 @@
         <div class="cart-top">
             <div class="pull-left">
                 <h1>购物车</h1>
-                <p class="cart-tips" ng-if="data_cart.length>0">请在<span class="color-org">29分15秒</span>内结算订单，时间结束后商品会清空</p>
+                <p class="cart-tips" ng-if="data_cart.length>0">请在<span class="color-org" count-down={{initCartTimeRemain(cart_time_create)}} ></span>内结算订单，时间结束后商品会清空</p>
             </div>
             <div class="shopping-steps pull-right" >
                 <span class="cur ">我的购物车</span>

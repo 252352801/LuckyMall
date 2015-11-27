@@ -21,12 +21,14 @@ angular.module('LuckyCat.services')
                     method: 'get',
                     url: app.interface.goodsDetailsData+ goods_id
                 }).success(function (response, status, headers, config) {
-                    data = response;
-                    data.SmallImages = data.RollingImages.split('|');
-                    data.BigImages = data.DetailImages.split('|');
-                    data.Property = JSON.parse(data.Property);
-                    initDisabled();
-                    callback();
+                    if(status==200&&response) {
+                        data = response;
+                        data.SmallImages = data.RollingImages.split('|');
+                        data.BigImages = data.DetailImages.split('|');
+                        data.Property = JSON.parse(data.Property);
+                        initDisabled();
+                        callback();
+                    }
 
                 }).error(function (data, status, headers, config) {
 

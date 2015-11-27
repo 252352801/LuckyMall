@@ -143,6 +143,7 @@ angular.module('LuckyCat.controllers')
                     }else if(response.Code=='0X02'){
                         swal({
                             title: "确认订单失败！",
+                            text:'请您不要重复提交订单',
                             type: "error",
                             confirmButtonText: "确定"
                         });
@@ -164,9 +165,25 @@ angular.module('LuckyCat.controllers')
                 }
             });
         };
+        /*检测交易状态*/
+        $scope.testTradeStatus=function(){
+            PaymentSer.getStatusOfTrade(trade_id,function(response,status){
+                if(status===1){
+                    $rootScope.$broadcast('orders-update');
+                    $state.go('paySuccess');
+                }else{
+                    $scope.isTipsUnFinishShow=true;
+                    $scope.r_t=5000;
+                }
+            });
+        };
+        /*返回等待付款*/
+        $scope.returnWaitingModal=function(){
+            $scope.isTipsUnFinishShow=false;
+        };
         /*支付时间到期*/
       $scope.payTimeOver=function(){
-        alert("支付超时！");
+          alert("支付超时！");
           $state.go('UCIndex.myOrders',{status:'unPay'});
       };
         /*关闭等待对话框*/

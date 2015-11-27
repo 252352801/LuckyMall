@@ -970,7 +970,7 @@ input:focus{
     margin-top:-250px;
     overflow:hidden;
     position:relative;
-    animation:slideCenterFromRight 0.35s;
+    animation:slideCenterFromRight 0.2s;
 }
 @keyframes slideCenterFromRight{
     0%{left:100%;margin-left:0px;}
@@ -1962,5 +1962,19 @@ a.icon-mb-link{
     border-bottom-color:#fff;
     border-left-color:#eaeaea;
     border-right-color:#eaeaea;
+}
+.page-location a:after{
+    content:'>';
+    font-family:"新宋体","Microsoft YaHei";
+    margin-left:10px;
+    margin-right:5px;
+    color: #C2C2C2;
+    font-size: 13px
+}
+.page-location a.cur:after{
+    content:'';
+}
+.page-location a.cur{
+    color:#333;
 }
 /*-----------------------------------------------------------------------------------------------公共样式end-----------------------------------------------------------*/
