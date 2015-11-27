@@ -769,7 +769,6 @@ angular.module('LuckyCat')
     .directive('areaPicker', function ($timeout) {
         return {
             link: function (scope, element, attrs) {
-
               areaPicker(document.getElementById(attrs.id),function(){});
             }
         }
