@@ -1,8 +1,10 @@
 <div class="sub-header">
 <div class="content">
 <div class="logo pull-left">
-    <img src="./res/logo/logo.png" alt="幸运猫"/>
-    <p class="logo-desc">新生代电商购物</p>
+    <a href="/home" >
+        <img src="./res/logo/logo.png" alt="幸运猫"/>
+        <p class="logo-desc">新生代电商购物</p>
+    </a>
 </div>
 <div class="user-box pull-right">
     <div class="btn-user btn-handle">
@@ -40,7 +42,7 @@
             <p class="hide-cart-tips">
                 <span class="icon-time"></span>
                 <!--<span ng-bind="cart(cart_time_remain/60)+'分'+cart_time_remain%60+'秒'"></span>-->
-                <span count-down={{initCartTimeRemain(cart_time_create)}} time-over="cartTimeOver"></span>
+                <span ng-bind="cartTimeRemainFormat"></span>
                 后购物车被清空！
             </p>
             <ul class="cart-simple-list">

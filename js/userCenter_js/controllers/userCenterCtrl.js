@@ -21,12 +21,14 @@ angular.module('LuckyCat.controllers')
     };
         /*监听打开头像编辑*/
      $scope.$on("showMTXX",function(){
+         $scope.openMTXX();
+     });
+       /* 打开头像编辑*/
+      $scope.openMTXX=function(){
           $timeout(function(){
               $scope.isMTXXShow=true;
-              console.log($scope.isMTXXShow);
-         },5);
-     });
-    
+          });
+      };
     
     
     

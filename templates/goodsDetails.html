@@ -6,9 +6,9 @@
 <!--中部 start-->
 <div class="G-details container">
     <div class="content">
-        <div class="page-location">
-            <a>幸运猫</a>
-            <a ng-bind="data_category.categoryName" href="/list/{{'category='+data_category.categoryId}}"></a>
+        <div class="page-location" ng-show="data_categoryName">
+            <a href="/home">幸运猫</a>
+            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}"></a>
             <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId+'_item='+item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="bar-btn">
                     <input class="btn-buy" type="button" value="立即购买" ng-if="data_goods.IsCanFree==false"/>
-                    <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true" ng-click="playForDiscount(data_goods.Id)">免费试玩</a>
+                    <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true" ng-click="playForDiscount(data_goods.Id)">试玩赢折扣</a>
                     <input class="btn-add" ng-if="data_goods.IsCanFree==false" type="button" value="加入购物车"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart/>
                 </div>
             </form>
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="tab-content tab-cont2" ng-show="showingTab=='tab2'">
-                <p class="tx-center">敬请期待</p>
+                <p class="tx-center" style="color:#ccc;">敬请期待</p>
             </div>
         </div>
     </div>

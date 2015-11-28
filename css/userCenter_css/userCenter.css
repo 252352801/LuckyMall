@@ -473,6 +473,7 @@
     margin:10px auto;
     line-height:50px;
     border-bottom:1px solid #f1f1f1;
+    position:relative;
 }
 .menu-cont-title label{
     display:inline-block;
@@ -481,6 +482,18 @@
     color:#666;
     position:relative;
     top:3px;
+}
+.menu-cont-title .a-return{
+    margin-left:87%;
+    color:#999;
+}
+.menu-cont-title .a-return:before{
+    content:'<';
+    font-family: "新宋体";
+    padding-right:5px;
+}
+.menu-cont-title .a-return:hover{
+    color:#ff6700;
 }
 .UC .address-list{
     margin-left:25px;
@@ -542,6 +555,9 @@
 .box-add-address .tips{
     margin-left:10px;
     color:#ff0000;
+}
+.box-add-address input.input-area{
+    min-width:225px;
 }
 .box-add-address input.input-address{
     min-width:225px;

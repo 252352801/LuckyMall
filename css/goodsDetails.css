@@ -84,7 +84,7 @@
 }
 .small-goods-img{
     margin-top:15px;
-    width:500px;
+    width:520px;
     height:80px;
     position:relative;
     text-align:center;
@@ -148,10 +148,12 @@
     display:none;
 }
 .G-details .pro-property.unFinish{
-    border-color:#ff1100;
-    padding-top:40px;
-    background:#fffffe;
-    box-shadow:0px 0px 5px #dd9898;
+    padding-top: 40px;
+    background:#fff;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    border-color: rgb(221, 152, 152);
+    box-shadow: 0px 3px 10px rgb(102, 102, 102);
 }
 .G-details .pro-property.unFinish .tips{
     display:block;
@@ -320,8 +322,10 @@
     cursor:pointer;
     font-size:18px;
     text-align:center;
-    line-height:46px;
     outline:none;
+}
+.pro-info .bar-btn a {
+    line-height: 46px;
 }
 .pro-info .bar-btn input.btn-buy{
     background:#ff6700;

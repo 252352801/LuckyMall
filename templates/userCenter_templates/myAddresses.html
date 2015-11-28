@@ -7,13 +7,7 @@
     <p class="sub-title">新增收货地址<small>标记<b>*</b>为必填项</small></p>
     <p>
         <label class="label">所在地区</label>
-       <!-- <select id="s_province" my-change="new_province">
-        </select>
-        <select id="s_city"  my-change="new_city">
-        </select>
-        <select id="s_county"  my-change="new_county" test-new-area-select>
-        </select>-->
-        <input id="uc_area" readonly area-picker/>
+        <input class="input-area" id="uc_area" ng-model="new_area" readonly area-picker area-picker-finish="areaInputFinish"  placeholder="请选择区域"/>
         <small class="tips" ng-bind="tips.inputAreaTip"></small>
     </p>
     <p>
@@ -49,12 +43,7 @@
     <p class="sub-title">修改收货地址<small>标记<b>*</b>为必填项</small></p>
     <p>
         <label class="label">所在地区</label>
-        <select id="edit_province" my-change="edit_province">
-        </select>
-        <select id="edit_city"  my-change="edit_city">
-        </select>
-        <select id="edit_county"  my-change="edit_county" test-edit-area-select>
-        </select>
+        <input class="input-area" id="uc_area_edit" readonly area-picker area-picker-finish="areaEditFinish" ng-model="edit_area" placeholder="请选择区域"/>
         <small class="tips" ng-bind="tips.inputAreaTip"></small>
     </p>
     <p>

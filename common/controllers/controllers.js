@@ -121,9 +121,29 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             if(status==1){
                 var time_str=CartSer.getDeadline();
                 $scope.cart_time_create=initCartStartTime(time_str);
+                console.log("购物车起始时间："+time_str);
+                $scope.cartTimeRemain= $scope.initCartTimeRemain($scope.cart_time_create);
+                cartTimeDown();//开始购物车倒计时
             }
         });
     }
+
+    function cartTimeDown(){
+        $scope.cartTimer=setInterval(function(){
+            if( $scope.cartTimeRemain>0){
+                $timeout(function(){
+                    $scope.cartTimeRemain--;
+                    $scope.cartTimeRemainFormat=parseInt($scope.cartTimeRemain/60)+'分'+parseInt($scope.cartTimeRemain%60)+'秒';
+                });
+            }else{
+                clearInterval($scope.cartTimer);
+                $scope.$broadcast('cart-update');
+                $scope.cartTimeRemainFormat='';
+                console.log("购物车中商品已到达存放期限");
+            }
+        },1000);
+    }
+
      /*计算购物车剩余时间（秒）*/
      $scope.initCartTimeRemain=function(start_time){
          var time_now=new Date().getTime();
@@ -133,11 +153,6 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
          }else{
              return 1800;
          }
-     };
-   /*  购物车时间到时*/
-     $scope.cartTimeOver=function(){
-        $scope.$broadcast('cart-update');
-        console.log("购物车中商品已到达存放期限");
      };
     function loadOrdersData(){
         MyOrdersSer.requestData(1,function(response,status){//请求未支付订单

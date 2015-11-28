@@ -411,7 +411,11 @@ angular.module('LuckyCat.services',[])
                 }).success(function (response) {
                     if (response) {
                         callback(response,1);
+                    }else{
+                        callback(response,0);
                     }
+                }).error(function(){
+                    callback('网络错误',-1);
                 });
             },
             removeAddress:function(addr_id,callback){
@@ -622,6 +626,63 @@ angular.module('LuckyCat.services',[])
                     }
                 }).error(function(data,status,headers,config){
 
+                });
+            }
+        };
+
+    })
+
+    /*支付定金*/
+    .factory('PayForEnergySer',function($http,TokenSer){
+        var data=null;
+        return {
+            getData:function(){
+                return data;
+            },
+            setData:function(new_data){
+                data=new_data;
+            },
+            payForEnergy:function(order_id,callback){
+                $http({
+                    method:'post',
+                    url:app.interface.payForEnergy+order_id,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(data,status,headers,config){
+
+                });
+            }
+        };
+
+    })
+
+    /*区域选择服务*/
+    .factory('AreaSer',function($http){
+        var data=null;
+        return {
+            getData:function(){
+                return data;
+            },
+            requestData:function(callback){
+                $http({
+                    method:'get',
+                    url:app.interface.getAreas
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        data=response;
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
                 });
             }
         };

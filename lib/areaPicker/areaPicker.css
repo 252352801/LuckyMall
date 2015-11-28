@@ -22,43 +22,41 @@
             border: 1px solid #dfc5bc;
             text-align: center;
             z-index: 2;
-            color:#dfc5bc;
-            background: #fff;
+            color:#8B2806;
+            background: #fcf7f5;
             position: relative;
             left: 0px;
             top: 0px;
             max-width:100px;
             overflow:hidden;
         }
-
-        .areaPicker ul {
-            padding: 0;
-            margin: 0;
-            display: none;
-            min-width:300px;
-            min-height:100px;
-            max-height:200px;
-            max-width:500px;
-            padding: 10px;
-            border: 1px solid #dfc5bc;
-            position: absolute;
-            left: 0px;
-            top: 31px;
-            background: #fff;
-            z-index: 0;
-            overflow:auto;
-            color:#8b2806;
-        }
-        .areaPicker ul:first-child{
-            min-width:500px;
-        }
         .areaPicker .selector.cur p {
             height: 31px;
             border-bottom: none;
             color:#8b2806;
             border-color:#dfc5bc;
+            background:#fff;
         }
-
+        .areaPicker ul {
+            margin: 0px;
+            display: none;
+            min-width: 320px;
+            min-height: 100px;
+            max-height: 160px;
+            max-width: 500px;
+            padding: 10px;
+            border: 1px solid #DFC5BC;
+            position: absolute;
+            left: 0px;
+            top: 31px;
+            background: #FFF none repeat scroll 0% 0%;
+            z-index: 0;
+            overflow: auto;
+            color: #8B2806;
+        }
+        .areaPicker ul:first-child{
+            min-width:500px;
+        }
         .areaPicker .selector ul li {
             float:left;
             display:block;

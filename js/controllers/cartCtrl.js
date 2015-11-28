@@ -1,5 +1,5 @@
 angular.module('LuckyCat.controllers')
- .controller('CartCtrl',function($scope,CartSer,LoginSer,$state,$timeout,TokenSer,RefreshUserDataSer){
+ .controller('CartCtrl',function($scope,CartSer,LoginSer,$state,$timeout,TokenSer,RefreshUserDataSer,PayForEnergySer){
         $scope.isModal1show=false;
         $scope.isModal2show=false;
         $scope.energy={
@@ -84,9 +84,10 @@ angular.module('LuckyCat.controllers')
             $scope.isModal2show = false;
         };
 
-    $scope.payForEnergy=function(){
+    $scope.payForEnergy=function(order_data){
         if($scope.agree){
-            swal("支付定金...");
+            PayForEnergySer.setData(order_data);
+            $state.go('payForEnergy');
         }else{
         }
     };

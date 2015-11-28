@@ -56,7 +56,6 @@ angular.module('LuckyCat.services')
                         }
                         category_info={
                             categoryId:  response[0].CategoryId,
-                            categoryName:response[0].FilterName.replace('分类',''),
                             items:item_data
                         };
                         callback(category_info,1);

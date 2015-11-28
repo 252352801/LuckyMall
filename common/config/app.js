@@ -154,7 +154,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
 
         })
 
-        /*支付页*/
+        /*微信支付页*/
         .state('WXPay', {
             url: '/WXPay/:trade_id',
             views: {
@@ -167,6 +167,24 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 loadFiles:load([
                     './css/WXPay.css',
                     './js/controllers/WXPayCtrl.js'
+                ])
+            }
+
+        })
+
+        /*支付定金页*/
+        .state('payForEnergy', {
+            url: '/payForEnergy',
+            views: {
+                '': {
+                    templateUrl: "templates/payForEnergy.html",
+                    controller:'PayForEnergyCtrl'
+                }
+            },
+            resolve: {
+                loadFiles:load([
+                    './css/confirmOrders.css',
+                    './js/controllers/payForEnergyCtrl.js'
                 ])
             }
 
@@ -356,6 +374,21 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 ])
             }
         })
+        /*修改绑定手机*/
+        .state('UCIndex.updateCellPhoneNum', {
+            url: '/updateCellPhoneNum',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/updateCellPhoneNum.html",
+                    controller:'UpdateCellPhoneNumCtrl'
+                }
+            },
+            resolve:{
+                loadFiles:load([
+                    './js/userCenter_js/controllers/updateCellPhoneNumCtrl.js'
+                ])
+            }
+        })
         /*帮助中心*/
         .state('UCIndex.helpCenter', {
             url: '/helpCenter',
@@ -432,13 +465,28 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             }
         })
 
+        /*消息详情*/
+        .state('UCIndex.messageDetails', {
+            url: '/messageDetails/:param',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/messageDetails.html",
+                    controller:'MessageDetailsCtrl'
+                }
+            },
+            resolve:{
+                loadFiles:load([
+                    './js/userCenter_js/controllers/messageDetailsCtrl.js'
+                ])
+            }
+        })
 }]);
 
 /*定义主机地址和接口地址*/
 app.host1="http://120.24.175.151:9000/"; //开发服务器
 app.host2="http://120.25.60.19:9000/";//测试服务器
 app.host3="http://120.24.225.116:9000/";//运营服务器
-app.host=app.host2;
+app.host=app.host1;
 
 
 //app.gameHost='http://120.24.175.151:9004';//游戏服务器
@@ -478,9 +526,11 @@ app.interface = {
     cartDeadline: app.host + 'api/user/sctime/', //购物车时间（期限）后接id
     purchaseFromShoppingCart: app.host + 'api/order/purchase/0',//确认订单(购物车)
     purchaseFromUnPayOrders: app.host + 'api/order/purchase/1',//确认订单(待付款订单)
+    payForEnergy:app.host+'api/order/payment/',//支付定金获取能量 后接订单ID
     updatePassword: app.host + 'api/user/password/',//修改密码 后接用户id
     getQRCodeData: app.host + 'api/wxpay/b/qrcodedata/', //获取微信支付二维码数据 后接交易单号
     QRCodeUrl: app.host + 'api/wxpay/qrcode?data=',//支付二维码图片地址，后接文件名
     aliPaySubmit: app.host + 'api/alipay/submit/',//支付宝支付提交  后接交易单号
-    getTradeStatus:app.host+'api/order/gettradestatus/' //获取交易单状态  后接交易单ID
+    getTradeStatus:app.host+'api/order/gettradestatus/', //获取交易单状态  后接交易单ID
+    getAreas:app.host+'api/user/areas/get' //获取行政区域地址数据
 };

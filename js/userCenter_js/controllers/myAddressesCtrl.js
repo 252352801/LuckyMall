@@ -10,10 +10,10 @@ angular.module('LuckyCat.controllers')
         /*显示添加新地址表单*/
         $scope.showAddForm=function(){
             initNewAddressData();
+            initTips();
             $scope.hideEditForm();
-            AddressSer.setAddForm(true);
             $timeout(function(){
-                $scope.isAddFormShow=AddressSer.isShowAddForm();
+                $scope.isAddFormShow=true;
             },5);
         };
        /* 隐藏添加新地址表单*/
@@ -26,18 +26,8 @@ angular.module('LuckyCat.controllers')
         /*显示编辑地址表单*/
         $scope.showEditForm=function(list){
             $scope.hideAddForm();
-            var area=list.Area.split(" ");
-            var prov,city,county;
-            if(area.length>2){
-                prov=area[0];
-                city=area[1];
-                county=area[2];
-            }else{
-                prov=area[0];
-                city=area[0];
-                county=area[1];
-            }
-            initEditAddressData(prov,city,county,list.ConsigneeAddress,list.ConsigneeName,list.ConsigneeMobile,list.Id,list.Selected);
+            initEditAddressData(list.Area,list.ConsigneeAddress,list.ConsigneeName,list.ConsigneeMobile,list.Id,list.Selected);
+            initTips();
             AddressSer.setEditForm(true);
             $timeout(function(){
                 $scope.isEditFormShow=AddressSer.isShowEditForm();
@@ -68,14 +58,23 @@ angular.module('LuckyCat.controllers')
                 $scope.tips.inputMobileTip=msg;
             },5);
         };
+        $scope.areaInputFinish=function(val){
+            $scope.tips.inputAreaTip='';
+            $scope.new_area=val;
+        };
+        $scope.areaEditFinish=function(val){
+            $scope.tips.inputAreaTip='';
+            $scope.edit_area=val;
+        };
         /*添加新地址*/
         $scope.addAddress=function(){
-            if($scope.new_province=="省份"||$scope.new_city=="地级市"||$scope.new_county=="市、县级市"){
-                    $scope.tips.inputAreaTip='请选择区域';return;
+            if($scope.new_area==''){
+                    $scope.tips.inputAreaTip='请选择区域';
+                    return;
             }else{
                     $scope.tips.inputAreaTip='';
                     if($scope.new_address==''|$scope.new_address==undefined){
-                        $scope.tips.inputAddressTip='请输入地址';return;
+                        $scope.tips.inputAddressTip='请输入详细地址';return;
                     }else{
                         if($scope.new_consignee==''||$scope.new_consignee==undefined){
                             $scope.tips.inputConsigneeTip='请输入收货人姓名';return;
@@ -91,7 +90,7 @@ angular.module('LuckyCat.controllers')
             }
             var param={
                 "ConsigneeName":$scope.new_consignee,
-                "Area":formatArea($scope.new_province,$scope.new_city,$scope.new_county),
+                "Area":$scope.new_area,
                 "ConsigneeAddress":$scope.new_address,
                 "ConsigneeMobile":$scope.new_mobile,
                 "UserId":LoginSer.getData().UserModel.Id,
@@ -117,7 +116,7 @@ angular.module('LuckyCat.controllers')
             var param={
                 "Id":$scope.edit_id,
                 "ConsigneeName":$scope.edit_consignee,
-                "Area":formatArea($scope.edit_province,$scope.edit_city,$scope.edit_county),
+                "Area":$scope.edit_area,
                 "ConsigneeAddress":$scope.edit_address,
                 "ConsigneeMobile":$scope.edit_mobile,
                 "UserId":LoginSer.getData().UserModel.Id,
@@ -132,10 +131,10 @@ angular.module('LuckyCat.controllers')
                         type: "success",
                         confirmButtonText: "确定"
                     });
+                    $scope.hideEditForm();
+                    loadData();
                 }
                 $scope.value_btn_edit='保存';
-                $scope.hideEditForm();
-                loadData();
             })
         };
         /*删除收货地址*/
@@ -205,37 +204,22 @@ angular.module('LuckyCat.controllers')
         }
        /* 初始化新地址数据*/
         function initNewAddressData(){
-           // _init_area(["s_province","s_city","s_county"]);//初始化地址选择器
-            $scope.new_province="省份";
-            $scope.new_city="地级市";
-            $scope.new_county="市、县级市";
+            $scope.new_area='';
             $scope.new_setDefault=false;
             $scope.new_consignee='';
             $scope.new_address='';
             $scope.new_mobile='';
         }
-    
         /* 初始化编辑地址数据*/
-        function initEditAddressData(province,city,conty,address,name,mobile,id,is_default){
-            //_init_area(["edit_province","edit_city","edit_county"]);
-            $scope.edit_province=province;
-            $scope.edit_city=city;
-            $scope.edit_county=conty;
-            $scope.edit_consignee=name;
-            $scope.edit_address=address;
-            $scope.edit_mobile=mobile;
-            $scope.edit_setDefault2=is_default;
-            $scope.edit_id=id;
-        }
-        /*格式化地区信息*/
-        function formatArea(_province,_city,_county){
-            var area='';
-            if(_province==_city){
-                area=_province+' '+_county;
-            }else{
-                area=_province+' '+_city+' '+_county;
-            }
-            return area;
+        function initEditAddressData(area,address,name,mobile,id,is_default){
+            $timeout(function(){
+                $scope.edit_area=area;
+                $scope.edit_consignee=name;
+                $scope.edit_address=address;
+                $scope.edit_mobile=mobile;
+                $scope.edit_setDefault2=is_default;
+                $scope.edit_id=id;
+            });
         }
        /* 是否正确完成输入*/
         function isInputFinish(){

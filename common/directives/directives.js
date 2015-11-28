@@ -518,17 +518,6 @@ angular.module('LuckyCat')
         };
     })
 
-    /*select改变时更新绑定*/
-    .directive('myChange', function () {
-        return {
-            link: function (scope, element, attrs) {
-                element.bind('change', function () {
-                    scope[attrs.myChange] = element.val();
-                });
-            }
-        };
-    })
-
     /*只能输入数字*/
     .directive('requireNumber', function () {
         return {
@@ -766,10 +755,31 @@ angular.module('LuckyCat')
     })
 
     /*地址选择*/
-    .directive('areaPicker', function ($timeout) {
+    .directive('areaPicker', function (AreaSer) {
         return {
             link: function (scope, element, attrs) {
-              areaPicker(document.getElementById(attrs.id),function(){});
+                function start(){
+                    var data_area = AreaSer.getData();
+                    areaPicker({
+                        elem: document.getElementById(attrs.id),
+                        data: data_area,
+                        callback: function () {
+                            if(typeof scope[attrs.areaPickerFinish]=='function'){//选择完毕的回调
+                                var val=element.val()||element.html();
+                                scope[attrs.areaPickerFinish](val);
+                            }
+                        }
+                    });
+                }
+                if(AreaSer.getData()==null) {
+                    AreaSer.requestData(function (response, status) {
+                        if (status == 1) {
+                            start();
+                        }
+                    });
+                }else{
+                    start();
+                }
             }
         }
     });
