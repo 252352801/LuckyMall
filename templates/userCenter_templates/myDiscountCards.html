@@ -1,21 +1,21 @@
 <p class="menu-cont-title">
     <label>我的折扣卡</label>
 </p>
-<div class="discount-card-tabs">
-    <a class="cur">未使用（15）</a>
-    <a>已使用</a>
-    <a>已过期</a>
-</div>
+<!--<div class="discount-card-tabs">
+    <a ng-class="{'cur':card_status==0}" href="/UCIndex/myDiscountCards/status=0">未使用</a>
+    <a ng-class="{'cur':card_status==1}" href="/UCIndex/myDiscountCards/status=1">已使用</a>
+    <a ng-class="{'cur':card_status==2}" href="/UCIndex/myDiscountCards/status=2">已失效</a>
+</div>-->
 <ul>
-    <li class="dc-cart-li">
+    <li class="dc-cart-li" ng-repeat="list in data_card">
         <div class="details">
             <a class="img-container">
                 <img src="./res/test/g_dt_bimg.jpg" alt=""/>
             </a>
 
-            <h2>小米note顶配版</h2>
+            <h2 ng-bind="list.Order.CommodityName"></h2>
 
-            <p>型号：标准版</p>
+            <p ng-repeat="">型号：标准版</p>
 
             <p>颜色：金色</p>
 
@@ -27,7 +27,7 @@
                     <label>折后价：</label>
                     <span class="dc-price">￥2100</span>
                 </p>
-                <p class="old-price">原价￥3000</p>
+                <p class="old-price" ng-bind="'原价'+list.Order.Commodity.RetailPrice"></p>
             </div>
         </div>
         <div class="card">
@@ -39,7 +39,7 @@
             <p>使用期限：2015.08.15-2015.12.03</p>
         </div>
     </li>
-    <li class="dc-cart-li">
+<!--    <li class="dc-cart-li">
         <div class="details">
             <a class="img-container">
                 <img src="./res/test/g_dt_bimg.jpg" alt=""/>
@@ -166,7 +166,7 @@
             <p>使用说明：限本商品使用</p>
             <p>使用期限：2015.08.15-2015.12.03</p>
         </div>
-    </li>
+    </li>-->
 </ul>
 <div class="UC page-index">
     <div class="prev"><</div>

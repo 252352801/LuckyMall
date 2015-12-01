@@ -9,7 +9,7 @@
     <div>
         <p class="bar-nick-name">
             <span ng-bind="data_user.UserModel.NickName" ng-show="!nickName_editing"></span>
-            <input type="text" ng-value="data_user.UserModel.NickName" ng-show="nickName_editing==true"/>
+            <input type="text" ng-model="new_nickname"  ng-show="nickName_editing==true"/>
         </p>
         <span class="btn-edit" ng-click="handleNickName()" ng-bind="(nickName_editing?'保存':'修改')"></span>
         <p class="user-mobile" ng-bind="simpleMobile"></p>
@@ -46,7 +46,7 @@
         </div>
         <div class="cont2">
             <p>
-                <a  class="color-org" href="/UCIndex/updateCellPhoneNum">修改</a>
+                <!--<a  class="color-org" href="/UCIndex/updateCellPhoneNum">修改</a>-->
             </p>
         </div>
     </li>

@@ -1,5 +1,8 @@
 angular.module('LuckyCat.controllers')
  .controller('MyAddressesCtrl',function($scope,$state,$stateParams,AddressSer,$timeout,LoginSer){
+        if(LoginSer.getData()==null){
+            return;
+        }
         $scope.$emit('changeMenu',9);//切换菜单显示消息
         $scope.isAddFormShow=AddressSer.isShowAddForm();//是否显示添加新地址表单
         $scope.isEditFormShow=false;////是否显示编辑地址表单

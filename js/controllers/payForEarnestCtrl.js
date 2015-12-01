@@ -1,5 +1,5 @@
 angular.module('LuckyCat.controllers')
- .controller('PayForEnergyCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,PaymentSer){
+ .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API){
         $scope.isModalWaitingShow=false;
         $scope.pay_type='zhifubao';//支付方式
         loadPageData();//加载本页必须的数据
@@ -28,48 +28,32 @@ angular.module('LuckyCat.controllers')
             var pay_method=($scope.pay_type=='weixin')?1:0;//1：微信支付，0：支付宝支付
             var pay_type=(pay_method==1)?0:($scope.pay_type=='zhifubao')?0:1;
             var post_data=(pay_method==0)?{"ShowUrl":'',"BankSimpleCode":initBankSimpleCode($scope.pay_type)}
-                :{"ProductId":$scope.data_orders[0].Commodity.Id};
-            var type=($scope.source=='shoppingCart')?0:1;
+                :{"ProductId":$scope.data_order.Commodity.Id};
             var param={
-                "Orders":null,
                 "Method":pay_method,
                 "Type":pay_type,
                 "Data":angular.toJson(post_data)
             };
-            PaymentSer.purchaseOrders(type,param,function(response,status){
+            PaymentSer.payForEarnest($scope.data_order.Id,param,function(response,status){
                 if(status==1){
-                    if(response.Code=='0X00') {
+                    if(response!=''&&response!=null&&response!=undefined) {
                         $scope.$emit('cart-update');
                         $rootScope.$broadcast('orders-update');
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
-                            WXPaySer.setTotalCost($scope.total_cost);
-                            $state.go('WXPay',{trade_id:response.Data.OutTradeNo});
+                            WXPaySer.setTotalCost($scope.earnest_cost);
+                            $state.go('WXPay',{trade_id:response.OutTradeNo});
                         }else{
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;
                             },5);
-                            window.open(app.interface.aliPaySubmit+response.Data.OutTradeNo);
-                            pollingTradeStatus(response.Data.OutTradeNo);
+                            window.open(API.aliPaySubmit.url+response.OutTradeNo);
+                            pollingTradeStatus(response.OutTradeNo);
+                            $scope.trade_id=response.OutTradeNo;
                         }
-                    }else if(response.Code=='0X02'){
-                        swal({
-                            title: "确认订单失败！",
-                            text:'请您不要重复提交订单',
-                            type: "error",
-                            confirmButtonText: "确定"
-                        });
-
-                    }else if(response.Code=='0X03'){
-                        swal({
-                            title: "创建交易失败！",
-                            type: "error",
-                            confirmButtonText: "确定"
-                        });
                     }else{
                         swal({
-                            title: "未知错误！",
+                            title: "支付定金失败！",
                             type: "error",
-                            text:'错误码：0XXX',
                             confirmButtonText: "确定"
                         });
                     }
@@ -78,7 +62,7 @@ angular.module('LuckyCat.controllers')
         };
         /*检测交易状态*/
         $scope.testTradeStatus=function(){
-            PaymentSer.getStatusOfTrade(trade_id,function(response,status){
+            PaymentSer.getStatusOfTrade($scope.trade_id,function(response,status){
                 if(status===1){
                     $rootScope.$broadcast('orders-update');
                     $state.go('paySuccess');
@@ -105,8 +89,19 @@ angular.module('LuckyCat.controllers')
       };
       /*初始化显示数据*/
      function loadPageData(){
+         var order_id=$stateParams.params.split('=')[1];
+         if(CartSer.getData()==null){
+             CartSer.requestCartData(function(response,status){
+                if(status==1){
+                    $scope.data_order=CartSer.getOrderById(order_id);
+                    $scope.earnest_cost=$scope.data_order.UnitPrice*$scope.data_order.Count*$scope.data_order.EarnestPercent.toFixed(2);//需支付的定金总额
+                }
+             });
+         }else{
+             $scope.data_order=CartSer.getOrderById(order_id);
+             $scope.earnest_cost=$scope.data_order.UnitPrice*$scope.data_order.Count*$scope.data_order.EarnestPercent.toFixed(2);//需支付的定金总额
+         }
          $scope.data_orders='';
-         $scope.total_cost=2000;
      }
 
         /*银行简码对应*/

@@ -444,6 +444,7 @@
     height:30px;
     margin-top:5px;
     font-size:12px;
+    cursor: pointer;
 }
 .btn-org{
     background:#ff6700;
@@ -701,20 +702,26 @@
     margin-left: 20px;
     display: inline-block;
 }
-.discount-card-tabs{
+.discount-card-tabs,.msg-tabs{
     margin:20px auto;
     width:94%;
 }
-.discount-card-tabs a{
+.discount-card-tabs a,.msg-tabs a{
     color:#8d8e92;
     cursor:pointer;
 }
-.discount-card-tabs a:nth-child(n+2){
+.discount-card-tabs a:nth-child(n+2),.msg-tabs a:nth-child(n+2){
     margin-left:45px;
 }
-.discount-card-tabs a.cur{
+.discount-card-tabs a.cur,.msg-tabs a.cur{
     color:#ff6700;
 }
+
+.msg-tabs{
+   text-align:right;
+    padding-right:20px;
+}
+
 .dc-cart-li{
     width:94%;
     box-sizing:border-box;
@@ -1070,6 +1077,37 @@
     margin-right:28px;
 }
 /*我的消息end*/
+
+/*============
+消息详情begin
+==============*/
+.msg-body{
+    width:94%;
+    margin:0 auto;
+    color:#333;
+}
+.msg-body .msg-title{
+    font-size:18px;
+    font-weight:500;
+    margin-top:40px;
+    margin-bottom:10px;
+    text-align:center;
+}
+.msg-body .msg-time{
+    text-align:center;
+    color:#666;
+}
+.msg-body .msg-content{
+    background:#fcfcfc;
+    margin-top:20px;
+    min-height:540px;
+    text-indent:2em;
+    line-height:18px;
+    padding:15px;
+}
+/*消息详情end*/
+
+
 
 /*================
  安全中心begin

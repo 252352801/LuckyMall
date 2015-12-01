@@ -1,6 +1,6 @@
 ﻿angular.module('LuckyCat.services')
 
-.factory('ListSer',function($http,$timeout){
+.factory('ListSer',function(API,$http,$timeout){
 	var data=[];
     var handleImgSrc=function(){
         for(var o in data){

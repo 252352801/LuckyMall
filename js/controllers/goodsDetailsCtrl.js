@@ -1,5 +1,5 @@
 angular.module('LuckyCat.controllers')
-    .controller('GoodsDetailsCtrl', function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer) {
+    .controller('GoodsDetailsCtrl', function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer,Host) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
         $scope.isLogin = LoginSer.isLogin;//是否应经登录
@@ -121,7 +121,7 @@ angular.module('LuckyCat.controllers')
                 GoodsDetailsSer.addToCart(params, function (response, status) {
                     if (status == 1) {
                         $scope.$emit('cart-update');
-                        location.href = app.gameHost + '?orderid=' + response.Data.Id + '&from=' + app.gameOverPage + '&authorization=' + TokenSer.getToken();
+                        location.href = Host.game + '?orderid=' + response.Data.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
                     } else {
                         if (status == 0) {
                             if (response.Code == '0XXX') {

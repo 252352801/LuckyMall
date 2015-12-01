@@ -1,5 +1,5 @@
 ﻿angular.module('LuckyCat.services')
-.factory('HomeSer',function($http){
+.factory('HomeSer',function(API,$http){
 	var data={
         banner:null,
         today:null,
@@ -14,8 +14,8 @@
 		},
         requestTodayData:function(callback){
             $http({
-                method:'post',
-                url:app.interface.todayData,
+                method:API.todayData.method,
+                url:API.todayData.url,
                 data: {"PageIndex":0,"PageSize":1000}
             }).success(function(response,status,headers,config){
                 data.today=response;
@@ -26,8 +26,8 @@
         },
         requestBannerData:function(callback){
             $http({
-                method:'post',
-                url:app.interface.bannerList,
+                method:API.bannerList.method,
+                url:API.bannerList.url,
                 data: {"PageIndex":0,"PageSize":1000}
             }).success(function(response,status,headers,config){
                 if(response&&response!=null&&response!=''){

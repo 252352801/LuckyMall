@@ -22,7 +22,6 @@ angular.module('LuckyCat.controllers')
                         }else{
                             $timeout(function(){$scope.input_tips=''},1);
                             var param={
-                                userId:LoginSer.getData().UserModel.Id,
                                 passwords:[$scope.old_pw,$scope.new_pw]
                             };
                             $scope.value_btn="正在处理...";
@@ -37,6 +36,7 @@ angular.module('LuckyCat.controllers')
                                 }else{
                                     swal({
                                         title: "修改密码失败!",
+                                        text:'您输入的旧密码有误！',
                                         type: "error",
                                         confirmButtonText: "确定"
                                     });
@@ -52,6 +52,7 @@ angular.module('LuckyCat.controllers')
         };
         /*返回*/
         $scope.returnOrg=function(){
+            $state.go('UCIndex.safeAccount');
             $timeout(function() {
                 $scope.show_update_success = false;
                 initPostData();
@@ -69,6 +70,7 @@ angular.module('LuckyCat.controllers')
                     $scope.return_time--;
                     countDownReturn();
                 }else{
+                    $state.go('UCIndex.safeAccount');
                     $scope.show_update_success=false;
                     initPostData();
                 }

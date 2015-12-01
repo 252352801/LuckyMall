@@ -36,7 +36,7 @@
             </li>
         </ul>
         <div class="part-line"></div>
-        <p class="label-cont-name"><label>商品信息</label><a href="/shoppingCart" class="a-returnCart">返回购物车修改</a></p>
+        <p class="label-cont-name"><label>商品信息</label><a href="/shoppingCart" class="a-returnCart" ng-if="source=='shoppingCart'">返回购物车修改</a></p>
 
         <div class="confirmOrder-th">
             <span>商品信息</span>
@@ -47,7 +47,7 @@
         <div class="goods-list" ng-repeat="order in data_orders">
             <div class="bar-sellerInfo">
                 <img src="./res/test/logo_xiaomi.jpg" alt=""/>
-                <p ng-bind="order.BrandName"></p>
+                <p ng-bind="order.SupplierName"></p>
             </div>
             <div class="goods-list-cont">
                 <div class="cont1">

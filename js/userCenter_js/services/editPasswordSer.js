@@ -1,11 +1,11 @@
 ﻿angular.module('LuckyCat.services')
 
-.factory('EditPasswordSer',function($http,TokenSer){
+.factory('EditPasswordSer',function(API,$http,TokenSer){
 	return {
        updatePassword:function(params,callback){
             $http({
-                method:'post',
-                url:app.interface.updatePassword+params.userId,
+                method:API.updatePassword.method,
+                url:API.updatePassword.url,
                 data:params.passwords,
                 headers: {
                     'Authorization': TokenSer.getAuth()

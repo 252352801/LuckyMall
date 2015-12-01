@@ -1,5 +1,5 @@
 angular.module('LuckyCat.services')
-.factory('GoodsDetailsSer',function($http,$timeout,TokenSer){
+.factory('GoodsDetailsSer',function(API,$http,$timeout,TokenSer){
         var data = null;//商品数据
         var category_info=null;//商品品类信息
         /*初始化产品规格的可选属性*/
@@ -18,8 +18,8 @@ angular.module('LuckyCat.services')
             /*请求数据*/
             requestData: function (goods_id, callback) {
                 $http({
-                    method: 'get',
-                    url: app.interface.goodsDetailsData+ goods_id
+                    method:API.goodsDetailsData.method,
+                    url: API.goodsDetailsData.url+ goods_id
                 }).success(function (response, status, headers, config) {
                     if(status==200&&response) {
                         data = response;
@@ -37,8 +37,8 @@ angular.module('LuckyCat.services')
             /*根据商品id获取品类数据*/
             requestCategoryByGoodsId:function(goods_id,callback){
                 $http({
-                    method: 'get',
-                    url: app.interface.getCategoryByGoodsId+ goods_id
+                    method:API.getCategoryByGoodsId.method,
+                    url: API.getCategoryByGoodsId.url+ goods_id
                 }).success(function (response, status, headers, config) {
                     if(response){
                         var item_data=new Array();
@@ -149,8 +149,8 @@ angular.module('LuckyCat.services')
             },
             addToCart:function(params,callback){
                 $http({
-                    method: 'post',
-                    url: app.interface.addToCart,
+                    method: API.addToCart.method,
+                    url: API.addToCart.url,
                     data:params,
                     headers: {
                         'Authorization':TokenSer.getAuth()

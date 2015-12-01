@@ -1,5 +1,5 @@
 angular.module('LuckyCat.controllers')
- .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,PaymentSer){
+ .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,PaymentSer,API){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
@@ -8,6 +8,7 @@ angular.module('LuckyCat.controllers')
         $scope.isModalWaitingShow=false;
         $scope.inputTips='';
         $scope.value_btn_save='保存';
+        $scope.polling=false;
         loadConfirmOrderData();//加载本页必须的数据
         /*支付方式切换*/
         $scope.changePayType=function(new_type){
@@ -130,8 +131,10 @@ angular.module('LuckyCat.controllers')
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;
                             },5);
-                            window.open(app.interface.aliPaySubmit+response.Data.OutTradeNo);
+                            window.open(API.aliPaySubmit.url+response.Data.OutTradeNo);
+                            $scope.polling=true;
                             pollingTradeStatus(response.Data.OutTradeNo);
+                            $scope.trade_id=response.Data.OutTradeNo;
                         }
                     }else if(response.Code=='0X01'){
                         swal({
@@ -167,7 +170,7 @@ angular.module('LuckyCat.controllers')
         };
         /*检测交易状态*/
         $scope.testTradeStatus=function(){
-            PaymentSer.getStatusOfTrade(trade_id,function(response,status){
+            PaymentSer.getStatusOfTrade($scope.trade_id,function(response,status){
                 if(status===1){
                     $rootScope.$broadcast('orders-update');
                     $state.go('paySuccess');
@@ -192,12 +195,17 @@ angular.module('LuckyCat.controllers')
               $scope.isModalWaitingShow=false;
           },5);
       };
+       $scope.$on('stop-polling-tradeStatus',function(){
+            clearTimeout($scope.timer_trade_status);
+            $scope.polling=false;
+       });
       /*初始化显示数据*/
      function loadConfirmOrderData(){
          if($scope.source=='shoppingCart'){
              $scope.data_orders=CartSer.getConfirmData();//取已选择订单
-         }else if($scope.source=='unPayOrders'){
-
+         }else if($scope.source=='repay'){
+             $scope.data_orders=PaymentSer.getData().orders;
+             /*alert($scope.data_orders[0].Id);*/
          }else if($scope.source=='purchase'){
 
          }
@@ -252,7 +260,10 @@ angular.module('LuckyCat.controllers')
         }
 
         function pollingTradeStatus(trade_id){
-            $timeout(function(){
+            if($scope.polling!=true){
+                return;
+            }
+            $scope.timer_trade_status=$timeout(function(){
                 PaymentSer.getStatusOfTrade(trade_id,function(response,status){
                     if(status===1){
                         $rootScope.$broadcast('orders-update');

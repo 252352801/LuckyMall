@@ -29,7 +29,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
     };
     $scope.value_btn='同意协议并注册';
     $scope.register=function(mobile,password,re_password,nickname,code) {
-        //alert('手机号：'+mobile+'\n'+'密码：'+password+'\n'+'昵称：'+'\n'+'验证码：'+code);
+
         if(mobile==''||mobile==undefined){
             $scope.showTips('请输入手机号码 ！');
         }else{
@@ -59,7 +59,11 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
                                     swal("恭喜！注册成功！");
                                     $state.go('login');
                                 }else{
-                                    swal("注册失败！");
+                                    swal({
+                                        title: "注册失败！",
+                                        type: "error",
+                                        confirmButtonText: "确定"
+                                    });
                                 }
                                 $scope.value_btn='同意协议并注册';
                             });

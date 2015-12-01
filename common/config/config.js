@@ -1,13 +1,208 @@
-var app = angular.module('LuckyCat', ['LuckyCat.controllers', 'ui.router','oc.lazyLoad','ngCookies']);
-app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProvider','$cookiesProvider',function ($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider, $cookiesProvider) {
-
-    function load(url){
-        return ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load(url);
-          }]
+var app = angular.module('LuckyCat', ['LuckyCat.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies']);
+app.constant('Host',{
+    develop: "http://120.24.175.151:9000/", //开发服务器
+    test: "http://120.25.60.19:9000/",//测试服务器
+    prev:"http://120.24.225.116:9000/", //运营服务器
+    game:'http://120.25.60.19:9004', //游戏服务器
+    gameOverPage:'http://www.xingyunmao.cn/shoppingCart'//游戏结束后返回地址
+});
+app.constant('API',{
+    login: {//登陆
+        method:'post',
+        url:'api/user/login'
+    },
+    ImgHost:{//获取图片服务器地址
+        method:'get',
+        url: 'api/upload/imagecloudurl'
+    },
+    refreshUserData:{//获取最新的用户数据
+        method:'get',
+        url: 'api/user/refresh'
+    },
+    authorization:{//授权
+        method:'get',
+        url: 'api/user/auth/'
+    },
+    bannerList:{//banner轮播图
+        method:'post',
+        url: 'api/promotion/query/0'
+    },
+    todayData:{//今日推广商品
+        method:'post',
+        url: 'api/promotion/query/1'
+    },
+    marketOnline:{//今日推广商品
+        method:'get',
+        url: 'api/market/online'
+    },
+    marketView:{//获取多个市场活动页面
+        method:'post',
+        url: 'api/market/view'
+    },
+    getAllCategory:{//获取所有分类
+        method:'get',
+        url: 'api/category/all2'
+    },
+    goodsDetailsData:{//根据商品ID获取商品详情页数据 后接商品id
+        method:'get',
+        url: 'api/commodity/'
+    },
+    getCategoryByGoodsId:{//根据商品id获取分类数据，后接商品id
+        method:'get',
+        url: 'api/filterby/'
+    },
+    search:{//根据搜索条件搜索商品
+        method:'post',
+        url: 'api/commodity/search'
+    },
+    getVerifyCode:{//获取手机验证码 后接手机号码
+        method:'get',
+        url: 'api/user/verificationcode/'
+    },
+    register: {//注册
+        method:'post',
+        url:'api/user/register'
+    },
+    addToCart: {//加入购物车
+        method:'post',
+        url:'api/order/add'
+    },
+    cartList: {//购物车列表
+        method:'post',
+        url:'api/order/all/0'
+    },
+    orderList_unPay: {//待付款订单     {"PageIndex": 1,"PageSize": 2,"TotalSize": 3, "TotalPage": 4}<==>{当前第几页，每页大小，总条数，总页数}
+        method:'post',
+        url:'api/order/all/1'
+    },
+    orderList: {//根据状态查询订单数据  后接状态 ：0-已预选 1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
+        method:'post',
+        url:'api/order/all/'
+    },
+    orderList_paid: {//已付款订单
+        method:'post',
+        url:'api/order/all/2'
+    },
+    orderList_sentOut: { //已发货订单
+        method:'post',
+        url:'api/order/all/3'
+    },
+    orderList_finish: { //已完成订单
+        method:'post',
+        url:'api/order/all/4'
+    },
+    orderList_cancel: { //已取消订单
+        method:'post',
+        url:'api/order/all/5'
+    },
+    cancelOrder: { //取消单个订单操作 后接id
+        method:'get',
+        url:'api/order/cancel/'
+    },
+    cancelOrders: { //取消多个订单操作
+        method:'post',
+        url:'api/order/cancels'
+    },
+    confirmReceive: { //确认收货 后接订单ID
+        method:'get',
+        url:'api/order/complete/'
+    },
+    addressList: { //收货地址列表，后接用户id
+        method:'get',
+        url:'api/user/address/all/'
+    },
+    addAddress: { //添加收货地址
+        method:'post',
+        url:'api/user/address/add'
+    },
+    updateAddress: { //修改收货地址
+        method:'post',
+        url:'api/user/address/update'
+    },
+    removeAddress: {//删除收货地址 后接id
+        method:'get',
+        url:'api/user/address/delete/'
+    },
+    setDefaultAddress: {//设置默认地址 后接id
+        method:'get',
+        url:'api/user/address/setdefault/'
+    },
+    cartDeadline: { //购物车时间（期限）后接id
+        method:'get',
+        url:'api/user/sctime/'
+    },
+    purchaseFromShoppingCart: { //确认订单(购物车)
+        method:'post',
+        url:'api/order/purchase/0'
+    },
+    purchaseFromUnPayOrders: { //确认订单(待付款订单)
+        method:'post',
+        url: 'api/order/purchase/1'
+    },
+    payForEarnest: { //支付定金获取能量 后接订单ID
+        method:'post',
+        url: 'api/order/payment/'
+    },
+    updatePassword: { //修改密码
+        method:'post',
+        url: 'api/user/password'
+    },
+    updateNickname: { //修改昵称  后接昵称
+        method:'get',
+        url: 'api/user/nickname/'
+    },
+    getQRCodeData: { //获取微信支付二维码数据 后接交易单号
+        method:'get',
+        url:  'api/wxpay/b/qrcodedata/'
+    },
+    QRCodeUrl: { //支付二维码图片地址，后接文件名
+        method:'get',
+        url:  'api/wxpay/qrcode?data='
+    },
+    aliPaySubmit: { //支付宝支付提交  后接交易单号
+        method:'get',
+        url:  'api/alipay/submit/'
+    },
+    getTradeStatus: {//获取交易单状态  后接交易单ID
+        method:'get',
+        url:  'api/order/gettradestatus/'
+    },
+    getAreas: {//获取行政区域地址数据
+        method:'get',
+        url:  'api/user/areas/get'
+    },
+    messageOfUnRead: {//未读消息
+        method:'post',
+        url: 'api/user/message/0'
+    },
+    messageOfRead: {//已读消息
+        method:'post',
+        url:'api/user/message/1'
+    },
+    messageContent: {//根据消息ID获取消息内容  后接消息ID
+        method:'get',
+        url:'api/user/message/content/'
+    },
+    removeMsg: {//删除指定消息 后接消息ID
+        method:'get',
+        url:'api/user/message/delete/'
+    },
+    discountCard: { //获取折扣卡
+        method:'get',
+        url:'api/user/discountcard/get'
     }
+});
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
+    function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $cookiesProvider,Host,API) {
+    function load(url) {
+        return ['$ocLazyLoad', function ($ocLazyLoad) {
+            return $ocLazyLoad.load(url);
+        }]
+    }
+
     $locationProvider.html5Mode(true);
 
+    /*==================================================路由配置    begin=============================================*/
     /*默认路由*/
     $urlRouterProvider.otherwise('home');
     $stateProvider
@@ -37,7 +232,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/list.html",
-                    controller:'ListCtrl'
+                    controller: 'ListCtrl'
                 }
             },
             resolve: {
@@ -65,7 +260,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/register.html",
-                    controller:'RegisterCtrl'
+                    controller: 'RegisterCtrl'
                 }
             },
             resolve: {
@@ -85,7 +280,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/shoppingCart.html",
-                    controller:'CartCtrl'
+                    controller: 'CartCtrl'
                 }
             },
             resolve: {
@@ -120,11 +315,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/goodsDetails.html",
-                    controller:'GoodsDetailsCtrl'
+                    controller: 'GoodsDetailsCtrl'
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/goodsDetails.css',
                     './js/controllers/goodsDetailsCtrl.js',
                     './js/services/goodsDetailsSer.js',
@@ -141,11 +336,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/confirmOrder.html",
-                    controller:'ConfirmOrdersCtrl'
+                    controller: 'ConfirmOrdersCtrl'
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/confirmOrders.css',
                     './js/controllers/confirmOrdersCtrl.js',
                     './lib/areaSelect/area.js'
@@ -160,11 +355,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/WXPay.html",
-                    controller:'WXPayCtrl'
+                    controller: 'WXPayCtrl'
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/WXPay.css',
                     './js/controllers/WXPayCtrl.js'
                 ])
@@ -173,18 +368,20 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
         })
 
         /*支付定金页*/
-        .state('payForEnergy', {
-            url: '/payForEnergy',
+        .state('payForEarnest', {
+            url: '/payForEarnest/:params',
             views: {
                 '': {
-                    templateUrl: "templates/payForEnergy.html",
-                    controller:'PayForEnergyCtrl'
+                    templateUrl: "templates/payForEarnest.html",
+                    controller: 'PayForEarnestCtrl'
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/confirmOrders.css',
-                    './js/controllers/payForEnergyCtrl.js'
+                    './js/controllers/payForEarnestCtrl.js',
+                    './lib/sweetAlert/sweetAlert.css',
+                    './lib/sweetAlert/sweetAlert.min.js'
                 ])
             }
 
@@ -199,7 +396,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/paySuccess.css'
                 ])
             }
@@ -214,7 +411,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/support.css'
                 ])
             }
@@ -229,7 +426,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/support.css',
                     './lib/BDMap/BaiDuMap.js',
                     './lib/BDMap/BaiDuMap.css',
@@ -247,7 +444,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './css/support.css'
                 ])
             }
@@ -259,11 +456,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 '': {
                     templateUrl: "templates/market.html",
-                    controller:'MarketCtrl'
+                    controller: 'MarketCtrl'
                 }
             },
             resolve: {
-                loadFiles:load([
+                loadFiles: load([
                     './js/controllers/marketCtrl.js',
                     './js/services/marketSer.js'
                 ])
@@ -271,25 +468,26 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
 
         })
 
-  /*--------------------------------------分割线----------------------------------------------------------*/
+        /*--------------------------------------分割线----------------------------------------------------------*/
         /*用户中心首页*/
         .state('UCIndex', {
             url: '/UCIndex',
             views: {
                 '': {
                     templateUrl: "templates/userCenter_templates/UCIndex.html",
-                    controller:'UserCenterCtrl'
+                    controller: 'UserCenterCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './css/userCenter_css/userCenter.css',
                     './js/userCenter_js/controllers/userCenterCtrl.js',
                     './js/userCenter_js/directives/headerImgEditDirectives.js',
+                    './js/userCenter_js/services/userSer.js',
                     './lib/sweetAlert/sweetAlert.css',
                     './lib/sweetAlert/sweetAlert.min.js',
                     'http://open.web.meitu.com/sources/xiuxiu.js'
-                    
+
                 ])
             }
         })
@@ -299,11 +497,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/myOrders.html",
-                    controller:'MyOrdersCtrl'
+                    controller: 'MyOrdersCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/myOrdersCtrl.js',
                     './js/userCenter_js/services/myOrdersSer.js'
                 ])
@@ -315,26 +513,26 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/myWallet.html",
-                    controller:'MyWalletCtrl'
+                    controller: 'MyWalletCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/myWalletCtrl.js'
                 ])
             }
         })
         /*我的折扣卡*/
         .state('UCIndex.myDiscountCards', {
-            url: '/myDiscountCards',
+            url: '/myDiscountCards/:params',
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/myDiscountCards.html",
-                    controller:'MyDiscountCardsCtrl'
+                    controller: 'MyDiscountCardsCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/myDiscountCardsCtrl.js'
                 ])
             }
@@ -345,11 +543,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/editPassword.html",
-                    controller:'EditPasswordCtrl'
+                    controller: 'EditPasswordCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/editPasswordCtrl.js',
                     './js/userCenter_js/services/editPasswordSer.js'
                 ])
@@ -361,11 +559,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/myAddresses.html",
-                    controller:'MyAddressesCtrl'
+                    controller: 'MyAddressesCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/myAddressesCtrl.js',
                     './js/userCenter_js/directives/myAddressDirectives.js',
                     //'./lib/areaSelect/area.js'
@@ -380,11 +578,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/updateCellPhoneNum.html",
-                    controller:'UpdateCellPhoneNumCtrl'
+                    controller: 'UpdateCellPhoneNumCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/updateCellPhoneNumCtrl.js'
                 ])
             }
@@ -395,11 +593,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/helpCenter.html",
-                    controller:'HelpCenterCtrl'
+                    controller: 'HelpCenterCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/helpCenterCtrl.js'
                 ])
             }
@@ -410,11 +608,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/about.html",
-                    controller:'AboutCtrl'
+                    controller: 'AboutCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/aboutCtrl.js'
                 ])
             }
@@ -425,11 +623,11 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/adviceAndFeedback.html",
-                    controller:'AdviceAndFeedbackCtrl'
+                    controller: 'AdviceAndFeedbackCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/adviceAndFeedbackCtrl.js'
                 ])
             }
@@ -440,26 +638,26 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/safeAccount.html",
-                    controller:'SafeAccountCtrl'
+                    controller: 'SafeAccountCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/safeAccountCtrl.js'
                 ])
             }
         })
         /*我的消息*/
         .state('UCIndex.myMessage', {
-            url: '/myMessage',
+            url: '/myMessage/:msg_type',
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/myMessage.html",
-                    controller:'MyMessageCtrl'
+                    controller: 'MyMessageCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/myMessageCtrl.js'
                 ])
             }
@@ -467,70 +665,26 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProv
 
         /*消息详情*/
         .state('UCIndex.messageDetails', {
-            url: '/messageDetails/:param',
+            url: '/messageDetails/:params',
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/messageDetails.html",
-                    controller:'MessageDetailsCtrl'
+                    controller: 'MessageDetailsCtrl'
                 }
             },
-            resolve:{
-                loadFiles:load([
+            resolve: {
+                loadFiles: load([
                     './js/userCenter_js/controllers/messageDetailsCtrl.js'
                 ])
             }
-        })
+        });
+
+    /*==================================================接口配置    end===============================================*/
+    initAPI();
+    function initAPI(){
+        for(var o in API){
+            API[o].url=Host.develop+API[o].url;
+        }
+    }
+
 }]);
-
-/*定义主机地址和接口地址*/
-app.host1="http://120.24.175.151:9000/"; //开发服务器
-app.host2="http://120.25.60.19:9000/";//测试服务器
-app.host3="http://120.24.225.116:9000/";//运营服务器
-app.host=app.host1;
-
-
-//app.gameHost='http://120.24.175.151:9004';//游戏服务器
-app.gameHost='http://120.25.60.19:9004';//游戏服务器
-app.gameOverPage='http://www.xingyunmao.cn/shoppingCart';//游戏服务器
-app.interface = {
-    login: app.host + 'api/user/login',//登陆
-    ImgHost: app.host + 'api/upload/imagecloudurl',//获取图片服务器地址
-    refreshUserData: app.host + 'api/user/refresh',//获取最新的用户数据
-    authorization: app.host + 'api/user/auth/',//授权
-    bannerList: app.host + 'api/promotion/query/0',//banner轮播图
-    todayData: app.host + 'api/promotion/query/1',//今日推广商品
-    marketOnline: app.host + 'api/market/online',//当前上线的市场活动列表
-    marketView:app.host+'api/market/view',//获取多个市场活动页面
-    getAllCategory: app.host + 'api/category/all2',//获取所有分类
-    goodsDetailsData: app.host + 'api/commodity/',//商品详情页数据 后接商品id
-    getCategoryByGoodsId: app.host + 'api/filterby/',//根据商品id获取分类数据，后接商品id
-    search: app.host + 'api/commodity/search',//商品详情页数据
-    getVerifyCode: app.host + 'api/user/verificationcode/',//获取手机验证码
-    register: app.host + 'api/user/register',//注册
-    addToCart: app.host + 'api/order/add', //加入购物车
-    cartList: app.host + 'api/order/all/0', //购物车列表
-    orderList_unPay: app.host + 'api/order/all/1', //待付款订单     {"PageIndex": 1,"PageSize": 2,"TotalSize": 3, "TotalPage": 4}<==>{当前第几页，每页大小，总条数，总页数}
-    orderList: app.host + 'api/order/all/', //根据状态查询订单数据  后接状态 ：0-已预选 1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
-    orderList_paid: app.host + 'api/order/all/2', //已付款订单
-    orderList_sentOut: app.host + 'api/order/all/3', //已发货订单
-    orderList_finish: app.host + 'api/order/all/4', //已完成订单
-    orderList_cancel: app.host + 'api/order/all/5', //已取消订单
-    cancelOrder: app.host + 'api/order/cancel/',//取消单个订单操作 后接id
-    cancelOrders: app.host + 'api/order/cancels',//取消多个订单操作
-    confirmReceive: app.host + 'api/order/complete/{id}',//确认收货
-    addressList: app.host + 'api/user/address/all/',//收货地址列表，后接id
-    addAddress: app.host + 'api/user/address/add',//添加收货地址
-    updateAddress: app.host + 'api/user/address/update',//修改收货地址
-    removeAddress: app.host + 'api/user/address/delete/',//删除收货地址 后接id
-    setDefaultAddress: app.host + 'api/user/address/setdefault/',//设置默认地址 后接id
-    cartDeadline: app.host + 'api/user/sctime/', //购物车时间（期限）后接id
-    purchaseFromShoppingCart: app.host + 'api/order/purchase/0',//确认订单(购物车)
-    purchaseFromUnPayOrders: app.host + 'api/order/purchase/1',//确认订单(待付款订单)
-    payForEnergy:app.host+'api/order/payment/',//支付定金获取能量 后接订单ID
-    updatePassword: app.host + 'api/user/password/',//修改密码 后接用户id
-    getQRCodeData: app.host + 'api/wxpay/b/qrcodedata/', //获取微信支付二维码数据 后接交易单号
-    QRCodeUrl: app.host + 'api/wxpay/qrcode?data=',//支付二维码图片地址，后接文件名
-    aliPaySubmit: app.host + 'api/alipay/submit/',//支付宝支付提交  后接交易单号
-    getTradeStatus:app.host+'api/order/gettradestatus/', //获取交易单状态  后接交易单ID
-    getAreas:app.host+'api/user/areas/get' //获取行政区域地址数据
-};

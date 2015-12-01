@@ -1,7 +1,6 @@
 angular.module('LuckyCat.controllers',['LuckyCat.services'])
 
-.controller('AppCtrl',function($scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer){
-     console.log('auth:'+$cookies.get('Token'));
+.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer){
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
      $scope.isFeedbackModalShow=false;//反馈框是否显示
@@ -32,9 +31,24 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
       });
         /* 监听用户登录*/
       $scope.$on('user-login',function(){
+          UserSer.setData(LoginSer.getData());//设置用户数据
           loadSomeUserData();//用户登录之后初始化和加载一些必要数据
           loadOrdersData();//加载部分订单数目
       });
+        /*监听账号数据改变*/
+        $scope.$on('user-update',function(){
+            RefreshUserDataSer.requestUserData(function(response,status){
+                if(status==1){
+                    UserSer.setUserData(RefreshUserDataSer.getData());
+                    $scope.simpleData_user.UserModel=UserSer.getUserData();
+                    $timeout(function(){
+                        UserSer.setUserData(RefreshUserDataSer.getData());
+                        $scope.simpleData_user.UserModel=UserSer.getUserData();
+                        $scope.showName=$scope.simpleData_user.UserModel.NickName?$scope.simpleData_user.UserModel.NickName:$scope.simpleData_user.UserModel.Mobile;
+                    });
+                }
+            });
+        });
         /* 监听反馈框显示消息*/
         $scope.$on('show-feedback-modal',function(){
             $scope.isFeedbackModalShow=true;
@@ -69,9 +83,13 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             if (toState.name == 'login') return; // 如果是进入登录界面则允许
             // 如果用户未登录
             if (!LoginSer.isLogin()) {
-                if (toState.name == 'confirmOrders') {
+                if (toState.name == 'confirmOrder') {
                     event.preventDefault();
                     $state.go('login');
+                }
+            }else{
+                if(fromState.name=='confirmOrder'||fromState.name=='WXPay'){
+                    $scope.$broadcast('stop-polling-tradeStatus');
                 }
             }
         });
@@ -92,6 +110,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
         LoginSer.authorization(function(response,status){
             if(status==1){
                 $scope.isLogin=true;
+                UserSer.setData(LoginSer.getData());//设置用户数据
                 loadSomeUserData();//加载一些必要数据
                 loadOrdersData();//加载部分订单数目
             }else{
@@ -102,7 +121,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
      /*用户登录之后初始化和加载一些必要数据*/
     function loadSomeUserData(){
         $timeout(function(){ //初始化
-            $scope.simpleData_user=LoginSer.getData();
+            $scope.simpleData_user=UserSer.getData();
             $scope.luckyEnergy=setLuckyEnergyLevel(LoginSer.getData().UserModel.LuckyEnergy.PaidValue);
             $scope.showName=$scope.simpleData_user.UserModel.NickName?$scope.simpleData_user.UserModel.NickName:$scope.simpleData_user.UserModel.Mobile;
             $scope.isLogin=true;

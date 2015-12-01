@@ -1,5 +1,5 @@
 ﻿/*angular.module('LuckyCat.services',[])*/
-app.factory('newProSer',function($http){
+app.factory('newProSer',function(API,$http){
 	var data=null
 	return {
 		getTodayData:function(){
@@ -7,8 +7,8 @@ app.factory('newProSer',function($http){
 		},
         requestTodayData:function(callback){
             $http({
-                method:'post',
-                url:app.interface.todayData,
+                method:API.todayData.method,
+                url:API.todayData.url,
                 data: {"PageIndex":0,"PageSize":1000}
             }).success(function(response,status,headers,config){
                 data.today=response;

@@ -1,4 +1,9 @@
 <p class="menu-cont-title">
     <label>消息详情</label>
-    <a class="a-return" href="/UCIndex/myMessage">返回</a>
+    <a class="a-return" href="/UCIndex/myMessage/{{msg_type}}">返回</a>
 </p>
+<div class="msg-body">
+    <h1 class="msg-title" ng-bind="data_msg.Title"></h1>
+    <p class="msg-time"><small ng-bind="data_msg.CreateTime"></small></p>
+    <div class="msg-content" ng-bind="data_msg_content"></div>
+</div>

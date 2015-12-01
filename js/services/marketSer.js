@@ -1,5 +1,5 @@
 ﻿angular.module('LuckyCat.services')
-.factory('MarketSer',function($http){
+.factory('MarketSer',function(API,$http){
 	var data={
         marketOnline:null,
         pageData:null
@@ -10,8 +10,8 @@
         },
         requestMarketList:function(callback){
             $http({
-                method:'get',
-                url:app.interface.marketOnline
+                method:API.marketOnline.method,
+                url:API.marketOnline.url
             }).success(function(response){
                 if(response){
                     data.marketOnline=response;
@@ -23,8 +23,8 @@
         },
         requestMarketPage:function(param,callback){
             $http({
-                method:'post',
-                url:app.interface.marketView,
+                method:API.marketView.method,
+                url:API.marketView.url,
                 data:param
             }).success(function(response){
                 if(response){

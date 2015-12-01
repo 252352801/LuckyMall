@@ -1,13 +1,14 @@
 angular.module('LuckyCat.controllers')
- .controller('UserCenterCtrl',function($scope,LoginSer,$state,$timeout){
+ .controller('UserCenterCtrl',function($scope,LoginSer,$state,$timeout,UserSer){
     $scope.isMTXXShow=false;
 
     if(LoginSer.getData()!=null){//判断是否登陆
-        $scope.data_user=LoginSer.getData();
+        $scope.data_user=UserSer.getData();
         $scope.simpleMobile=hideSomeStr($scope.data_user.UserModel.Mobile,3,8,'*');
     }else{
         $scope.data_user=null;
         $state.go('login');
+        return;
     }
     $scope.$on('changeMenu',function(e,menu_index){
         $scope.curMenu=menu_index;

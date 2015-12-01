@@ -1,5 +1,5 @@
 angular.module('LuckyCat.services',[])
-    .factory('TokenSer',function($http,$timeout,$cookies) {
+    .factory('TokenSer',function(API,$http,$timeout,$cookies) {
         return {
             getAuth:function(){
                 return  'Basic '+$cookies.get('Token');
@@ -14,7 +14,7 @@ angular.module('LuckyCat.services',[])
     })
 
      /*获取阿里云图片服务器ser*/
-    .factory('ImgSer',function($http) {
+    .factory('ImgSer',function(API,$http) {
         var data;
         return {
             getData:function(){
@@ -22,8 +22,8 @@ angular.module('LuckyCat.services',[])
             },
             requestData:function(callback){
                 $http({
-                    method:'get',
-                    url:app.interface.ImgHost
+                    method:API.ImgHost.method,
+                    url:API.ImgHost.url
                 }).success(function(response){
                     if(response!=null){
                         data=response;
@@ -34,7 +34,7 @@ angular.module('LuckyCat.services',[])
         };
     })
     /*登陆服务*/
-    .factory('LoginSer',function($http,$timeout,TokenSer){
+    .factory('LoginSer',function(API,$http,$timeout,TokenSer){
         var data=null;
         var isLogin=false;
         return {
@@ -49,8 +49,8 @@ angular.module('LuckyCat.services',[])
             },
             login:function(username,password,callback){
                 $http({
-                    method:'post',
-                    url:app.interface.login,
+                    method:API.login.method,
+                    url:API.login.url,
                     data: {  "Name": username, "Password":password}
                 }).success(function(response){
                     if(response) {
@@ -76,8 +76,8 @@ angular.module('LuckyCat.services',[])
             authorization:function(callback){
                 if(TokenSer.getToken()){
                     $http({
-                        method:'get',
-                        url:app.interface.authorization+TokenSer.getToken()
+                        method:API.authorization.method,
+                        url:API.authorization.url+TokenSer.getToken()
                     }).success(function(response){
                         if(response) {
                             if(!response.Token){
@@ -100,8 +100,52 @@ angular.module('LuckyCat.services',[])
         };
     })
 
+    .factory('UserSer',function(API,$http,TokenSer){
+        var data={
+            UserModel:null,
+            LuckyEnergy:null
+        }
+        return {
+            getData:function(){
+                return data;
+            },
+            getUserData:function(){
+                return data.UserModel;
+            },
+            getLuckyEnergyData:function(){
+                return data.LuckyEnergy;
+            },
+            setData:function(new_data){
+                data=new_data;
+            },
+            setUserData:function(new_data){
+                data.UserModel=new_data;
+            },
+            setLuckyEnergyData:function(new_data){
+                data.LuckyEnergy=new_data;
+            },
+            updateNickname:function(new_nickname,callback){
+                $http({
+                    method:API.updateNickname.method,
+                    url:API.updateNickname.url+new_nickname,
+                    headers: {
+                        'Authorization': TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback(data,0);
+                });
+            }
+        };
+    })
 
-    .factory('RefreshUserDataSer',function($http,TokenSer) {
+
+    .factory('RefreshUserDataSer',function(API,$http,TokenSer) {
         var data=null;
         return {
             getData:function(){
@@ -109,8 +153,8 @@ angular.module('LuckyCat.services',[])
             },
             requestUserData:function(callback){
                 $http({
-                    method:'get',
-                    url:app.interface.refreshUserData,
+                    method:API.refreshUserData.method,
+                    url:API.refreshUserData.url,
                     headers: {
                         'Authorization':TokenSer.getAuth()
                     }
@@ -125,7 +169,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /*列表页筛选器*/
-.factory('FilterSer',function($http,$timeout){
+.factory('FilterSer',function(API,$http,$timeout){
         var data_select={
             category:null,
             items:new Array()
@@ -136,6 +180,18 @@ angular.module('LuckyCat.services',[])
             for(var o in res){
                 res[o].isSelected=false;
             }
+        };
+        var filterData=function(data){//筛选出正在销售的商品
+            var result=new Array();
+            var time_now=new Date();
+            for(var o in data){
+                var t1=new Date(data[o].OnSaleTime.replace(/-/g,"/"));
+                var t2=new Date(data[o].ExpiryDate.replace(/-/g,"/"));
+                if(time_now.getTime()>=t1.getTime()&&time_now.getTime()<t2.getTime()){
+                    result.push(data[o]);
+                }
+            }
+            return result;
         };
         return {
             getCategoryData:function(){
@@ -181,6 +237,7 @@ angular.module('LuckyCat.services',[])
             },
             search:function(params){
                 var post_data={
+                    "Status":3,//3表示已上架商品
                     "CategoryId":""+params.category,
                     "FilterItems":params.items,
                     "Keyword": "",
@@ -194,11 +251,11 @@ angular.module('LuckyCat.services',[])
                     "TotalPage": 10//总页数
                 };
                 $http({
-                    method:'post',
-                    url:app.interface.search,
+                    method:API.search.method,
+                    url:API.search.url,
                     data: post_data
                 }).success(function(response,status,headers,config){
-                    params.callback(response);
+                    params.callback(filterData(response));
                 }).error(function(data,status,headers,config){
 
                 });
@@ -206,7 +263,7 @@ angular.module('LuckyCat.services',[])
         };
 })
     /*分类数据服务*/
-    .factory('CategorySer',function($http){
+    .factory('CategorySer',function(API,$http){
         var data=null;
         return {
             getData:function(){
@@ -214,8 +271,8 @@ angular.module('LuckyCat.services',[])
             },
             requestData:function(callback){
                 $http({
-                    method:'get',
-                    url:app.interface.getAllCategory
+                    method:API.getAllCategory.method,
+                    url:API.getAllCategory.url
                 }).success(function(response,status,headers,config){
                     data=response;
                     if(typeof callback=='function'){
@@ -235,10 +292,10 @@ angular.module('LuckyCat.services',[])
         };
     })
    /* 获取手机验证码服务*/
-    .factory('VerifyCodeSer',function($http){
+    .factory('VerifyCodeSer',function(API,$http){
         return {
             getVerifyCode:function(mobile_num,callback){
-                $http.get(app.interface.getVerifyCode+mobile_num)
+                $http.get(API.getVerifyCode.url+mobile_num)
                     .success(function(response){
                         if(typeof callback=='function'){
                             callback(response);
@@ -249,7 +306,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /* 购物车服务*/
-    .factory('CartSer',function($http,TokenSer){
+    .factory('CartSer',function(API,$http,TokenSer){
         var data=null;
         var deadline=null;
         var initData=function(){
@@ -285,6 +342,13 @@ angular.module('LuckyCat.services',[])
                         return 0;
                     }
                 },
+                getOrderById:function(order_id){
+                    for(var o in data){
+                        if(order_id==data[o].Id){
+                            return data[o];
+                        }
+                    }
+                },
                 getConfirmData:function(){
                     var result=new Array();
                     for(var o in data){
@@ -297,8 +361,8 @@ angular.module('LuckyCat.services',[])
                 requestCartData:function(callback) {
                     var params = { "PageIndex": 0, "PageSize": 100,"TotalSize": 0, "TotalPage": 0};
                     $http({
-                        method: 'post',
-                        url: app.interface.cartList,
+                        method: API.cartList.method,
+                        url: API.cartList.url,
                         data:params,
                         headers: {
                             'Authorization':TokenSer.getAuth()
@@ -319,8 +383,8 @@ angular.module('LuckyCat.services',[])
                 },
                 requestCartDeadline:function(u_id,callback){
                     $http({
-                        method: 'get',
-                        url: app.interface.cartDeadline+u_id,
+                        method:API.cartDeadline.method,
+                        url: API.cartDeadline.url+u_id,
                         headers: {
                             'Authorization':TokenSer.getAuth()
                         }
@@ -335,8 +399,8 @@ angular.module('LuckyCat.services',[])
                 /*根据id删除购物车里的订单*/
                 cancelOrder:function(order_id,callback){
                     $http({
-                        method: 'get',
-                        url: app.interface.cancelOrder+order_id,
+                        method: API.cancelOrder.method,
+                        url: API.cancelOrder.url+order_id,
                         headers: {
                             'Authorization': TokenSer.getAuth()
                         }
@@ -352,7 +416,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /* 收货地址服务*/
-    .factory('AddressSer',function($http,TokenSer){
+    .factory('AddressSer',function(API,$http,TokenSer){
         var show_add_form=false;//是否显示添加收货地址框
         var show_edit_form=false;//是否显示编辑收货地址框
         var data=null;//地址数据
@@ -374,8 +438,8 @@ angular.module('LuckyCat.services',[])
             },
             requestAddressData:function(user_id,callback){
                 $http({
-                    method: 'get',
-                    url: app.interface.addressList+user_id,
+                    method:API.addressList.method,
+                    url: API.addressList.url+user_id,
                     headers: {
                         'Authorization': TokenSer.getAuth()
                     }
@@ -388,8 +452,8 @@ angular.module('LuckyCat.services',[])
             },
             addAddress:function(params,callback){
                 $http({
-                    method: 'post',
-                    url: app.interface.addAddress,
+                    method:API.addAddress.method,
+                    url: API.addAddress.url,
                     data:params,
                     headers: {
                         'Authorization': TokenSer.getAuth()
@@ -402,8 +466,8 @@ angular.module('LuckyCat.services',[])
             },
             updateAddress:function(params,callback){
                 $http({
-                    method: 'post',
-                    url: app.interface.updateAddress,
+                    method:API.updateAddress.method,
+                    url: API.updateAddress.url,
                     data:params,
                     headers: {
                         'Authorization': TokenSer.getAuth()
@@ -420,8 +484,8 @@ angular.module('LuckyCat.services',[])
             },
             removeAddress:function(addr_id,callback){
                 $http({
-                    method: 'get',
-                    url: app.interface.removeAddress+addr_id,
+                    method:API.removeAddress.method,
+                    url: API.removeAddress.url+addr_id,
                     headers: {
                         'Authorization': TokenSer.getAuth()
                     }
@@ -433,8 +497,8 @@ angular.module('LuckyCat.services',[])
             },
             setDefaultAddress:function(addr_id,callback){
                 $http({
-                    method: 'get',
-                    url: app.interface.setDefaultAddress+addr_id,
+                    method: API.setDefaultAddress.method,
+                    url: API.setDefaultAddress.url+addr_id,
                     headers: {
                         'Authorization': TokenSer.getAuth()
                     }
@@ -449,7 +513,7 @@ angular.module('LuckyCat.services',[])
 
 
     /*订单服务*/
-    .factory('MyOrdersSer',function($http,TokenSer){
+    .factory('MyOrdersSer',function(API,$http,TokenSer){
         var orders_all=null;
         var orders_unPay=null;
         var orders_paid=null;
@@ -483,8 +547,8 @@ angular.module('LuckyCat.services',[])
             },
             requestData:function(order_type,callback){ //order_type:1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
                 $http({
-                    method:'post',
-                    url:app.interface.orderList+order_type,
+                    method:API.orderList.method,
+                    url:API.orderList.url+order_type,
                     data: { "PageIndex": 0, "PageSize": 100,"TotalSize": 0, "TotalPage": 0},
                     headers: {
                         'Authorization':TokenSer.getAuth()
@@ -513,8 +577,8 @@ angular.module('LuckyCat.services',[])
             },
             cancelOrder:function(order_id,order_type,callback){
                 $http({
-                    method: 'get',
-                    url: app.interface.cancelOrder+order_id,
+                    method: API.cancelOrder.method,
+                    url: API.cancelOrder.url+order_id,
                     headers: {
                         'Authorization': TokenSer.getAuth()
                     }
@@ -537,7 +601,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /*支付服务*/
-    .factory('PaymentSer',function($http,TokenSer){
+    .factory('PaymentSer',function(API,$http,TokenSer){
         var data={
             addressId:null,
             orders:null
@@ -549,16 +613,21 @@ angular.module('LuckyCat.services',[])
             setData:function(new_data){
                 data=new_data;
             },
+            setOrdersData:function(new_data){
+                data.orders=new_data;
+            },
             clearData:function(){
                 data={
                     addressId:null,
                     orders:null
                 };
             },
+            /*支付订单*/
             purchaseOrders:function(type,params,callback){
-                var url=(type==0)?app.interface.purchaseFromShoppingCart:app.interface.purchaseFromUnPayOrders;
+                var url=(type==0)?API.purchaseFromShoppingCart.url:API.purchaseFromUnPayOrders.url;
+                var method=(type==0)?API.purchaseFromShoppingCart.method:API.purchaseFromUnPayOrders.method;
                 $http({
-                    method: 'post',
+                    method: method,
                     url: url,
                     data:params,
                     headers: {
@@ -572,10 +641,27 @@ angular.module('LuckyCat.services',[])
                     }
                 });
             },
-            getStatusOfTrade:function(trade_id,callback){
-                var url=app.interface.getTradeStatus+trade_id;
+           /* 支付定金*/
+            payForEarnest:function(order_id,params,callback){
                 $http({
-                    method: 'get',
+                    method:API.payForEarnest.method,
+                    url: API.payForEarnest.url+order_id,
+                    data:params,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }) .success(function(response){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                });
+            },
+            getStatusOfTrade:function(trade_id,callback){
+                var url=API.getTradeStatus.url+trade_id;
+                $http({
+                    method: API.getTradeStatus.method,
                     url: url,
                     timeout: 10000,
                     headers: {
@@ -600,7 +686,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /*微信支付*/
-    .factory('WXPaySer',function($http,TokenSer){
+    .factory('WXPaySer',function(API,$http,TokenSer){
         var data={
             totalCost:0
         };
@@ -613,8 +699,8 @@ angular.module('LuckyCat.services',[])
             },
             getQRCodeData:function(trade_id,callback){
                 $http({
-                    method:'get',
-                    url:app.interface.getQRCodeData+trade_id,
+                    method:API.getQRCodeData.method,
+                    url:API.getQRCodeData.url+trade_id,
                     headers: {
                         'Authorization':TokenSer.getAuth()
                     }
@@ -633,7 +719,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /*支付定金*/
-    .factory('PayForEnergySer',function($http,TokenSer){
+    .factory('PayForEarnest',function(API,$http,TokenSer){
         var data=null;
         return {
             getData:function(){
@@ -644,8 +730,8 @@ angular.module('LuckyCat.services',[])
             },
             payForEnergy:function(order_id,callback){
                 $http({
-                    method:'post',
-                    url:app.interface.payForEnergy+order_id,
+                    method:API.payForEarnest.method,
+                    url:API.payForEarnest.url+order_id,
                     headers: {
                         'Authorization':TokenSer.getAuth()
                     }
@@ -664,7 +750,7 @@ angular.module('LuckyCat.services',[])
     })
 
     /*区域选择服务*/
-    .factory('AreaSer',function($http){
+    .factory('AreaSer',function(API,$http){
         var data=null;
         return {
             getData:function(){
@@ -672,8 +758,8 @@ angular.module('LuckyCat.services',[])
             },
             requestData:function(callback){
                 $http({
-                    method:'get',
-                    url:app.interface.getAreas
+                    method:API.getAreas.method,
+                    url:API.getAreas.url
                 }).success(function(response,status,headers,config){
                     if(response){
                         data=response;
@@ -685,6 +771,123 @@ angular.module('LuckyCat.services',[])
                     callback("网络错误",-1);
                 });
             }
+        };
+
+    })
+
+    /*消息服务*/
+    .factory('MessageSer',function(API,$http,TokenSer){
+        var msg=[null,null];//msg[0]:未读消息，msg[1]:已读消息，
+        return {
+            getData:function(index){
+                return msg[index];
+            },
+            getMsgById:function(msg_type,msg_id){
+                 for(var o in msg[msg_type]){
+                     if(msg_id==msg[msg_type][o].Id){
+                         return msg[msg_type][o];
+                     }
+                 }
+            },
+            /*获取消息列表*/
+            requestMsg:function(msg_type,params,callback){
+                var url=(msg_type==0)?API.messageOfUnRead.url:API.messageOfRead.url;//0未读 1已读
+                var method=(msg_type==0)?API.messageOfUnRead.method:API.messageOfRead.method;
+                $http({
+                    method:method,
+                    url:url,
+                    data:params,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        msg[msg_type]=response;
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
+                });
+            },
+            /*根据消息ID请求消息内容*/
+            requestMsgContentById:function(msg_id,callback){
+                var url=API.messageContent.url+msg_id;
+                $http({
+                    method:API.messageContent.method,
+                    url:url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback("获取消息失败",0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
+                });
+            },
+           /* 删除指定消息*/
+            removeMsg:function(msg_id,callback){
+                $http({
+                    method:API.removeMsg.method,
+                    url:API.removeMsg.url+msg_id,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback("获取消息失败",0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
+                });
+            }
+
+        };
+
+    })
+
+    /*折扣卡服务*/
+    .factory('DiscountCardSer',function(API,$http,TokenSer){
+        var data=null;
+        function initData(data){
+            for(var o in data){
+                data[o].Order.Specifications=angular.toJson(data[o].Order.Specifications);
+                data[o].Order.imgUrl=data[o].Order.Commodity.RollingImages.split('|')[0];
+            }
+            console.log(data[0].Order.Specifications[0].name);
+            return data;
+        }
+        return {
+            getData:function(){
+                return data;
+            },
+            /*请求折扣卡数据*/
+            requestData:function(callback){
+                $http({
+                    method:API.discountCard.method,
+                    url:API.discountCard.url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                       data=initData(response);
+                        callback(initData(response),1);
+                    }else{
+                        callback('',0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
+                });
+            }
+
         };
 
     })

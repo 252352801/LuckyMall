@@ -1,27 +1,31 @@
 <p class="menu-cont-title">
     <label>我的消息</label>
 </p>
+<div class="msg-tabs">
+    <a ng-class="{'cur':msg_type==0}" href="UCIndex/myMessage/0">[未读]</a>
+    <a ng-class="{'cur':msg_type==1}" href="UCIndex/myMessage/1">[已读]</a>
+</div>
 <ul class="my-msg-list">
-    <li>
-        <div class="icon-msg-type2"></div>
+    <li ng-repeat="list in data_msg">
+        <div ng-class="{'icon-msg-type2':list.MsgType==1,'icon-msg-type1':list.MsgType==0}"></div>
         <div class="cont1">
             <a>
-                <h2>您购买的<span class="color-org">小米手机4 4G版神机</span>订单发货啦！</h2>
+                <h2 ng-bind="list.Title"></h2>
             </a>
-            <p class="msg-time">10分钟前</p>
+            <p class="msg-time" ng-bind="list.showTime"></p>
         </div>
         <div class="cont2">
             <div class="inner-cont">
                 <p>
-                    <span class="icon-delete" ng-click="removeMsg()"></span>
+                    <span class="icon-delete" ng-click="removeMsg(list.Id)"></span>
                 </p>
                 <p class="bar-a-details">
-                    <a  class="color-org" href="/UCIndex/messageDetails/id=1">查看详情</a>
+                    <a  class="color-org" href="/UCIndex/messageDetails/{{'type='+msg_type+'_id='+list.Id+'_textId='+list.TextId}}">查看详情</a>
                 </p>
             </div>
         </div>
     </li>
-    <li>
+<!--    <li>
         <div class="icon-msg-type1"></div>
         <div class="cont1">
             <a>
@@ -39,18 +43,15 @@
                 </p>
             </div>
         </div>
-    </li>
+    </li>-->
 </ul>
 
 
+<!--
 <div class="UC msg page-index">
     <div class="prev"><</div>
     <div class="indexes">
-        <span class="cur">1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
+        <span class="cur" ng-repeat="item in page" ng-bind="item"></span>
     </div>
     <div class="next">></div>
-</div>
+</div>-->

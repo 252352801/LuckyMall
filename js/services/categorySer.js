@@ -9,7 +9,7 @@
         requestData:function(callback){
             $http({
                 method:'get',
-                url:app.interface.getAllCategory
+                url:app.API.getAllCategory
             }).success(function(response,status,headers,config){
                 data=response;
                 if(typeof callback=='function'){
