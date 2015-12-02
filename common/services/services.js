@@ -526,6 +526,7 @@ angular.module('LuckyCat.services',[])
                 data[o].discountUnitPrice=data[o].UnitPrice*data[o].DiscountVal;//折后单件价
                 data[o].cost=data[o].UnitPrice*data[o].Count*data[o].DiscountVal;//折后价
                 data[o].needToPay=data[o].cost-data[o].EarnestMoney;//待支付
+                data[o].supplierImg=data[o].Commodity.DetailImages.split('|')[0];
             }
             return data;
         };
@@ -544,6 +545,20 @@ angular.module('LuckyCat.services',[])
             },
             getFinishOrders:function(){
                 return orders_finish;
+            },
+            getOrder:function(order_status,order_id){
+                var obj={};
+                switch (parseInt(order_status)){
+                    case 1:obj=orders_unPay;break;
+                    case 2:obj=orders_paid;break;
+                    case 3:obj=orders_unRecieve;break;
+                    case 4:obj=orders_finish;break;
+                }
+                for(var o in obj){
+                    if(order_id==obj[o].Id){
+                        return obj[o];
+                    }
+                }
             },
             requestData:function(order_type,callback){ //order_type:1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
                 $http({
@@ -858,10 +873,12 @@ angular.module('LuckyCat.services',[])
         var data=null;
         function initData(data){
             for(var o in data){
-                data[o].Order.Specifications=angular.toJson(data[o].Order.Specifications);
+                var spe=data[o].Order.Specifications;
+                data[o].Order.goodsProperty=JSON.parse(spe);
                 data[o].Order.imgUrl=data[o].Order.Commodity.RollingImages.split('|')[0];
+                data[o].discountPrice=(data[o].BaseDiscount*data[o].Order.UnitPrice).toFixed(2);
+                data[o].BaseDiscount=10*(data[o].BaseDiscount.toFixed(2));
             }
-            console.log(data[0].Order.Specifications[0].name);
             return data;
         }
         return {
@@ -879,7 +896,7 @@ angular.module('LuckyCat.services',[])
                 }).success(function(response,status,headers,config){
                     if(response){
                        data=initData(response);
-                        callback(initData(response),1);
+                        callback('',1);
                     }else{
                         callback('',0);
                     }

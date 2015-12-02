@@ -190,6 +190,10 @@ app.constant('API',{
     discountCard: { //获取折扣卡
         method:'get',
         url:'api/user/discountcard/get'
+    },
+    isMobileSignUp:{  //检测手机号码是否已经注册  后接手机号   返回true表示已注册
+        method:'get',
+        url:'api/user/checkmobile/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -504,6 +508,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './js/userCenter_js/controllers/myOrdersCtrl.js',
                     './js/userCenter_js/services/myOrdersSer.js'
+                ])
+            }
+        })
+        /*我的订单*/
+        .state('UCIndex.orderDetails', {
+            url: '/orderDetails/:order_status/:order_id',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/orderDetails.html",
+                    controller: 'OrderDetailsCtrl'
+                }
+            },
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/orderDetailsCtrl.js'
                 ])
             }
         })

@@ -11,6 +11,12 @@ angular.module('LuckyCat.services')
                          callback(response,0);
                      }
                 });
+        },
+        isSignUp:function(mb_num,callback){
+            $http.get(API.isMobileSignUp.url+mb_num)
+                .success(function(response){
+                    callback(response);
+                })
         }
     };
 })

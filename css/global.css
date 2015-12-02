@@ -200,7 +200,36 @@ input:focus{
     background:url(../res/icon/icon_good.png);
 }
 /*网站简介end*/
-
+.icon-discount{
+    display:inline-block;
+    height:22px;
+    line-height:20px;
+    padding:0px 8px;
+    background:#ff6700;
+    text-align:center;
+    color:#fff;
+    position:relative;
+    left:10px;
+}
+.icon-discount:before{
+    content:'';
+    display:block;
+    border-top:11px solid transparent;
+    border-right:11px solid #ff6700;
+    border-bottom:11px solid transparent;
+    position:absolute;
+    left:-11px;
+}
+.icon-discount:after{
+    content:'';
+    display:block;
+    width:3px;
+    height:3px;
+    background:#fff;
+    position:absolute;
+    left:0px;
+    top:9px;
+}
 /*==============
    次页脚begin
 ===============*/
@@ -1768,8 +1797,21 @@ a.icon-mb-link{
     margin-top:25px;
     width:100%;
 }
+.form-register .checked:after{
+    content:'';
+    display:block;
+    width:24px;
+    height:24px;
+    background:url(../res/icon/icon_checked.png) no-repeat;
+    background-size: 100%;
+    position:absolute;
+    left:100%;
+    top:7px;
+    margin-left:5px;
+}
 .form-register p{
     margin-bottom:20px;
+    position: relative;
 }
 .form-register p input{
     box-sizing:border-box;

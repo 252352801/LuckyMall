@@ -18,8 +18,8 @@
     </div>
     <div class="order-list" ng-repeat="list in data_orders.curPage">
         <div class="order-list-top">
-            <img src="./res/test/test_brand6.jpg" alt=""/>
-
+           <!-- <img src="./res/test/test_brand6.jpg" alt=""/>-->
+            <img ng-src={{imgHost+list.supplierImg}} />
             <p class="seller-name"><a href="/login" title="" ng-bind="list.SupplierName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
@@ -55,7 +55,7 @@
                 <div>
                     <p class="color-org" ng-if="list.OrderStatus==1">等待付款</p>
 
-                    <p><a href="#">订单详情</a></p>
+                    <p><a href="/UCIndex/orderDetails/{{list.OrderStatus}}/{{list.Id}}">订单详情</a></p>
 
                     <p ng-if="list.OrderStatus==3">已发货</p>
 

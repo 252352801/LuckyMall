@@ -215,6 +215,10 @@
     float:right;;
     margin-right:25px;
 }
+.UC-menu-cont-wrap{
+    width:94%;
+    margin:0 auto;
+}
 .UC-menu-cont{
     float:left;
     margin-left:17px;
@@ -737,6 +741,7 @@
 .dc-cart-li .details{
     box-sizing:border-box;
     width:360px;
+    min-height:115px;
     padding-left:135px;
     overflow:hidden;
     position:relative;
@@ -751,6 +756,7 @@
     position:absolute;
     left:0px;
     top:0px;
+    text-align: center;
 }
 .img-container img{
     vertical-align:middle;
@@ -1260,3 +1266,255 @@
     animation: none;
     margin: 30px auto;
 }
+
+/*===================
+  订单详情 begin
+====================*/
+.OD{
+    padding-top:15px;
+    padding-bottom:25px;
+    font-size:14px;
+}
+.OD label{
+    color:#8d8e92;
+}
+.OD .bar-order-sp{
+    margin-bottom:45px;
+}
+.OD .bar-order-sp label:nth-child(n+2){
+    margin-left:25px;
+}
+.OD .order-status{
+    margin-bottom:25px;
+    overflow:hidden;
+}
+.OD .order-status .item{
+    float:left;
+    width:33.3333333333%;
+    text-align:center;
+}
+.OD .order-status .item-name{
+    font-size:16px;
+    color:#666;
+}
+.OD .order-status .line{
+    width:98%;
+    margin:20px auto;
+    height:5px;
+    background:#d3d3d3;
+    position:relative;
+}
+.OD .order-status .line:before{
+    content: '';
+    display:block;
+    width:12px;
+    height:12px;
+    border-radius:6px;
+    background:#d3d3d3;
+    position: absolute;
+    left:50%;
+    top:-4px;
+    margin-left:-6px;
+}
+.OD .order-status .line:after{
+    content: '';
+    display:block;
+    width:4px;
+    height:4px;
+    border-radius:6px;
+    background:#fff;
+    position: absolute;
+    left:50%;
+    top:0px;
+    margin-left:-2px;
+}
+.OD .order-status .item.finish .item-name{
+    color:#24861f;
+}
+.OD .order-status .item.finish .line{
+    background:#51bb4c;
+}
+.OD .order-status .item.finish .line:before{
+    background:#51bb4c;
+}
+.OD .order-status .time{
+    color:#8d8e92;
+    font-size:12px;
+}
+.OD .box-commodity{
+    border:1px solid #f1f1f1;
+}
+.OD .box-commodity .top{
+    height:40px;
+    background:#f1f1f1;
+    line-height:40px;
+    overflow: hidden;
+}
+.OD .box-commodity .top img{
+    width:30px;
+    height:30px;
+    float:left;
+    background:#fff;
+    margin-left:15px;
+    margin-top:5px;
+    margin-right:8px;
+   /* margin-left:15px;
+    margin-right:8px;*/
+}
+.OD .box-commodity .top a{
+    display:inline-block;
+    font-size:14px;
+    color:#333;
+    float:left;
+    cursor:pointer;
+}
+.OD .box-commodity .top a:after{
+    content: '>';
+    color:#666;
+    font-family:'新宋体';
+}
+.OD .box-commodity .cont{
+    min-height:115px;
+    padding:18px 0px;
+    overflow:hidden;
+}
+.box-commodity .cont1,.box-commodity .cont2,.box-commodity .cont3,.box-commodity .cont4{
+    float: left;
+}
+.OD .box-commodity .cont1{
+    box-sizing:border-box;
+    width:345px;
+    padding-left:100px;
+    position: relative;
+    padding-right:10px;
+}
+.OD .box-commodity .cont1 .img-container{
+    display:table-caption;
+    box-sizing:border-box;
+    width:100px;
+    height:100px;
+    padding:0px 10px;
+    position:absolute;
+    left:0px;
+    top:7px;
+    text-align:center;
+}
+.OD .box-commodity .cont1 .img-container img{
+    display:inline-block;
+    max-width:100%;
+    max-height:100%;
+    vertical-align:middle;
+}
+.OD .box-commodity .cont1 h2{
+    font-size:14px;
+    color:#333;
+    font-weight:500;
+    display:inline-block;
+    margin-top:3px;
+}
+.OD .box-commodity .cont1 small{
+    color:#666;
+}
+.OD .box-commodity .cont1 .property{
+    font-size:13px;
+    color:#8d8e92;
+    margin-top:10px;
+}
+.OD .box-commodity .cont2{
+    box-sizing:border-box;
+    width:125px;
+    padding:0px 10px;
+    text-align:center;
+}
+.OD .box-commodity .cont2 p{
+    text-decoration:line-through;
+    font-size:14px;
+    color:#8d8e92;
+    line-height:90px;
+}
+.OD .box-commodity .cont3{
+    box-sizing:border-box;
+    width:260px;
+    padding:0px 10px;
+    line-height: 90px;
+    text-align: center;
+    display:table-caption;
+}
+.OD .box-commodity .cont3 .inner-cont{
+    display:inline-block;
+    vertical-align:middle;
+    text-align:center;
+    line-height:24px;
+}
+.OD .box-commodity .cont3 .inner-cont .disc-cost{
+    font-size:18px;
+    color:#ea3127;
+}
+.OD .icon-discount{
+    font-size:13px;
+}
+.OD .box-commodity .cont4{
+    width:140px;
+    text-align:center;
+    color:#666;
+    line-height:80px;
+}
+.OD .box-commodity .cont4 a{
+    cursor:pointer;
+}
+.OD .box-logistics {
+    margin-top:35px;
+}
+.OD .box-logistics .title{
+    margin-bottom:10px;
+    font-size:18px;
+    color:#333;
+    font-weight: 500;
+}
+.OD .box-logistics label{
+    margin-right:10px;
+}
+.OD .box-logistics .item{
+    line-height:30px;
+}
+.OD .logistics-details{
+    overflow:hidden;
+    line-height:24px;
+    font-size:12px;
+    color:#8d8e92;
+}
+.OD .logistics-details label,.OD .logistics-details .logistics-info{
+    float: left;
+    margin-top:5px;
+}
+.OD .logistics-details .date{
+    font-size:14px;
+    color:#333;
+    margin-top:10px;
+}
+.OD .logistics-details .time{
+    margin-right:15px;
+}
+.OD .box-consignee,.OD .box-invoice{
+    margin-top:35px;
+    line-height:30px;
+}
+.OD .box-consignee h3,.OD .box-invoice h3{
+    font-size:18px;
+    font-weight:500;
+    margin-bottom: 3px;
+}
+.OD .box-cost{
+    margin-top:35px;
+    border-top:1px solid #f1f1f1;
+    padding-top:20px;
+    text-align:right;
+}
+.OD .box-cost p span{
+    min-width:150px;
+    color:#ff6700;
+}
+.OD .box-cost .real-cost{
+    font-size:24px;
+}
+/*订单详情 end*/

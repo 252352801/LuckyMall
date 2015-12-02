@@ -182,36 +182,6 @@
 .payed{
    color:#ea3127;
 }
-.icon-discount{
-    display:inline-block;
-    height:22px;
-    line-height:20px;
-    padding:0px 8px;
-    background:#ff6700;
-    text-align:center;
-    color:#fff;
-    position:relative;
-    left:10px;
-}
-.icon-discount:before{
-    content:'';
-    display:block;
-    border-top:11px solid transparent;
-    border-right:11px solid #ff6700;
-    border-bottom:11px solid transparent;
-    position:absolute;
-    left:-11px;
-}
-.icon-discount:after{
-    content:'';
-    display:block;
-    width:3px;
-    height:3px;
-    background:#fff;
-    position:absolute;
-    left:0px;
-    top:9px;
-}
 .cart-list .icon-remove{
     display:block;
     width:32px;

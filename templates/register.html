@@ -27,7 +27,7 @@
                     <a class="tab-item" href="/login">账号登录</a>
                     <a  class="tab-item cur">账号注册</a>
                 </div>
-                <form class="form-register tab-content">
+            <!--    <form class="form-register tab-content">
                     <p class="input-tips" ng-bind="tips" ng-show="hasInputError"></p>
                     <p>
                         <input class="input-reg-username" type="text" placeholder="手机号" ng-model="reg_cellPhone" require-cell-phone inputTips="showTips" autocomplete="false"/>
@@ -51,7 +51,51 @@
                     <p>
                         <a href="#" class="color-org" ng-click="showAlert()">《幸运猫用户协议》</a>
                     </p>
+                </form>-->
+
+
+
+                <form class="form-register tab-content" name="form_register" novalidate="novalidate" ng-submit="submitRegister()">
+                    <p class="input-tips" ng-bind="tips" ng-show="hasInputError"></p>
+                    <p ng-class="{'checked':form_register.mobile.$valid}">
+                        <input class="input-reg-username"  placeholder="手机号" ng-model="mobile" autocomplete="false" name="mobile" ng-pattern="/^[1][358]\d{9}$/" required ng-blur="isMobileCanRegister()"/>
+                    </p>
+                    <p class="p-verifyCode">
+                        <input  placeholder="验证码" ng-model="code"  autocomplete="false" maxlength="6" name="code" required ng-disabled="form_register.mobile.$invalid"/>
+                        <input  class="btn-getCode" type="button" value="获取验证码"  btn-count-down="60" require={{isValid(mobile)&&form_register.mobile.$valid}} ng-click="getVerifyCode(mobile)" />
+                    </p>
+                    <p ng-class="{'checked':form_register.password.$valid}">
+                        <input  type="password" placeholder="设置您的密码" ng-model="password" autocomplete="false" name="password" required ng-disabled="form_register.code.$invalid||form_register.mobile.$invalid" onpaste="return false"/>
+                    </p>
+                    <p ng-class="{'checked':form_register.re_password.$valid&&form_register.re_password.$modelValue==form_register.password.$modelValue}">
+                        <input  type="password" placeholder="再次输入密码" ng-model="re_password" autocomplete="false" name="re_password" required ng-disabled="form_register.password.$invalid||form_register.mobile.$invalid" onpaste="return false" />
+                    </p>
+                    <p>
+                        <input  type="text" placeholder="昵称" ng-model="nickname" autocomplete="false" name="nickname" ng-disabled="form_register.re_password.$invalid"/>
+                    </p>
+                    <p>
+                        <input class="btn btn-register" type="submit" ng-value="value_btn" />
+                    </p>
+                    <p>
+                        <a href="#" class="color-org" ng-click="showAlert()">《幸运猫用户协议》</a>
+                    </p>
                 </form>
+
+             <!--   <form name="form" novalidate="novalidate" ng-submit="test()">
+                    <p>
+                        <input name="test1" placeholder="测试1" require ng-model="test1" ng-pattern="/^[1][358]\d{9}$/" required  ng-blur="tt('test1')" />
+                        <p ng-show="form.test1.$error.pattern">您输入的手机号码有误！</p>
+                    </p>
+                    <p>
+                        <input placeholder="测试2" ng-model="test2" name="test2" ng-minlength="5" ng-change="tt(test2)"/>
+                    </p>
+                    <p>
+                        <input placeholder="测试3" ng-model="test3" name="test3" ng-minlength="10"/>
+                    </p>
+                    <p>
+                        <input type="submit"  />
+                    </p>
+                </form>-->
             </div>
         </div>
     </div>

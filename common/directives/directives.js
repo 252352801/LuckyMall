@@ -198,7 +198,7 @@ angular.module('LuckyCat')
             transclude: true,
             link: function (scope, element, attrs) {
                 /*隐藏反馈窗口*/
-                scope.showFeedbackModal=function(){
+                scope.showFeedbackModal = function () {
                     scope.$emit('show-feedback-modal');
                 };
             }
@@ -369,7 +369,7 @@ angular.module('LuckyCat')
                 var bodyHeight = window.screen.availHeight;//body（页面）可见区域的总高度
                 for (var i = 0; i < imgElements.length; i++) {
                     if (imgElements[i].getAttribute("real-src") != null) {
-                        addClass(imgElements[i],'img-loading');
+                        addClass(imgElements[i], 'img-loading');
                         lazyImgArr.push(imgElements[i]);
                     }
                 }
@@ -378,9 +378,9 @@ angular.module('LuckyCat')
                     if (temp < scrollHeight) {//为true表示是向下滚动，否则是向上滚动，不需要执行动作。
                         for (var k = 0; k < lazyImgArr.length; k++) {
                             var imgTop = getPosition(lazyImgArr[k]).top;//（图片纵坐标）
-                            if (imgTop - scrollHeight+150<= bodyHeight) {
+                            if (imgTop - scrollHeight + 150 <= bodyHeight) {
                                 lazyImgArr[k].setAttribute('src', lazyImgArr[k].getAttribute("real-src"));
-                                addClass(lazyImgArr[k],'img-loaded');
+                                addClass(lazyImgArr[k], 'img-loaded');
                                 //removeClass(lazyImgArr[k],'img-loading');
                                 lazyImgArr.splice(k, 1);
                             }
@@ -403,7 +403,7 @@ angular.module('LuckyCat')
             restrict: 'A',
             link: function (scope, element, attrs) {
                 element.bind('click', function () {
-                    if (attrs.require == '' || attrs.require == undefined) {
+                    if (attrs.require == 'false') {
                         return;
                     }
                     element.attr('disabled', true);
@@ -551,17 +551,17 @@ angular.module('LuckyCat')
     .directive('tempSrc', function () {
         return {
             link: function (scope, element, attrs) {
-                var src=attrs.realSrc;
+                var src = attrs.realSrc;
                 attrs.$set('src', attrs.tempSrc);
                 var img = document.createElement("img");
-                img.src=src;
+                img.src = src;
                 element.addClass('img-loading');
                 img.onload = function () {
                     attrs.$set('src', src);
                     element.removeClass('img-loading');
                     element.addClass('img-loaded');
                 };
-                img.onerror=function(){
+                img.onerror = function () {
                     element.removeClass('img-loading');
                 };
             }
@@ -578,7 +578,7 @@ angular.module('LuckyCat')
     })
 
     /*图片滚动出现时加载*/
-    .directive('lazySrc', ['$window', '$document', function($window, $document){
+    .directive('lazySrc', ['$window', '$document', function ($window, $document) {
         var doc = $document[0],
             body = doc.body,
             win = $window,
@@ -586,11 +586,11 @@ angular.module('LuckyCat')
             uid = 0,
             elements = {};
 
-        function getUid(el){
+        function getUid(el) {
             return el.__uid || (el.__uid = '' + ++uid);
         }
 
-        function getWindowOffset(){
+        function getWindowOffset() {
             var t,
                 pageXOffset = (typeof win.pageXOffset == 'number') ? win.pageXOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.ScrollLeft == 'number' ? t : body).ScrollLeft,
                 pageYOffset = (typeof win.pageYOffset == 'number') ? win.pageYOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.ScrollTop == 'number' ? t : body).ScrollTop;
@@ -600,7 +600,7 @@ angular.module('LuckyCat')
             };
         }
 
-        function isVisible(iElement){
+        function isVisible(iElement) {
             var elem = iElement[0],
                 elemRect = elem.getBoundingClientRect(),
                 windowOffset = getWindowOffset(),
@@ -615,22 +615,22 @@ angular.module('LuckyCat')
                 xVisible,
                 yVisible;
 
-            if(elemOffsetY <= winOffsetY){
-                if(elemOffsetY + elemHeight >= winOffsetY){
+            if (elemOffsetY <= winOffsetY) {
+                if (elemOffsetY + elemHeight >= winOffsetY) {
                     yVisible = true;
                 }
-            }else if(elemOffsetY >= winOffsetY){
-                if(elemOffsetY <= winOffsetY + viewHeight){
+            } else if (elemOffsetY >= winOffsetY) {
+                if (elemOffsetY <= winOffsetY + viewHeight) {
                     yVisible = true;
                 }
             }
 
-            if(elemOffsetX <= winOffsetX){
-                if(elemOffsetX + elemWidth >= winOffsetX){
+            if (elemOffsetX <= winOffsetX) {
+                if (elemOffsetX + elemWidth >= winOffsetX) {
                     xVisible = true;
                 }
-            }else if(elemOffsetX >= winOffsetX){
-                if(elemOffsetX <= winOffsetX + viewWidth){
+            } else if (elemOffsetX >= winOffsetX) {
+                if (elemOffsetX <= winOffsetX + viewWidth) {
                     xVisible = true;
                 }
             }
@@ -638,12 +638,12 @@ angular.module('LuckyCat')
             return xVisible && yVisible;
         };
 
-        function checkImage(){
-            Object.keys(elements).forEach(function(key){
+        function checkImage() {
+            Object.keys(elements).forEach(function (key) {
                 var obj = elements[key],
                     iElement = obj.iElement,
                     $scope = obj.$scope;
-                if(isVisible(iElement)){
+                if (isVisible(iElement)) {
                     iElement.attr('src', $scope.lazySrc);
                 }
             });
@@ -652,13 +652,13 @@ angular.module('LuckyCat')
         $win.bind('scroll', checkImage);
         $win.bind('resize', checkImage);
 
-        function onLoad(){
+        function onLoad() {
             var $el = angular.element(this),
                 uid = getUid($el);
 
             $el.css('opacity', 1);
 
-            if(elements.hasOwnProperty(uid)){
+            if (elements.hasOwnProperty(uid)) {
                 delete elements[uid];
             }
         }
@@ -668,16 +668,16 @@ angular.module('LuckyCat')
             scope: {
                 lazySrc: '@'
             },
-            link: function($scope, iElement,attrs){
-                attrs.$set('src','./res/images/default.png');
+            link: function ($scope, iElement, attrs) {
+                attrs.$set('src', './res/images/default.png');
                 iElement.bind('load', onLoad);
-                iElement.bind('error', function(){
-                    attrs.$set('src','./res/images/default.png');
+                iElement.bind('error', function () {
+                    attrs.$set('src', './res/images/default.png');
                 });
-                $scope.$watch('lazySrc', function(){
-                    if(isVisible(iElement)){
+                $scope.$watch('lazySrc', function () {
+                    if (isVisible(iElement)) {
                         iElement.attr('src', $scope.lazySrc);
-                    }else{
+                    } else {
                         var uid = getUid(iElement);
                         iElement.css({
                             'background-color': '#fff',
@@ -692,7 +692,7 @@ angular.module('LuckyCat')
                     }
                 });
 
-                $scope.$on('$destroy', function(){
+                $scope.$on('$destroy', function () {
                     iElement.unbind('load');
                 });
             }
@@ -706,10 +706,10 @@ angular.module('LuckyCat')
             restrict: 'A',
             link: function (scope, element, attrs) {
                 testLoad();
-                function testLoad(){
-                    if(scope[attrs.innerHtml]==undefined){
-                        setTimeout(testLoad,100);
-                    }else{
+                function testLoad() {
+                    if (scope[attrs.innerHtml] == undefined) {
+                        setTimeout(testLoad, 100);
+                    } else {
                         element.html(scope[attrs.innerHtml]);
                     }
                 }
@@ -722,13 +722,14 @@ angular.module('LuckyCat')
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                function polling(){
-                    if(attrs.countDown==''){
-                        $timeout(polling,500);
-                    }else{
+                function polling() {
+                    if (attrs.countDown == '') {
+                        $timeout(polling, 500);
+                    } else {
                         start();
                     }
                 }
+
                 polling();
                 function start() {
                     element.time = parseInt(attrs.countDown);
@@ -743,7 +744,7 @@ angular.module('LuckyCat')
                                 element.html(new_inner);
                             } else {
                                 clearInterval(element.timer);
-                                if (typeof scope[attrs.timeOver] == "function" ){
+                                if (typeof scope[attrs.timeOver] == "function") {
                                     scope[attrs.timeOver]();
                                 }
                             }
@@ -758,26 +759,27 @@ angular.module('LuckyCat')
     .directive('areaPicker', function (AreaSer) {
         return {
             link: function (scope, element, attrs) {
-                function start(){
+                function start() {
                     var data_area = AreaSer.getData();
                     areaPicker({
                         elem: document.getElementById(attrs.id),
                         data: data_area,
                         callback: function () {
-                            if(typeof scope[attrs.areaPickerFinish]=='function'){//选择完毕的回调
-                                var val=element.val()||element.html();
+                            if (typeof scope[attrs.areaPickerFinish] == 'function') {//选择完毕的回调
+                                var val = element.val() || element.html();
                                 scope[attrs.areaPickerFinish](val);
                             }
                         }
                     });
                 }
-                if(AreaSer.getData()==null) {
+
+                if (AreaSer.getData() == null) {
                     AreaSer.requestData(function (response, status) {
                         if (status == 1) {
                             start();
                         }
                     });
-                }else{
+                } else {
                     start();
                 }
             }

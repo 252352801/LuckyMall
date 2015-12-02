@@ -1,6 +1,8 @@
 <p class="menu-cont-title">
     <label>我的折扣卡</label>
 </p>
+
+<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
 <!--<div class="discount-card-tabs">
     <a ng-class="{'cur':card_status==0}" href="/UCIndex/myDiscountCards/status=0">未使用</a>
     <a ng-class="{'cur':card_status==1}" href="/UCIndex/myDiscountCards/status=1">已使用</a>
@@ -10,22 +12,18 @@
     <li class="dc-cart-li" ng-repeat="list in data_card">
         <div class="details">
             <a class="img-container">
-                <img src="./res/test/g_dt_bimg.jpg" alt=""/>
+                <img real-src={{imgHost+list.imgUrl}} alt="" temp-src="./res/images/default.png" />
             </a>
 
             <h2 ng-bind="list.Order.CommodityName"></h2>
 
-            <p ng-repeat="">型号：标准版</p>
-
-            <p>颜色：金色</p>
-
-            <p>网络制式：全网通16G</p>
+            <p ng-repeat="property in list.Order.goodsProperty" ng-bind="property.name+'：'+property.value"></p>
         </div>
         <div class="price">
             <div class="cont">
                 <p>
                     <label>折后价：</label>
-                    <span class="dc-price">￥2100</span>
+                    <span class="dc-price" ng-bind="'￥'+list.discountPrice"></span>
                 </p>
                 <p class="old-price" ng-bind="'原价'+list.Order.Commodity.RetailPrice"></p>
             </div>
@@ -33,10 +31,10 @@
         <div class="card">
             <div class="card-top">
                 <label></label>
-                <span><font>7</font>折</span>
+                <span><font ng-bind="list.BaseDiscount"></font>折</span>
             </div>
             <p>使用说明：限本商品使用</p>
-            <p>使用期限：2015.08.15-2015.12.03</p>
+           <!-- <p>使用期限：2015.08.15-2015.12.03</p>-->
         </div>
     </li>
 <!--    <li class="dc-cart-li">
@@ -168,7 +166,7 @@
         </div>
     </li>-->
 </ul>
-<div class="UC page-index">
+<!--<div class="UC page-index">
     <div class="prev"><</div>
     <div class="indexes">
         <span class="cur">1</span>
@@ -178,4 +176,4 @@
         <span>5</span>
     </div>
     <div class="next">></div>
-</div>
+</div>-->
