@@ -21,10 +21,12 @@
             </p>
         </div>
         <ul>
-            <li ng-repeat="category in data_filter.FilterModels" ng-if="!hasSelectedItem(category.FilterItemModels)">
-                <span ng-bind="category.FilterName+'：'"></span>
+           <!-- <li ng-repeat="filter in data_filter.FilterModels" ng-if="!hasSelectedItem(filter.FilterItemModels)">-->
+            <li ng-repeat="filter in data_filter.FilterModels" >
+                <span ng-bind="filter.FilterName+'：'"></span>
                 <p>
-                    <a  ng-class="{'cur':sub_c.isSelected==true}" ng-repeat="sub_c in category.FilterItemModels" ng-bind="sub_c.ItemValue" title={{sub_c.Value}} ng-click="select(sub_c.Id)">
+                    <a ng-class="{'cur':!hasSelectedItem(filter.FilterItemModels)}" ng-click="resetFilter(filter.Id)">全部</a>
+                    <a  ng-class="{'cur':sub_c.isSelected==true}" ng-repeat="sub_c in filter.FilterItemModels" ng-bind="sub_c.ItemValue" title={{sub_c.Value}} ng-click="select(sub_c.Id)">
                     </a>
                 </p>
             </li>

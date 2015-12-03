@@ -10,7 +10,7 @@
             <p>
                 <a href="/list/{{'category='+category.Id+'_item='+sub_c1.Id}}" title="" ng-repeat="sub_c1 in category.FilterModels[0].FilterItemModels" ng-bind="sub_c1.ItemValue"></a>
             </p>
-
+<!--
             <div class="hide-category">
                 <div class="category-filters" ng-repeat="sub_c in category.FilterModels">
                     <h4 class="pull-left" ng-bind="sub_c.FilterName"></h4>
@@ -18,11 +18,7 @@
                         <a href="/list/{{'category='+category.Id+'_item='+filter.Id}}" ng-repeat="filter in sub_c.FilterItemModels" ng-bind="filter.ItemValue"></a>
                     </p>
                 </div>
-            </div>
+            </div>-->
         </li>
     </ul>
-<!--    <p class="category-more" ng-if="showSubCategory">
-        <a title="" ng-click="showMore()" ng-show="!showMoreCategory">查看更多</a>
-        <a title="" ng-click="hideMore()" ng-show="showMoreCategory">收起</a>
-    </p>-->
 </div>

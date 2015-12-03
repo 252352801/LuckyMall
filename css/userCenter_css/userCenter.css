@@ -1509,6 +1509,7 @@
     border-top:1px solid #f1f1f1;
     padding-top:20px;
     text-align:right;
+    line-height:30px;
 }
 .OD .box-cost p span{
     min-width:150px;
@@ -1516,5 +1517,158 @@
 }
 .OD .box-cost .real-cost{
     font-size:24px;
+    line-height:36px;
 }
+.OD .msg-board h3{
+    font-size:18px;
+    font-weight:500;
+    margin-bottom:20px;
+}
+.OD .msg-board{
+    margin-top:35px;
+}
+.OD .msg-board .msg-time,.OD .msg-board .me,.OD .msg-board .supplier-name{
+    display:inline-block;
+}
+.OD .msg-board .msg-time{
+    margin-left: 15%;
+    font-size:12px;
+    color:#999;
+}
+.OD .msg-board ul{
+    overflow:hidden;
+}
+.OD .msg-board li{
+    margin-top:10px;
+}
+.OD .msg-board .supplier{
+    overflow:hidden;
+}
+.OD .msg-board .supplier-name{
+    color:#ff6700;
+}
+.OD .msg-board .supplier{
+    float: right;
+}
+.msg-board .supplier .msg-time{
+    margin-right:15%;
+}
+.msg-board .supplier .bar-sender{
+    text-align:right;
+}
+.OD .msg-board .msg{
+    border:1px solid #ddd;
+    display:inline-block;
+    padding:10px;
+    border-radius:10px;
+    margin-left:10px;
+    margin-right: 10px;
+    margin-top:10px;
+    position: relative;
+}
+.OD .msg-board  .msg:before{
+    content:'';
+    border:5px solid transparent;
+    border-bottom:6px solid #ddd;
+    border-right-width: 8px;
+    position:absolute;
+    left:10px;
+    top:-12px;
+}
+.OD .msg-board .msg:after{
+    content:'';
+    border:5px solid transparent;
+    border-bottom:6px solid #fff;
+    border-right-width: 8px;
+    position:absolute;
+    left:10px;
+    top:-10px;
+}
+.OD .msg-board .supplier .msg:before,.OD .msg-board .supplier .msg:after{
+    left:100%;
+    margin-left:-30px;
+    border-right-width:5px;
+    border-left-width:8px;
+}
+.OD .msg-board textarea{
+    box-sizing:border-box;
+    display:block;
+    width:100%;
+    height:120px;
+    border:1px solid #ddd;
+    padding:10px;
+    margin-top:30px;
+    margin-bottom:10px;
+    font-size: 13px
+}
+.OD .form-msg .bar-buttons{
+    overflow:hidden;
+}
+.OD .btn-submit-msg{
+    display:inline-block;
+    width:105px;
+    height:35px;
+    background:#ff6700;
+    color:#fff;
+    text-align:center;
+    border:0px;
+    cursor:pointer;
+    float: right;
+}
+.OD .bar-msg-file{
+    position: relative;
+    top:-36px;
+}
+.btn-file-upload{
+    width:80px;
+    height:80px;
+    border:1px solid #ddd;
+    display:table-caption;
+    text-align:center;
+    line-height:80px;
+    position: relative;
+    float:left;
+    margin-left:15px;
+    margin-top:15px;
+    cursor:pointer;
+}
+.btn-file-upload .btn-add{
+    font-size:36px;
+    color:#ddd;
+}
+.btn-file-upload input{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    opacity: 0;
+    z-index: 2;
+    cursor:alias;
+}
+.btn-file-upload img{
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 0;
+    vertical-align: middle;
+}
+.btn-file-upload .btn-remove{
+    display:none;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 100%;
+    top: -45px;
+    font-size: 16px;
+    color: #CCC;
+    font-style:normal;
+}
+.btn-file-upload .btn-remove:hover{
+    color:#ff3300;
+}
+.btn-file-upload .btn-remove:last-child{
+    display:none;
+}
+
 /*订单详情 end*/

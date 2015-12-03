@@ -193,6 +193,41 @@ angular.module('LuckyCat.services',[])
             }
             return result;
         };
+        /*是否已经有筛选项*/
+        var hasItem=function(item_id){
+            for(var o in data_select.items){
+                if(item_id==data_select.items[o]){
+                    return true;
+                }
+            }
+            return false;
+        };
+        /*通过id获取筛选项*/
+        var getFilterById=function(filter_id){
+            for(var o in data_category.FilterModels){
+                if(filter_id==data_category.FilterModels[o].Id){
+                    return data_category.FilterModels[o];
+                }
+            }
+        };
+        /*通过筛选项id获取筛选器*/
+        var getFilterByItemId=function(item_id){
+            for(var o in data_category.FilterModels){
+                for(var i in data_category.FilterModels[o].FilterItemModels){
+                    if(item_id==data_category.FilterModels[o].FilterItemModels[i].Id){
+                        return data_category.FilterModels[o];
+                    }
+                }
+            }
+        };
+        /*从容器中删除选项*/
+        var removeItem=function(item_id){
+            for(var o in data_select.items){
+                if(item_id==data_select.items[o]){
+                    data_select.items.splice(o,1);
+                }
+            }
+        };
         return {
             getCategoryData:function(){
                 return data_category;
@@ -207,21 +242,37 @@ angular.module('LuckyCat.services',[])
                 data_select=new_data;
             },
             addSelection:function(item_id){
-                data_select.items.push(item_id);
-            },
-            removeSelection:function(item_id){
+                var filter_id=getFilterByItemId(item_id).Id;
                 for(var o in data_select.items){
-                    if(item_id==data_select.items[o]){
+                    var f_i=getFilterByItemId(data_select.items[o]).Id;
+                    if(filter_id==f_i){
                         data_select.items.splice(o,1);
                     }
                 }
+                console.log(angular.toJson(data_select.items));
+                if(!hasItem(item_id)){
+                    data_select.items.push(item_id);
+                }
+            },
+            /*重置某一行筛选项*/
+            resetFilter:function(filter_id){
+                var filter = getFilterById(filter_id);
+                for (var o in filter.FilterItemModels) {
+                    filter.FilterItemModels[o].isSelected = false;//选择状态重置为false
+                    removeItem(filter.FilterItemModels[o].Id);//将该选项的已选项从容器中移除
+                }
+            },
+            removeSelection:function(item_id){
+                removeItem(item_id);
             },
             select:function(){
-                for(var i=0;i<data_category.FilterModels.length;i++){
-                    for(var j=0;j<data_category.FilterModels[i].FilterItemModels.length;j++){
-                        for(var o in data_select.items){
-                            if(data_select.items[o]==data_category.FilterModels[i].FilterItemModels[j].Id){
-                                data_category.FilterModels[i].FilterItemModels[j].isSelected=true;
+                if(data_category&&data_category.FilterModels) {
+                    for (var i = 0; i < data_category.FilterModels.length; i++) {
+                        for (var j = 0; j < data_category.FilterModels[i].FilterItemModels.length; j++) {
+                            for (var o in data_select.items) {
+                                if (data_select.items[o] == data_category.FilterModels[i].FilterItemModels[j].Id) {
+                                    data_category.FilterModels[i].FilterItemModels[j].isSelected = true;
+                                }
                             }
                         }
                     }
@@ -229,9 +280,11 @@ angular.module('LuckyCat.services',[])
             },
             /*清除所有已选状态*/
             clearSelect:function(){
-                for(var i=0;i<data_category.FilterModels.length;i++){
-                    for(var j=0;j<data_category.FilterModels[i].FilterItemModels.length;j++){
-                        data_category.FilterModels[i].FilterItemModels[j].isSelected=false;
+                if (data_category&&data_category.FilterModels) {
+                    for (var i = 0; i < data_category.FilterModels.length; i++) {
+                        for (var j = 0; j < data_category.FilterModels[i].FilterItemModels.length; j++) {
+                            data_category.FilterModels[i].FilterItemModels[j].isSelected = false;
+                        }
                     }
                 }
             },
@@ -526,7 +579,10 @@ angular.module('LuckyCat.services',[])
                 data[o].discountUnitPrice=data[o].UnitPrice*data[o].DiscountVal;//折后单件价
                 data[o].cost=data[o].UnitPrice*data[o].Count*data[o].DiscountVal;//折后价
                 data[o].needToPay=data[o].cost-data[o].EarnestMoney;//待支付
-                data[o].supplierImg=data[o].Commodity.DetailImages.split('|')[0];
+                if(data[o].ConsigneeInfo!=(''||null)){
+                    console.log("111");
+                    data[o].ConsigneeInfo=JSON.parse(data[o].ConsigneeInfo);//收货地址
+                }
             }
             return data;
         };
@@ -689,6 +745,24 @@ angular.module('LuckyCat.services',[])
                         }else{
                             callback(response,0);
                         }
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(){
+                    callback(null,-1);
+                });
+            },
+            getTradeInfoByOrderId:function(order_id,callback){
+                $http({
+                    method: API.getTradeInfo.method,
+                    url: API.getTradeInfo.url+order_id,
+                    timeout: 10000,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }) .success(function(response){
+                    if(response){
+                        callback(response,1);
                     }else{
                         callback(response,0);
                     }
@@ -906,5 +980,27 @@ angular.module('LuckyCat.services',[])
             }
 
         };
-
     })
+
+    .factory('LogisticsSer',function(API,$http,TokenSer){
+        return {
+           /* 获取物流信息*/
+            getLogisticsInfo:function(order_id,type,callback){ //type状态  0售前  1售后
+                $http({
+                    method:API.getLogisticsInfo.method,
+                    url:API.getLogisticsInfo.url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback('',0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
+                });
+            }
+        }
+    });

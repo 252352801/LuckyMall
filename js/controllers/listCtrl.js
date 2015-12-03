@@ -13,8 +13,8 @@ angular.module('LuckyCat.controllers')
             initData();
         }
         /*选择筛选项*/
-        $scope.select = function (val_id) {
-            FilterSer.addSelection(val_id);
+        $scope.select = function (item_id) {
+            FilterSer.addSelection(item_id);
             $state.go('list', {params: setUrlParams()});
         };
         /*取消选择*/
@@ -30,6 +30,11 @@ angular.module('LuckyCat.controllers')
                 }
             }
             return false;
+        };
+       /*重置该选项*/
+        $scope.resetFilter=function(filter_id){
+           FilterSer.resetFilter(filter_id);
+            $state.go('list', {params: setUrlParams()});
         };
         $scope.pageIndex = 1;//当前页
         /*前一页*/
@@ -68,6 +73,7 @@ angular.module('LuckyCat.controllers')
             }
             this.category = arr[0].split('=')[1];
             this.items = items;
+            console.log(angular.toJson(items));
         }
 
         /*初始化数据*/
@@ -121,7 +127,7 @@ angular.module('LuckyCat.controllers')
             var result = 'category=' + params.category;
             var _items = FilterSer.getSelectData().items;
             for (var o in _items) {
-                result += '_item=' + _items[o];
+                    result += '_item=' + _items[o];
             }
             return result;
         }

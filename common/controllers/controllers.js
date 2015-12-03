@@ -170,7 +170,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
          if(res>0){
              return res;
          }else{
-             return 1800;
+             return 0;
          }
      };
     function loadOrdersData(){

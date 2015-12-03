@@ -201,6 +201,7 @@
 .list .page-location{
     margin-bottom:15px;
     display:inline-block;
+    margin-top: 10px;
 }
 .list .page-location a{
     color:#999;
@@ -231,18 +232,18 @@
     font-size:13px;
     font-weight:500;
     vertical-align:top;
-    line-height:30px;
+    line-height:28px;
 }
 .filters ul li p{
     display:inline-block;
     width:80%;
-    line-height: 30px;
+    line-height:24px;
 }
 .filters ul li a{
     display:inline-block;
     margin-left:20px;
     border:1px solid transparent;
-    padding:3px 10px;
+    padding:1px 8px;
     color:#B16B33;
     font-size:12px;
     font-weight:500;
@@ -258,11 +259,12 @@
     top:0px;
 }
 .filters ul li a.cur{
-    border-color:#ff6700;
-    color:#ff6700;
+    color: #fff;
+    background: #ff542b;
+    font-size:12px;
 }
-.filters ul li a:hover{
-    color:#ff6700;
+.filters ul li a.cur:hover{
+    color:#fff;
 }
 .filters .choices {
  display:inline-block;

@@ -784,4 +784,40 @@ angular.module('LuckyCat')
                 }
             }
         }
-    });
+    })
+
+/*图片上传*/
+.directive('btnFileUpload', function ($compile) {
+    return {
+        link: function (scope, element, attrs) {
+            if(!scope.count){
+                scope.count=1;
+            }
+           element.find('input').bind('change',function(e){
+               setImagePreview();
+               function setImagePreview() {
+                   var is_img_null=(!element.find('img').attr('src')||element.find('img').attr('src')=='')?true:false;
+                   var new_f_box=$compile(element.clone())(scope);
+                   element.find('span').css('display','none');
+                   element.find('img').attr('src',window.URL.createObjectURL((e.srcElement || e.target).files[0]));
+                   element.find('i').css('display','block');
+                   if(is_img_null){
+                       var max_count=parseInt(attrs.maxFileCount);
+                       if(scope.count<max_count) {
+                           element.after(new_f_box);
+                           scope.count++;
+                       }
+                   }
+                   element.find('i').bind('click',function(){
+                       var max_count=parseInt(attrs.maxFileCount);
+                       if(scope.count>=max_count){
+                           element.after(new_f_box);
+                       }
+                       element.remove();
+                       scope.count--;
+                   });
+               }
+           });
+        }
+    }
+});

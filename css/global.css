@@ -536,6 +536,7 @@ input:focus{
     color:#aaa;
     text-align:center;
     line-height:100px;
+    min-height: 520px;
 }
 .btn{
     display:inline-block;

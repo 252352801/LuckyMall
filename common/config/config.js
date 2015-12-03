@@ -39,9 +39,9 @@ app.constant('API',{
         method:'post',
         url: 'api/market/view'
     },
-    getAllCategory:{//获取所有分类
+    getAllCategory:{//获取所有分类(包含筛选器)
         method:'get',
-        url: 'api/category/all2'
+        url: 'api/category/allwithfilter/0'
     },
     goodsDetailsData:{//根据商品ID获取商品详情页数据 后接商品id
         method:'get',
@@ -165,7 +165,11 @@ app.constant('API',{
     },
     getTradeStatus: {//获取交易单状态  后接交易单ID
         method:'get',
-        url:  'api/order/gettradestatus/'
+        url:  'api/order/tradestatus/'
+    },
+    getTradeInfo:{ //获取交易单信息
+        method:'get',
+        url:'api/order/trade/'
     },
     getAreas: {//获取行政区域地址数据
         method:'get',
@@ -194,6 +198,10 @@ app.constant('API',{
     isMobileSignUp:{  //检测手机号码是否已经注册  后接手机号   返回true表示已注册
         method:'get',
         url:'api/user/checkmobile/'
+    },
+    getLogisticsInfo:{  //获取物流信息  后接 订单id/类型
+        method:'get',
+        url:'api/logistics/queryexpress/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
