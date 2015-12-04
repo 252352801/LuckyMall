@@ -19,13 +19,13 @@
                     <b class="icon-delete" title="删除选项" ng-click="cancelSelect(item.Id)">×</b>
                 </a>
             </p>
-       <!--     <p ng-repeat="mul_choice in data_filter.FilterModels">
+            <p ng-repeat="mul_choice in data_filter.FilterModels" ng-if="mul_choice.isMultiSelected">
                 <span ng-bind="mul_choice.FilterName+'：'"></span>
-                <a  ng-repeat="mul_item in mul_choice.FilterItemModels|filter:{isMultiSelected:false}">
-                    <span ng-bind="mul_item.ItemValue+',"></span>
+                <a  class="multi-item">
+                    <span ng-repeat="mul_item in mul_choice.FilterItemModels|filter:{isMultiSelected:false}" ng-bind="mul_item.ItemValue+','"></span>
                 </a>
                 <b class="icon-delete" title="删除选项" >×</b>
-            </p>-->
+            </p>
         </div>
         <ul>
            <!-- <li ng-repeat="filter in data_filter.FilterModels" ng-if="!hasSelectedItem(filter.FilterItemModels)">-->
