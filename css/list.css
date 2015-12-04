@@ -215,11 +215,30 @@
 }
 .filters ul li:first-child{ padding-top:10px;}
 .filters ul li{
-   padding:5px 0px;
+    padding: 8px 0px;
+    position: relative;
+}
+.filters ul li:last-child{
+    padding-bottom:15px;
 }
 .filters ul{
     border-top:1px solid #eee;
-    padding-bottom:10px;
+}
+.filters ul .btn-more{
+    border:1px solid #ddd;
+    background:none;
+    outline:none;
+    cursor:pointer;
+    color:#aaa;
+    font-size:12px;
+    vertical-align:top;
+    position: absolute;
+    left: 96%;
+    top: 12px;
+}
+.filters ul .btn-more:hover{
+    color:#666;
+    border-color:#aaa;
 }
 .filters ul li:hover{
     background:#fcfcfc;
@@ -232,16 +251,17 @@
     font-size:13px;
     font-weight:500;
     vertical-align:top;
-    line-height:28px;
+    line-height:22px;
 }
 .filters ul li p{
     display:inline-block;
-    width:80%;
-    line-height:24px;
+    width:86%;
+    line-height:18px;
 }
 .filters ul li a{
     display:inline-block;
     margin-left:20px;
+    margin-bottom:8px;
     border:1px solid transparent;
     padding:1px 8px;
     color:#B16B33;
@@ -262,6 +282,7 @@
     color: #fff;
     background: #ff542b;
     font-size:12px;
+    border-radius: 3px;
 }
 .filters ul li a.cur:hover{
     color:#fff;
@@ -299,4 +320,47 @@
 .filters .choices p:hover a{
      color:#ff6700;
  }
+
+.filters .box-multi-select{
+    display:inline-block;
+    width:84%;
+    border:1px solid #aaa;
+    padding-top: 10px;
+    background:#fff;
+}
+.filters .box-multi-select .bar-buttons{
+    text-align:center;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.filters .box-multi-select .bar-buttons button{
+    margin-right:20px;
+    cursor:pointer;
+}
+.my-checkbox{
+    line-height:20px;
+}
+.my-checkbox .checkbox{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    border:1px solid #999;
+    position:relative;
+    top:2px;
+    margin-right:3px;
+}
+.my-checkbox .label-checkbox{
+    display:inline-block;
+}
+
+.my-checkbox.checked .checkbox:after{
+    content:'';
+    display:block;
+    width:80%;
+    height:80%;
+    background:#666;
+    position:absolute;
+    left:10%;
+    top:10%;
+}
  /*列表 end*/

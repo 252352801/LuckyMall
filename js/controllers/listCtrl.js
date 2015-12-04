@@ -4,9 +4,10 @@ angular.module('LuckyCat.controllers')
         var params = new initSearchItems($stateParams.params);
         $scope.cate_id = params.category;
         $scope.items_id = params.items;//筛选项id
-        if (CategorySer.getData() == null) {
+        if (FilterSer.getCategoryData() == null) {
             /*如果分类数据为空则请求数据*/
             CategorySer.requestData(function () {//请求成功后的回调
+                FilterSer.setCategoryData(CategorySer.getCategoryById(params.category));
                 initData();//初始化数据
             });
         } else {
@@ -17,6 +18,29 @@ angular.module('LuckyCat.controllers')
             FilterSer.addSelection(item_id);
             $state.go('list', {params: setUrlParams()});
         };
+
+        /*多选提交搜索*/
+        $scope.multiSearch=function(filter_id){
+            FilterSer.cancelMultiSelect(filter_id);
+            FilterSer.addMultiSelection(filter_id);
+            $state.go('list', {params: setUrlParams()});
+        };
+
+        /*多选框开关*/
+        $scope.toggleMultiSelect=function(filter_id){
+            FilterSer.toggleMultiSelect(filter_id);
+        };
+       /* 关闭复选框*/
+        $scope.closeMultiSelect=function(filter_id){
+            FilterSer.cancelMultiSelect(filter_id);
+            FilterSer. resetMultiSelection(filter_id)
+        };
+
+        /*勾选与取消勾选*/
+        $scope.multiSelect=function(filter_id,item_id){
+            FilterSer.multiSelect(filter_id,item_id);
+        };
+
         /*取消选择*/
         $scope.cancelSelect = function (id) {
             FilterSer.removeSelection(id);
@@ -35,6 +59,16 @@ angular.module('LuckyCat.controllers')
         $scope.resetFilter=function(filter_id){
            FilterSer.resetFilter(filter_id);
             $state.go('list', {params: setUrlParams()});
+        };
+
+        /*判断是否已多选*/
+        $scope.isMultiSelected=function(choice){
+            for(var o in choice.FilterItemModels){
+                if(choice.FilterItemModels[o].isMultiSelected){
+                    return true;
+                }
+            }
+            return false;
         };
         $scope.pageIndex = 1;//当前页
         /*前一页*/
@@ -84,10 +118,9 @@ angular.module('LuckyCat.controllers')
                 items: params.items
             };
             FilterSer.setSelectData(data);
-            FilterSer.setCategoryData(CategorySer.getCategoryById(params.category));
             FilterSer.clearSelect();
-            $scope.data_filter = FilterSer.getCategoryData();
             FilterSer.select();
+            $scope.data_filter = FilterSer.getCategoryData();
             $scope.sortByPrice = true;//价格排序方式 true:升序,false:降序
             search({sort_price: $scope.sortByPrice});//搜索数据
         }

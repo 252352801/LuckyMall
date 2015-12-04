@@ -12,23 +12,41 @@
             <a class="category-name" ng-bind="data_filter.CategoryName" class="cur" href="/list/{{'category='+cate_id}}"></a>
         </div>
         <div class="choices">
-            <p ng-repeat="choice in data_filter.FilterModels" ng-if="hasSelectedItem(choice.FilterItemModels)">
+            <p ng-repeat="choice in data_filter.FilterModels" ng-if="hasSelectedItem(choice.FilterItemModels)&&!choice.isMultiSelected">
                 <span ng-bind="choice.FilterName+'：'"></span>
                 <a  ng-repeat="item in choice.FilterItemModels|filter:{isSelected:true}">
                     <span ng-bind="item.ItemValue"></span>
                     <b class="icon-delete" title="删除选项" ng-click="cancelSelect(item.Id)">×</b>
                 </a>
             </p>
+       <!--     <p ng-repeat="mul_choice in data_filter.FilterModels">
+                <span ng-bind="mul_choice.FilterName+'：'"></span>
+                <a  ng-repeat="mul_item in mul_choice.FilterItemModels|filter:{isMultiSelected:false}">
+                    <span ng-bind="mul_item.ItemValue+',"></span>
+                </a>
+                <b class="icon-delete" title="删除选项" >×</b>
+            </p>-->
         </div>
         <ul>
            <!-- <li ng-repeat="filter in data_filter.FilterModels" ng-if="!hasSelectedItem(filter.FilterItemModels)">-->
-            <li ng-repeat="filter in data_filter.FilterModels" >
+            <li ng-repeat="filter in data_filter.FilterModels" ng-if="!filter.isMultiSelected">
                 <span ng-bind="filter.FilterName+'：'"></span>
-                <p>
+                <p ng-show="!filter.isMulti">
                     <a ng-class="{'cur':!hasSelectedItem(filter.FilterItemModels)}" ng-click="resetFilter(filter.Id)">全部</a>
                     <a  ng-class="{'cur':sub_c.isSelected==true}" ng-repeat="sub_c in filter.FilterItemModels" ng-bind="sub_c.ItemValue" title={{sub_c.Value}} ng-click="select(sub_c.Id)">
                     </a>
                 </p>
+                <button class="btn-more" ng-click="toggleMultiSelect(filter.Id)" ng-bind="(filter.isMulti)?'收起':'多选'"></button>
+                <div class="box-multi-select" ng-show="filter.isMulti">
+                    <a ng-class="sub_c.isMultiSelected?'my-checkbox checked':'my-checkbox'" ng-repeat="sub_c in filter.FilterItemModels" ng-click="multiSelect(filter.Id,sub_c.Id)">
+                        <i class="checkbox"></i>
+                        <label class="label-checkbox" ng-class="{'cur':sub_c.isSelected==true}" ng-bind="sub_c.ItemValue" title={{sub_c.Value}}></label>
+                    </a>
+                    <p class="bar-buttons">
+                        <button ng-click="multiSearch(filter.Id)">确定</button>
+                        <button ng-click="closeMultiSelect(filter.Id)">取消</button>
+                    </p>
+                </div>
             </li>
         </ul>
     </div>

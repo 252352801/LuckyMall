@@ -78,8 +78,9 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             loadOrdersData();
         });
 
-     /*拦截未登录时的跳转*/
+     /*监听页面跳转*/
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
             if (toState.name == 'login') return; // 如果是进入登录界面则允许
             // 如果用户未登录
             if (!LoginSer.isLogin()) {

@@ -173,7 +173,7 @@ app.constant('API',{
     },
     getAreas: {//获取行政区域地址数据
         method:'get',
-        url:  'api/user/areas/get'
+        url:  'api/user/areas'
     },
     messageOfUnRead: {//未读消息
         method:'post',
@@ -193,7 +193,7 @@ app.constant('API',{
     },
     discountCard: { //获取折扣卡
         method:'get',
-        url:'api/user/discountcard/get'
+        url:'api/user/discountcard'
     },
     isMobileSignUp:{  //检测手机号码是否已经注册  后接手机号   返回true表示已注册
         method:'get',
@@ -202,6 +202,10 @@ app.constant('API',{
     getLogisticsInfo:{  //获取物流信息  后接 订单id/类型
         method:'get',
         url:'api/logistics/queryexpress/'
+    },
+    getCategoryById:{//通过ID获取品类数据
+        method:'get',
+        url:'api/category/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -710,8 +714,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     initAPI();
     function initAPI(){
         for(var o in API){
-            API[o].url=Host.develop+API[o].url;
+            API[o].url=Host.test+API[o].url;
         }
     }
 
-}]);
+   /*=============================================*/
+
+
+
+    }]);
+
+app.run(['$rootScope', '$location', '$window',function($rootScope, $location, $window) {
+    // initialise google analytics
+    $window.ga('create', 'UA-71031576-1', 'auto');  //UA-71031576-1为key
+    // track pageview on state change
+    $rootScope.$on('$stateChangeSuccess', function (event) {
+        $window.ga('send', 'pageview', $location.path());
+    });
+}])

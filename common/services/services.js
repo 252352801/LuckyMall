@@ -175,12 +175,6 @@ angular.module('LuckyCat.services',[])
             items:new Array()
         };
         var data_category=null;
-        /*清除与res下的所有选项*/
-        var clearSelections=function(res){
-            for(var o in res){
-                res[o].isSelected=false;
-            }
-        };
         var filterData=function(data){//筛选出正在销售的商品
             var result=new Array();
             var time_now=new Date();
@@ -228,39 +222,96 @@ angular.module('LuckyCat.services',[])
                 }
             }
         };
+        var initMulti=function(data){
+            for(var o in data.FilterModels){
+                if(!data.FilterModels[o].isMulti){
+                    data.FilterModels[o].isMulti=false;
+                }
+                for(var i in data.FilterModels[o].FilterItemModels){
+                    data.FilterModels[o].FilterItemModels[i].isMultiSelected=false;
+                }
+            }
+            return data;
+        };
+        var clearFilter=function(filter_id){
+            var filter = getFilterById(filter_id);
+            for (var o in filter.FilterItemModels) {
+                filter.FilterItemModels[o].isSelected = false;//选择状态重置为false
+                removeItem(filter.FilterItemModels[o].Id);//将该选项的已选项从容器中移除
+            }
+        };
         return {
             getCategoryData:function(){
                 return data_category;
             },
             setCategoryData:function(new_data){
-                data_category=new_data;
+                data_category=initMulti(new_data);
             },
             getSelectData:function(){
                 return data_select;
             },
+            toggleMultiSelect:function(filter_id){
+                for(var o in data_category.FilterModels){
+                    if(filter_id!=data_category.FilterModels[o].Id){
+                        data_category.FilterModels[o].isMulti=false;
+                    }else{
+                        data_category.FilterModels[o].isMulti=!data_category.FilterModels[o].isMulti;
+                    }
+                }
+            },
+            cancelMultiSelect:function(filter_id){
+                getFilterById(filter_id).isMulti=false;
+            },
             setSelectData:function(new_data){
                 data_select=new_data;
             },
+            /*增加筛选项*/
             addSelection:function(item_id){
                 var filter_id=getFilterByItemId(item_id).Id;
                 for(var o in data_select.items){
-                    var f_i=getFilterByItemId(data_select.items[o]).Id;
-                    if(filter_id==f_i){
-                        data_select.items.splice(o,1);
+                    if(item_id!=data_select.items[o]) {//选择的不是同一项时
+                        var f_i = getFilterByItemId(data_select.items[o]).Id;
+                        if (filter_id == f_i) {
+                            data_select.items.splice(o, 1);
+                        }
                     }
                 }
-                console.log(angular.toJson(data_select.items));
                 if(!hasItem(item_id)){
                     data_select.items.push(item_id);
+                }else{
+                    removeItem(item_id);
+                }
+            },
+            /*增加筛选项（多选）*/
+            addMultiSelection:function(filter_id){
+                clearFilter(filter_id);
+                var filter=getFilterById(filter_id);
+                for(var o in filter.FilterItemModels){
+                    if(filter.FilterItemModels[o].isMultiSelected){
+                            data_select.items.push(filter.FilterItemModels[o].Id);
+                    }
+                }
+                filter.isMultiSelected=true;
+            },
+            /*一个筛选器的多选操作*/
+            multiSelect:function(filter_id,item_id){
+                var filter=getFilterById(filter_id);
+                for(var o in filter.FilterItemModels){
+                    if(item_id==filter.FilterItemModels[o].Id){
+                       filter.FilterItemModels[o].isMultiSelected=!filter.FilterItemModels[o].isMultiSelected;
+                    }
+                }
+            },
+            /*重置该筛选器的多选*/
+            resetMultiSelection:function(filter_id){
+                var filter=getFilterById(filter_id);
+                for(var o in filter.FilterItemModels){
+                    filter.FilterItemModels[o].isMultiSelected=false;
                 }
             },
             /*重置某一行筛选项*/
             resetFilter:function(filter_id){
-                var filter = getFilterById(filter_id);
-                for (var o in filter.FilterItemModels) {
-                    filter.FilterItemModels[o].isSelected = false;//选择状态重置为false
-                    removeItem(filter.FilterItemModels[o].Id);//将该选项的已选项从容器中移除
-                }
+                clearFilter(filter_id);
             },
             removeSelection:function(item_id){
                 removeItem(item_id);
@@ -288,6 +339,24 @@ angular.module('LuckyCat.services',[])
                     }
                 }
             },
+
+
+            requestCategoryById:function(cate_id,callback){
+                $http({
+                    method:API.getCategoryById.method,
+                    url:API.getCategoryById.url+cate_id
+                }).success(function(response,status,headers,config){
+                    if(response&&status==200){
+                        data_category=response;
+                        callback(response,1);
+                    }else{
+                        callback('',0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback('网络错误',-1);
+                });
+            },
+
             search:function(params){
                 var post_data={
                     "Status":3,//3表示已上架商品
@@ -574,6 +643,7 @@ angular.module('LuckyCat.services',[])
         var orders_finish=null;
         var initData=function(data){
             for(var o in data){
+                data[o].brandImg=data[o].Brand?data[o].Brand.BrandImage:'';
                 data[o].Specifications=JSON.parse(data[o].Specifications);//产品规格字符串转换json
                 data[o].imageUrl=data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                 data[o].discountUnitPrice=data[o].UnitPrice*data[o].DiscountVal;//折后单件价
