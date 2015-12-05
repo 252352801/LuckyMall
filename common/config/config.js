@@ -244,7 +244,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         })
         /*列表页*/
         .state('list', {
-            url: '/list/:params',
+            url: '/list/:category/:filters',
             views: {
                 '': {
                     templateUrl: "templates/list.html",
@@ -523,7 +523,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
         })
-        /*我的订单*/
+        /*订单详情*/
         .state('UCIndex.orderDetails', {
             url: '/orderDetails/:order_status/:order_id',
             views: {
@@ -706,6 +706,22 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/messageDetailsCtrl.js'
+                ])
+            }
+        })
+
+        /*消息详情*/
+        .state('UCIndex.afterService', {
+            url: '/afterService/:order_status/:order_id',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/afterService.html",
+                    controller: 'AfterServiceCtrl'
+                }
+            },
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/afterServiceCtrl.js'
                 ])
             }
         });

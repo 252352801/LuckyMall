@@ -1,0 +1,101 @@
+<p class="menu-cont-title">
+    <label>售后申请</label>
+</p>
+<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+<div class="OD UC-menu-cont-wrap">
+    <div class="box-od">
+        <p class="bar-order-sp">
+            <label>订单状态:</label>
+            <span ng-bind="(data_order.OrderStatus==1)?'待付款':(data_order.OrderStatus==2)?'已付款':(data_order.OrderStatus==3)?'正在配送中':(data_order.OrderStatus==4)?'已完成':'未知'" class="color-org"></span>
+            <label>订单号：</label>
+            <span ng-bind="data_order.Id"></span>
+            <label>下单时间：</label>
+            <span  ng-bind="data_order.CreateTime"></span>
+        </p>
+        <div class="AS-checkboxes">
+            <div ng-class="service_type==2?'checkbox checkbox2 checked':'checkbox checkbox2'" ng-click="changeType(2)">
+                退款
+            </div>
+            <div ng-class="service_type==1?'checkbox checkbox1 checked':'checkbox checkbox1'" ng-click="changeType(1)">
+                换货
+            </div>
+            <div ng-class="service_type==0?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(0)">
+                返修
+            </div>
+        </div>
+        <h3 class="box-label">售后商品</h3>
+        <div class="box-commodity">
+            <div class="top">
+                <img/>
+                <a ng-bind="data_order.SupplierName"></a>
+            </div>
+            <div class="cont">
+                <div class="cont1">
+                    <a class="img-container" href="/goodsDetails/{{data_order.Commodity.Id}}">
+                        <img ng-src="{{imgHost+data_order.imageUrl}}"/>
+                    </a>
+                    <a href="/goodsDetails/{{data_order.Commodity.Id}}">
+                        <h2 ng-bind="data_order.Commodity.CommodityName"></h2>
+                    </a>
+                    <small ng-bind="'×'+data_order.Count"></small>
+                    <p class="property" ng-repeat="property in data_order.Specifications" ng-bind="property.name+'：'+property.value"></p>
+                </div>
+                <div class="cont2">
+                    <p ng-bind="'￥'+(data_order.UnitPrice*data_order.Count).toFixed(2)"></p>
+                </div>
+                <div class="cont3">
+                    <div class="inner-cont">
+                        <p class="disc-cost" ng-bind="'￥'+(data_order.UnitPrice*data_order.Count*data_order.DiscountVal).toFixed(2)"></p>
+
+                        <p ng-bind="'（含定金：￥'+data_order.EarnestMoney+'）'" ng-if="data_order.EarnestMoney>0"></p>
+
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_order.DiscountVal*10).toFixed(1)+'折'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="cont4">
+                    <a>取消售后</a>
+                </div>
+            </div>
+        </div>
+        <p class="AS-label-amount">退货数量</p>
+        <div class="AS-bar-amount">
+            <button ng-click="reduce()">-</button>
+            <input ng-model="apply_amount"  onpaste="return false" require-number  style="ime-mode:disabled"  />
+            <button ng-click="add()">+</button>
+        </div>
+    </div>
+
+    <div class="AS-box-describe">
+        <h3 class="box-label">描述</h3>
+        <textarea placeholder="请输入您的售后原因"></textarea>
+        <div class="bar-msg-file">
+            <div btn-file-upload max-file-count="5" class="btn-file-upload">
+                <span class="btn-add">+</span>
+                <input  type="file" title="上传图片"/>
+                <img />
+                <i class="btn-remove" title="删除">×</i>
+            </div>
+        </div>
+    </div>
+    <div class="AS-box-address">
+        <h3 class="box-label">售后地址</h3>
+        <ul class="address-list">
+            <li ng-class="{'cur':selected_address.Id==address.Id}" ng-repeat="address in data_addresses|orderBy:'Selected':true" ng-click="changeConsignee(address)">
+                <h3><span ng-bind="address.ConsigneeName"></span>{{address.ConsigneeMobile}}</h3>
+
+                <p class="address-info" ng-bind="address.Area+' '+address.ConsigneeAddress"></p>
+
+                <p class="take-delivery-time">收货时间：不限</p>
+            </li>
+            <li class="btn-addAddress" ng-click="showAddressModal()">
+                <h5>+</h5>
+                <small>添加地址</small>
+            </li>
+        </ul>
+    </div>
+
+    <div class="AS-bar-submit">
+        <button class="AS-btn-submit">提交申请</button>
+    </div>
+</div>

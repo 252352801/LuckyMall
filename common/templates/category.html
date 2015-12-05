@@ -5,10 +5,10 @@
     <ul ng-if="showSubCategory" ng-class="{'category-cont':showMoreCategory==false,'full-height category-cont':showMoreCategory==true}">
         <li ng-repeat="category in data_category">
             <h3  data-id="{{category.Id}}">
-                <a href="/list/{{'category='+category.Id}}" ng-bind="category.CategoryName"></a>
+                <a href="/list/{{'category='+category.Id}}/" ng-bind="category.CategoryName"></a>
             </h3>
             <p>
-                <a href="/list/{{'category='+category.Id+'_item='+sub_c1.Id}}" title="" ng-repeat="sub_c1 in category.FilterModels[0].FilterItemModels" ng-bind="sub_c1.ItemValue"></a>
+                <a href="/list/{{'category='+category.Id}}/{{'filter='+category.FilterModels[0].Id+'_0_items='+item.Id}}" title="" ng-repeat="item in category.FilterModels[0].FilterItemModels" ng-bind="item.ItemValue"></a>
             </p>
 <!--
             <div class="hide-category">

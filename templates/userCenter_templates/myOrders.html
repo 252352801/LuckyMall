@@ -67,15 +67,15 @@
                 <div>
                     <p><a class="btn btn-org" ng-if="list.OrderStatus==1" ng-click="repay(list)">立即支付</a></p>
 
-                    <p><a href="#" class="btn" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)">取消订单</a></p>
+                    <p><a  class="btn" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)">取消订单</a></p>
 
                     <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
                     <p><a href="#" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
 
-                    <p><a href="#" class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
+                    <p><a class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
 
-                    <p><a href="#" class="btn" ng-if="list.OrderStatus==4">申请售后</a></p>
+                    <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}"  class="btn" ng-if="list.OrderStatus==4">申请售后</a></p>
 
                 </div>
             </div>

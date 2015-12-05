@@ -1618,6 +1618,7 @@
 .OD .bar-msg-file{
     position: relative;
     top:-36px;
+    overflow: hidden;
 }
 .btn-file-upload{
     width:80px;
@@ -1628,7 +1629,7 @@
     line-height:80px;
     position: relative;
     float:left;
-    margin-left:15px;
+    margin-right:15px;
     margin-top:15px;
     cursor:pointer;
 }
@@ -1672,3 +1673,137 @@
 }
 
 /*订单详情 end*/
+
+/*=====================
+    申请售后 begin
+======================*/
+.box-label{
+    font-size:18px;
+    margin-bottom:15px;
+    font-weight:500;
+    color:#333;
+}
+.box-label:after{
+    content:'*';
+    color:#ff0000;
+    margin-left:5px;
+    position:relative;
+    top:4px;
+}
+.AS-checkboxes{
+    margin:30px auto;
+    overflow:hidden;
+}
+.AS-checkboxes .checkbox{
+    width:260px;
+    height:125px;
+    line-height:125px;
+    border:1px solid #c4c4c4;
+    text-align:center;
+    text-indent:40px;
+    font-size:18px;
+    color:#555;
+    margin-right: 28px;
+    float:left;
+    cursor: pointer;
+}
+.AS-checkboxes .checkbox:hover{
+    border-color:#ff6700;
+}
+.AS-checkboxes .checkbox0{
+    background:url(../../res/icon/icon_aft_service_ty0.png);
+}
+.AS-checkboxes .checkbox1{
+    background:url(../../res/icon/icon_aft_service_ty1.png);
+}
+.AS-checkboxes .checkbox2{
+    background:url(../../res/icon/icon_aft_service_ty2.png);
+}
+.AS-checkboxes .checkbox0,.AS-checkboxes .checkbox1,.AS-checkboxes .checkbox2{
+    background-repeat:no-repeat;
+    background-position:40% 48px;
+}
+.AS-checkboxes .checkbox.checked{
+    border-color:#ff6700;
+    position:relative;
+}
+.AS-checkboxes .checkbox.checked:after{
+    content: '';
+    display:block;
+    width:32px;
+    height:32px;
+    position: absolute;
+    left:100%;
+    top:100%;
+    margin-left:-32px;
+    margin-top:-32px;
+    background:url(../../res/icon/icon_ck.png) no-repeat;
+    background-size:100%;
+}
+.AS-bar-amount{
+    margin-top:10px;
+    box-sizing:border-box;
+    width:120px;
+    height:40px;
+    overflow: hidden;
+    border:1px solid #cecece;
+}
+.AS-bar-amount button,.AS-bar-amount input{
+    display:block;
+    float: left;
+    width:33.33%;
+    height:100%;
+    padding:0px;
+    margin:0px;
+    outline:none;
+    box-sizing:border-box;
+    text-align:center;
+    border:0px;
+    background:#fff;
+}
+.AS-label-amount{
+    margin-top:25px;
+    font-size:14px;
+}
+.AS-bar-amount input{
+    border-left:1px solid #cecece;
+    border-right: 1px solid #cecece;
+}
+.AS-bar-amount button{
+    cursor: pointer;
+}
+.AS-bar-amount button:hover{
+    background: #eee;
+}
+.AS-box-describe{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.AS-box-describe textarea{
+    width:100%;
+    height:100px;
+    border:1px solid #cecece;
+    display:block;
+    box-sizing:border-box;
+    padding:10px;
+}
+.AS-box-describe .bar-msg-file{
+    top:0px;
+}
+.AS-box-address{
+    margin-top:30px;
+}
+.AS-bar-submit{
+    text-align:right;
+    margin-top:35px;
+}
+.AS-bar-submit button{
+    width:170px;
+    height:40px;
+    background:#ff542b;
+    color:#fff;
+    font-size:16px;
+    border:none;
+    padding:0px;
+}
+/*申请售后 end*/
