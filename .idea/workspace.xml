@@ -29,31 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="orderDetails.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/orderDetails.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.464285" vertical-offset="3341" max-vertical-offset="4218">
-              <caret line="206" column="0" selection-start-line="206" selection-start-column="0" selection-end-line="213" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="list.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/list.css">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="3699" max-vertical-offset="7277">
               <caret line="201" column="20" selection-start-line="201" selection-start-column="20" selection-end-line="201" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="category.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/templates/category.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.785714" vertical-offset="0" max-vertical-offset="551">
-              <caret line="10" column="116" selection-start-line="10" selection-start-column="116" selection-end-line="10" selection-end-column="116" />
               <folding />
             </state>
           </provider>
@@ -113,12 +93,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="listCtrl.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="listCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/listCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48801744" vertical-offset="160" max-vertical-offset="3914">
+            <state vertical-scroll-proportion="0.0" vertical-offset="160" max-vertical-offset="3914">
               <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="myOrders.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/myOrders.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.464286" vertical-offset="782" max-vertical-offset="1938">
+              <caret line="61" column="72" selection-start-line="61" selection-start-column="58" selection-end-line="61" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="global.css" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/css/global.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.41769317" vertical-offset="1185" max-vertical-offset="38608">
+              <caret line="82" column="18" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
+              <folding>
+                <marker date="1449312128975" expanded="true" signature="756:775" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -176,7 +178,6 @@
         <option value="$PROJECT_DIR$/js/controllers/registerCtrl.js" />
         <option value="$PROJECT_DIR$/css/cart.css" />
         <option value="$PROJECT_DIR$/common/directives/directives.js" />
-        <option value="$PROJECT_DIR$/css/global.css" />
         <option value="$PROJECT_DIR$/common/templates/sub-header.html" />
         <option value="$PROJECT_DIR$/templates/shoppingCart.html" />
         <option value="$PROJECT_DIR$/js/userCenter_js/controllers/orderDetailsCtrl.js" />
@@ -186,7 +187,6 @@
         <option value="$PROJECT_DIR$/common/templates/category.html" />
         <option value="$PROJECT_DIR$/css/list.css" />
         <option value="$PROJECT_DIR$/templates/list.html" />
-        <option value="$PROJECT_DIR$/templates/userCenter_templates/myOrders.html" />
         <option value="$PROJECT_DIR$/common/config/config.js" />
         <option value="$PROJECT_DIR$/common/services/services.js" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/orderDetails.html" />
@@ -194,6 +194,8 @@
         <option value="$PROJECT_DIR$/css/userCenter_css/userCenter.css" />
         <option value="$PROJECT_DIR$/templates/userCenter_templates/afterService.html" />
         <option value="$PROJECT_DIR$/js/controllers/listCtrl.js" />
+        <option value="$PROJECT_DIR$/templates/userCenter_templates/myOrders.html" />
+        <option value="$PROJECT_DIR$/css/global.css" />
       </list>
     </option>
   </component>
@@ -835,14 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/global.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9342" max-vertical-offset="38551">
-          <caret line="538" column="18" selection-start-line="538" selection-start-column="18" selection-end-line="538" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/templates/sub-header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.821428" vertical-offset="532" max-vertical-offset="2014">
@@ -893,14 +887,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-18.321428" vertical-offset="0" max-vertical-offset="817">
           <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/myOrders.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.571428" vertical-offset="953" max-vertical-offset="1900">
-          <caret line="79" column="22" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1023,9 +1009,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/listCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48801744" vertical-offset="160" max-vertical-offset="3914">
+        <state vertical-scroll-proportion="0.0" vertical-offset="160" max-vertical-offset="3914">
           <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userCenter_templates/myOrders.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.464286" vertical-offset="782" max-vertical-offset="1938">
+          <caret line="61" column="72" selection-start-line="61" selection-start-column="58" selection-end-line="61" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/global.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41769317" vertical-offset="1185" max-vertical-offset="38608">
+          <caret line="82" column="18" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
+          <folding>
+            <marker date="1449312128975" expanded="true" signature="756:775" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
