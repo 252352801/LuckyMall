@@ -30,13 +30,14 @@ angular.module('LuckyCat.controllers')
             };
         }
       console.log('已选筛选项：'+$scope.params.getItems());
-        if (FilterSer.getCategoryData() == null) {
+        if (CategorySer.getData()== null) {
             /*如果分类数据为空则请求数据*/
             CategorySer.requestData(function () {//请求成功后的回调
                 FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
                 initData();//初始化数据
             });
         } else {
+            FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
             initData();
         }
         /*选择筛选项*/
