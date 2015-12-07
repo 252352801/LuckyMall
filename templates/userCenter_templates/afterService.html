@@ -68,7 +68,7 @@
 
     <div class="AS-box-describe">
         <h3 class="box-label">描述</h3>
-        <textarea placeholder="请输入您的售后原因"></textarea>
+        <textarea placeholder="请输入您的售后原因" ng-model="input_txt"></textarea>
         <div class="bar-msg-file">
             <div btn-file-upload max-file-count="5" class="btn-file-upload">
                 <span class="btn-add">+</span>
@@ -96,6 +96,6 @@
     </div>
 
     <div class="AS-bar-submit">
-        <button class="AS-btn-submit">提交申请</button>
+        <button class="AS-btn-submit" ng-click="submit()">提交申请</button>
     </div>
 </div>

@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('EditPasswordCtrl',function($scope,$state,$stateParams,LoginSer,EditPasswordSer,$timeout){
         $scope.$emit('changeMenu',13);
         initPostData();//初始化数据

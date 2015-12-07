@@ -1,4 +1,4 @@
-﻿angular.module('LuckyCat.services')
+﻿angular.module('LuckyMall.services')
 
 .factory('EditPasswordSer',function(API,$http,TokenSer){
 	return {

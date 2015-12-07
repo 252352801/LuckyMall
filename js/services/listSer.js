@@ -1,4 +1,4 @@
-﻿angular.module('LuckyCat.services')
+﻿angular.module('LuckyMall.services')
 
 .factory('ListSer',function(API,$http,$timeout){
 	var data=[];

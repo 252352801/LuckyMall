@@ -42,7 +42,7 @@
                         <label class="label-checkbox" ng-class="{'cur':sub_c.isSelected==true}" ng-bind="sub_c.ItemValue" title={{sub_c.Value}}></label>
                     </a>
                     <p class="bar-buttons">
-                        <button ng-click="multiSearch(filter.Id)">确定</button>
+                        <button ng-click="multiSearch(filter)">确定</button>
                         <button ng-click="closeMultiSelect(filter.Id)">取消</button>
                     </p>
                 </div>
@@ -94,7 +94,6 @@
     </div>
 </div>
 <!--中部 end-->
-
 
 
 <introduction></introduction>

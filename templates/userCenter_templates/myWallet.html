@@ -2,7 +2,7 @@
     <label>定金钱包明细</label>
 </p>
 <ul class="wallet-history">
-    <li>
+    <li ng-repeat="list in data_wallet">
         <div class="cont1">
             <a class="img-container" href="#">
                 <img src="./res/test/g_dt_bimg.jpg"/>
@@ -12,18 +12,18 @@
             </h2>
             <p class="changed-time">2015-09-19 19:40</p>
             <p class="btn-handles">
-                <a>支付定金</a>
-                <a>购买商品</a>
+                <a ng-if="list.BusinnessType==1">支付定金</a>
+                <a ng-if="list.BusinnessType==0">购买商品</a>
             </p>
         </div>
         <div class="cont2">
             <div class="inner-cont">
-                <p class="wallet-change">+105.00</p>
-                <p class="wallet-balance">余额：99999.99</p>
+                <p class="wallet-change" ng-bind="(list.TransferType==0)?('+'+list.ChangeValue):('-'+list.ChangeValue)"></p>
+                <p class="wallet-balance" ng-bind="'余额：'+list.Balance"></p>
             </div>
         </div>
     </li>
-    <li>
+<!--    <li>
         <div class="cont1">
             <a class="img-container" href="#">
                 <img src="./res/test/g_dt_bimg.jpg"/>
@@ -64,10 +64,10 @@
                 <p class="wallet-balance">余额：99999.99</p>
             </div>
         </div>
-    </li>
+    </li>-->
 </ul>
 
-<div class="UC wallet page-index">
+<!--<div class="UC wallet page-index">
     <div class="prev"><</div>
     <div class="indexes">
         <span class="cur">1</span>
@@ -77,5 +77,5 @@
         <span>5</span>
     </div>
     <div class="next">></div>
-</div>
+</div>-->
 

@@ -1,5 +1,5 @@
-angular.module('LuckyCat.controllers')
- .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,PaymentSer,API){
+angular.module('LuckyMall.controllers')
+ .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
@@ -37,13 +37,10 @@ angular.module('LuckyCat.controllers')
         };
         /*添加收货地址弹出框显示*/
         $scope.showAddressModal=function(){
-            _init_area(["s_province","s_city","s_county"]);//初始化地址选择器
             $scope.modal_consignee='';//初始化提交的数据
             $scope.modal_mobile='';
             $scope.modal_address='';
-            $scope.modal_province='';
-            $scope.modal_city='';
-            $scope.modal_county='';
+            $scope.modal_area='';
             $timeout(function(){
                 $scope.isModalAddressShow=true;
             },5);
@@ -68,7 +65,7 @@ angular.module('LuckyCat.controllers')
                 if($scope.modal_mobile==''){
                     $scope.showInputTips('请输入收货人手机号码！');
                 }else{
-                    if($scope.modal_province==''||$scope.modal_city==''||$scope.modal_county==''){
+                    if($scope.modal_area==''){
                         $scope.showInputTips('请选择区域！');
                     }else{
                         if($scope.modal_address==''){
@@ -76,7 +73,7 @@ angular.module('LuckyCat.controllers')
                         }else{
                             var param={
                                 "ConsigneeName":$scope.modal_consignee,
-                                "Area":formatArea($scope.modal_province,$scope.modal_city,$scope.modal_county),
+                                "Area":$scope.modal_area,
                                 "ConsigneeAddress":$scope.modal_address,
                                 "ConsigneeMobile":$scope.modal_mobile,
                                 "UserId":LoginSer.getData().UserModel.Id,
@@ -207,7 +204,9 @@ angular.module('LuckyCat.controllers')
              $scope.data_orders=PaymentSer.getData().orders;
              /*alert($scope.data_orders[0].Id);*/
          }else if($scope.source=='purchase'){
-
+             var order_id=MyOrdersSer.getTempOrder().Id;
+             $scope.data_orders=[CartSer.getOrderById(order_id)];
+             console.log(angular.toJson($scope.data_orders));
          }
          AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
              if(status==1){
@@ -235,16 +234,7 @@ angular.module('LuckyCat.controllers')
         $scope.total_amount=amount;//商品总数量
         $scope.total_cost=cost.toFixed(2);//商品总价
      }
-        /*格式化地区信息*/
-        function formatArea(_province,_city,_county){
-            var area='';
-            if(_province==_city){
-                area=_province+' '+_county;
-            }else{
-                area=_province+' '+_city+' '+_county;
-            }
-            return area;
-        }
+
         /*银行简码对应*/
         function initBankSimpleCode(str){
             switch(str){

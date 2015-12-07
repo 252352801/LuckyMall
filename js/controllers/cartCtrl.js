@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
     .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host,PayForEarnest) {
         $scope.data_eo={};//要付定金的订单数据
         $scope.isModal1show = false;

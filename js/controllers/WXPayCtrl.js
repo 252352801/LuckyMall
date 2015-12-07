@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('WXPayCtrl',function($rootScope,$scope,$state,WXPaySer,$stateParams,$timeout,PaymentSer,API){
         $scope.trade_id=$stateParams.trade_id;
         $scope.time_over=false;

@@ -77,7 +77,7 @@
                         <input class="btn btn-register" type="submit" ng-value="value_btn" />
                     </p>
                     <p>
-                        <a href="#" class="color-org" ng-click="showAlert()">《幸运猫用户协议》</a>
+                        <a href="#" class="color-org" ng-click="showProtocol()">《幸运猫用户协议》</a>
                     </p>
                 </form>
 
@@ -101,7 +101,24 @@
     </div>
 </div>
 <!--中部 end-->
-
+<div class="modal-protocol" ng-show="isModalProtocolShow">
+    <span class="btn_close" ng-click="hideProtocol()">×</span>
+    <div class="modal-content">
+        <h1>《幸运猫用户协议》</h1>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
+    </div>
+    <p class="bar-button">
+        <button ng-click="hideProtocol()">确定</button>
+    </p>
+</div>
 <introduction></introduction>
 
 <sub-footer></sub-footer>

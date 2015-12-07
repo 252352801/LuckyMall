@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
     .controller('MyOrdersCtrl', function ($scope, $state, $stateParams, $timeout, MyOrdersSer,PaymentSer) {
         var pageSize = 3;//每页条数
         var cur_orders_tab = 1;

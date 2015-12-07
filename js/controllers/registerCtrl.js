@@ -1,9 +1,10 @@
-angular.module('LuckyCat.controllers', ['LuckyCat.services'])
+angular.module('LuckyMall.controllers')
 
     .controller('RegisterCtrl', function ($scope, VerifyCodeSer, $timeout, RegisterSer, $state) {
         $scope.hasInputError = false;//是否有错误输入
         $scope.tips = '';//提示信息初始化
         $scope.value_btn = '同意协议并注册';
+        $scope.isModalProtocolShow=false;
         $scope.invalidMobile=new Array();
         /* 显示提示信息*/
         $scope.showTips = function (msg) {
@@ -35,10 +36,12 @@ angular.module('LuckyCat.controllers', ['LuckyCat.services'])
                 }
             }
         };
-        $scope.showAlert = function () {
-            swal("还没写喔");
-
-        }
+        $scope.showProtocol = function () {
+            $scope.isModalProtocolShow=true;
+        };
+        $scope.hideProtocol=function(){
+            $scope.isModalProtocolShow=false;
+        };
        /* 检测手机号码是否可用*/
         $scope.isMobileCanRegister=function(){
             if($scope.form_register.mobile.$valid){

@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('MarketCtrl',function($scope,MarketSer){
         MarketSer.requestMarketList(function(response,status){
             if(status==1){

@@ -19,13 +19,13 @@
     <div class="order-list" ng-repeat="list in data_orders.curPage">
         <div class="order-list-top">
            <!-- <img src="./res/test/test_brand6.jpg" alt=""/>-->
-            <img ng-src={{imgHost+list.supplierImg}} />
+            <img real-src={{imgHost+list.brandImg}}  temp-src="./res/images/default.png" />
             <p class="seller-name"><a href="/login" title="" ng-bind="list.SupplierName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
 
             <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
-            <span class="icon-delete" ng-if="list.OrderStatus==4"></span>
+            <span class="icon-delete" ng-if="list.OrderStatus==4" ng-click="removeOrder(list.Id)"></span>
         </div>
         <div class="order-list-cont">
             <div class="cont1 pull-left">
@@ -44,7 +44,7 @@
             <div class="cont2 pull-left" ng-bind="'￥'+list.UnitPrice">
             </div>
             <div class="cont3 pull-left">
-                <p class="cost" ng-bind="'￥'+(list.cost+list.EarnestMoney).toFixed(2)"></p>
+                <p class="cost" ng-bind="'￥'+(list.cost).toFixed(2)"></p>
 
                 <p ng-bind="'（含定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestMoney>0"></p>
 
@@ -73,7 +73,7 @@
 
                     <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
-                    <p><a href="#" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
+                    <p><a href="/goodsDetails/{{list.CommodityId}}" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
 
                     <p><a class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
 

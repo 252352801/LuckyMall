@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('HomeCtrl',function($scope,HomeSer,CategorySer){
     $scope.loadingToday=true;
     if(CategorySer.getData()==null){

@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('UserCenterCtrl',function($scope,LoginSer,$state,$timeout,UserSer){
     $scope.isMTXXShow=false;
 

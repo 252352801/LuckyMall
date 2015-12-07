@@ -1,4 +1,4 @@
-var app = angular.module('LuckyCat', ['LuckyCat.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies']);
+var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies']);
 app.constant('Host',{
     develop: "http://120.24.175.151:9000/", //开发服务器
     test: "http://120.25.60.19:9000/",//测试服务器
@@ -206,6 +206,10 @@ app.constant('API',{
     getCategoryById:{//通过ID获取品类数据
         method:'get',
         url:'api/category/'
+    },
+    wallet:{//钱包
+        method:'get',
+        url:'api/user/depositwalletdetails'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -283,7 +287,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './js/controllers/registerCtrl.js',
                     './js/services/registerSer.js',
-                    './js/directives/registerDirectives.js',
+                    './css/modal-protocol.css',
                     './lib/sweetAlert/sweetAlert.css',
                     './lib/sweetAlert/sweetAlert.min.js'
                 ])
@@ -359,7 +363,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './css/confirmOrders.css',
                     './js/controllers/confirmOrdersCtrl.js',
-                    './lib/areaSelect/area.js'
+                    './lib/areaPicker/areaPicker.js',
+                    './lib/areaPicker/areaPicker.css'
                 ])
             }
 
@@ -730,7 +735,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     initAPI();
     function initAPI(){
         for(var o in API){
-            API[o].url=Host.test+API[o].url;
+            API[o].url=Host.develop+API[o].url;
         }
     }
 
@@ -743,8 +748,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 app.run(['$rootScope', '$location', '$window',function($rootScope, $location, $window) {
     // initialise google analytics
     $window.ga('create', 'UA-71031576-1', 'auto');  //UA-71031576-1为key
+
+
+
+    $rootScope.$on('$stateChangeStart', function() {
+        $rootScope.page_loading=true;//loading图片显示
+    });
+
     // track pageview on state change
     $rootScope.$on('$stateChangeSuccess', function (event) {
         $window.ga('send', 'pageview', $location.path());
+        $rootScope.page_loading=false;//loading图片隐藏
     });
 }])

@@ -1,6 +1,6 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
     .controller('ListCtrl', function ($scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state,$stateParams) {
-        var pageSize = 8;//每页大小（个数）
+        var pageSize = 16;//每页大小（个数）
         initParams();
         function initParams(){
             var collect_ft = new Array();
@@ -47,10 +47,22 @@ angular.module('LuckyCat.controllers')
         };
 
         /*多选提交搜索*/
-        $scope.multiSearch=function(filter_id){
-            FilterSer.closeMultiSelect(filter_id);
-            FilterSer.addMultiSelection(filter_id);
-            goListPage();
+        $scope.multiSearch=function(filter){
+            var has_change=false;
+            for(var o in filter.FilterItemModels){
+                if(filter.FilterItemModels[o].isMultiSelected==true){
+                    has_change=true;
+                    break;
+                }
+            }
+            if(has_change) {
+                FilterSer.closeMultiSelect(filter.Id);
+                FilterSer.addMultiSelection(filter.Id);
+                goListPage();
+            }else{
+                FilterSer.closeMultiSelect(filter.Id);
+                FilterSer. resetMultiSelection(filter.Id);
+            }
         };
 
         /*多选框开关*/
@@ -60,7 +72,7 @@ angular.module('LuckyCat.controllers')
        /* 关闭复选框*/
         $scope.closeMultiSelect=function(filter_id){
             FilterSer.closeMultiSelect(filter_id);
-            FilterSer. resetMultiSelection(filter_id)
+            FilterSer. resetMultiSelection(filter_id);
         };
         /*勾选与取消勾选*/
         $scope.multiSelect=function(filter_id,item_id){

@@ -92,14 +92,18 @@
     color:#fff;
 }
 .btn-pay-models li.cur span:after{
-    content:'';
-    width:20px;
-    height:20px;
-    display:block;
-    position:absolute;
-    left:0px;
-    top:0px;
-    background:url(../res/icon/icon_ck_s.png) 2px 2px no-repeat;
+    content: "";
+    width: 12px;
+    height: 6px;
+    display: block;
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    border-left: 1px solid #ff6700;
+    border-bottom: 1px solid #ff6700;
+    transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
 }
 .receipt-list{
     margin-top:20px;
@@ -463,4 +467,10 @@
     cursor:pointer;
     border-radius:2px;
 }
+.CO.modal-overlay{
+    position:fixed;
+    left:0px;
+    top:0px;
+}
+
 /* 核对订单end*/

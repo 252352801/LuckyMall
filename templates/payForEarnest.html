@@ -23,7 +23,7 @@
         </div>
         <div class="goods-list" ng-show="data_order">
             <div class="bar-sellerInfo">
-                <img src="./res/test/logo_xiaomi.jpg" alt=""/>
+                <img ng-src={{imgHost+list.brandImg}} alt=""/>
                 <p ng-bind="data_order.SupplierName"></p>
             </div>
             <div class="goods-list-cont">

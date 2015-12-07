@@ -1,4 +1,4 @@
-﻿/*angular.module('LuckyCat.services',[])*/
+﻿/*angular.module('LuckyMall.services',[])*/
 app.factory('newProSer',function(API,$http){
 	var data=null
 	return {

@@ -1,4 +1,4 @@
-﻿angular.module('LuckyCat.services')
+﻿angular.module('LuckyMall.services')
 .factory('MarketSer',function(API,$http){
 	var data={
         marketOnline:null,

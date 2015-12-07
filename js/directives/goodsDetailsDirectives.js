@@ -1,4 +1,4 @@
-angular.module('LuckyCat')
+angular.module('LuckyMall')
 .directive('slideBoxImg',function($timeout){
     return {
        link:function(scope,element,attrs){
@@ -24,7 +24,7 @@ angular.module('LuckyCat')
         return {
             link: function (scope, element, attrs) {
                element.bind('click', function () {
-                    scope.addToCart(function(){
+                    scope.createOrder(0,function(){ //0表示加入购物车   1表示立即购买
                         moveGoods();
                     });
                 });

@@ -10,7 +10,7 @@
         <div class="cart-top">
             <div class="pull-left">
                 <h1>购物车</h1>
-                <p class="cart-tips" ng-if="data_cart.length>0" ng-show="cartTimeRemainFormat>0">请在<span class="color-org" ng-bind="cartTimeRemainFormat" ></span>内结算订单，时间结束后商品会清空</p>
+                <p class="cart-tips" ng-if="data_cart.length>0" ng-show="cartTimeRemain>0">请在<span class="color-org" ng-bind="cartTimeRemainFormat" ></span>内结算订单，时间结束后商品会清空</p>
             </div>
             <div class="shopping-steps pull-right" >
                 <span class="cur ">我的购物车</span>
@@ -27,7 +27,7 @@
         </div>
         <div class="cart-list" ng-repeat="list in data_cart" ng-if="data_cart.length>0">
             <div class="cart-list-top">
-                <img src="./res/test/test_login_big_img.jpg" alt=""/>
+                <img ng-src={{imgHost+list.brandImg}} alt=""/>
                 <a href="#" ng-bind="list.SupplierName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.Commodity.IsCanFree">赢折扣</a>

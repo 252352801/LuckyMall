@@ -108,7 +108,7 @@ input:focus{
     width:64px;
     height:64px;
     background-color:rgba(0,0,0,0.5);
-    background-image:url(../res/images/defualt_03.png);
+    background-image:url(../res/spinner/spinner_loading.gif);
     background-size:40%;
     background-repeat:no-repeat;
     background-position:20px 18px;
@@ -117,34 +117,13 @@ input:focus{
     text-align:center;
     line-height: 130px;
     border-radius:6px;
-    position:relative;
     line-height:100px;
     font-size:10px;
     color:#eee \9;
-}
-.loading .spinner-circle{
-    display:none\9;
-    box-sizing:border-box;
-    width:75%;
-    height:75%;
-    border:2px solid rgba(255,255,255,0.7);
-    border-right-color:transparent;
-    border-bottom:none;
-    border-radius:50%;
-    position:absolute;
-    left:12.5%;
-    top:12.5%;
-    animation:rotateAnimate 1.2s;
-    animation-iteration-count:infinite;
-    animation-timing-function:linear;
-}
-@keyframes rotateAnimate{
-    0%{
-        transform: rotate(0deg);
-    }
-    100%{
-        transform: rotate(360deg);
-    }
+    position:fixed;
+    left:50%;
+    top:30%;
+    margin-left:-32px;
 }
 /*==============
    网站简介begin

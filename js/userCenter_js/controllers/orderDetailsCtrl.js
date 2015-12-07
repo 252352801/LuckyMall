@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('OrderDetailsCtrl',function($scope,$state,$stateParams,MyOrdersSer,LogisticsSer,PaymentSer){
         $scope.order_id=$stateParams.order_id;
         $scope.order_status=$stateParams.order_status;

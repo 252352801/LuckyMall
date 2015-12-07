@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('SafeAccountCtrl',function($scope,$state,$stateParams,$timeout,UserSer){
         $scope.$emit('changeMenu',13);
         $scope.new_nickname=$scope.data_user.UserModel.NickName;

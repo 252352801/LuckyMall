@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers',['LuckyCat.services'])
+angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
 .controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer){
      $scope.cartAmount=0;//购物车商品数量
@@ -86,7 +86,7 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
             if (!LoginSer.isLogin()) {
                 if (toState.name == 'confirmOrder') {
                     event.preventDefault();
-                    $state.go('login');
+                    $state.go('home');
                 }
             }else{
                 if(fromState.name=='confirmOrder'||fromState.name=='WXPay'){
@@ -140,9 +140,9 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
         CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
             if(status==1){
                 var time_str=CartSer.getDeadline();
-                $scope.cart_time_create=initCartStartTime(time_str);
-                console.log("购物车起始时间："+time_str);
-                $scope.cartTimeRemain= $scope.initCartTimeRemain($scope.cart_time_create);
+                $scope.cart_end_time=initCartStartTime(time_str);
+                console.log("购物车结束时间："+time_str);
+                $scope.cartTimeRemain= $scope.initCartTimeRemain($scope.cart_end_time);
                 cartTimeDown();//开始购物车倒计时
             }
         });
@@ -157,7 +157,9 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
                 });
             }else{
                 clearInterval($scope.cartTimer);
-                $scope.$broadcast('cart-update');
+                $timeout(function(){
+                    $scope.$broadcast('cart-update');
+                },3000);
                 $scope.cartTimeRemainFormat='';
                 console.log("购物车中商品已到达存放期限");
             }
@@ -165,9 +167,9 @@ angular.module('LuckyCat.controllers',['LuckyCat.services'])
     }
 
      /*计算购物车剩余时间（秒）*/
-     $scope.initCartTimeRemain=function(start_time){
+     $scope.initCartTimeRemain=function(end_time){
          var time_now=new Date().getTime();
-         var res=1800-(time_now-start_time)/1000;
+         var res=(end_time-time_now)/1000;
          if(res>0){
              return res;
          }else{

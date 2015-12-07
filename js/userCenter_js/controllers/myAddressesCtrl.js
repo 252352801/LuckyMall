@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('MyAddressesCtrl',function($scope,$state,$stateParams,AddressSer,$timeout,LoginSer){
         if(LoginSer.getData()==null){
             return;

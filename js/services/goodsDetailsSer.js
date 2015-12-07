@@ -1,4 +1,4 @@
-angular.module('LuckyCat.services')
+angular.module('LuckyMall.services')
 .factory('GoodsDetailsSer',function(API,$http,$timeout,TokenSer){
         var data = null;//商品数据
         var category_info=null;//商品品类信息

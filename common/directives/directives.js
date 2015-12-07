@@ -1,4 +1,4 @@
-angular.module('LuckyCat')
+angular.module('LuckyMall')
 
     /*回到顶部*/
     .directive('btnPageUp', function () {
@@ -791,7 +791,7 @@ angular.module('LuckyCat')
     return {
         link: function (scope, element, attrs) {
             if(!scope.count){
-                scope.count=1;
+                scope.count=0;
             }
            element.find('input').bind('change',function(e){
                setImagePreview();
@@ -810,7 +810,7 @@ angular.module('LuckyCat')
                    }
                    element.find('i').bind('click',function(){
                        var max_count=parseInt(attrs.maxFileCount);
-                       if(scope.count>=max_count){
+                       if(scope.count==max_count){
                            element.after(new_f_box);
                        }
                        element.remove();

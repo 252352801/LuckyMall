@@ -1,4 +1,4 @@
-angular.module('LuckyCat.services',[])
+angular.module('LuckyMall.services',[])
     .factory('TokenSer',function(API,$http,$timeout,$cookies) {
         return {
             getAuth:function(){
@@ -665,6 +665,7 @@ angular.module('LuckyCat.services',[])
         var orders_paid=null;
         var orders_unRecieve=null;
         var orders_finish=null;
+        var orders_temp=null;
         var initData=function(data){
             for(var o in data){
                 data[o].brandImg=data[o].Brand?data[o].Brand.BrandImage:'';
@@ -682,6 +683,12 @@ angular.module('LuckyCat.services',[])
         return {
             getAllOrders:function(){
                 return orders_all;
+            },
+            getTempOrder:function(){
+                return orders_temp;
+            },
+            setTempOrder:function(new_data){
+                orders_temp=new_data;
             },
             getUnPayOrders:function(){
                 return orders_unPay;
@@ -759,6 +766,20 @@ angular.module('LuckyCat.services',[])
                         callback(response,0);
                     }
                 });
+            },
+            /*售后服务申请*/
+            submitAfterServiceApplication:function(params,callback){
+                alert('正在提交（test）');return;
+                $http({
+                    method: API.ApplyAfterService.method,
+                    url: API.ApplyAfterService.url,
+                    data:params,
+                    headers: {
+                        'Authorization': TokenSer.getAuth()
+                    }
+                }).success(function (response) {
+                   
+                });
             }
 
         };
@@ -768,7 +789,8 @@ angular.module('LuckyCat.services',[])
     .factory('PaymentSer',function(API,$http,TokenSer){
         var data={
             addressId:null,
-            orders:null
+            orders:null,
+            tempOrder:null //临时订单  存放立即购买时下的订单
         };
         return {
             getData:function(){
@@ -779,6 +801,9 @@ angular.module('LuckyCat.services',[])
             },
             setOrdersData:function(new_data){
                 data.orders=new_data;
+            },
+            setTempOrder:function(new_data){
+                data.tempOrder=new_data;
             },
             clearData:function(){
                 data={
@@ -1088,6 +1113,33 @@ angular.module('LuckyCat.services',[])
                 }).success(function(response,status,headers,config){
                     if(response){
                         callback(response,1);
+                    }else{
+                        callback('',0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback("网络错误",-1);
+                });
+            }
+        }
+    })
+
+    .factory('WalletSer',function(API,$http,TokenSer){
+        var data=null;
+        return {
+            getData:function(){
+                return data;
+            },
+            requestData:function(callback){
+                $http({
+                    method:API.wallet.method,
+                    url:API.wallet.url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        callback(response,1);
+                        console.log(angular.toJson(response));
                     }else{
                         callback('',0);
                     }

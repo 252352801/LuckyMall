@@ -1,4 +1,4 @@
-angular.module('LuckyCat')
+angular.module('LuckyMall')
     /*banner*/
     .directive('banner', function () {
         return {

@@ -1,4 +1,4 @@
-angular.module('LuckyCat')
+angular.module('LuckyMall')
 
     /*地址输入验证*/
     .directive('requireAddress', function ($timeout) {

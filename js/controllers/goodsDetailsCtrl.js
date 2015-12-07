@@ -1,5 +1,6 @@
-angular.module('LuckyCat.controllers')
-    .controller('GoodsDetailsCtrl', function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer,Host) {
+angular.module('LuckyMall.controllers')
+    .controller('GoodsDetailsCtrl',
+    function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer,Host,MyOrdersSer) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
         $scope.isLogin = LoginSer.isLogin;//是否应经登录
@@ -9,6 +10,10 @@ angular.module('LuckyCat.controllers')
         loadGoodsDetailsData();//加载本页数据
         $scope.amount = 1;//当前数量
         $scope.loading = true;
+        $scope.btn_value={//按钮文字
+            addToCart:'加入购物车',
+            buyNow:'立即购买'
+        };
         $scope.discount = function (cur_price, old_price) {
             return ((cur_price / old_price) * 10).toFixed(1);
         };
@@ -143,8 +148,8 @@ angular.module('LuckyCat.controllers')
             }
         };
 
-        /*加入购物车*/
-        $scope.addToCart = function (callback) {
+        /*下单*/
+        $scope.createOrder = function (act,callback) { //act : 0加入购物车  1 立即购买
             if ($scope.choice.length <= 0) {
                 swal({
                     title: "该商品处于缺货状态!",
@@ -183,12 +188,25 @@ angular.module('LuckyCat.controllers')
                 "Count": $scope.amount,
                 "Specifications": angular.toJson(GoodsDetailsSer.getSelectedAttributes())
             };
+            if(act==0){
+                $scope.btn_value.addToCart='正在处理...';
+            }else if(act==1){
+                $scope.btn_value.buyNow='正在处理...';
+            }
             GoodsDetailsSer.addToCart(params, function (response, status) {
                 if (status == 1) {
-                    console.log('加入购物成功！');
-                    callback();
                     $scope.$emit('cart-update');
+                    if(act==0){
+                       $scope.btn_value.addToCart='加入购物车';
+                        callback();
+                    }else if(act==1){
+                        $scope.btn_value.buyNow='立即购买';
+                        MyOrdersSer.setTempOrder(response.Data);
+                        $state.go('confirmOrder',{source:'source=purchase'});
+                    }
                 } else {
+                    $scope.btn_value.addToCart='加入购物车';
+                    $scope.btn_value.buyNow='立即购买';
                     if (status == 0) {
                         if (response.Code == '0XXX') {
                             swal({
@@ -201,7 +219,7 @@ angular.module('LuckyCat.controllers')
                     }
                     if (status == 2) {
                         swal({
-                            title: "您的账号在别处登陆，请退出后重新登陆!",
+                            title: "当前账号已过期，请退出后重新登陆!",
                             type: "error",
                             confirmButtonText: "确定"
                         });

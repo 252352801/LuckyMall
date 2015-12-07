@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API){
         $scope.isModalWaitingShow=false;
         $scope.pay_type='zhifubao';//支付方式
@@ -64,6 +64,7 @@ angular.module('LuckyCat.controllers')
         $scope.testTradeStatus=function(){
             PaymentSer.getStatusOfTrade($scope.trade_id,function(response,status){
                 if(status===1){
+                    $rootScope.$broadcast('user-update');
                     $rootScope.$broadcast('orders-update');
                     $state.go('paySuccess');
                 }else{
@@ -121,6 +122,7 @@ angular.module('LuckyCat.controllers')
             $timeout(function(){
                 PaymentSer.getStatusOfTrade(trade_id,function(response,status){
                     if(status===1){
+                        $rootScope.$broadcast('user-update');
                         $rootScope.$broadcast('orders-update');
                         $state.go('paySuccess');
                     }else{

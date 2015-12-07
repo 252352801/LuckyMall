@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
  .controller('MyDiscountCardsCtrl',function($scope,$state,$stateParams,DiscountCardSer){
         $scope.$emit('changeMenu',7);
         $scope.card_status=$stateParams.params.split('=')[1];

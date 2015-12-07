@@ -46,7 +46,7 @@
         </div>
         <div class="goods-list" ng-repeat="order in data_orders">
             <div class="bar-sellerInfo">
-                <img src="./res/test/logo_xiaomi.jpg" alt=""/>
+                <img ng-src={{imgHost+list.brandImg}} alt=""/>
                 <p ng-bind="order.SupplierName"></p>
             </div>
             <div class="goods-list-cont">
@@ -203,7 +203,7 @@
 </form>
 <!--中部 end-->
 
-<div class="modal-overlay ng-hide" ng-show="isModalAddressShow==true">
+<div class="CO modal-overlay ng-hide" ng-show="isModalAddressShow==true">
     <div class="modal-add-address">
         <h4>添加收货地址</h4>
         <p class="input-tips" ng-show="inputTips!=''" ng-bind="inputTips"></p>
@@ -221,9 +221,7 @@
 
         <p>
             <label>地址</label>
-            <select id="s_province" my-change="modal_province"></select>
-            <select id="s_city"  my-change="modal_city"></select>
-            <select id="s_county"  my-change="modal_county"></select>
+            <input class="input-area" id="CO_area" readonly area-picker  area-picker-style="position:fixed" ng-model="area" placeholder="请选择区域"/>
             <span class="symbol">*</span>
         </p>
 

@@ -1,4 +1,4 @@
-angular.module('LuckyCat.controllers')
+angular.module('LuckyMall.controllers')
     .controller('MessageDetailsCtrl', function ($scope, $state, $stateParams,MessageSer) {
         $scope.$emit('changeMenu', 14);
         $scope.page={

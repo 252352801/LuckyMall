@@ -1,9 +1,10 @@
-angular.module('LuckyCat.controllers')
- .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout){
+angular.module('LuckyMall.controllers')
+ .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer){
         $scope.order_id=$stateParams.order_id;
         $scope.order_status=$stateParams.order_status;
         $scope.service_type=2;
         $scope.apply_amount=1;
+        $scope.input_txt='';
         $scope.showLoading=false;
         loadData();
 
@@ -21,6 +22,21 @@ angular.module('LuckyCat.controllers')
         $scope.changeType=function(new_type){
             $scope.service_type=new_type;
         };
+        /*收货地址切换*/
+        $scope.changeConsignee=function(new_address){
+            $timeout(function(){
+                $scope.selected_address=new_address;
+            },5);
+        };
+    
+    
+         $scope.submit=function(){
+             var params={};
+             MyOrdersSer.submitAfterServiceApplication(params,function(resp,status){
+                 /*提交成功*/
+             });
+             
+         };
         function loadData(){
             var flag=-1;//订单是否为空的标志
             switch(parseInt($scope.order_status)) {
@@ -47,6 +63,19 @@ angular.module('LuckyCat.controllers')
             }else{
                 $scope.data_order=MyOrdersSer.getOrder($scope.order_status,$scope.order_id);
             }
+            
+                        /*加载收货地址*/
+            AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
+                if(status==1){
+                    $scope.data_addresses=AddressSer.getData();
+                    for(var o in $scope.data_addresses){
+                        if($scope.data_addresses[o].Selected==true){
+                            $scope.selected_address=$scope.data_addresses[o];//地址
+                            break;
+                        }
+                    }
+                }
+            });
         }
 
 
