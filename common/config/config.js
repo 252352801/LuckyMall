@@ -210,6 +210,14 @@ app.constant('API',{
     wallet:{//钱包
         method:'get',
         url:'api/user/depositwalletdetails'
+    },
+    orderDetails:{ //订单详情
+        method:'get',
+        url:'api/order/'
+    },
+    ApplyAfterService:{//提交售后服务
+        method:'post',
+        url:'api/order/submitservice'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -235,6 +243,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'HomeCtrl'
                 }
             },
+            title:'幸运猫-享玩享购享折扣',
             resolve: {
                 loadFiles: load([
                     './css/index.css',
@@ -255,6 +264,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'ListCtrl'
                 }
             },
+            title:'商品列表-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/list.css',
@@ -272,7 +282,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/login.html",
                     controller: 'LoginCtrl'
                 }
-            }
+            },
+            title:'登陆-幸运猫'
         })
         /*注册*/
         .state('register', {
@@ -283,6 +294,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'RegisterCtrl'
                 }
             },
+            title:'注册-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/controllers/registerCtrl.js',
@@ -303,6 +315,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'CartCtrl'
                 }
             },
+            title:'我的购物车-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/cart.css',
@@ -322,6 +335,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/newProduct.html"
                 }
             },
+            title:'新品上市-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/list.css'
@@ -338,6 +352,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'GoodsDetailsCtrl'
                 }
             },
+            title:'商品详情-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/goodsDetails.css',
@@ -359,6 +374,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'ConfirmOrdersCtrl'
                 }
             },
+            title:'确认订单-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/confirmOrders.css',
@@ -379,6 +395,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'WXPayCtrl'
                 }
             },
+            title:'微信扫码支付-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/WXPay.css',
@@ -397,6 +414,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'PayForEarnestCtrl'
                 }
             },
+            title:'支付定金-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/confirmOrders.css',
@@ -416,6 +434,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/paySuccess.html"
                 }
             },
+            title:'支付成功-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/paySuccess.css'
@@ -431,6 +450,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/about.html"
                 }
             },
+            title:'关于我们-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/support.css'
@@ -446,6 +466,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/contact.html"
                 }
             },
+            title:'联系我们-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/support.css',
@@ -464,6 +485,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/help.html"
                 }
             },
+            title:'帮助中心-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/support.css'
@@ -480,6 +502,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MarketCtrl'
                 }
             },
+            title:'活动-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/controllers/marketCtrl.js',
@@ -499,6 +522,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'UserCenterCtrl'
                 }
             },
+            title:'我的幸运猫-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/userCenter_css/userCenter.css',
@@ -521,6 +545,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MyOrdersCtrl'
                 }
             },
+            title:'我的订单-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/myOrdersCtrl.js',
@@ -537,9 +562,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'OrderDetailsCtrl'
                 }
             },
+            title:'订单详情-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/orderDetailsCtrl.js'
+                    './js/userCenter_js/controllers/orderDetailsCtrl.js',
+                    './js/userCenter_js/services/orderDetailsSer.js'
                 ])
             }
         })
@@ -552,6 +579,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MyWalletCtrl'
                 }
             },
+            title:'喵喵钱包-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/myWalletCtrl.js'
@@ -567,6 +595,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MyDiscountCardsCtrl'
                 }
             },
+            title:'我的折扣卡-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/myDiscountCardsCtrl.js'
@@ -582,6 +611,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'EditPasswordCtrl'
                 }
             },
+            title:'修改密码-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/editPasswordCtrl.js',
@@ -598,6 +628,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MyAddressesCtrl'
                 }
             },
+            title:'我的收货地址-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/myAddressesCtrl.js',
@@ -617,6 +648,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'UpdateCellPhoneNumCtrl'
                 }
             },
+            title:'修改绑定手机-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/updateCellPhoneNumCtrl.js'
@@ -632,6 +664,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'HelpCenterCtrl'
                 }
             },
+            title:'帮助中心-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/helpCenterCtrl.js'
@@ -647,6 +680,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'AboutCtrl'
                 }
             },
+            title:'关于幸运猫-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/aboutCtrl.js'
@@ -662,6 +696,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'AdviceAndFeedbackCtrl'
                 }
             },
+            title:'建议和反馈-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/adviceAndFeedbackCtrl.js'
@@ -677,6 +712,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'SafeAccountCtrl'
                 }
             },
+            title:'安全中心-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/safeAccountCtrl.js'
@@ -692,6 +728,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MyMessageCtrl'
                 }
             },
+            title:'我的消息-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/myMessageCtrl.js'
@@ -708,6 +745,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MessageDetailsCtrl'
                 }
             },
+            title:'消息详情-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/messageDetailsCtrl.js'
@@ -715,7 +753,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             }
         })
 
-        /*消息详情*/
+        /*售后服务*/
         .state('UCIndex.afterService', {
             url: '/afterService/:order_status/:order_id',
             views: {
@@ -724,9 +762,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'AfterServiceCtrl'
                 }
             },
+            title:'售后服务申请-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/afterServiceCtrl.js'
+                    './js/userCenter_js/controllers/afterServiceCtrl.js',
+                    './lib/areaPicker/areaPicker.js',
+                    './lib/areaPicker/areaPicker.css'
                 ])
             }
         });
@@ -756,8 +797,15 @@ app.run(['$rootScope', '$location', '$window',function($rootScope, $location, $w
     });
 
     // track pageview on state change
-    $rootScope.$on('$stateChangeSuccess', function (event) {
-        $window.ga('send', 'pageview', $location.path());
+    $rootScope.$on('$stateChangeSuccess', function (event,toState) {
+        $window.ga('send', 'pageview', $location.path()); //google监测
         $rootScope.page_loading=false;//loading图片隐藏
+
+        /*设置标题*/
+        if(toState.title){
+            document.title=toState.title;
+        }else{
+            document.title='幸运猫';
+        }
     });
 }])

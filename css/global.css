@@ -565,7 +565,7 @@ input:focus{
 .address-list li{
     display:block;
     width:235px;
-    height:145px;
+    height:110px;
     border:1px solid #dedede;
     padding:15px;
     position:relative;
@@ -616,7 +616,7 @@ input:focus{
 .address-list .address-handle{
     position:absolute;
     left:0px;
-    top:176px;
+    top:140px;
     width:100%;
     height:30px;
     background:rgba(0,0,0,0.35);
@@ -642,7 +642,7 @@ input:focus{
 
 .address-list li:hover .address-handle{
     display:block;
-    top:145px;
+    top:110px;
     transition:top 0.3s;
 }
 
@@ -656,7 +656,7 @@ input:focus{
     font-size:100px;
     font-weight:100;
     color:#bebdc2;
-    line-height:100px;
+    line-height:70px;
 }
 .btn-addAddress:hover{
     border-color:#aaa;
@@ -889,7 +889,7 @@ input:focus{
     font-size:16px;
     font-weight:normal;
     color:#666;
-    margin-bottom:40px;
+    margin-bottom:60px;
 }
 .modal-add-address p{
     margin-bottom:16px;
@@ -949,7 +949,7 @@ input:focus{
     color:#ff542b;
     border-color:#ff542b;
 }
-.modal-add-address button{
+.modal-add-address .btn-submit-address{
     width:120px;
     height:36px;
     border:none;
@@ -966,6 +966,8 @@ input:focus{
 .modal-add-address .input-tips{
     width:270px;
     margin-left:100px;
+    position:absolute;
+    top:60px;
 }
 /*======================
  modal-意见和反馈 begin

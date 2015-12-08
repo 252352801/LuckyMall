@@ -37,6 +37,7 @@ angular.module('LuckyMall.controllers')
         };
         /*添加收货地址弹出框显示*/
         $scope.showAddressModal=function(){
+            $scope.inputTips='';
             $scope.modal_consignee='';//初始化提交的数据
             $scope.modal_mobile='';
             $scope.modal_address='';
@@ -44,6 +45,10 @@ angular.module('LuckyMall.controllers')
             $timeout(function(){
                 $scope.isModalAddressShow=true;
             },5);
+        };
+       /* 选择区域结束时的回调*/
+        $scope.areaInputFinish=function(val){
+            $scope.modal_area=val;
         };
         /*关闭添加收货地址弹出框*/
         $scope.closeAddressModal=function(){
@@ -59,38 +64,39 @@ angular.module('LuckyMall.controllers')
         };
         /*添加地址*/
         $scope.addAddress=function(){
-            if($scope.modal_consignee==''){
-                $scope.showInputTips('请输入收货人姓名！');
-            }else{
-                if($scope.modal_mobile==''){
-                    $scope.showInputTips('请输入收货人手机号码！');
-                }else{
-                    if($scope.modal_area==''){
-                        $scope.showInputTips('请选择区域！');
-                    }else{
-                        if($scope.modal_address==''){
-                            $scope.showInputTips('请输入详细地址！');
-                        }else{
-                            var param={
-                                "ConsigneeName":$scope.modal_consignee,
-                                "Area":$scope.modal_area,
-                                "ConsigneeAddress":$scope.modal_address,
-                                "ConsigneeMobile":$scope.modal_mobile,
-                                "UserId":LoginSer.getData().UserModel.Id,
-                                "Selected": true
-                            };
-                            console.log(angular.toJson(param));
-                            $scope.value_btn_save='正在提交...';
-                            AddressSer.addAddress(param,function(response,status){
-                                if(status==1){
-                                    $scope.value_btn_save='保存';
-                                    loadConfirmOrderData();
-                                    $scope.closeAddressModal();
-                                }
-                            });
-                        }
+            if($scope.form_address.$invalid){
+                if($scope.form_address.consignee.$invalid){
+                    $scope.showInputTips('请输入收货人姓名！');
+                }else if($scope.form_address.mobile.$invalid){
+                    if($scope.form_address.mobile.$error.pattern){
+                        $scope.showInputTips('您输入的手机号码有误！');
+                    }else if($scope.form_address.mobile.$error.required){
+                        $scope.showInputTips('请输入收货人手机号码！');
                     }
+                }else if($scope.form_address.area.$invalid){
+                    $scope.showInputTips('请选择区域！');
+                }else if($scope.form_address.address.$invalid){
+                    $scope.showInputTips('请输入详细地址！');
                 }
+            }else{
+                $scope.showInputTips('');
+                var param={
+                    "ConsigneeName":$scope.modal_consignee,
+                    "Area":$scope.modal_area,
+                    "ConsigneeAddress":$scope.modal_address,
+                    "ConsigneeMobile":$scope.modal_mobile,
+                    "UserId":LoginSer.getData().UserModel.Id,
+                    "Selected": true
+                };
+                console.log(angular.toJson(param));
+                $scope.value_btn_save='正在提交...';
+                AddressSer.addAddress(param,function(response,status){
+                    if(status==1){
+                        $scope.value_btn_save='保存';
+                        loadConfirmOrderData();
+                        $scope.closeAddressModal();
+                    }
+                });
             }
         };
         /*提交订单*/
@@ -111,11 +117,13 @@ angular.module('LuckyMall.controllers')
             var type=($scope.source=='shoppingCart')?0:1;
             var param={
                 "AddressId":$scope.selected_address.Id,
+                InvoiceTitle:($scope.invoice.type!=-1)?$scope.invoice.title:'',
                 "Orders":order_id,
                 "Method":pay_method,
                 "Type":pay_type,
                 "Data":angular.toJson(post_data)
             };
+            console.log(angular.toJson(param));
             PaymentSer.purchaseOrders(type,param,function(response,status){
                 if(status==1){
                     if(response.Code=='0X00') {
@@ -196,6 +204,17 @@ angular.module('LuckyMall.controllers')
             clearTimeout($scope.timer_trade_status);
             $scope.polling=false;
        });
+
+        $scope.chooseInvoice=function(type){
+            if($scope.invoice.type!=type){
+                $scope.invoice.type=type;
+                $scope.invoice.input=true;
+            }else{
+                $scope.invoice.type=-1;
+                $scope.invoice.input=false;
+                $scope.invoice.title='';
+            }
+        };
       /*初始化显示数据*/
      function loadConfirmOrderData(){
          if($scope.source=='shoppingCart'){
@@ -233,6 +252,10 @@ angular.module('LuckyMall.controllers')
         }
         $scope.total_amount=amount;//商品总数量
         $scope.total_cost=cost.toFixed(2);//商品总价
+        $scope.invoice={
+            type:-1,
+            title:''
+        };
      }
 
         /*银行简码对应*/

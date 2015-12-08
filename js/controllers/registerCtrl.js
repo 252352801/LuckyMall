@@ -48,11 +48,19 @@ angular.module('LuckyMall.controllers')
                 var mb=$scope.mobile;
                 if(!$scope.isValid(mb)){
                     $scope.showTips('手机号'+mb+'已注册！');
+                    ga('send', 'pageview', {
+                        'page': '/register_success',
+                        'title': '注册成功'
+                    });
                 }else{
                     RegisterSer.isSignUp(mb,function(response){
                         if(response==true){
                             $scope.invalidMobile.push(mb);
                             $scope.showTips('手机号'+mb+'已注册！');
+                            ga('send', 'pageview', {
+                                'page': '/register_success',
+                                'title': '注册成功'
+                            });
                         }else{
                             $scope.showTips('');
                         }
@@ -75,6 +83,10 @@ angular.module('LuckyMall.controllers')
                         if (status == 1) {
                             swal("恭喜！注册成功！");
                             $state.go('login');
+                            ga('send', 'pageview', {
+                                'page': '/register_success',
+                                'title': '注册成功'
+                            });
                         } else {
                             swal({
                                 title: "注册失败！",

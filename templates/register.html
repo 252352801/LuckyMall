@@ -58,7 +58,7 @@
                 <form class="form-register tab-content" name="form_register" novalidate="novalidate" ng-submit="submitRegister()">
                     <p class="input-tips" ng-bind="tips" ng-show="hasInputError"></p>
                     <p ng-class="{'checked':form_register.mobile.$valid}">
-                        <input class="input-reg-username"  placeholder="手机号" ng-model="mobile" autocomplete="false" name="mobile" ng-pattern="/^[1][358]\d{9}$/" required ng-blur="isMobileCanRegister()"/>
+                        <input class="input-reg-username"  placeholder="手机号" ng-model="mobile" autocomplete="false" name="mobile" ng-pattern="/^[1][3458]\d{9}$/" required ng-blur="isMobileCanRegister()"/>
                     </p>
                     <p class="p-verifyCode">
                         <input  placeholder="验证码" ng-model="code"  autocomplete="false" maxlength="6" name="code" required ng-disabled="form_register.mobile.$invalid"/>

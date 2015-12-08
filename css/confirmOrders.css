@@ -22,6 +22,7 @@
     padding:20px;
     width:1160px;
     min-width:1160px;
+    margin-bottom: 30px;
 }
 .box-confirmOrder .label-cont-name:nth-child(n+2){
     margin-top:24px;
@@ -105,37 +106,48 @@
     -ms-transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
 }
-.receipt-list{
+.invoice-list{
     margin-top:20px;
-    margin-bottom:20px;
+    margin-bottom:10px;
     overflow:hidden;
 }
-.receipt-list li{
+.invoice-list li{
     float:left;
-    width:154px;
     height:36px;
-    border:1px solid #e0e0e0;
     text-align:center;
-    line-height:36px;
+    line-height:30px;
     color:#999;
     cursor:pointer;
 }
-.receipt-list li:nth-child(n+2){
+.invoice-list li span{
+    display:inline-block;
+    width:100px;
+    height:30px;
+    border:1px solid #ddd;
+}
+.invoice-list li:nth-child(n+2){
     margin-left:17px;
 }
-.receipt-list li.cur{
+.invoice-list li.cur span{
     border-color:#ff6700;
     color:#ff6700;
 }
-.receipt-tips{
+.invoice-list input{
+    height:30px;
+    margin-left:15px;
+    border:1px solid #ddd;
+    padding:0px 10px;
+    width:200px;
+}
+.invoice-tips{
     color:#999;
 }
-.receipt-tips-cont{
+.invoice-tips-cont{
     display:inline-block;
     max-width:350px;
     position:relative;
 }
-.receipt-tips-cont .pop-box{
+.invoice-tips-cont .pop-box{
     display:none;
     position:absolute;
     left:50px;
@@ -148,14 +160,14 @@
     border:1px solid #fefefe;
     box-shadow:0px 0px 10px #ddd ;
 }
-.receipt-tips-cont .icon{
+.invoice-tips-cont .icon{
     margin-left:5px;
     padding:0px 6px;
     background:#ff6700;
     color:#fff;
     border-radius:20px;
 }
-.receipt-tips-cont .pop-box:before{
+.invoice-tips-cont .pop-box:before{
     display:block;
     content:'';
     border:10px solid transparent;
@@ -164,7 +176,7 @@
     left:53px;
     top:161px;
 }
-.receipt-tips-cont .pop-box:after{
+.invoice-tips-cont .pop-box:after{
     display:block;
     content:'';
     border:10px solid transparent;
@@ -173,10 +185,10 @@
     left:53px;
     top:159px;
 }
-.receipt-tips-cont.hover-tips{
+.invoice-tips-cont.hover-tips{
     cursor:pointer;
 }
-.receipt-tips-cont.hover-tips:hover .pop-box{
+.invoice-tips-cont.hover-tips:hover .pop-box{
     display:block;
 }
 .confirmOrder-th{
@@ -339,6 +351,11 @@
     font-size:18px;
     color:#ff6700;
 }
+.confirmOrder-bottom{
+    border-top:1px solid #eee;
+    margin-top:25px;
+    padding-top:15px;
+}
 .confirmOrder-bottom div{
     text-align:right;
     color:#666;
@@ -471,6 +488,18 @@
     position:fixed;
     left:0px;
     top:0px;
+}
+.bar-invoice-input{
+    line-height:30px;
+}
+.bar-invoice-input label{
+    color:#999;
+}
+.bar-invoice-input input{
+    height:24px;
+    padding:0px 10px;
+    border:1px solid #ddd;
+    font-size:13px;
 }
 
 /* 核对订单end*/

@@ -1,5 +1,20 @@
 angular.module('LuckyMall')
 
+    .directive('ngTitle', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                if(attrs.ngTitle) {
+                    scope.$watch(attrs.ngTitle, function (val) {
+                        document.title=val;
+                    });
+                }
+            }
+        };
+    })
+
+
+
     /*回到顶部*/
     .directive('btnPageUp', function () {
         return {
@@ -705,13 +720,10 @@ angular.module('LuckyMall')
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                testLoad();
-                function testLoad() {
-                    if (scope[attrs.innerHtml] == undefined) {
-                        setTimeout(testLoad, 100);
-                    } else {
-                        element.html(scope[attrs.innerHtml]);
-                    }
+                if(attrs.innerHtml) {
+                    scope.$watch(attrs.innerHtml, function (html) {
+                        element.html(html || '');//更新html内容
+                    });
                 }
             }
         };
@@ -722,15 +734,11 @@ angular.module('LuckyMall')
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                function polling() {
-                    if (attrs.countDown == '') {
-                        $timeout(polling, 500);
-                    } else {
+                if(attrs.countDown) {
+                    scope.$watch(attrs.countDown, function () {
                         start();
-                    }
+                    });
                 }
-
-                polling();
                 function start() {
                     element.time = parseInt(attrs.countDown);
                     var inner = element.time >= 60 ? parseInt(element.time / 60) + '分' + element.time % 60 + '秒' : element.time % 60 + '秒';
@@ -786,14 +794,18 @@ angular.module('LuckyMall')
         }
     })
 
-/*图片上传*/
+/*图片上传预览*/
 .directive('btnFileUpload', function ($compile) {
     return {
         link: function (scope, element, attrs) {
-            if(!scope.count){
-                scope.count=0;
-            }
-           element.find('input').bind('change',function(e){
+            var max_count= parseInt(element.attr('max-count'));
+            element.find('input').bind('change',function(e){
+                var count=element.parent().attr('count');
+                if(count==undefined){
+                    count=1;
+                }else{
+                    count=parseInt(count);
+                }
                setImagePreview();
                function setImagePreview() {
                    var is_img_null=(!element.find('img').attr('src')||element.find('img').attr('src')=='')?true:false;
@@ -802,19 +814,17 @@ angular.module('LuckyMall')
                    element.find('img').attr('src',window.URL.createObjectURL((e.srcElement || e.target).files[0]));
                    element.find('i').css('display','block');
                    if(is_img_null){
-                       var max_count=parseInt(attrs.maxFileCount);
-                       if(scope.count<max_count) {
+                       if(count<max_count){
                            element.after(new_f_box);
-                           scope.count++;
                        }
+                       element.parent().attr('count',count+1);
                    }
                    element.find('i').bind('click',function(){
-                       var max_count=parseInt(attrs.maxFileCount);
-                       if(scope.count==max_count){
+                       if(count>=max_count){
                            element.after(new_f_box);
                        }
+                       element.parent().attr('count',count);
                        element.remove();
-                       scope.count--;
                    });
                }
            });

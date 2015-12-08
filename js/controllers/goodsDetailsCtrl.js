@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
     .controller('GoodsDetailsCtrl',
-    function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer,Host,MyOrdersSer) {
+    function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer,Host,MyOrdersSer,CartSer) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
         $scope.isLogin = LoginSer.isLogin;//是否应经登录
@@ -195,14 +195,18 @@ angular.module('LuckyMall.controllers')
             }
             GoodsDetailsSer.addToCart(params, function (response, status) {
                 if (status == 1) {
-                    $scope.$emit('cart-update');
                     if(act==0){
+                        $scope.$emit('cart-update');
                        $scope.btn_value.addToCart='加入购物车';
                         callback();
                     }else if(act==1){
-                        $scope.btn_value.buyNow='立即购买';
                         MyOrdersSer.setTempOrder(response.Data);
-                        $state.go('confirmOrder',{source:'source=purchase'});
+                        CartSer.requestCartData(function(response,status){
+                            $scope.btn_value.buyNow='立即购买';
+                            if(status==1){
+                                $state.go('confirmOrder',{source:'source=purchase'});
+                            }
+                        });
                     }
                 } else {
                     $scope.btn_value.addToCart='加入购物车';
@@ -249,6 +253,7 @@ angular.module('LuckyMall.controllers')
             GoodsDetailsSer.requestCategoryByGoodsId(goods_id, function (response, status) {
                 if (status == 1) {
                     $scope.data_category = response;//品类数据  包含所属项和品类ID
+                    console.log(angular.toJson($scope.data_category));
                     if(CategorySer.getData()==null){
                         CategorySer.requestData(function(){
                             $scope.data_categoryName=CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;//通过品类ID获取品类名

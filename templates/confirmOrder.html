@@ -28,7 +28,6 @@
 
                 <p class="address-info" ng-bind="address.Area+' '+address.ConsigneeAddress"></p>
 
-                <p class="take-delivery-time">收货时间：不限</p>
             </li>
             <li class="btn-addAddress" ng-click="showAddressModal()">
                 <h5>+</h5>
@@ -164,11 +163,22 @@
         <p class="label-cont-name">
             <label>发票信息</label>
         </p>
-        <ul class="receipt-list">
-            <li class="cur">电子发票</li>
-          <!--  <li>纸质发票</li>-->
+        <ul class="invoice-list">
+            <li ng-class="{'cur':invoice.type==1}" >
+                <span ng-click="chooseInvoice(1)">我要发票</span>
+            </li>
         </ul>
-        <div class="receipt-tips">
+        <div class="bar-invoice-input" ng-show="invoice.input" >
+            <p>
+                <label>发票类型：</label>
+                <span>纸质发票</span>
+            </p>
+            <p>
+                <label>发票抬头：</label>
+                <input placeholder="个人或公司" ng-model="invoice.title"/>
+            </p>
+        </div>
+<!--        <div class="receipt-tips">
                 <div class="receipt-tips-cont">电子发票目前仅对个人用户开具，不可用于单位报销！</div>
                 <div class="receipt-tips-cont color-org hover-tips">什么是电子发票<span class="icon">?</span>
                     <p class="pop-box">电子发票是指在购销商品、提供或者接受
@@ -177,56 +187,58 @@
                         票具有同等法律效力，可作为用户维权、保修
                         的有效凭据。</p>
                 </div>
+        </div>-->
+
+        <div class="confirmOrder-bottom">
+            <div>
+                <label>收货地址信息：</label>
+                <p class="final-address" ng-bind="selected_address.ConsigneeName+' '+selected_address.ConsigneeMobile+'  '+selected_address.Area+''+selected_address.ConsigneeAddress"></p>
+            </div>
+            <div>
+                <label>支付方式：</label>
+                <p ng-bind="showPayType()"></p>
+            </div>
+            <div>
+                <label>商品数量：</label>
+                <p ng-bind="total_amount"></p>
+            </div>
+            <div>
+                <label>合计金额：</label>
+                <p><span class="cost" ng-bind="'￥'+total_cost"></span>元</p>
+            </div>
+            <div>
+                <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>
+            </div>
         </div>
-    </div>
-    <div class="content confirmOrder-bottom">
-        <div>
-            <label>收货地址信息：</label>
-            <p class="final-address" ng-bind="selected_address.ConsigneeName+' '+selected_address.ConsigneeMobile+'  '+selected_address.Area+''+selected_address.ConsigneeAddress"></p>
-        </div>
-        <div>
-            <label>支付方式：</label>
-            <p ng-bind="showPayType()"></p>
-        </div>
-        <div>
-            <label>商品数量：</label>
-            <p ng-bind="total_amount"></p>
-        </div>
-        <div>
-            <label>合计金额：</label>
-            <p><span class="cost" ng-bind="'￥'+total_cost"></span>元</p>
-        </div>
-        <div>
-            <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>
-        </div>
+
     </div>
 </form>
 <!--中部 end-->
 
 <div class="CO modal-overlay ng-hide" ng-show="isModalAddressShow==true">
-    <div class="modal-add-address">
+    <form class="modal-add-address" name="form_address" ng-submit="addAddress()" novalidate="novalidate">
         <h4>添加收货地址</h4>
         <p class="input-tips" ng-show="inputTips!=''" ng-bind="inputTips"></p>
         <p>
             <label>姓名</label>
-            <input type="text" placeholder="收货人姓名" ng-model="modal_consignee" require-name="showInputTips"/>
+            <input type="text" placeholder="收货人姓名" ng-model="modal_consignee" name="consignee" required />
             <span class="symbol">*</span>
         </p>
 
         <p>
             <label>手机</label>
-            <input type="text" placeholder="手机号码" ng-model="modal_mobile" require-mobile="showInputTips" />
+            <input type="text" placeholder="手机号码" ng-model="modal_mobile" name="mobile" ng-pattern="/^[1][3458]\d{9}$/" required />
             <span class="symbol">*</span>
         </p>
 
         <p>
             <label>地址</label>
-            <input class="input-area" id="CO_area" readonly area-picker  area-picker-style="position:fixed" ng-model="area" placeholder="请选择区域"/>
+            <input class="input-area" name="area"  id="CO_area" readonly area-picker  area-picker-finish="areaInputFinish" area-picker-style="position:fixed" ng-model="modal_area" placeholder="请选择区域" required/>
             <span class="symbol">*</span>
         </p>
 
         <p>
-            <textarea ng-model="modal_address"></textarea>
+            <textarea ng-model="modal_address" placeholder="请输入详细地址" name="address" required></textarea>
             <span class="symbol">*</span>
         </p>
 
@@ -239,10 +251,10 @@
         </p>-->
 
         <p>
-            <button ng-click="addAddress()" ng-bind="value_btn_save"></button>
+            <input class='btn-submit-address' type='submit' ng-value="value_btn_save" />
         </p>
         <span class="btn-close" ng-click="closeAddressModal()">×</span>
-    </div>
+    </form>
 </div>
 
 <div class="modal-container" ng-if="isModalWaitingShow">

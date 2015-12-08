@@ -769,7 +769,6 @@ angular.module('LuckyMall.services',[])
             },
             /*售后服务申请*/
             submitAfterServiceApplication:function(params,callback){
-                alert('正在提交（test）');return;
                 $http({
                     method: API.ApplyAfterService.method,
                     url: API.ApplyAfterService.url,
@@ -778,7 +777,11 @@ angular.module('LuckyMall.services',[])
                         'Authorization': TokenSer.getAuth()
                     }
                 }).success(function (response) {
-                   
+                   if(response){
+                       callback(response,1);
+                   }else{
+                       callback(response,0);
+                   }
                 });
             }
 

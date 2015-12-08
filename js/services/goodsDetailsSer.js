@@ -46,6 +46,7 @@ angular.module('LuckyMall.services')
                             for(var obj in response[o].FilterItemModels){
                                 if(response[o].FilterItemModels[obj].Selected==true){
                                     var item={
+                                        filterId:response[o].Id,
                                         itemId:response[o].FilterItemModels[obj].Id,
                                         itemValue:response[o].FilterItemModels[obj].ItemValue
 

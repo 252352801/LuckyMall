@@ -70,9 +70,9 @@
         <h3 class="box-label">描述</h3>
         <textarea placeholder="请输入您的售后原因" ng-model="input_txt"></textarea>
         <div class="bar-msg-file">
-            <div btn-file-upload max-file-count="5" class="btn-file-upload">
+            <div btn-file-upload max-file-count="1" class="btn-file-upload" max-count="5">
                 <span class="btn-add">+</span>
-                <input  type="file" title="上传图片"/>
+                <input  type="file" title="上传图片" id="AS_img" />
                 <img />
                 <i class="btn-remove" title="删除">×</i>
             </div>
@@ -85,8 +85,8 @@
                 <h3><span ng-bind="address.ConsigneeName"></span>{{address.ConsigneeMobile}}</h3>
 
                 <p class="address-info" ng-bind="address.Area+' '+address.ConsigneeAddress"></p>
-
-                <p class="take-delivery-time">收货时间：不限</p>
+<!--
+                <p class="take-delivery-time">收货时间：不限</p>-->
             </li>
             <li class="btn-addAddress" ng-click="showAddressModal()">
                 <h5>+</h5>
@@ -96,6 +96,40 @@
     </div>
 
     <div class="AS-bar-submit">
-        <button class="AS-btn-submit" ng-click="submit()">提交申请</button>
+        <button class="AS-btn-submit" ng-click="submit()" ng-bind="value_btn_submit"></button>
     </div>
+</div>
+
+<div class="CO modal-overlay ng-hide" ng-show="isModalAddressShow==true">
+    <form class="modal-add-address" name="form_address" ng-submit="addAddress()" novalidate="novalidate">
+        <h4>添加收货地址</h4>
+        <p class="input-tips" ng-show="inputTips!=''" ng-bind="inputTips"></p>
+        <p>
+            <label>姓名</label>
+            <input type="text" placeholder="收货人姓名" ng-model="modal_consignee" name="consignee" required />
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <label>手机</label>
+            <input type="text" placeholder="手机号码" ng-model="modal_mobile" name="mobile" ng-pattern="/^[1][3458]\d{9}$/" required />
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <label>地址</label>
+            <input class="input-area" name="area"  id="CO_area" readonly area-picker  area-picker-finish="areaInputFinish" area-picker-style="position:fixed" ng-model="modal_area" placeholder="请选择区域" required/>
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <textarea ng-model="modal_address" placeholder="请输入详细地址" name="address" required></textarea>
+            <span class="symbol">*</span>
+        </p>
+
+        <p>
+            <input class='btn-submit-address' type='submit' ng-value="value_btn_save" />
+        </p>
+        <span class="btn-close" ng-click="closeAddressModal()">×</span>
+    </form>
 </div>

@@ -1,4 +1,4 @@
-<header></header>
+<header ng-title="data_goods.CommodityName+' '+data_goods.Description+'_幸运猫'"></header>
 <sub-header>
     <category has-sub-category="false"></category>
 </sub-header>
@@ -8,8 +8,8 @@
     <div class="content">
         <div class="page-location" ng-show="data_categoryName">
             <a href="/home">幸运猫</a>
-            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}"></a>
-            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId+'_item='+item.itemId}}"></a>
+            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}/"></a>
+            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
             <div class="box-goods-img" slide-box-img >

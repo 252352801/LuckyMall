@@ -6,8 +6,79 @@ angular.module('LuckyMall.controllers')
         $scope.apply_amount=1;
         $scope.input_txt='';
         $scope.showLoading=false;
+        $scope.isModalAddressShow=false;
+        $scope.inputTips='';//地址输入提示
+        $scope.value_btn_save='保存';
+        $scope.value_btn_submit='提交申请';
         loadData();
 
+
+
+        /*提示信息*/
+        $scope.showInputTips=function(msg){
+           // $timeout(function(){
+                $scope.inputTips=msg;
+           // });
+        };
+        /* 选择区域结束时的回调*/
+        $scope.areaInputFinish=function(val){
+            $scope.modal_area=val;
+        };
+
+        /*添加收货地址弹出框显示*/
+        $scope.showAddressModal=function(){
+            $scope.inputTips='';
+            $scope.modal_consignee='';//初始化提交的数据
+            $scope.modal_mobile='';
+            $scope.modal_address='';
+            $scope.modal_area='';
+            $timeout(function(){
+                $scope.isModalAddressShow=true;
+            },5);
+        };
+        /*关闭添加收货地址弹出框*/
+        $scope.closeAddressModal=function(){
+            $timeout(function(){
+                $scope.isModalAddressShow=false;
+            },5)
+        };
+        /*添加地址*/
+        $scope.addAddress=function(){
+            if($scope.form_address.$invalid){
+                if($scope.form_address.consignee.$invalid){
+                    $scope.showInputTips('请输入收货人姓名！');
+                }else if($scope.form_address.mobile.$invalid){
+                    if($scope.form_address.mobile.$error.pattern){
+                        $scope.showInputTips('您输入的手机号码有误！');
+                    }else if($scope.form_address.mobile.$error.required){
+                        $scope.showInputTips('请输入收货人手机号码！');
+                    }
+                }else if($scope.form_address.area.$invalid){
+                    $scope.showInputTips('请选择区域！');
+                }else if($scope.form_address.address.$invalid){
+                    $scope.showInputTips('请输入详细地址！');
+                }
+            }else{
+                $scope.showInputTips('');
+                var param={
+                    "ConsigneeName":$scope.modal_consignee,
+                    "Area":$scope.modal_area,
+                    "ConsigneeAddress":$scope.modal_address,
+                    "ConsigneeMobile":$scope.modal_mobile,
+                    "UserId":LoginSer.getData().UserModel.Id,
+                    "Selected": true
+                };
+                console.log(angular.toJson(param));
+                $scope.value_btn_save='正在提交...';
+                AddressSer.addAddress(param,function(response,status){
+                    if(status==1){
+                        loadAddressList();
+                        $scope.value_btn_save='保存';
+                        $scope.closeAddressModal();
+                    }
+                });
+            }
+        };
         $scope.add=function(){
            if($scope.apply_amount<$scope.data_order.Count) {
                 $scope.apply_amount++;
@@ -31,10 +102,43 @@ angular.module('LuckyMall.controllers')
     
     
          $scope.submit=function(){
-             var params={};
-             MyOrdersSer.submitAfterServiceApplication(params,function(resp,status){
-                 /*提交成功*/
-             });
+             var params={
+                 OrderId:$scope.order_id,//订单ID
+                 RepairType: $scope.service_type,//申请类型 0维修 1换货 2退款
+                 Count:$scope.apply_amount,//申请数量
+                 ProblemDescription:$scope.input_txt,//问题描述
+                 Images:document.getElementById('AS_img').value
+             };
+             if(params.ProblemDescription==''){
+                 swal({
+                     title: "请输入您申请售后的原因!",
+                     text:'如商品非人为损坏、商品过期等',
+                     type: "error",
+                     confirmButtonText: "确定"
+                 });
+             }else{
+                 $scope.value_btn_submit='正在提交...';
+                 MyOrdersSer.submitAfterServiceApplication(params,function(resp,status){
+                     $timeout(function(){
+                         $scope.value_btn_submit='提交申请';
+                     });
+                     if(status==1){
+                         swal({
+                             title: "您的申请已成功提交!",
+                             text:'请耐心等待客服回复',
+                             type: "success",
+                             confirmButtonText: "确定"
+                         });
+                     }else{
+                         swal({
+                             title: "申请失败!",
+                             text:'请您联系客服',
+                             type: "error",
+                             confirmButtonText: "确定"
+                         });
+                     }
+                 });
+             }
              
          };
         function loadData(){
@@ -63,8 +167,14 @@ angular.module('LuckyMall.controllers')
             }else{
                 $scope.data_order=MyOrdersSer.getOrder($scope.order_status,$scope.order_id);
             }
-            
-                        /*加载收货地址*/
+
+            loadAddressList();         /*加载收货地址*/
+
+        }
+
+
+        function loadAddressList(){
+            /*加载收货地址*/
             AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
                 if(status==1){
                     $scope.data_addresses=AddressSer.getData();
@@ -76,7 +186,5 @@ angular.module('LuckyMall.controllers')
                     }
                 }
             });
-        }
-
-
+        };
 });

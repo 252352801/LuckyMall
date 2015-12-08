@@ -72,6 +72,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                     },5);
                 }
             });
+            initCartTime();//构建购物车时间
         });
       /*监听订单数据改变*/
         $scope.$on('orders-update',function(){
@@ -137,45 +138,47 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 }
             },5);
         });
-        CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
-            if(status==1){
-                var time_str=CartSer.getDeadline();
-                $scope.cart_end_time=initCartStartTime(time_str);
-                console.log("购物车结束时间："+time_str);
-                $scope.cartTimeRemain= $scope.initCartTimeRemain($scope.cart_end_time);
-                cartTimeDown();//开始购物车倒计时
-            }
-        });
+        initCartTime();
     }
 
-    function cartTimeDown(){
-        $scope.cartTimer=setInterval(function(){
-            if( $scope.cartTimeRemain>0){
-                $timeout(function(){
-                    $scope.cartTimeRemain--;
-                    $scope.cartTimeRemainFormat=parseInt($scope.cartTimeRemain/60)+'分'+parseInt($scope.cartTimeRemain%60)+'秒';
-                });
+
+        /*计算购物车剩余时间（秒）*/
+        $scope.initCartTimeRemain=function(end_time){
+            var time_now=new Date().getTime();
+            var res=(end_time-time_now)/1000;
+            if(res>0){
+                return res;
             }else{
-                clearInterval($scope.cartTimer);
-                $timeout(function(){
-                    $scope.$broadcast('cart-update');
-                },3000);
-                $scope.cartTimeRemainFormat='';
-                console.log("购物车中商品已到达存放期限");
+                return 0;
             }
-        },1000);
-    }
-
-     /*计算购物车剩余时间（秒）*/
-     $scope.initCartTimeRemain=function(end_time){
-         var time_now=new Date().getTime();
-         var res=(end_time-time_now)/1000;
-         if(res>0){
-             return res;
-         }else{
-             return 0;
-         }
-     };
+        };
+        /*初始化购物车时间*/
+        function initCartTime(){
+            clearInterval($scope.cartTimer);
+            CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
+                if(status==1){
+                    var time_str=CartSer.getDeadline();
+                    $scope.cart_end_time=initCartStartTime(time_str);
+                    console.log("购物车结束时间："+time_str);
+                    $scope.cartTimeRemain= $scope.initCartTimeRemain($scope.cart_end_time);
+                    $scope.cartTimer=setInterval(function(){
+                        if( $scope.cartTimeRemain>0){
+                            $timeout(function(){
+                                $scope.cartTimeRemain--;
+                                $scope.cartTimeRemainFormat=parseInt($scope.cartTimeRemain/60)+'分'+parseInt($scope.cartTimeRemain%60)+'秒';
+                            });
+                        }else{
+                            clearInterval($scope.cartTimer);
+                            $timeout(function(){
+                                $scope.$broadcast('cart-update');
+                            },3000);
+                            $scope.cartTimeRemainFormat='';
+                            console.log("购物车中商品已到达存放期限");
+                        }
+                    },1000);
+                }
+            });
+        }
     function loadOrdersData(){
         MyOrdersSer.requestData(1,function(response,status){//请求未支付订单
             $scope.simpleData_unPay_count=(MyOrdersSer.getUnPayOrders()==null)?0:MyOrdersSer.getUnPayOrders().length;

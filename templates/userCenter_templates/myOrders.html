@@ -75,7 +75,7 @@
 
                     <p><a href="/goodsDetails/{{list.CommodityId}}" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
 
-                    <p><a class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
+                    <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}" class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
 
                     <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}"  class="btn" ng-if="list.OrderStatus==4">申请售后</a></p>
 
