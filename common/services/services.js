@@ -766,16 +766,15 @@ angular.module('LuckyMall.services',[])
                     }
                 });
             },
-            confirmOrder:function(order_id,callback){
+            confirmReceive:function(order_id,callback){
                 $http({
-                    method:API.afterOrders.method,
-                    url:API.afterOrders.url,
+                    method:API.confirmReceive.method,
+                    url:API.confirmReceive.url+order_id,
                     headers: {
                         'Authorization':TokenSer.getAuth()
                     }
                 }).success(function(response,status,headers,config){
                     if(response){
-                        orders_after=initData(response,1);
                         callback(response,1);
                     }
                 });

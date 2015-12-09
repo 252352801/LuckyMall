@@ -227,7 +227,7 @@ app.constant('API',{
         method:'get',
         url:'api/repairorder/query'
     },
-    confirmOrder:{//确认收货
+    confirmReceive:{//确认收货
         method:'get',
         url:'api/order/complete/'
     }

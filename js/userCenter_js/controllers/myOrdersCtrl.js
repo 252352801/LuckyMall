@@ -63,7 +63,24 @@ angular.module('LuckyMall.controllers')
 
        /* 确认收货*/
         $scope.confirmReceive=function(order_id){
-
+            swal({
+                title: "是否确认收货?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                cancelButtonText: '取消',
+                confirmButtonText: "确定",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
+                MyOrdersSer.confirmReceive(order_id,function (response, status) {
+                    if (status == 1) {
+                        swal('您已确认收货！');
+                        $scope.$emit('orders-update');
+                        refreshData(cur_orders_tab);
+                    }
+                });
+            });
         };
         /*请求订单数据*/
         function loadData() {
