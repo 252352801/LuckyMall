@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="cont4">
-                    <a href="/UCIndex/afterService/{{data_order.OrderStatus}}/{{data_order.Id}}">申请售后</a>
+                    <a href="/UCIndex/afterService/{{data_order.OrderStatus}}/{{data_order.Id}}" ng-if="data_order.OrderStatus!=(0||1)">申请售后</a>
                 </div>
             </div>
         </div>
@@ -77,12 +77,12 @@
 
         <p class="item">
             <label>物流公司：</label>
-            <span>顺丰快递</span>
+            <span ng-bind="data_logistics.CourierName"></span>
         </p>
 
         <p class="item">
             <label>物流单号：</label>
-            <span>1234567890</span>
+            <span ng-bind="data_logistics.TrackingNumber"></span>
         </p>
 
         <div class="logistics-details">
@@ -90,39 +90,21 @@
 
             <div class="logistics-info">
                 <div class="logistics-list">
+                    <ul>
+                        <li ng-repeat="trace in data_logistics.lastResult.data">
+                            <span class="time" ng-bind="trace.ftime"></span>
+                            <span class="info" ng-bind="trace.context"></span>
+                        </li>
+                    </ul>
+                </div>
+<!--                <div class="logistics-list">
                     <p class="date">2015-11-12</p>
                     <ul>
                         <li><span class="time">14:36:42</span><span
                                 class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
                         </li>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
                     </ul>
-                </div>
-                <div class="logistics-list">
-                    <p class="date">2015-11-12</p>
-                    <ul>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
-                        <li><span class="time">14:36:42</span><span
-                                class="info">【广州市】已签收,签收人是本人签收，感谢使用申通快递，期待再次为您服务</span>
-                        </li>
-                    </ul>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

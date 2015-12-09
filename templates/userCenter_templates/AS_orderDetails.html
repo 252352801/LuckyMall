@@ -1,0 +1,121 @@
+<p class="menu-cont-title">
+    <label>订单详情</label>
+</p>
+<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+<div class="OD UC-menu-cont-wrap">
+    <div class="box-od">
+        <p class="bar-order-sp">
+            <label>售后类型:</label>
+            <span  class="color-balanced" ng-bind="(data_details.RepairType==0)?'维修':(data_details.RepairType==1)?'换货':'退款'"></span>
+            <label>状态:</label>
+            <span  class="color-org"
+                    ng-bind="(data_details.RepairStatus==0)?'审核中':
+                    (data_details.RepairStatus==1)?'审核通过':
+                    (data_details.RepairStatus==2)?'审核不通过':
+                    (data_details.RepairStatus==3)?'处理中':
+                    (data_details.RepairStatus==4)?'发货中':
+                    (data_details.RepairStatus==5)?'已完成':"
+                >
+            </span>
+            <label>订单号：</label>
+            <span ng-bind="data_details.OrderId"></span>
+            <label>申请时间：</label>
+            <span ng-bind="data_details.DataTime"></span>
+        </p>
+
+        <div class="box-commodity">
+            <h2>售后商品</h2>
+            <div class="top">
+                <img/>
+                <a ng-bind="data_order.SupplierName"></a>
+            </div>
+            <div class="cont">
+                <div class="cont1">
+                    <a class="img-container" href="/goodsDetails/{{data_details.Order.CommodityId}}">
+                        <img ng-src="{{imgHost+data_details.Order.imageUrl}}"/>
+                    </a>
+                    <a href="/goodsDetails/{{data_details.Order.CommodityId}}">
+                        <h2 ng-bind="data_details.Order.CommodityName"></h2>
+                    </a>
+                    <small ng-bind="'×'+data_details.Order..Count"></small>
+                    <p class="property" ng-repeat="property in data_details.Order.Specifications" ng-bind="property.name+'：'+property.value"></p>
+                </div>
+                <div class="cont2">
+                    <p ng-bind="'￥'+(data_details.Order.UnitPrice*data_order.Count).toFixed(2)"></p>
+                </div>
+                <div class="cont3">
+                    <div class="inner-cont">
+                        <p class="disc-cost" ng-bind="'￥'+(data_details.Order.UnitPrice*data_details.Order.Count*data_details.Order.DiscountVal).toFixed(2)"></p>
+
+                        <p ng-bind="'（含定金：￥'+data_details.Order.EarnestMoney+'）'" ng-if="data_details.Order.EarnestMoney>0"></p>
+
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_details.Order.DiscountVal*10).toFixed(1)+'折'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="cont4">
+                    <a>取消售后</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-logistics">
+        <h3 class="title">物流信息</h3>
+
+        <p class="item">
+            <label>物流公司：</label>
+            <span ng-bind="data_logistics.CourierName"></span>
+        </p>
+
+        <p class="item">
+            <label>物流单号：</label>
+            <span ng-bind="data_logistics.TrackingNumber"></span>
+        </p>
+
+        <div class="logistics-details">
+            <label>物流跟踪：</label>
+
+            <div class="logistics-info">
+                <div class="logistics-list">
+                    <ul>
+                        <li ng-repeat="trace in data_logistics.data">
+                            <span class="time" ng-bind="trace.ftime"></span>
+                            <span class="info" ng-bind="trace.context"></span>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+
+    <div class="box-consignee">
+        <h3>收货信息</h3>
+
+        <p>
+            <label>收货人： </label>
+            <span ng-bind="data_order.ConsigneeInfo.consigneeName+'    '+data_order.ConsigneeInfo.consigneeMobile"></span>
+        </p>
+
+        <p>
+            <label>收货地址： </label>
+            <span ng-bind="data_order.ConsigneeInfo.area+' '+data_order.ConsigneeInfo.consigneeAddress"></span>
+        </p>
+    </div>
+
+    <div class="box-cost" ng-if="data_order.OrderStatus!=(0||1)">
+        <p>
+            <label>商品金额：</label>
+            <span ng-bind="data_order.cost.toFixed(2)"></span>
+        </p>
+
+        <p>
+            <label>运费：</label>
+            <span>￥0.00</span>
+        </p>
+        <p>
+            <label>退款金额：</label>
+            <span></span>
+        </p>
+    </div>
+</div>
+

@@ -88,7 +88,7 @@ angular.module('LuckyMall.controllers')
                     $scope.data_orders_upReceive = MyOrdersSer.getUnReceiveOrders();
                     $scope.loaded++;
                 });
-            } else {
+            }else {
                 $scope.data_orders_upReceive = MyOrdersSer.getUnReceiveOrders();
                 $scope.loaded++;
             }
@@ -98,12 +98,23 @@ angular.module('LuckyMall.controllers')
                     $scope.data_orders_finish = MyOrdersSer.getFinishOrders();
                     $scope.loaded++;
                 });
-            } else {
+            }else{
                 $scope.data_orders_finish = MyOrdersSer.getFinishOrders();
                 $scope.loaded++;
             }
+            if (MyOrdersSer.getAfterOrders() == null) {
+                MyOrdersSer.requestAfterOrders(function (response, status) {//请求已完成订单
+                    if(status==1) {
+                        $scope.data_orders_after = MyOrdersSer.getAfterOrders();
+                    }
+                    $scope.loaded++;
+                });
+            } else {
+                $scope.data_orders_after = MyOrdersSer.getAfterOrders();
+                $scope.loaded++;
+            }
             $scope.$watch('loaded', function (newValue, oldValue) {
-                if (newValue >= 4) {
+                if (newValue >= 5) {
                     $timeout(function () {
                         $scope.showLoading = false;
                         loadCurPageData($stateParams.status);
@@ -155,13 +166,19 @@ angular.module('LuckyMall.controllers')
                         createPage(MyOrdersSer.getFinishOrders());
                     }, 50);
                     break;
-                case 'refund':
+                case 'after':
                     $scope.curTab = 'tab5';
                     $scope.$emit('changeMenu', 5);
                     cur_orders_tab = 5;
+                    $timeout(function () {
+                        $scope.data_orders.all = MyOrdersSer.getAfterOrders();
+                        $scope.data_orders.curPage = getFirstPage(MyOrdersSer.getAfterOrders());
+                        createPage(MyOrdersSer.getAfterOrders());
+                    }, 50);
                     break;
             }
         }
+
 
         function getFirstPage(_data) {
             if (_data != null) {

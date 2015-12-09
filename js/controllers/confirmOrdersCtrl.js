@@ -248,7 +248,7 @@ angular.module('LuckyMall.controllers')
         var cost=0;
         for(var o in $scope.data_orders){
             amount+=$scope.data_orders[o].Count;
-            cost+=$scope.data_orders[o].cost;
+            cost+=$scope.data_orders[o].needToPay;
         }
         $scope.total_amount=amount;//商品总数量
         $scope.total_cost=cost.toFixed(2);//商品总价

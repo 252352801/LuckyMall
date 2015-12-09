@@ -466,7 +466,7 @@ angular.module('LuckyMall.services',[])
                     data[o].needToPay=data[o].cost-data[o].EarnestMoney;//待支付
                     data[o].isSelected=true;//勾选状态，默认勾选
                     total_amount+=data[o].Count;
-                    total_cost+=data[o].cost;
+                    total_cost+=data[o].needToPay;
               }
               data.totalAmount=total_amount;
               data.totalCost=total_cost;
@@ -666,16 +666,18 @@ angular.module('LuckyMall.services',[])
         var orders_unRecieve=null;
         var orders_finish=null;
         var orders_temp=null;
-        var initData=function(data){
+        var orders_after=null;
+        var initData=function(data,type){ //type 0 售前单   1 售后单
             for(var o in data){
-                data[o].brandImg=data[o].Brand?data[o].Brand.BrandImage:'';
-                data[o].Specifications=JSON.parse(data[o].Specifications);//产品规格字符串转换json
-                data[o].imageUrl=data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-                data[o].discountUnitPrice=data[o].UnitPrice*data[o].DiscountVal;//折后单件价
-                data[o].cost=data[o].UnitPrice*data[o].Count*data[o].DiscountVal;//折后价
-                data[o].needToPay=data[o].cost-data[o].EarnestMoney;//待支付
-                if(data[o].ConsigneeInfo!=(''||null)){
-                    data[o].ConsigneeInfo=JSON.parse(data[o].ConsigneeInfo);//收货地址
+                var obj=(type==0)?data[o]:data[o].Order;
+                obj.brandImg=obj.Brand?obj.Brand.BrandImage:'';
+                obj.Specifications=JSON.parse(obj.Specifications);//产品规格字符串转换json
+                obj.imageUrl=obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
+                obj.discountUnitPrice=obj.UnitPrice*obj.DiscountVal;//折后单件价
+                obj.cost=obj.UnitPrice*obj.Count*obj.DiscountVal;//折后价
+                obj.needToPay=obj.cost-obj.EarnestMoney;//待支付
+                if(obj.ConsigneeInfo!=(''||null)){
+                    obj.ConsigneeInfo=JSON.parse(obj.ConsigneeInfo);//收货地址
                 }
             }
             return data;
@@ -702,6 +704,9 @@ angular.module('LuckyMall.services',[])
             getFinishOrders:function(){
                 return orders_finish;
             },
+            getAfterOrders:function(){
+                return orders_after;
+            },
             getOrder:function(order_status,order_id){
                 var obj='';
                 switch (parseInt(order_status)){
@@ -709,6 +714,7 @@ angular.module('LuckyMall.services',[])
                     case 2:obj=orders_paid;break;
                     case 3:obj=orders_unRecieve;break;
                     case 4:obj=orders_finish;break;
+                    case 5:obj=orders_after;break;
                 }
                 for(var o in obj){
                     if(order_id==obj[o].Id){
@@ -727,10 +733,10 @@ angular.module('LuckyMall.services',[])
                 }).success(function(response,status,headers,config){
                     if(response){
                         switch(order_type){
-                            case 1:orders_unPay=initData(response);break;
-                            case 2:orders_paid=initData(response);break;
-                            case 3:orders_unRecieve=initData(response);break;
-                            case 4:orders_finish=initData(response);break;
+                            case 1:orders_unPay=initData(response,0);break;
+                            case 2:orders_paid=initData(response,0);break;
+                            case 3:orders_unRecieve=initData(response,0);break;
+                            case 4:orders_finish=initData(response,0);break;
                         }
                         callback(response,1);
                     }else{
@@ -746,6 +752,20 @@ angular.module('LuckyMall.services',[])
 
                 });
             },
+            requestAfterOrders:function(callback){
+                $http({
+                    method:API.afterOrders.method,
+                    url:API.afterOrders.url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        orders_after=initData(response,1);
+                        callback(response,1);
+                    }
+                });
+            },
             cancelOrder:function(order_id,order_type,callback){
                 $http({
                     method: API.cancelOrder.method,
@@ -756,10 +776,10 @@ angular.module('LuckyMall.services',[])
                 }).success(function (response) {
                     if (response) {
                         switch(order_type){
-                            case 1:orders_unPay=initData(response);break;
-                            case 2:orders_paid=initData(response);break;
-                            case 3:orders_unRecieve=initData(response);break;
-                            case 4:orders_finish=initData(response);break;
+                            case 1:orders_unPay=initData(response,0);break;
+                            case 2:orders_paid=initData(response,0);break;
+                            case 3:orders_unRecieve=initData(response,0);break;
+                            case 4:orders_finish=initData(response,0);break;
                         }
                         callback(response,1);
                     }else{
@@ -773,6 +793,7 @@ angular.module('LuckyMall.services',[])
                     method: API.ApplyAfterService.method,
                     url: API.ApplyAfterService.url,
                     data:params,
+                    timeout:5000,
                     headers: {
                         'Authorization': TokenSer.getAuth()
                     }
@@ -782,6 +803,8 @@ angular.module('LuckyMall.services',[])
                    }else{
                        callback(response,0);
                    }
+                }).error(function(){
+                    callback('网络错误',-1);
                 });
             }
 
@@ -1104,17 +1127,22 @@ angular.module('LuckyMall.services',[])
     })
 
     .factory('LogisticsSer',function(API,$http,TokenSer){
+        var data=null;
         return {
+            getData:function(){
+                return data;
+            },
            /* 获取物流信息*/
-            getLogisticsInfo:function(order_id,type,callback){ //type状态  0售前  1售后
+            requestData:function(order_id,type,callback){ //type状态  0售前  1售后
                 $http({
                     method:API.getLogisticsInfo.method,
-                    url:API.getLogisticsInfo.url,
+                    url:API.getLogisticsInfo.url+order_id+'/'+type,
                     headers: {
                         'Authorization':TokenSer.getAuth()
                     }
                 }).success(function(response,status,headers,config){
                     if(response){
+                        data=response.lastResult;
                         callback(response,1);
                     }else{
                         callback('',0);
@@ -1151,4 +1179,62 @@ angular.module('LuckyMall.services',[])
                 });
             }
         }
-    });
+    })
+
+    .factory('UploadSer',function(API,$http,TokenSer,FileUploader){
+        return {
+            initUploader:function(max_count,max_size){
+                var uploader=new FileUploader({
+                    url: API.upload.url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                });
+
+                uploader.filters.push({
+                    name: 'customFilter',
+                    fn: function(item /*{File|FileLikeObject}*/, options) {
+                        return this.queue.length <max_count;
+                    }
+                });
+                // CALLBACKS
+
+                uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+                    console.info('onWhenAddingFileFailed', item, filter, options);
+                };
+                uploader.onAfterAddingFile = function(fileItem) {
+                    fileItem.upload();
+                    console.info('onAfterAddingFile', fileItem);
+                };
+                uploader.onAfterAddingAll = function(addedFileItems) {
+                    console.info('onAfterAddingAll', addedFileItems);
+                };
+                uploader.onBeforeUploadItem = function(item) {
+                    console.info('onBeforeUploadItem', item);
+                };
+                uploader.onProgressItem = function(fileItem, progress) {
+                    console.info('onProgressItem', fileItem, progress);
+                };
+                uploader.onProgressAll = function(progress) {
+                    console.info('onProgressAll', progress);
+                };
+                uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                    console.info('onSuccessItem', fileItem, response, status, headers);
+                };
+                uploader.onErrorItem = function(fileItem, response, status, headers) {
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+                uploader.onCancelItem = function(fileItem, response, status, headers) {
+                    console.info('onCancelItem', fileItem, response, status, headers);
+                };
+                uploader.onCompleteItem = function(fileItem, response, status, headers) {
+                    console.info('onCompleteItem', fileItem, response, status, headers);
+                    fileItem.url=response;
+                };
+                uploader.onCompleteAll = function() {
+                    console.info('onCompleteAll');
+                };
+                return uploader;
+            }
+        }
+    })

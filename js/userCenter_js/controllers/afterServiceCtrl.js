@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer){
+ .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer,FileUploader,UploadSer,TokenSer){
         $scope.order_id=$stateParams.order_id;
         $scope.order_status=$stateParams.order_status;
         $scope.service_type=2;
@@ -102,13 +102,25 @@ angular.module('LuckyMall.controllers')
     
     
          $scope.submit=function(){
+             var img_info=new Array();
+             var len=$scope.uploader.queue.length;
+             for(var o in $scope.uploader.queue){
+                 if($scope.uploader.queue[o].url){
+                     var img_url=$scope.uploader.queue[o].url;
+                     if(o<len-1){
+                         img_url+='|';
+                     }
+                     img_info.push(img_url);
+                 }
+             }
              var params={
                  OrderId:$scope.order_id,//订单ID
                  RepairType: $scope.service_type,//申请类型 0维修 1换货 2退款
                  Count:$scope.apply_amount,//申请数量
                  ProblemDescription:$scope.input_txt,//问题描述
-                 Images:document.getElementById('AS_img').value
+                 Images:img_info.join('')
              };
+             console.log(params);
              if(params.ProblemDescription==''){
                  swal({
                      title: "请输入您申请售后的原因!",
@@ -187,4 +199,14 @@ angular.module('LuckyMall.controllers')
                 }
             });
         };
+
+
+
+
+
+
+
+
+
+        $scope.uploader =UploadSer.initUploader(10,20480); // 最大数量10  最大总大小2048kb(20MB)
 });

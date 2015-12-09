@@ -16,10 +16,10 @@
             <div ng-class="service_type==2?'checkbox checkbox2 checked':'checkbox checkbox2'" ng-click="changeType(2)">
                 退款
             </div>
-            <div ng-class="service_type==1?'checkbox checkbox1 checked':'checkbox checkbox1'" ng-click="changeType(1)">
+            <div ng-class="service_type==1?'checkbox checkbox1 checked':'checkbox checkbox1'" ng-click="changeType(1)" ng-if="data_order.OrderStatus==4">
                 换货
             </div>
-            <div ng-class="service_type==0?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(0)">
+            <div ng-class="service_type==0?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(0)" ng-if="data_order.OrderStatus==4">
                 返修
             </div>
         </div>
@@ -70,12 +70,42 @@
         <h3 class="box-label">描述</h3>
         <textarea placeholder="请输入您的售后原因" ng-model="input_txt"></textarea>
         <div class="bar-msg-file">
-            <div btn-file-upload max-file-count="1" class="btn-file-upload" max-count="5">
-                <span class="btn-add">+</span>
-                <input  type="file" title="上传图片" id="AS_img" />
-                <img />
-                <i class="btn-remove" title="删除">×</i>
+<!--            <input type="file" nv-file-select="" uploader="uploader" />-->
+
+
+
+
+            <div class="upload-box">
+                <div class="items" ng-repeat="item in uploader.queue">
+                    <div>
+                        <div class="img-preview" >
+                            <img ng-src="{{imgHost+item.url}}" />
+                            <span ng-show="uploader.isHTML5&&!item.isError" >{{ item.file.size/1024/1024|number:2 }} MB</span>
+                            <span class="items-error" ng-show="item.isError">上传失败</span>
+                        </div>
+<!--                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                            上传
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                            取消
+                        </button>-->
+                        <div ng-show="uploader.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-remove" ng-click="item.remove()">
+                            移除
+                        </button>
+                    </div>
+                </div>
+                <div  max-file-count="1" class="btn-file-upload" max-count="5">
+                    <span class="btn-add">+</span>
+                    <p>上传图片</p>
+                    <input  type="file" nv-file-select="" uploader="uploader" title="上传图片" />
+                </div>
             </div>
+
         </div>
     </div>
     <div class="AS-box-address">

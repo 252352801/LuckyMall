@@ -170,7 +170,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }else{
                             clearInterval($scope.cartTimer);
                             $timeout(function(){
-                                $scope.$broadcast('cart-update');
+                                //$scope.$broadcast('cart-update');
                             },3000);
                             $scope.cartTimeRemainFormat='';
                             console.log("购物车中商品已到达存放期限");

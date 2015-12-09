@@ -1,6 +1,6 @@
-var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies']);
+var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies','angularFileUpload']);
 app.constant('Host',{
-    develop: "http://120.24.175.151:9000/", //开发服务器
+    develop: "http://dapi.xingyunmao.cn/", //开发服务器
     test: "http://120.25.60.19:9000/",//测试服务器
     prev:"http://120.24.225.116:9000/", //运营服务器
     game:'http://120.25.60.19:9004', //游戏服务器
@@ -201,7 +201,7 @@ app.constant('API',{
     },
     getLogisticsInfo:{  //获取物流信息  后接 订单id/类型
         method:'get',
-        url:'api/logistics/queryexpress/'
+        url:'api/logistics/query/'
     },
     getCategoryById:{//通过ID获取品类数据
         method:'get',
@@ -218,6 +218,14 @@ app.constant('API',{
     ApplyAfterService:{//提交售后服务
         method:'post',
         url:'api/order/submitservice'
+    },
+    upload:{
+        method:'post',
+        url:'api/upload'
+    },
+    afterOrders:{//售后单列表
+        method:'get',
+        url:'api/repairorder/query'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -365,6 +373,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             }
 
         })
+
+
         /*确认订单*/
         .state('confirmOrder', {
             url: '/confirmOrder/:source',
@@ -570,6 +580,25 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
         })
+
+        /*售后订单详情*/
+        .state('UCIndex.AS_orderDetails', {
+            url: '/AS_orderDetails/:order_id',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/AS_orderDetails.html",
+                    controller: 'AS_OrderDetailsCtrl'
+                }
+            },
+            title:'订单详情-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/AS_orderDetailsCtrl.js',
+                    './js/userCenter_js/services/AS_orderDetailsSer.js'
+                ])
+            }
+        })
+
         /*我的钱包*/
         .state('UCIndex.myWallet', {
             url: '/myWallet',

@@ -27,7 +27,7 @@
         </div>
         <div class="cart-list" ng-repeat="list in data_cart" ng-if="data_cart.length>0">
             <div class="cart-list-top">
-                <img ng-src={{imgHost+list.brandImg}} alt=""/>
+                <img real-src={{imgHost+list.brandImg}} alt="" temp-src="./res/images/default.png"  />
                 <a href="#" ng-bind="list.SupplierName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.Commodity.IsCanFree">赢折扣</a>
