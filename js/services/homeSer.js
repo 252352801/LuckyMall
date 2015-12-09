@@ -31,7 +31,11 @@
                 data: {"PageIndex":0,"PageSize":1000}
             }).success(function(response,status,headers,config){
                 if(response&&response!=null&&response!=''){
+                    for(var o in response){
+                        response[o].ImageData=response[o].ImageData.split('|')[0];
+                    }
                     data.banner=response;
+                    console.log(data.banner);
                     callback(response,1);
                 }else{
                     callback(response,0);
