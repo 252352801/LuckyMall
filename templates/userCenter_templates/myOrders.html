@@ -74,6 +74,8 @@
 
                     <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
+                    <p><a ng-click="confirmReceive(list.Id)" class="btn btn-org" ng-if="list.OrderStatus==(2||3)">确认收货</a></p>
+
                     <p><a href="/goodsDetails/{{list.CommodityId}}" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
 
                     <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}" class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>

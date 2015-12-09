@@ -226,6 +226,10 @@ app.constant('API',{
     afterOrders:{//售后单列表
         method:'get',
         url:'api/repairorder/query'
+    },
+    confirmOrder:{//确认收货
+        method:'get',
+        url:'api/order/complete/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',

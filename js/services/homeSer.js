@@ -35,20 +35,10 @@
                         response[o].ImageData=response[o].ImageData.split('|')[0];
                     }
                     data.banner=response;
-                    console.log(data.banner);
                     callback(response,1);
                 }else{
                     callback(response,0);
                 }
-                /*data.banner=[{
-                    ImageData:'./res/test/banner/banner_01.jpg'
-                },{
-                    ImageData:'./res/test/banner/banner02.jpg'
-                },{
-                    ImageData:'./res/test/banner/banner03.jpg'
-                },{
-                    ImageData:'./res/test/banner/banner04.jpg'
-                }];*/
             }).error(function(data,status,headers,config){
 
             });

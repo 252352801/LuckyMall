@@ -60,6 +60,11 @@ angular.module('LuckyMall.controllers')
             PaymentSer.setOrdersData(repay_order);
             $state.go('confirmOrder',{source:'source=repay'});
         };
+
+       /* 确认收货*/
+        $scope.confirmReceive=function(order_id){
+
+        };
         /*请求订单数据*/
         function loadData() {
             $scope.loaded = 0;//已加载数据数量

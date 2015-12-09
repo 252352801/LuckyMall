@@ -766,6 +766,20 @@ angular.module('LuckyMall.services',[])
                     }
                 });
             },
+            confirmOrder:function(order_id,callback){
+                $http({
+                    method:API.afterOrders.method,
+                    url:API.afterOrders.url,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        orders_after=initData(response,1);
+                        callback(response,1);
+                    }
+                });
+            },
             cancelOrder:function(order_id,order_type,callback){
                 $http({
                     method: API.cancelOrder.method,
