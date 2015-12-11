@@ -14,7 +14,7 @@
                     (data_details.RepairStatus==2)?'审核不通过':
                     (data_details.RepairStatus==3)?'处理中':
                     (data_details.RepairStatus==4)?'发货中':
-                    (data_details.RepairStatus==5)?'已完成':"
+                    (data_details.RepairStatus==5)?'已完成':''"
                 >
             </span>
             <label>订单号：</label>
@@ -22,12 +22,11 @@
             <label>申请时间：</label>
             <span ng-bind="data_details.DataTime"></span>
         </p>
-
+            <h2 class="title">售后商品</h2>
         <div class="box-commodity">
-            <h2>售后商品</h2>
             <div class="top">
                 <img/>
-                <a ng-bind="data_order.SupplierName"></a>
+                <a ng-bind="data_details.Order.SupplierName"></a>
             </div>
             <div class="cont">
                 <div class="cont1">
@@ -37,11 +36,11 @@
                     <a href="/goodsDetails/{{data_details.Order.CommodityId}}">
                         <h2 ng-bind="data_details.Order.CommodityName"></h2>
                     </a>
-                    <small ng-bind="'×'+data_details.Order..Count"></small>
+                    <small ng-bind="'×'+data_details.Order.Count"></small>
                     <p class="property" ng-repeat="property in data_details.Order.Specifications" ng-bind="property.name+'：'+property.value"></p>
                 </div>
                 <div class="cont2">
-                    <p ng-bind="'￥'+(data_details.Order.UnitPrice*data_order.Count).toFixed(2)"></p>
+                    <p ng-bind="'￥'+(data_details.Order.UnitPrice*data_details.Order.Count).toFixed(2)"></p>
                 </div>
                 <div class="cont3">
                     <div class="inner-cont">
@@ -56,6 +55,16 @@
                 <div class="cont4">
                     <a>取消售后</a>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ASOD box-describetion">
+        <h3 class="title">描述信息</h3>
+        <p ng-bind="data_details.ProblemDescription"></p>
+        <div class="img-list">
+            <div class="img-container" ng-repeat="img in imgs" >
+                <img ng-src="{{imgHost+img}}"  alt=""/>
             </div>
         </div>
     </div>
@@ -105,16 +114,16 @@
     <div class="box-cost" ng-if="data_order.OrderStatus!=(0||1)">
         <p>
             <label>商品金额：</label>
-            <span ng-bind="data_order.cost.toFixed(2)"></span>
+            <span ng-bind="data_details.Order.cost.toFixed(2)"></span>
         </p>
 
         <p>
             <label>运费：</label>
             <span>￥0.00</span>
         </p>
-        <p>
-            <label>退款金额：</label>
-            <span></span>
+        <p ng-if="data_details.RepairType==2">
+            <label>应退金额：</label>
+            <span ng-bind="(data_details.Order.UnitPrice*data_details.Count*data_details.Order.DiscountVal).toFixed(2)"></span>
         </p>
     </div>
 </div>

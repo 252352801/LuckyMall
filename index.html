@@ -25,7 +25,7 @@
 
 </head>
 <body ng-controller="AppCtrl" ng-app="LuckyMall"  id="ng-app">
-    <div ui-view>
+    <div ui-view ng-show="!page_loading">
     </div>
     <modal-login ng-show="isLoginModalShow"></modal-login>
     <modal-feedback ng-show="isFeedbackModalShow"></modal-feedback>

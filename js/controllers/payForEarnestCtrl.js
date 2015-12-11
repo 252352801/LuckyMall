@@ -1,5 +1,6 @@
 angular.module('LuckyMall.controllers')
- .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API){
+ .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API,OrderDetailsSer){
+
         $scope.isModalWaitingShow=false;
         $scope.pay_type='zhifubao';//支付方式
         loadPageData();//加载本页必须的数据
@@ -91,7 +92,7 @@ angular.module('LuckyMall.controllers')
       /*初始化显示数据*/
      function loadPageData(){
          var order_id=$stateParams.params.split('=')[1];
-         if(CartSer.getData()==null){
+      /*   if(CartSer.getData()==null){
              CartSer.requestCartData(function(response,status){
                 if(status==1){
                     $scope.data_order=CartSer.getOrderById(order_id);
@@ -101,8 +102,15 @@ angular.module('LuckyMall.controllers')
          }else{
              $scope.data_order=CartSer.getOrderById(order_id);
              $scope.earnest_cost=$scope.data_order.UnitPrice*$scope.data_order.Count*$scope.data_order.EarnestPercent.toFixed(2);//需支付的定金总额
-         }
-         $scope.data_orders='';
+         }*/
+
+         OrderDetailsSer.requestData(order_id,function(resp,status){
+             if(status==1){
+                 $scope.data_order=OrderDetailsSer.getData();
+                 $scope.earnest_cost=$scope.data_order.UnitPrice*$scope.data_order.Count*$scope.data_order.EarnestPercent.toFixed(2);//需支付的定金总额
+             }
+         });
+
      }
 
         /*银行简码对应*/

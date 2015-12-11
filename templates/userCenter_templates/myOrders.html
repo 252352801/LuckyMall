@@ -1,4 +1,4 @@
-<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+<div class="UC loading-tips" ng-show="showLoading==true">正在加载...</div>
 <div ng-show="showLoading==false">
     <div class="tabs">
         <div class="tab-item">
@@ -16,8 +16,7 @@
         <span>状态</span>
         <span>操作</span>
     </div>
-    <a href="/UCIndex/AS_orderDetails/{{123456}}">售后单</a>
-    <div class="order-list" ng-repeat="list in data_orders.curPage">
+    <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==0">
         <div class="order-list-top">
            <!-- <img src="./res/test/test_brand6.jpg" alt=""/>-->
             <img real-src={{imgHost+list.brandImg}}  temp-src="./res/images/default.png" />
@@ -72,13 +71,13 @@
 
                     <p><a  class="btn" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)">取消订单</a></p>
 
-                    <p><a href="#" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
+                    <p><a href="/UCIndex/logisticsInfo/0/{{list.Id}}" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
                     <p><a ng-click="confirmReceive(list.Id)" class="btn btn-org" ng-if="list.OrderStatus==(2||3)">确认收货</a></p>
 
                     <p><a href="/goodsDetails/{{list.CommodityId}}" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
 
-                    <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}" class="btn" ng-if="list.OrderStatus==4||list.OrderStatus==2">申请退款</a></p>
+                    <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}" class="btn" ng-if="list.OrderStatus==(2||3)">申请退款</a></p>
 
                     <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}"  class="btn" ng-if="list.OrderStatus==4">申请售后</a></p>
 
@@ -86,6 +85,73 @@
             </div>
         </div>
     </div>
+    
+    
+    <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==1">
+        <div class="order-list-top">
+            <img real-src={{imgHost+list.Order.brandImg}}  temp-src="./res/images/default.png" />
+            <p class="seller-name"><a href="/login" title="" ng-bind="list.Order.SupplierName"></a></p>
+
+            <p class="create-time" ng-bind="'下单时间：'+list.Order.CreateTime"></p>
+
+            <p class="order-sn"><span>订单号：</span>{{list.Order.Id}}</p>
+            <span class="icon-delete" ng-if="list.Order.OrderStatus==4" ng-click="removeOrder(list.Order.Id)"></span>
+        </div>
+        <div class="order-list-cont">
+            <div class="cont1 pull-left">
+                <div class="cont-img">
+                    <a href="/goodsDetails/{{list.Order.CommodityId}}">
+                        <img real-src={{imgHost+list.Order.imageUrl}} temp-src="./res/images/default.png" alt=""/>
+                    </a>
+                </div>
+                <a class="goods-name" href="/goodsDetails/{{list.Order.CommodityId}}">
+                    <h2 ng-bind="list.Order.CommodityName"></h2>
+                    <small ng-bind="'×'+list.Order.Count"></small>
+                </a>
+
+                <p ng-repeat="property in list.Order.Specifications" ng-bind="property.name+'：'+property.value"></p>
+            </div>
+            <div class="cont2 pull-left" ng-bind="'￥'+list.Order.UnitPrice">
+            </div>
+            <div class="cont3 pull-left">
+                <p class="cost" ng-bind="'￥'+(list.Order.cost).toFixed(2)"></p>
+
+                <p ng-bind="'（含定金：￥'+list.Order.EarnestMoney+'）'" ng-if="list.Order.EarnestMoney>0"></p>
+
+                <p class="discount">已享用折扣卡<span class="icon-discount"
+                                                ng-bind="(list.Order.DiscountVal*10).toFixed(1)+'折'"></span></p>
+            </div>
+            <div class="cont4 pull-left">
+                <div>
+
+
+                   <!-- <p ng-if="list.OrderStatus==5">退换中</p>-->
+                    <p>
+                            <span  class="color-org"
+                                    ng-bind="(list.RepairStatus==0)?'审核中':
+                                    (list.RepairStatus==1)?'审核通过':
+                                    (list.RepairStatus==2)?'审核不通过':
+                                    (list.RepairStatus==3)?'处理中':
+                                    (list.RepairStatus==4)?'发货中':
+                                    (list.RepairStatus==5)?'已完成':'未知'"
+                                >
+                            </span>
+                    </p>
+                     <p><a href="/UCIndex/AS_orderDetails/{{list.Order.Id}}">查看详情</a></p>
+                </div>
+            </div>
+            <div class="cont5 pull-left">
+                <div>
+
+                    <p><a href="/UCIndex/logisticsInfo/1/{{list.Order.Id}}" class="btn btn-balanced" ng-if="list.Order.OrderStatus!=1">查看物流</a></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
 
     <div class="UC page-index" ng-show="data_orders.curPage.length>0&&!showLoading">
         <div class="prev" ng-click="prevPage()"><</div>

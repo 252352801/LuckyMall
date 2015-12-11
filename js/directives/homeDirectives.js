@@ -134,7 +134,6 @@ angular.module('LuckyMall')
                 });
             },
             link:function(scope,element,attrs){
-
             }
         };
     })

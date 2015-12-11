@@ -72,7 +72,6 @@ angular.module('LuckyMall')
                 };
             },
             link: function (scope, element, attrs) {
-
             }
         };
     })
@@ -152,13 +151,38 @@ angular.module('LuckyMall')
             controller: function ($scope, $timeout) {
             },
             link: function (scope, element, attrs) {
-                scope.showSubCategory = attrs.hasSubCategory ? ((attrs.hasSubCategory == 'false') ? false : true) : true;
+                scope.showCategoryContent = attrs.hasSubCategory ? ((attrs.hasSubCategory == 'false') ? false : true) : true;
                 scope.showMoreCategory = false;
                 scope.showMore = function () {
                     scope.showMoreCategory = true;
                 };
                 scope.hideMore = function () {
                     scope.showMoreCategory = false;
+                };
+            }
+        };
+    })
+
+
+    /*商品分类(隐藏的)*/
+    .directive('hiddenCategory', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/hiddenCategory.html',
+            controller:function($scope,CategorySer,$timeout){
+                $scope.toggleCategory=function(){
+                    $scope.showHiddenCategory=!$scope.showHiddenCategory;
+                    if($scope.showHiddenCategory){
+                        if(CategorySer.getData()==null){
+                            $scope.category_loading=true;
+                            CategorySer.requestData(function(){
+                                $scope.data_category= CategorySer.getData();
+                                $scope.category_loading=false;
+                            });
+                        }else{
+                            $scope.data_category= CategorySer.getData();
+                        }
+                    }
                 };
             }
         };
@@ -828,6 +852,18 @@ angular.module('LuckyMall')
                    });
                }
            });
+        }
+    }
+})
+
+/*图片出错*/
+.directive('errorSrc', function ($compile) {
+    return {
+        restrict:'A',
+        link: function (scope, element, attrs) {
+            element.bind('error',function(){
+                element.attr('src',attrs.errorSrc);
+            });
         }
     }
 });

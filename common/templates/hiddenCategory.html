@@ -1,0 +1,15 @@
+<div  ng-class="{'left move-right':showHiddenCategory,'left':!showHiddenCategory}" >
+    <div class="hidden-category-title">全部商品分类</div>
+    <p class="category-loading tx-center" ng-show="category_loading">正在加载...</p>
+    <ul  class="full-height dynamic category-cont">
+        <li ng-repeat="category in data_category">
+            <h3  data-id="{{category.Id}}">
+                <a href="/list/{{'category='+category.Id}}/" ng-bind="category.CategoryName"></a>
+            </h3>
+            <p>
+                <a href="/list/{{'category='+category.Id}}/{{'filter='+category.FilterModels[0].Id+'_0_items='+item.Id}}" title="" ng-repeat="item in category.FilterModels[0].FilterItemModels" ng-bind="item.ItemValue"></a>
+            </p>
+        </li>
+    </ul>
+    <a ng-class="{'btn-toggle-category':!showHiddenCategory,'btn-toggle-category open':showHiddenCategory}" ng-click="toggleCategory()" ng-bind="showHiddenCategory?'收起':'全部商品'"></a>
+</div>

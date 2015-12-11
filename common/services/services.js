@@ -73,11 +73,12 @@ angular.module('LuckyMall.services',[])
                     TokenSer.remove();
                 });
             },
-            authorization:function(callback){
+            authorization:function(callback,auth){
+                var param=auth?auth:TokenSer.getToken();
                 if(TokenSer.getToken()){
                     $http({
                         method:API.authorization.method,
-                        url:API.authorization.url+TokenSer.getToken()
+                        url:API.authorization.url+param
                     }).success(function(response){
                         if(response) {
                             if(!response.Token){
@@ -399,11 +400,12 @@ angular.module('LuckyMall.services',[])
                 $http({
                     method:API.search.method,
                     url:API.search.url,
+                    timeout:10000,
                     data: post_data
                 }).success(function(response,status,headers,config){
                     params.callback(filterData(response));
                 }).error(function(data,status,headers,config){
-
+                    alert("请求超时，请检查网络设置");
                 });
             }
         };
@@ -680,7 +682,7 @@ angular.module('LuckyMall.services',[])
                     obj.ConsigneeInfo=JSON.parse(obj.ConsigneeInfo);//收货地址
                 }
             }
-            return data;
+                return data;
         };
         return {
             getAllOrders:function(){
@@ -716,10 +718,18 @@ angular.module('LuckyMall.services',[])
                     case 4:obj=orders_finish;break;
                     case 5:obj=orders_after;break;
                 }
-                for(var o in obj){
-                    if(order_id==obj[o].Id){
-                        return obj[o];
-                    }
+                if(order_status==5){
+                    for(var o in obj){
+                        if(order_id==obj[o].Order.Id){
+                            return obj[o];
+                        }
+                    }                 
+                }else{
+                    for(var o in obj){
+                        if(order_id==obj[o].Id){
+                            return obj[o];
+                        }
+                    }  
                 }
             },
             requestData:function(order_type,callback){ //order_type:1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
@@ -763,6 +773,9 @@ angular.module('LuckyMall.services',[])
                     if(response){
                         orders_after=initData(response,1);
                         callback(response,1);
+                    }else{
+                        orders_after=new Array();
+                        callback(response,0);
                     }
                 });
             },
@@ -824,6 +837,46 @@ angular.module('LuckyMall.services',[])
         };
     })
 
+       /* 订单详情服务*/
+    .factory('OrderDetailsSer',function(API,$http,TokenSer){
+        var data=null;
+        var initData=function(data){
+            data.brandImg=data.Brand?data.Brand.BrandImage:'';
+            data.Specifications=JSON.parse(data.Specifications);//产品规格字符串转换json
+            data.imageUrl=data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
+            data.discountUnitPrice=data.UnitPrice*data.DiscountVal;//折后单件价
+            data.cost=data.UnitPrice*data.Count*data.DiscountVal;//折后价
+            data.needToPay=data.cost-data.EarnestMoney;//待支付
+            if(data.ConsigneeInfo){
+                data.ConsigneeInfo=angular.fromJson(data.ConsigneeInfo);//收货地址
+            }
+            return data;
+        };
+        return {
+            getData:function(){
+                return data;
+            },
+            requestData:function(order_id,callback){
+                $http({
+                    method:API.orderDetails.method,
+                    url:API.orderDetails.url+order_id,
+                    headers: {
+                        'Authorization': TokenSer.getAuth()
+                    }
+                }).success(function(response,status,headers,config){
+                    if(response){
+                        var new_data=initData(response);
+                        data=new_data;
+                        callback(new_data,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(data,status,headers,config){
+                    callback(data,0);
+                });
+            }
+        };
+    })
     /*支付服务*/
     .factory('PaymentSer',function(API,$http,TokenSer){
         var data={
@@ -1182,8 +1235,8 @@ angular.module('LuckyMall.services',[])
                     }
                 }).success(function(response,status,headers,config){
                     if(response){
+                        data=response;
                         callback(response,1);
-                        console.log(angular.toJson(response));
                     }else{
                         callback('',0);
                     }

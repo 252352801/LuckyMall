@@ -1,9 +1,12 @@
 angular.module('LuckyMall.controllers')
-    .controller('MyOrdersCtrl', function ($scope, $state, $stateParams, $timeout, MyOrdersSer,PaymentSer) {
+    .controller('MyOrdersCtrl', function ($scope, $state, $stateParams, $timeout, MyOrdersSer,PaymentSer,LoginSer) {
+        if(!LoginSer.isLogin()){
+            return;
+        }
         var pageSize = 3;//每页条数
         var cur_orders_tab = 1;
         $scope.pageIndex = 1;//当前页
-        $scope.showLoading = true;
+        $scope.showLoading =false;
         $scope.data_orders = {//订单数据
             all: new Array(),
             curPage: new Array()
@@ -84,6 +87,7 @@ angular.module('LuckyMall.controllers')
         };
         /*请求订单数据*/
         function loadData() {
+            $scope.showLoading =true;
             $scope.loaded = 0;//已加载数据数量
             if (MyOrdersSer.getUnPayOrders() == null) {
                 MyOrdersSer.requestData(1, function (response, status) {//请求未支付订单
@@ -126,9 +130,7 @@ angular.module('LuckyMall.controllers')
             }
             if (MyOrdersSer.getAfterOrders() == null) {
                 MyOrdersSer.requestAfterOrders(function (response, status) {//请求已完成订单
-                    if(status==1) {
-                        $scope.data_orders_after = MyOrdersSer.getAfterOrders();
-                    }
+                    $scope.data_orders_after = MyOrdersSer.getAfterOrders();
                     $scope.loaded++;
                 });
             } else {
@@ -147,6 +149,11 @@ angular.module('LuckyMall.controllers')
 
         /*加载本页订单数据*/
         function loadCurPageData(orders_type) {
+            if(orders_type=='after'){
+                $scope.order_type=1;
+            }else{
+                $scope.order_type=0;
+            }
             switch (orders_type) {
                 case 'unPay':
                     $scope.curTab = 'tab1';
@@ -268,6 +275,13 @@ angular.module('LuckyMall.controllers')
                             createPage(MyOrdersSer.getFinishOrders());
                         }, 5);
                         break;
+                    case 5:
+                        $timeout(function () {
+                            $scope.data_orders.all = MyOrdersSer.getAfterOrders();
+                            $scope.data_orders.curPage = getFirstPage(MyOrdersSer.getAfterOrders());
+                            createPage(MyOrdersSer.getAfterOrders());
+                        }, 5);
+                        break;                        
                 }
             });
         }
@@ -284,6 +298,11 @@ angular.module('LuckyMall.controllers')
             });
             MyOrdersSer.requestData(4, function (response, status) {//请求已完成订单
                 $scope.data_orders_finish = MyOrdersSer.getFinishOrders();
+            });
+            MyOrdersSer.requestAfterOrders(function (response, status) {//请求已完成订单
+                if(status==1) {
+                    $scope.data_orders_after = MyOrdersSer.getAfterOrders();
+                }
             });
         }
     });

@@ -11,7 +11,7 @@
 /*    background:#ff7801;*/
     background:rgba(255,120,1,0.9);
 }
-.bar-userInfo .left{
+.bar-userInfo-left{
     min-height:136px;
     width:359px;
     margin-left:100px;
@@ -19,7 +19,7 @@
     border-right:1px solid #fca032;
     position:relative;
 }
-.bar-userInfo .left .user-head-img{
+.bar-userInfo-left .user-head-img{
     width:140px;
     height:140px;
     border-radius:70px;
@@ -50,24 +50,24 @@
     top:140px;
     transition:top 0.5s;
 }
-.bar-userInfo .left .user-head-img:hover .btn-edit-img{
+.bar-userInfo-left .user-head-img:hover .btn-edit-img{
     top:0px;
     transition:top 0.5s;
 }
-.bar-userInfo .left h1{
+.bar-userInfo-left h1{
     display:inline-block;
     margin-top:36px;
     font-size:20px;
     margin-left:20px;
     font-weight:normal;
 }
-.bar-userInfo .left  small{
+.bar-userInfo-left  small{
 
 }
-.bar-userInfo .left p{
+.bar-userInfo-left p{
     margin-left:10px;
 }
-.bar-userInfo .left p:before{
+.bar-userInfo-left p:before{
     content:'';
     display:inline-block;
     width:32px;
@@ -76,43 +76,43 @@
    position:relative;
     top:10px;
 }
-.bar-userInfo .right{
+.bar-userInfo-right{
     margin-left:140px;
     min-height:136px;
     width:360px;
     padding-left:100px;
     position:relative;
 }
-.bar-userInfo .right img{
+.bar-userInfo-right img{
     width:100px;
     height:100px;
     position:absolute;
     left:0px;
     top:35px;
 }
-.bar-userInfo .right h2{
+.bar-userInfo-right h2{
     font-size:16px;
     font-weight:normal;
     position:absolute;
     left:10px;
     top:0px;
 }
-.bar-userInfo .right h2:before{
+.bar-userInfo-right h2:before{
     content:'我的';
     font-size:18px;
 }
-.bar-userInfo .right h3,.bar-userInfo .right p{
+.bar-userInfo-right h3,.bar-userInfo-right p{
     margin-left:20px;
     position:relative;
 }
-.bar-userInfo .right h3{
+.bar-userInfo-right h3{
     font-size:20px;
     color:#fca032;
     font-weight:500;
     margin-top:40px;
     margin-bottom:10px;
 }
-.bar-userInfo .right .exp{
+.bar-userInfo-right .exp{
     display:inline-block;
     margin-top:10px;
     width:250px;
@@ -120,7 +120,7 @@
     border-radius:8px;
     background:#fff;
 }
-.bar-userInfo .right small{
+.bar-userInfo-right small{
     display:inline-block;
     width:16px;
     height:16px;
@@ -134,7 +134,7 @@
     position:relative;
     top:-5px;
 }
-.bar-userInfo .right .exp .exp-value{
+.bar-userInfo-right .exp .exp-value{
     display:block;
     width:70%;
     height:100%;
@@ -912,7 +912,7 @@
 .wallet-history li .cont1{
     box-sizing:border-box;
     width:70%;
-    padding-left:126px;
+/*    padding-left:126px;*/
     float:left;
     position:relative;
     min-height:110px;
@@ -955,6 +955,7 @@
     font-size:12px;
     color:#a9a9a9;
     margin-bottom:20px;
+    margin-top: 20px;
 }
 .wallet-history li .btn-handles a{
     display:inline-block;
@@ -1468,7 +1469,7 @@
 .OD .box-logistics {
     margin-top:35px;
 }
-.OD .box-logistics .title{
+.OD  .title{
     margin-bottom:10px;
     font-size:18px;
     color:#333;
@@ -1868,3 +1869,35 @@
     display:inline;
 }
 /*申请售后 end*/
+
+.ASOD.box-describetion{
+    margin-top:25px;
+}
+.ASOD.box-describetion p{
+    margin-left:25px;
+    margin-bottom: 10px;
+}
+.ASOD.box-describetion .img-list{
+    overflow:hidden;
+}
+.ASOD.box-describetion .img-container{
+    width:150px;
+    height:150px;
+    float:left;
+    margin-left:25px;
+    border:1px solid #eee;
+    display:table-caption;
+    text-align: center;
+    line-height: 150px;
+}
+.ASOD.box-describetion .img-container img{
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+}
+.UC.loading-tips{
+    position:absolute;
+    left:50%;
+    top:100px;
+    margin-left:-50px;
+}

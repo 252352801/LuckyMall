@@ -1,0 +1,36 @@
+<p class="menu-cont-title">
+    <label>物流信息</label>
+</p>
+<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+<div class="OD UC-menu-cont-wrap">
+
+    <div class="box-logistics">
+        <h3 class="title">物流信息</h3>
+
+        <p class="item">
+            <label>物流公司：</label>
+            <span ng-bind="data_logistics.CourierName"></span>
+        </p>
+
+        <p class="item">
+            <label>物流单号：</label>
+            <span ng-bind="data_logistics.TrackingNumber"></span>
+        </p>
+
+        <div class="logistics-details">
+            <label>物流跟踪：</label>
+
+            <div class="logistics-info">
+                <div class="logistics-list">
+                    <ul>
+                        <li ng-repeat="trace in data_logistics.lastResult.data">
+                            <span class="time" ng-bind="trace.ftime"></span>
+                            <span class="info" ng-bind="trace.context"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

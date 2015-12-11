@@ -1,18 +1,19 @@
 angular.module('LuckyMall.controllers')
     .controller('GoodsDetailsCtrl',
-    function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer,CategorySer,Host,MyOrdersSer,CartSer) {
+    function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host, MyOrdersSer, CartSer) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
-        $scope.isLogin = LoginSer.isLogin;//是否应经登录
+        $scope.isLogin = LoginSer.isLogin();//是否应经登录
         $scope.showingTab = 'tab1';//当前显示的tab
         $scope.showTips = false;//开始默认不显示提示
         $scope.finishSelect = false;
         loadGoodsDetailsData();//加载本页数据
         $scope.amount = 1;//当前数量
         $scope.loading = true;
-        $scope.btn_value={//按钮文字
-            addToCart:'加入购物车',
-            buyNow:'立即购买'
+        $scope.isFreePlayed = false;
+        $scope.btn_value = {//按钮文字
+            addToCart: '加入购物车',
+            buyNow: '立即购买'
         };
         $scope.discount = function (cur_price, old_price) {
             return ((cur_price / old_price) * 10).toFixed(1);
@@ -80,10 +81,23 @@ angular.module('LuckyMall.controllers')
         };
         $rootScope.$on('user-login', function () {
             $timeout(function () {
-                $scope.isLogin = LoginSer.isLogin;
+                $scope.isLogin = LoginSer.isLogin();
             }, 5);
+            isFreePlay();
         });
-
+        function isFreePlay(){
+            if ($scope.isCanFree) {//测试是否玩使用过免费机会
+                GoodsDetailsSer.isFreePlayed(goods_id, function (response, status) {
+                    if (status == 1) {
+                        if (response) {
+                            $scope.isFreePlayed = false;
+                        } else {
+                            $scope.isFreePlayed = true;
+                        }
+                    }
+                });
+            }
+        }
         $scope.overMax = function (reset_value) {
             swal({
                 title: "库存不足!",
@@ -123,24 +137,29 @@ angular.module('LuckyMall.controllers')
                     "Count": $scope.amount,
                     "Specifications": angular.toJson(GoodsDetailsSer.getSelectedAttributes())
                 };
-                GoodsDetailsSer.addToCart(params, function (response, status) {
+                GoodsDetailsSer.addToCart(params, function (response,status) {
                     if (status == 1) {
                         $scope.$emit('cart-update');
                         location.href = Host.game + '?orderid=' + response.Data.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
-                    } else {
-                        if (status == 0) {
-                            if (response.Code == '0XXX') {
-                                swal({
-                                    title: "未知错误!",
-                                    text: '错误码：0XXX',
-                                    type: "error",
-                                    confirmButtonText: "确定"
-                                });
-                            }
+                    } else if(status == 0) {
+                        if (response.Code == '0X50') {
+                            swal({
+                                title: "请不要重复下单!",
+                                text: '您可以在购物车或‘我的订单’里看到它',
+                                type: "error",
+                                confirmButtonText: "确定"
+                            });
                         }
-                        if (status == 2) {
-                            $scope.$emit("show-login-modal");
+                        else if (response.Code == '0XXX') {
+                            swal({
+                                title: "未知错误!",
+                                text: '错误码：0XXX',
+                                type: "error",
+                                confirmButtonText: "确定"
+                            });
                         }
+                    } else if (status == 2) {
+                        $scope.$emit("show-login-modal");
                     }
                 });
             } else {
@@ -149,7 +168,7 @@ angular.module('LuckyMall.controllers')
         };
 
         /*下单*/
-        $scope.createOrder = function (act,callback) { //act : 0加入购物车  1 立即购买
+        $scope.createOrder = function (act, callback) { //act : 0加入购物车  1 立即购买
             if ($scope.choice.length <= 0) {
                 swal({
                     title: "该商品处于缺货状态!",
@@ -188,47 +207,52 @@ angular.module('LuckyMall.controllers')
                 "Count": $scope.amount,
                 "Specifications": angular.toJson(GoodsDetailsSer.getSelectedAttributes())
             };
-            if(act==0){
-                $scope.btn_value.addToCart='正在处理...';
-            }else if(act==1){
-                $scope.btn_value.buyNow='正在处理...';
+            if (act == 0) {
+                $scope.btn_value.addToCart = '正在处理...';
+            } else if (act == 1) {
+                $scope.btn_value.buyNow = '正在处理...';
             }
             GoodsDetailsSer.addToCart(params, function (response, status) {
                 if (status == 1) {
-                    if(act==0){
+                    if (act == 0) {
                         $scope.$emit('cart-update');
-                       $scope.btn_value.addToCart='加入购物车';
+                        $scope.btn_value.addToCart = '加入购物车';
                         callback();
-                    }else if(act==1){
+                    } else if (act == 1) {
                         MyOrdersSer.setTempOrder(response.Data);
-                        CartSer.requestCartData(function(response,status){
-                            $scope.btn_value.buyNow='立即购买';
-                            if(status==1){
-                                $state.go('confirmOrder',{source:'source=purchase'});
+                        CartSer.requestCartData(function (response, status) {
+                            $scope.btn_value.buyNow = '立即购买';
+                            if (status == 1) {
+                                $state.go('confirmOrder', {source: 'source=purchase'});
                             }
                         });
                     }
-                } else {
-                    $scope.btn_value.addToCart='加入购物车';
-                    $scope.btn_value.buyNow='立即购买';
-                    if (status == 0) {
-                        if (response.Code == '0XXX') {
-                            swal({
-                                title: "未知错误!",
-                                text: '错误码：0XXX',
-                                type: "error",
-                                confirmButtonText: "确定"
-                            });
-                        }
-                    }
-                    if (status == 2) {
+                } else if (status == 0) {
+                    $scope.btn_value.addToCart = '加入购物车';
+                    $scope.btn_value.buyNow = '立即购买';
+                    if (response.Code == '0X50') {
                         swal({
-                            title: "当前账号已过期，请退出后重新登陆!",
+                            title: "请不要重复下单!",
+                            text: '您可以在购物车或“我的订单”里看到它',
+                            type: "error",
+                            confirmButtonText: "确定"
+                        });
+                    } else if (response.Code == '0XXX') {
+                        swal({
+                            title: "未知错误!",
+                            text: '错误码：0XXX',
                             type: "error",
                             confirmButtonText: "确定"
                         });
                     }
+                }else if (status == 2) {
+                    swal({
+                        title: "当前账号已过期，请退出后重新登陆!",
+                        type: "error",
+                        confirmButtonText: "确定"
+                    });
                 }
+
             });
         };
         /*加载本页数据*/
@@ -237,6 +261,10 @@ angular.module('LuckyMall.controllers')
             var loaded = 0;
             GoodsDetailsSer.requestData(goods_id, function () { //加载商品详细信息数据
                 $scope.data_goods = GoodsDetailsSer.getData();//产品数据
+                $scope.isCanFree = $scope.data_goods.IsCanFree;
+                if($scope.isLogin) {
+                    isFreePlay();
+                }
                 $scope.choice = new Array();//产品规格选择器，存放被选的属性的下标（索引）
                 loaded++;
                 isFinishLoad();
@@ -254,12 +282,12 @@ angular.module('LuckyMall.controllers')
                 if (status == 1) {
                     $scope.data_category = response;//品类数据  包含所属项和品类ID
                     console.log(angular.toJson($scope.data_category));
-                    if(CategorySer.getData()==null){
-                        CategorySer.requestData(function(){
-                            $scope.data_categoryName=CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;//通过品类ID获取品类名
+                    if (CategorySer.getData() == null) {
+                        CategorySer.requestData(function () {
+                            $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;//通过品类ID获取品类名
                         });
-                    }else{
-                        $scope.data_categoryName=CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;
+                    } else {
+                        $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;
                     }
                 }
                 loaded++;
@@ -270,11 +298,12 @@ angular.module('LuckyMall.controllers')
                 if (loaded >= 2) {
                     $timeout(function () {
                         $scope.loading = false;
-                    }, 300)
+                    }, 300);
                     $scope.loaded = true;//加载完成标志
                 }
             }
         }
+
         /*清空选择*/
         function clearChecked() {
             GoodsDetailsSer.clearSelections();//重置所有isSelected属性

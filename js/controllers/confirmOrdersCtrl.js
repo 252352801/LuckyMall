@@ -226,6 +226,8 @@ angular.module('LuckyMall.controllers')
              var order_id=MyOrdersSer.getTempOrder().Id;
              $scope.data_orders=[CartSer.getOrderById(order_id)];
              console.log(angular.toJson($scope.data_orders));
+         }else if($scope.source=='game'){
+
          }
          AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
              if(status==1){

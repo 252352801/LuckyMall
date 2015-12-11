@@ -3,7 +3,7 @@ app.constant('Host',{
     develop: "http://dapi.xingyunmao.cn/", //开发服务器
     test: "http://120.25.60.19:9000/",//测试服务器
     prev:"http://120.24.225.116:9000/", //运营服务器
-    game:'http://120.25.60.19:9004', //游戏服务器
+    game:'http://120.24.175.151:9004', //游戏服务器
     gameOverPage:'http://www.xingyunmao.cn/shoppingCart'//游戏结束后返回地址
 });
 app.constant('API',{
@@ -46,6 +46,10 @@ app.constant('API',{
     goodsDetailsData:{//根据商品ID获取商品详情页数据 后接商品id
         method:'get',
         url: 'api/commodity/'
+    },
+    isFreePlayed:{//是否使用了免费玩游戏的次数
+        method:'get',
+        url: 'api/user/isfreeplay/'
     },
     getCategoryByGoodsId:{//根据商品id获取分类数据，后接商品id
         method:'get',
@@ -241,7 +245,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     }
 
     $locationProvider.html5Mode(true);
-
     /*==================================================路由配置    begin=============================================*/
     /*默认路由*/
     $urlRouterProvider.otherwise('home');
@@ -526,6 +529,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         })
 
+        /*活动页*/
+        .state('afterGame', {
+            url: '/afterGame/:params',
+            views: {
+                '': {
+                    templateUrl: "templates/afterGame.html",
+                    controller: 'AfterGameCtrl'
+                }
+            },
+            title:'正在处理...',
+            resolve: {
+                loadFiles: load([
+                    './js/controllers/afterGameCtrl.js'
+                ])
+            }
+        })
+
         /*--------------------------------------分割线----------------------------------------------------------*/
         /*用户中心首页*/
         .state('UCIndex', {
@@ -803,13 +823,47 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './lib/areaPicker/areaPicker.css'
                 ])
             }
+        })
+    
+    
+        /*物流信息*/
+        .state('UCIndex.logisticsInfo', {
+            url: '/logisticsInfo/:order_type/:order_id',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/logisticsInfo.html",
+                    controller: 'LogisticsInfoCtrl'
+                }
+            },
+            title:'物流信息-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/logisticsInfoCtrl.js'
+                ])
+            }
         });
 
-    /*==================================================接口配置    end===============================================*/
+    /*===================接口配置 ==================*/
     initAPI();
     function initAPI(){
+        var cur_host=Host.develop;//##############当前环境
+        switch(cur_host){
+            case Host.develop:
+                Host.game='http://120.24.175.151:9004';//开发
+                Host.gameOverPage='http://127.0.0.1/afterGame/';
+                break;
+            case Host.test:
+                Host.game='http://120.25.60.19:9004';//测试
+                Host.gameOverPage='http://www.xingyunmao.cn/afterGame/';
+                break;
+            case Host.prev:
+                Host.game='http://120.24.225.116:9004';//运营（前）
+                Host.gameOverPage='http://pwww.xingyunmao.cn/afterGame/';
+                break;
+        }
+        Host.gameOverPage=Host.develop
         for(var o in API){
-            API[o].url=Host.develop+API[o].url;
+            API[o].url=cur_host+API[o].url;
         }
     }
 

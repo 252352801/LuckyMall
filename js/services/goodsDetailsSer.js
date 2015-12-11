@@ -34,6 +34,22 @@ angular.module('LuckyMall.services')
 
                 });
             },
+            /*是否使用过免费次数*/
+            isFreePlayed:function(goods_id,callback){
+                $http({
+                    method: API.isFreePlayed.method,
+                    url: API.isFreePlayed.url+goods_id,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function (response, status, headers, config) {
+                    if(status==200&&response){
+                        callback(response,1);
+                    }else if(status==200&&!response){
+                        callback(response,0);
+                    }
+                })
+            },
             /*根据商品id获取品类数据*/
             requestCategoryByGoodsId:function(goods_id,callback){
                 $http({
@@ -157,11 +173,14 @@ angular.module('LuckyMall.services')
                         'Authorization':TokenSer.getAuth()
                     }
                 }).success(function (response, status, headers, config) {
-                    if(response.Data!=null){
+                    if(status==200){
+                        if(response.Code=="0X00"){
                             callback(response,1);
-                    }else{
+                        }else{
                             callback(response,0);
-
+                        }
+                    }else{
+                            callback('下单失败！',-1);
                     }
                 })
                 .error(function(response,status){

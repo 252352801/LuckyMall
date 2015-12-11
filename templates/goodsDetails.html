@@ -12,6 +12,9 @@
             <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
+            <div class="tag-free-played" ng-if="data_goods.IsCanFree&&isFreePlayed">
+                <span>已试玩</span>
+            </div>
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img">
                     <img  id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png"/>
@@ -63,8 +66,8 @@
                     </div>
                 </div>
                 <div class="bar-btn">
-                    <input class="btn-buy" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false" ng-click="createOrder(1)" />
-                    <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true" ng-click="playForDiscount(data_goods.Id)">试玩赢折扣</a>
+                    <input class="btn-buy" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" />
+                    <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)">试玩赢折扣</a>
                     <input class="btn-add" ng-if="data_goods.IsCanFree==false" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart/>
                 </div>
             </form>
@@ -72,7 +75,7 @@
         <div class="box-proIntro tabs">
             <div class="tab-item">
                 <span ng-class="{'item cur':showingTab=='tab1','item':showingTab!='tab1'}" ng-click="showTab('tab1')">详细信息</span>
-                <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">商品咨询</span>
+               <!-- <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">商品咨询</span>-->
             </div>
             <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
                 <ul class="pro-showing-images">
