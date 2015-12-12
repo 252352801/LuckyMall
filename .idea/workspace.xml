@@ -73,10 +73,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../MyDemo/demo-图片放大/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.70449436" vertical-offset="0" max-vertical-offset="1976">
+            <state vertical-scroll-proportion="-22.392857" vertical-offset="0" max-vertical-offset="1976">
               <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -86,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="config.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/config/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="15764" max-vertical-offset="17157">
-              <caret line="847" column="23" selection-start-line="847" selection-start-column="23" selection-end-line="847" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.17211328" vertical-offset="15897" max-vertical-offset="17157">
+              <caret line="845" column="27" selection-start-line="845" selection-start-column="27" selection-end-line="845" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -161,12 +161,12 @@
         <option value="$PROJECT_DIR$/../myWork/demo/demo-图片放大/index.html" />
         <option value="$PROJECT_DIR$/js/controllers/afterGameCtrl.js" />
         <option value="$USER_HOME$/Desktop/新建文件夹/index.html" />
-        <option value="$PROJECT_DIR$/common/config/config.js" />
         <option value="$PROJECT_DIR$/css/goodsDetails.css" />
         <option value="$PROJECT_DIR$/js/directives/goodsDetailsDirectives.js" />
         <option value="$PROJECT_DIR$/templates/goodsDetails.html" />
         <option value="$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js" />
         <option value="$PROJECT_DIR$/../MyDemo/demo-图片放大/index.html" />
+        <option value="$PROJECT_DIR$/common/config/config.js" />
       </list>
     </option>
   </component>
@@ -658,14 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="15764" max-vertical-offset="17157">
-          <caret line="847" column="23" selection-start-line="847" selection-start-column="23" selection-end-line="847" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/directives/goodsDetailsDirectives.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="203" max-vertical-offset="1596">
@@ -684,12 +676,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../MyDemo/demo-图片放大/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70449436" vertical-offset="0" max-vertical-offset="1976">
+        <state vertical-scroll-proportion="-22.392857" vertical-offset="0" max-vertical-offset="1976">
           <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17211328" vertical-offset="15897" max-vertical-offset="17157">
+          <caret line="845" column="27" selection-start-line="845" selection-start-column="27" selection-end-line="845" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
