@@ -45,7 +45,7 @@
                 <div class="cont3">
                     <div class="cont-container">
                         <p class="discount-price"  ng-bind="'￥'+data_order.cost.toFixed(2)"></p>
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="data_order.DiscountVal*10+'折'"></span></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_order.DiscountVal.toFixed(2))*10+'折'"></span></p>
                     </div>
                 </div>
                 <div class="cont4">

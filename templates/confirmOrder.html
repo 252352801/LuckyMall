@@ -45,8 +45,8 @@
         </div>
         <div class="goods-list" ng-repeat="order in data_orders">
             <div class="bar-sellerInfo">
-                <img real-src={{imgHost+list.brandImg}} temp-src="./res/images/default.png" alt=""/>
-                <p ng-bind="order.SupplierName"></p>
+                <img real-src={{imgHost+order.Brand.BrandImage}} temp-src="./res/images/default.png" alt=""/>
+                <p ng-bind="order.Brand.BrandName"></p>
             </div>
             <div class="goods-list-cont">
                 <div class="cont1">
@@ -67,7 +67,7 @@
                 <div class="cont3">
                     <div class="cont-container">
                         <p class="discount-price"  ng-bind="'￥'+order.cost.toFixed(2)"></p>
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="order.DiscountVal*10+'折'"></span></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(order.DiscountVal.toFixed(2))*10+'折'"></span></p>
                     </div>
                 </div>
                 <div class="cont4">

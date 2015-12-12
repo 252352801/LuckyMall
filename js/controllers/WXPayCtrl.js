@@ -8,6 +8,16 @@ angular.module('LuckyMall.controllers')
         $scope.$on('stop-polling-tradeStatus',function(){
             $scope.polling=false;
         });
+    
+        $scope.goBack=function(){
+            window.history.back(-1);
+        };
+        $scope.repay=function(order){
+            var repay_order=new Array();
+            repay_order.push(order);
+            PaymentSer.setOrdersData(repay_order);
+            $state.go('confirmOrder',{source:'source=repay'});
+        };
        /* 获取二维码数据*/
         function getQRCodeData(){
             WXPaySer.getQRCodeData($scope.trade_id,function(response,status){

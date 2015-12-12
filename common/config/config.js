@@ -850,18 +850,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         switch(cur_host){
             case Host.develop:
                 Host.game='http://120.24.175.151:9004';//开发
-                Host.gameOverPage='http://127.0.0.1/afterGame/';
+                Host.gameOverPage='127.0.0.1/afterGame/';
                 break;
             case Host.test:
                 Host.game='http://120.25.60.19:9004';//测试
-                Host.gameOverPage='http://www.xingyunmao.cn/afterGame/';
+                Host.gameOverPage='www.xingyunmao.cn/afterGame/';
                 break;
             case Host.prev:
                 Host.game='http://120.24.225.116:9004';//运营（前）
-                Host.gameOverPage='http://pwww.xingyunmao.cn/afterGame/';
+                Host.gameOverPage='pwww.xingyunmao.cn/afterGame/';
                 break;
         }
-        Host.gameOverPage=Host.develop
         for(var o in API){
             API[o].url=cur_host+API[o].url;
         }

@@ -25,8 +25,8 @@
             <h2 class="title">售后商品</h2>
         <div class="box-commodity">
             <div class="top">
-                <img/>
-                <a ng-bind="data_details.Order.SupplierName"></a>
+                <img real-src={{imgHost+data_details.Order.Brand.BrandImage}}  temp-src="./res/images/default.png"/>
+                <a ng-bind="data_details.Order.Brand.BrandName"></a>
             </div>
             <div class="cont">
                 <div class="cont1">

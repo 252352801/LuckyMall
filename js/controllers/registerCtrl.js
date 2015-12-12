@@ -116,7 +116,7 @@ angular.module('LuckyMall.controllers')
                     if($scope.form_register.password.$error.required) {
                         $scope.showTips('请设置您的账号密码！');
                     }else{
-                        $scope.showTips('您设置的密码不符合要求，请按要求输入！');
+                        $scope.showTips('密码必须为8-24位字母与数字或下划线组合！');
                     }
                 }else if($scope.form_register.re_password.$modelValue!=$scope.form_register.password.$modelValue){
                     if($scope.form_register.re_password.$error.required){

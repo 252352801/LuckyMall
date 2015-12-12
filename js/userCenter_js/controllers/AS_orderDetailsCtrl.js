@@ -21,7 +21,7 @@ angular.module('LuckyMall.controllers')
     
        function initData(){
                     $scope.data_details= MyOrdersSer.getOrder(5,$scope.order_id);
-                    $scope.data_logistics=JSON.parse($scope.data_details.Order.LogisticsInfo);
+                    $scope.data_logistics=angular.fromJson($scope.data_details.Order.LogisticsInfo);
                     if($scope.data_details.Images!=''){
                             $scope.imgs=$scope.data_details.Images.split('|');
                     }else{

@@ -19,8 +19,8 @@
     <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==0">
         <div class="order-list-top">
            <!-- <img src="./res/test/test_brand6.jpg" alt=""/>-->
-            <img real-src={{imgHost+list.brandImg}}  temp-src="./res/images/default.png" />
-            <p class="seller-name"><a href="/login" title="" ng-bind="list.SupplierName"></a></p>
+            <img real-src={{imgHost+list.Brand.BrandImage}}  temp-src="./res/images/default.png" />
+            <p class="seller-name"><a href="/login" title="" ng-bind="list.Brand.BrandName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
 
@@ -89,8 +89,8 @@
     
     <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==1">
         <div class="order-list-top">
-            <img real-src={{imgHost+list.Order.brandImg}}  temp-src="./res/images/default.png" />
-            <p class="seller-name"><a href="/login" title="" ng-bind="list.Order.SupplierName"></a></p>
+            <img real-src={{imgHost+list.Order.Brand.BrandImage}}  temp-src="./res/images/default.png" />
+            <p class="seller-name"><a href="/login" title="" ng-bind="list.Order.Brand.BrandName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.Order.CreateTime"></p>
 

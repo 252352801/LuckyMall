@@ -1,5 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('AfterGameCtrl', function ($scope, CartSer, LoginSer, $state,$cookies, $timeout, UserSer,RefreshUserDataSer,Host,PayForEarnest) {
+    .controller('AfterGameCtrl', function ($scope, CartSer, LoginSer, $state,$cookies, $timeout, MyOrdersSer,
+                                            $rootScope) {
         var str=location.href.split('?')[1];
         var params={
             auth:str.split('&')[0].split('=')[1],
@@ -14,11 +15,16 @@ angular.module('LuckyMall.controllers')
         }
         /* 授权*/
         function authorization(callback){
-            var auth='Basic '+ params.auth;
+            var auth=params.auth;
             LoginSer.authorization(function(response,status){
                 if(status==1){
                     $scope.$emit('user-login');
                     callback();
+                }else{
+                    $scope.$emit("show-login-modal");
+                    $rootScope.$on('user-login',function(){
+                        callback();
+                    });
                 }
             },auth);
         }
@@ -32,10 +38,12 @@ angular.module('LuckyMall.controllers')
                     $state.go('shoppingCart');
                     break;
                 case '1':
-                    alert("付定金");
-                    $state.go('payForEarnest',{params:params.orderId});
+                    $state.go('payForEarnest',{params:'order_id='+params.orderId});
                     break;
-                case '2': alert('支付');
+                case '2':
+                    MyOrdersSer.setTempOrder(params.orderId);
+                    $state.go('confirmOrders',{source:'source=game'});
+                    break;
             }
         }
 

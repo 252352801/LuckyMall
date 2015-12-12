@@ -461,7 +461,7 @@ angular.module('LuckyMall.services',[])
               var total_amount=0;//商品总数
               var total_cost=0;//总花费
               for(var o in data){
-                    data[o].Specifications=JSON.parse(data[o].Specifications);//产品规格字符串转换json
+                    data[o].Specifications=angular.fromJson(data[o].Specifications);//产品规格字符串转换json
                     data[o].imageUrl=data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                     data[o].discountUnitPrice=data[o].UnitPrice*data[o].DiscountVal;//折后单件价
                     data[o].cost=data[o].UnitPrice*data[o].Count*data[o].DiscountVal;//折后价
@@ -672,14 +672,13 @@ angular.module('LuckyMall.services',[])
         var initData=function(data,type){ //type 0 售前单   1 售后单
             for(var o in data){
                 var obj=(type==0)?data[o]:data[o].Order;
-                obj.brandImg=obj.Brand?obj.Brand.BrandImage:'';
-                obj.Specifications=JSON.parse(obj.Specifications);//产品规格字符串转换json
+                obj.Specifications=angular.fromJson(obj.Specifications);//产品规格字符串转换json
                 obj.imageUrl=obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                 obj.discountUnitPrice=obj.UnitPrice*obj.DiscountVal;//折后单件价
                 obj.cost=obj.UnitPrice*obj.Count*obj.DiscountVal;//折后价
                 obj.needToPay=obj.cost-obj.EarnestMoney;//待支付
                 if(obj.ConsigneeInfo!=(''||null)){
-                    obj.ConsigneeInfo=JSON.parse(obj.ConsigneeInfo);//收货地址
+                    obj.ConsigneeInfo=angular.fromJson(obj.ConsigneeInfo);//收货地址
                 }
             }
                 return data;
@@ -842,7 +841,7 @@ angular.module('LuckyMall.services',[])
         var data=null;
         var initData=function(data){
             data.brandImg=data.Brand?data.Brand.BrandImage:'';
-            data.Specifications=JSON.parse(data.Specifications);//产品规格字符串转换json
+            data.Specifications=angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl=data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
             data.discountUnitPrice=data.UnitPrice*data.DiscountVal;//折后单件价
             data.cost=data.UnitPrice*data.Count*data.DiscountVal;//折后价
@@ -1158,7 +1157,7 @@ angular.module('LuckyMall.services',[])
         function initData(data){
             for(var o in data){
                 var spe=data[o].Order.Specifications;
-                data[o].Order.goodsProperty=JSON.parse(spe);
+                data[o].Order.goodsProperty=angular.fromJson(spe);
                 data[o].Order.imgUrl=data[o].Order.Commodity.RollingImages.split('|')[0];
                 data[o].discountPrice=(data[o].BaseDiscount*data[o].Order.UnitPrice).toFixed(2);
                 data[o].BaseDiscount=10*(data[o].BaseDiscount.toFixed(2));

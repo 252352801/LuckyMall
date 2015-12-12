@@ -1,4 +1,4 @@
-﻿/*===================
+/*===================
   支付页面 begin
 ====================*/
 .pay.container.content{
@@ -16,6 +16,7 @@
     color:#509f0d;
     display:inline-block;
     font-size:14px;
+    cursor:pointer;
  }
 .pay .bar-pay-top a:before{
     content:'<';
