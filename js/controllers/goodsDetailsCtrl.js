@@ -142,22 +142,7 @@ angular.module('LuckyMall.controllers')
                         $scope.$emit('cart-update');
                         location.href = Host.game + '?orderid=' + response.Data.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
                     } else if(status == 0) {
-                        if (response.Code == '0X50') {
-                            swal({
-                                title: "请不要重复下单!",
-                                text: '您可以在购物车或‘我的订单’里看到它',
-                                type: "error",
-                                confirmButtonText: "确定"
-                            });
-                        }
-                        else if (response.Code == '0XXX') {
-                            swal({
-                                title: "未知错误!",
-                                text: '错误码：0XXX',
-                                type: "error",
-                                confirmButtonText: "确定"
-                            });
-                        }
+                        handleErrs(response.Code);
                     } else if (status == 2) {
                         $scope.$emit("show-login-modal");
                     }
@@ -230,21 +215,8 @@ angular.module('LuckyMall.controllers')
                 } else if (status == 0) {
                     $scope.btn_value.addToCart = '加入购物车';
                     $scope.btn_value.buyNow = '立即购买';
-                    if (response.Code == '0X50') {
-                        swal({
-                            title: "请不要重复下单!",
-                            text: '您可以在购物车或“我的订单”里看到它',
-                            type: "error",
-                            confirmButtonText: "确定"
-                        });
-                    } else if (response.Code == '0XXX') {
-                        swal({
-                            title: "未知错误!",
-                            text: '错误码：0XXX',
-                            type: "error",
-                            confirmButtonText: "确定"
-                        });
-                    }
+                    handleErrs(response.Code);
+
                 }else if (status == 2) {
                     swal({
                         title: "当前账号已过期，请退出后重新登陆!",
@@ -368,4 +340,58 @@ angular.module('LuckyMall.controllers')
             $scope.finishSelect = false;
         }
 
+
+        /*处理下单错误*/
+        function handleErrs(err_code){
+            if (err_code == '0X50') {
+                swal({
+                    title: "请不要重复下单!",
+                    text: '您可以在购物车或“我的订单”里看到它',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            }else if(err_code == '0X51'){
+                swal({
+                    title: "折扣卡与订单不匹配!",
+                    text: '错误码：0X51',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            }else if(err_code == '0X52'){
+                swal({
+                    title: "订单状态异常!",
+                    text: '错误码：0X52',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            }else if(err_code == '0X60'){
+                swal({
+                    title: "已存在未处理完的免费订单，无法再添加免费订单!",
+                    text: '错误码：0X60',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            }else if(err_code== '0X61'){
+                swal({
+                    title: "商品的免费次数已用完!",
+                    text: '错误码：0X61',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            } else if(err_code== '0X62'){
+                swal({
+                    title: "该商品一次只能购买一件喔!",
+                    text: '提供免费模式的商品，一次限购一件',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            }else if (err_code== '0XXX') {
+                swal({
+                    title: "未知错误!",
+                    text: '错误码：0XXX',
+                    type: "error",
+                    confirmButtonText: "确定"
+                });
+            }
+        }
     });
