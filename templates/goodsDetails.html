@@ -17,7 +17,7 @@
             </div>
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img">
-                    <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />
+                    <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" magnifier magnifier-img={{imgHost+data_goods.SmallImages[index]}} />
                 </div>
                 <div class="small-goods-img">
                     <ul class="goods-index" id="details_goods_index">
@@ -93,6 +93,8 @@
     </div>
 </div>
 <!--中部 end-->
+
+
 <introduction></introduction>
 
 <sub-footer></sub-footer>

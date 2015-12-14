@@ -841,12 +841,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/userCenter_js/controllers/logisticsInfoCtrl.js'
                 ])
             }
-        });
+        })
+
 
     /*===================接口配置 ==================*/
     initAPI();
     function initAPI(){
-        var cur_host=Host.test;//##############当前环境
+        var cur_host=Host.develop;//##############当前环境
         switch(cur_host){
             case Host.develop:
                 Host.game='http://120.24.175.151:9004';//开发
