@@ -42,14 +42,15 @@ img{
     opacity:0;
     transition:opacity 1.5s;
 }
-.img-loaded{
+.icon-mb-link{
+    display:inline-block;
     opacity:1;
     transition:opacity 1.5s;
+    overflow:hidden;
 }
 .img-loading.img-loaded{
     opacity:1;
     transition:all .3s;
-	vertical-align: top;
 }
 input{
     outline:none;
@@ -2407,5 +2408,34 @@ ul.dynamic li p a:hover{
 
     100% {
         box-shadow: white 0 0 21px 0, #ff8866 -19px -19px 0 10px, #ffcc66 19px -19px 0 10px, #66dd77 19px 19px 0 10px, #44aaee -19px 19px 0 10px;
+    }
+}
+
+
+
+
+.amt-bigger{
+    animation:font_jump 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    /*animation-*/
+    background:#fff;
+    display:inline-block;
+    z-index:100;
+    position:relative;
+    top:0px;
+}
+@keyframes font_jump{
+    0%{
+
+    }
+    10%{
+        top:-5px;
+    }
+    20%{
+        top:0px;
+    }
+    100%{
+
     }
 }

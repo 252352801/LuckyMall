@@ -6,14 +6,18 @@ angular.module('LuckyMall')
                 scope.showBigImg = function (i) {
                     scope.index = i;
                 };
-                scope.prevImg = function (min_index) {
-                    if (scope.index > min_index) {
-                        scope.index--
+                scope.prevImg = function (max_index) {
+                    if (scope.index > 0) {
+                        scope.index--;
+                    }else{
+                       scope.index=max_index;
                     }
                 };
                 scope.nextImg = function (max_index) {
                     if (scope.index < max_index) {
                         scope.index++;
+                    }else{
+                        scope.index=0;
                     }
                 };
             }
@@ -77,30 +81,49 @@ angular.module('LuckyMall')
     .directive('magnifier', function ($timeout) {
         return {
             link: function (scope, element, attrs) {
-              /*  magnifier({
-                    elem:document.getElementById(attrs.id),
-                    width:300,
-                    height:300,
-                    src:attrs.magnifierImg
-                });*/
-                function magnifier(params){
-                    var img=params.elem;
-                    var s_box=document.createElement("div");
-                    s_box.style.width=params.width+'px';
-                    s_box.style.height=params.height+'px';
-                    s_box.style.background="#fff";
-                    s_box.style.position="absolute";
-                    s_box.style.display="none";
-                    s_box.style.overflow="hidden";
-                    s_box.style.border="2px solid #fff";
-                    var big_img=document.createElement('img');
-                    // img.offsetParent.appendChild(s_box);
-                    document.body.appendChild(s_box);
-                    // img.offsetParent.style.overflow="hidden";
-                    big_img.style.position='absolute';
-                    s_box.appendChild(big_img);
-                    big_img.src=params.src;
+              //  if(element.attr('ng-src')) {
+                    //scope.$watch(attrs.ngSrc, function (val) {
+                element.bind('mouseover',function(){
+                    magnifier({
+                        elem:document.getElementById(attrs.id),
+                        width:200,
+                        height:200,
+                        src:attrs.magnifierImg
+                    });
+                });
 
+                function magnifier(params){
+                    var img = params.elem;
+                    var s_box;
+                    var big_img
+                    if (!document['magnifier']) {
+                        document['magnifier'] = document.createElement("div");
+                        s_box = document['magnifier'];
+                        document.body.appendChild(s_box);
+
+                        document['magnifier_img']=document.createElement('img');
+                        big_img = document['magnifier_img'];
+                        big_img.style.position = 'absolute';
+                        s_box.appendChild(big_img);
+                    }
+                    s_box = document['magnifier'];
+                    big_img = document['magnifier_img'];
+                    s_box.style.width = params.width + 'px';
+                    s_box.style.height = params.height + 'px';
+                    s_box.style.background = "#fff";
+                    s_box.style.position = "absolute";
+                    s_box.style.display = "none";
+                    s_box.style.overflow = "hidden";
+                    s_box.style.border = "1px solid #fff";
+                    s_box.style.backgroundClip = 'padding-clip';
+                    big_img.src = params.src;
+                    /*s_box.style.borderRadius='50%';*/
+                   /* var big_img = document.createElement('img');
+
+                    big_img.style.position = 'absolute';
+                    big_img.src = params.src;
+                    s_box.appendChild(big_img);*/
+                        /*document.body.appendChild(s_box);*/
                     s_box.onmousemove=function(e){
                         var img_poit=getPosition(img);
                         var mul=big_img.offsetWidth/img.offsetWidth;
@@ -113,6 +136,7 @@ angular.module('LuckyMall')
 
                         big_img.style.left=-(m_x -img_poit.left)*mul+params.width/2+'px';
                         big_img.style.top=-(m_y - img_poit.top)*mul+params.height/2+'px';
+
 
 
                         var p=getMousePosition(e);
@@ -161,6 +185,41 @@ angular.module('LuckyMall')
 
                 }
 
+            }
+        }
+    })
+
+    /*价格滑动*/
+    .directive('priceSlider', function ($timeout) {
+        return {
+            link: function (scope, element, attrs) {
+                var data=angular.fromJson(attrs.priceSlider);
+                var prices=new Array();
+                var min=data.minDiscount;
+                var max=data.maxDiscount;
+                var index=max;
+                var str='';
+                while(index<min){
+                    str=index+'折：￥'+index*data.orgPrice/10;
+                    prices.push(str);
+                    index++;
+                }
+                str=min+'折：￥'+min*data.orgPrice/10;
+                prices.push(str);
+                scope.prices=prices;
+
+
+                scope.price_slide_index=0;
+                run();
+                function run(){
+                    $timeout(function(){
+                        scope.price_slide_index++;
+                        if(scope.price_slide_index>prices.length-1){
+                            scope.price_slide_index=0;
+                        }
+                        run();
+                    },1000);
+                }
             }
         }
     })

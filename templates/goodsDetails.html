@@ -17,17 +17,22 @@
             </div>
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img">
-                    <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" magnifier magnifier-img={{imgHost+data_goods.SmallImages[index]}} />
+                   <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
+                    <ul ng-style="{left:-index*520+'px',width:data_goods.SmallImages.length*520+'px'}">
+                        <li ng-repeat="Img in data_goods.SmallImages">
+                            <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img}} />
+                        </li>
+                    </ul>
                 </div>
                 <div class="small-goods-img">
                     <ul class="goods-index" id="details_goods_index">
-                        <li ng-class="{'cur': index==$index}" ng-repeat="sImg in data_goods.SmallImages"  ng-click="showBigImg($index)">
+                        <li ng-class="{'cur': index==$index}" ng-repeat="sImg in data_goods.SmallImages"  ng-mouseenter="showBigImg($index)">
                             <img  real-src={{imgHost+sImg}} alt="" temp-src="./res/images/default.png" />
                         </li>
                     </ul>
                 </div>
                 <div class="s-index">
-                    <a class="prev txtUnSelect" ng-click="prevImg(0)"></a>
+                    <a class="prev txtUnSelect" ng-click="prevImg(data_goods.SmallImages.length-1)"></a>
                     <a class="next txtUnSelect" ng-click="nextImg(data_goods.SmallImages.length-1)"></a>
                 </div>
             </div>
@@ -39,9 +44,17 @@
                     <!--<span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>-->
                     <!--<span class="icon-discount" ng-bind="'低至'+data_goods.MaxDiscount*10+'折'"></span>-->
                    <!-- <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>-->
-                    <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
+                    <span class="real-price amt-bigger" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
                     <span class="icon-discount" ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></span>
                     <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
+
+                    <div class="box-slider-container">
+                        <div class="box-price-slider">
+                            <ul ng-style="{top:-price_slide_index*20+'px'}" price-slider={"orgPrice":100,"minDiscount":9.5,"maxDiscount":1} >
+                                <li ng-repeat="price in prices" ng-bind="price"></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">
                     <p class="tips">请勾选您需要的商品选项：</p>

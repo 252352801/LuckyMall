@@ -74,7 +74,7 @@
                     <!--<span ng-bind="'￥'+(list.RetailPrice*list.MaxDiscount).toFixed(1)+'-￥'+(list.RetailPrice*list.MinDiscount).toFixed(1)"></span>
                     <span class="old-price" ng-bind="list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
                     <span class="icon-discount" ng-bind="'低至'+list.MaxDiscount*10+'折'"></span>-->
-                    <span ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)"></span>
+                    <span class="final-price" ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)" ></span>
                     <span class="old-price" ng-bind="list.RetailPrice"></span>
                     <span class="icon-discount" ng-bind="(list.MinDiscount*10).toFixed(1)+'折'"></span>
                 </p>

@@ -394,43 +394,51 @@ angular.module('LuckyMall')
 
 
     /*滚动加载图片脚本*/
-    .directive('scrollLoadImg', function ($timeout) {
+    .directive('lazyImg', function ($timeout) {
         return {
-            restrict: 'E',
+            restrict: 'A',
             scope: true,
             controller: function ($scope) {
 
             },
             link: function (scope, element, attrs) {
-                var temp = -1;//用来判断是否是向下滚动（向上滚动就不需要判断延迟加载图片了）
-                var imgElements = document.getElementsByTagName("img");
-                var lazyImgArr = new Array();
-                var bodyHeight = window.screen.availHeight;//body（页面）可见区域的总高度
-                for (var i = 0; i < imgElements.length; i++) {
-                    if (imgElements[i].getAttribute("real-src") != null) {
-                        addClass(imgElements[i], 'img-loading');
-                        lazyImgArr.push(imgElements[i]);
+                scope.$watch(attrs.lazyImg, function (val) {
+                    if(val) {
+                        start();
                     }
-                }
-                var onScroll = function () {
-                    var scrollHeight = (document.body.scrollTop == 0) ? document.documentElement.scrollTop : document.body.scrollTop;//滚动的高度
-                    if (temp < scrollHeight) {//为true表示是向下滚动，否则是向上滚动，不需要执行动作。
-                        for (var k = 0; k < lazyImgArr.length; k++) {
-                            var imgTop = getPosition(lazyImgArr[k]).top;//（图片纵坐标）
-                            if (imgTop - scrollHeight + 150 <= bodyHeight) {
-                                lazyImgArr[k].setAttribute('src', lazyImgArr[k].getAttribute("real-src"));
-                                addClass(lazyImgArr[k], 'img-loaded');
-                                //removeClass(lazyImgArr[k],'img-loading');
-                                lazyImgArr.splice(k, 1);
-                            }
+                });
+                function start() {
+                    var temp = -1;//用来判断是否是向下滚动（向上滚动就不需要判断延迟加载图片了）
+                    var imgElements = document.getElementsByTagName("img");
+                    var lazyImgArr = new Array();
+                    var bodyHeight = window.screen.availHeight;//body（页面）可见区域的总高度
+                    for (var i = 0; i < imgElements.length; i++) {
+                        if (imgElements[i].getAttribute("real-src") != null) {
+                            //addClass(imgElements[i], 'img-loading');
+                            lazyImgArr.push(imgElements[i]);
                         }
                     }
+                    var run = function () {
+                        var scrollHeight = (document.body.scrollTop == 0) ? document.documentElement.scrollTop : document.body.scrollTop;//滚动的高度
+                        if (temp < scrollHeight) {//为true表示是向下滚动，否则是向上滚动，不需要执行动作。
+                            for (var k = 0; k < lazyImgArr.length; k++) {
+                                var imgTop = getPosition(lazyImgArr[k]).top;//（图片纵坐标）
+                                if (imgTop - scrollHeight + 150 <= bodyHeight) {
+                                    lazyImgArr[k].setAttribute('src', lazyImgArr[k].getAttribute("real-src"));
+                                  //  addClass(lazyImgArr[k], 'img-loaded');
+                                    //removeClass(lazyImgArr[k],'img-loading');
+                                    lazyImgArr.splice(k, 1);
+                                }
+                            }
+                        }
 
-                };
-                $timeout(function () {
-                    onScroll();
-                }, 5);
-                window.onscroll = onScroll;
+                    };
+                    $timeout(function () {
+
+                        run();
+                    }, 5);
+                    window.onscroll = run;
+                }
             }
 
         };
@@ -687,7 +695,6 @@ angular.module('LuckyMall')
                 }
             });
         }
-
         $win.bind('scroll', checkImage);
         $win.bind('resize', checkImage);
 

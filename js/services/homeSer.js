@@ -5,6 +5,16 @@
         today:null,
         tomorrow:null
     };
+      function initHref(obj){
+          for(var o in obj){
+              if(obj[o].PromotionType==1){
+                  obj[o].href='/goodsDetails/'+obj[o].TypeId;
+              }else if(obj[o].PromotionType==0){
+                  obj[o].href='/newProduct';
+              }
+          }
+          return obj;
+      }
 	return {
         getData:function(){
             return data;
@@ -18,7 +28,7 @@
                 url:API.todayData.url,
                 data: {"PageIndex":0,"PageSize":1000}
             }).success(function(response,status,headers,config){
-                data.today=response;
+                data.today=initHref(response);
                     callback();
             }).error(function(data,status,headers,config){
 

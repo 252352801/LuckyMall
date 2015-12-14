@@ -28,7 +28,7 @@
     <!--中部 start-->
     <div class="container">
         <div class="content">
-            <div class="today-update">
+            <div class="today-update" lazy-img="data_todayList">
                 <div class="today-top">
                     <h3>每日上新</h3>
 
@@ -52,9 +52,9 @@
                         </div>
                     </div>
                     <div class="today-list-r">
-                        <a href="/goodsDetails/{{li_today.TypeId}}" title={{li_today.Description}}>
+                        <a ng-href={{li_today.href}} title={{li_today.Description}}>
                             <img class="lazy" src="./res/images/default.png" alt="{{li_today.Description}}"
-                                 lazy-src="{{imgHost+li_today.ImageData}}"/>
+                                 real-src="{{imgHost+li_today.ImageData}}" error-src="./res/images/default.png"/>
                         </a>
                     </div>
                 </div>

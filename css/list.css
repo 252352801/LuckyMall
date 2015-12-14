@@ -163,6 +163,10 @@
 .list .goods-info .price{
     color:#ff6700;
     font-size:16px;
+    position:relative;
+}
+.list .goods-info .price .final-price{
+    font-size:24px;
 }
 .list .goods-info .old-price{
     color:#666;
@@ -171,13 +175,14 @@
     margin-left:5px;
 }
 .list .icon-discount{
-    width:50px;
-    height:18px;
-    line-height:18px;
-    position:absolute;
-    left:220px;
-    top:50px;
-    font-size:12px;
+    width: 50px;
+    height: 18px;
+    line-height: 18px;
+    position: absolute;
+    left: 100%;
+    top: 6px;
+    font-size: 12px;
+    margin-left: -50px;
 }
 .list .icon-discount:before{
     border-width:9px;
@@ -386,3 +391,16 @@
     -webkit-transform: rotate(-45deg);
 }
  /*列表 end*/
+
+.list .pro-list-cont li:hover .final-price{
+    animation:font_jump 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    position:relative;
+    top:0px;
+}
+
+@keyframes font_jump{
+    10%{top:-3px; }
+    20%{top:0px; }
+}
