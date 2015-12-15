@@ -442,13 +442,14 @@ angular.module('LuckyMall.services',[])
    /* 获取手机验证码服务*/
     .factory('VerifyCodeSer',function(API,$http){
         return {
-            getVerifyCode:function(mobile_num,callback){
-                $http.get(API.getVerifyCode.url+mobile_num)
-                    .success(function(response){
-                        if(typeof callback=='function'){
-                            callback(response);
-                        }
-                    });
+            getVerifyCode:function(mobile_num,sk,img_code,callback){
+                $http({
+                    method:API.getVerifyCode.method,
+                    url:API.getVerifyCode.url,
+                    data:[img_code,sk,mobile_num]
+                }).success(function(response){
+                    callback(response,1);
+                });
             }
         };
     })
@@ -1215,6 +1216,23 @@ angular.module('LuckyMall.services',[])
                 }).error(function(data,status,headers,config){
                     callback("网络错误",-1);
                 });
+            },
+            getKuidiList:function(callback){
+                $http.get(API.logisticsList.url)
+                    .success(function(response,status){
+                        var result=[{Code:'auto',Name:'请选择快递',index:''}];
+                        result.push({Code:'ems',Name:'EMS'});
+                        result.push({Code:'shunfeng',Name:'顺丰速运'});
+                        result.push({Code:'yuantong',Name:'圆通速递'});
+                        result.push({Code:'yunda',Name:'韵达快递'});
+                        result.push({Code:'zhaijisong',Name:'宅急送'});
+                        result.push({Code:'zhongtong',Name:'中通快递'});
+                        for(var o in response){
+                            response[o].index=response[o].Code.substr(0,1).toUpperCase();
+                            result.push(response[o]);
+                        }
+                        callback(result,1);
+                    });
             }
         }
     })

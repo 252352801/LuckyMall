@@ -114,12 +114,12 @@
 
         <p>
             <label>收货人： </label>
-            <span ng-bind="data_order.ConsigneeInfo.consigneeName+'    '+data_order.ConsigneeInfo.consigneeMobile"></span>
+            <span ng-bind="data_consignee.ConsigneeName+'    '+data_consignee.ConsigneeMobile"></span>
         </p>
 
         <p>
             <label>收货地址： </label>
-            <span ng-bind="data_order.ConsigneeInfo.area+' '+data_order.ConsigneeInfo.consigneeAddress"></span>
+            <span ng-bind="data_consignee.Area+' '+data_consignee.ConsigneeAddress"></span>
         </p>
     </div>
     <div class="box-invoice">

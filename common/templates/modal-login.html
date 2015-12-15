@@ -1,5 +1,5 @@
 <div class="modal-container ng-hide">
-<div class="modal-login login" id="modal_login">
+<div ng-class="{'modal-login login show':isLoginModalShow,'modal-login login':!isLoginModalShow}" id="modal_login">
     <div class="login-tabs">
         <div class="tab-items">
             <a class="tab-item cur">账号登录</a>

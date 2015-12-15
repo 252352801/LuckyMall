@@ -190,35 +190,57 @@ angular.module('LuckyMall')
     })
 
     /*价格滑动*/
-    .directive('priceSlider', function ($timeout) {
+    .directive('priceSlider', function ($timeout,$compile) {
         return {
             link: function (scope, element, attrs) {
-                var data=angular.fromJson(attrs.priceSlider);
-                var prices=new Array();
-                var min=data.minDiscount;
-                var max=data.maxDiscount;
-                var index=max;
-                var str='';
-                while(index<min){
-                    str=index+'折：￥'+index*data.orgPrice/10;
+                var data = angular.fromJson(attrs.priceSlider);
+                var min = data.minDiscount;
+                var max = data.maxDiscount;
+                scope.cur=1;
+              //  element.parent().append($compile()(scope));
+                scope.$watch(scope.data_goods,function(new_val,old_val){
+                    if(new_val!=old_val) {
+                        start(scope.cur);
+                    }
+                });
+                start(scope.cur);
+                function start(item) {
+                    var prices = new Array();
+                    var index = max;
+                    var str = '';
+                    while (index < min) {
+                        str = index + '折：￥' + index * data.orgPrice / 10;
+                        prices.push(str);
+                        index+=5;
+                    }
+                    str = min + '折：￥' + min * data.orgPrice / 10;
                     prices.push(str);
-                    index++;
-                }
-                str=min+'折：￥'+min*data.orgPrice/10;
-                prices.push(str);
-                scope.prices=prices;
+                    scope.prices = prices;
 
 
-                scope.price_slide_index=0;
-                run();
-                function run(){
-                    $timeout(function(){
-                        scope.price_slide_index++;
-                        if(scope.price_slide_index>prices.length-1){
-                            scope.price_slide_index=0;
-                        }
-                        run();
-                    },1000);
+
+                  //  scope.price_slide_index1 = 0;
+                    scope['price_slide_index'+item]=0;
+                    run();
+                    function run() {
+                        $timeout(function () {
+                            scope['price_slide_index'+item]++;
+                            if (scope['price_slide_index'+item] > prices.length) {
+                                /*element.after($compile(element.clone())(scope));*/
+                                /*scope.price_slide_index1 = 0;
+                                scope.price_slide_index2=0;
+                                scope.cur=2;*/
+                                if(scope.cur==1){
+                                    scope.cur=2;
+                                }else{
+                                    scope.cur=1;
+                                }
+                                start(scope.cur);
+                            }else{
+                                run();
+                            }
+                        }, 1000);
+                    }
                 }
             }
         }

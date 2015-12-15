@@ -828,9 +828,14 @@ input:focus{
     z-index:999;
     background-clip: padding-box;
     border-radius:2px;
-    transition:top 0.35s;
+
+    animation:modal_show .3s;
 }
-.modal-container.ng-hide{
+@keyframes modal_show{
+    0%{transform:scale(0);}
+    100%{transform:scale(1);}
+}
+.modal-login.show{
 
 }
 .modal-login .login-tabs{
@@ -1100,7 +1105,7 @@ input:focus{
     color:#ff6700;
 }
 .header .header-has-border{
-    border-left:1px solid #dfe0e2;
+  /*  border-left:1px solid #dfe0e2;*/
     border-right:1px solid #dfe0e2;
 }
 /*头部end*/
@@ -1640,10 +1645,10 @@ a.icon-mb-link{
 .static.category-cont li:nth-child(4) h3:before{
     background:url(../res/icon/icon_category4.png) no-repeat;
 }
-.static.category-cont li:nth-child(5) h3:before{
+.static.category-cont li:nth-child(6) h3:before{
     background:url(../res/icon/icon_category5.png) no-repeat;
 }
-.static.category-cont li:nth-child(6) h3:before{
+.static.category-cont li:nth-child(5) h3:before{
     background:url(../res/icon/icon_category6.png) no-repeat;
 }
 
@@ -1977,6 +1982,28 @@ ul.dynamic li p a:hover{
 }
 .ql-XL{
     background-image:url(../res/icon/icon_xinlang.png);
+}
+
+.form-register .p-img-verify{
+    overflow: hidden;
+}
+.form-register .p-img-verify input{
+    width:57%;
+    float:left;
+}
+.form-register .p-img-verify img{
+    display: inline-block;
+    width: 40%;
+    margin-left: 3%;
+    height: 40px;
+    background: #eee;
+    float: left;
+    cursor: pointer;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+}
+.p-img-verify img:hover{
+    border-color:#eee;
 }
 /*登录end*/
 
@@ -2439,3 +2466,26 @@ ul.dynamic li p a:hover{
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+/*广告 begin*/
+.ad_top{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+}
+.ad_top img{
+    position:relative;
+    left:50%;
+    top:0px;
+    margin-left:-960px;
+}
+/*广告 end*/

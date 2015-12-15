@@ -6,6 +6,34 @@ angular.module('LuckyMall.controllers')
         $scope.value_btn = '同意协议并注册';
         $scope.isModalProtocolShow=false;
         $scope.invalidMobile=new Array();
+        $scope.s_key='';//会话密钥
+        $scope.captchaCode='';
+
+        var lock_cc=true;//获取图片验证码的锁,防止疯狂点击
+
+
+        RegisterSer.getSessionKey(function(response,status){
+            if(status==1){
+                console.log('会话密钥：'+response);
+                $scope.s_key=response;
+                $scope.getCaptchaCode();
+            }
+        });
+
+        $scope.getCaptchaCode=function(){
+            if(lock_cc){
+                lock_cc=false;
+                RegisterSer.getCaptchaCode(function (response, status) {
+                    if (status == 1) {
+                        $scope.captchaCode = response;
+                    }
+                    lock_cc=true;
+                });
+            }else{
+                alert("哎呀，您的手速太快了");
+            }
+        };
+
         /* 显示提示信息*/
         $scope.showTips = function (msg) {
             $scope.tips = msg;
@@ -19,16 +47,20 @@ angular.module('LuckyMall.controllers')
                 }, 5);
             }
         };
-        /*获取验证码*/
+        /*获取手机验证码*/
         $scope.getVerifyCode = function (mobile_num) {
             if (mobile_num == ('' || undefined)) {
                 $scope.showTips('请先正确输入接收验证码的手机号喔！');
             }else{
-               // alert(isValid($scope.mobile));return;
-                if($scope.isValid($scope.mobile)) {
-                    VerifyCodeSer.getVerifyCode(mobile_num, function (ver_code) {
-                        console.log(ver_code);
-                        $scope.verify_code = ver_code;
+               if($scope.form_register.img_code.$invalid){
+                   $scope.showTips('请先输入图片中的验证码喔！');
+               }else if($scope.isValid($scope.mobile)) {
+                   console.log(mobile_num+'-'+$scope.s_key+"-"+$scope.captchaCode);
+                    VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.captchaCode, function (response,status) {
+                        if(status==1) {
+                            console.log(response);
+                            $scope.verify_code = response;
+                        }
                     });
                 }else{
                     $scope.showTips('手机号'+$scope.mobile+'已注册！');
@@ -75,7 +107,7 @@ angular.module('LuckyMall.controllers')
                     $scope.showTips('');
                     $scope.value_btn = '正在提交...';
                     RegisterSer.register({
-                        "Name": $scope.nickname,
+                        "Name": $scope.mobile,
                         "PhoneNumber": $scope.mobile,
                         "Password":  $scope.password,
                         "Code":  $scope.code

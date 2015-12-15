@@ -31,7 +31,7 @@
                 <a href="#" ng-bind="list.Brand.BrandName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.Commodity.IsCanFree">赢折扣</a>
-                <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Commodity.Id)" ng-if="list.Commodity.IsCanFree">赢折扣</a>
+                <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Id)" ng-if="list.Commodity.IsCanFree">赢折扣</a>
             </div>
             <div class="cart-list-cont">
                 <div class="cont1">

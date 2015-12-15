@@ -108,6 +108,13 @@ angular.module('LuckyMall')
                                     lock=true;
                                 }, 5);
                             });
+                        }else{
+                            gradualChange($scope.banner_index,count-1, function () {
+                                $timeout(function () {
+                                    $scope.banner_index=count-1;
+                                    lock=true;
+                                }, 5);
+                            });
                         }
                     };
                     getById('next_banner').onclick=function(){
@@ -122,8 +129,16 @@ angular.module('LuckyMall')
                                     lock=true;
                                 }, 5);
                             });
+                        }else{
+                            gradualChange($scope.banner_index, 0, function () {
+                                $timeout(function () {
+                                    $scope.banner_index=0;
+                                    lock=true;
+                                }, 5);
+                            });
                         }
                     };
+
                 }
                 $scope.$on('bannerReady',function(){
                     $timeout(function(){

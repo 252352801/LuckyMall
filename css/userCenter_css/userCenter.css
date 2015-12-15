@@ -1282,6 +1282,10 @@
 .OD label{
     color:#8d8e92;
 }
+.OD label.color-balanced{
+    color:#6dd17b;
+}
+
 .OD .bar-order-sp{
     margin-bottom:45px;
 }
@@ -1798,7 +1802,25 @@
 }
 .AS-bar-submit{
     text-align:right;
-    margin-top:35px;
+    margin-top:15px;
+}
+.bar-kd-list{
+    margin-top:30px;
+    text-align: right;
+}
+.bar-kd-list select{
+    width:170px;
+    height:30px;
+    margin-bottom:15px;
+}
+.bar-kd-list button{
+    width:170px;
+    height:40px;
+    background:#ff6700;
+    border:0px;
+    color:#fff;
+    font-size:15px;
+    cursor:pointer;
 }
 .AS-bar-submit button{
     width:170px;
@@ -1808,6 +1830,7 @@
     font-size:16px;
     border:none;
     padding:0px;
+    cursor:pointer;
 }
 .AS-box-address .address-list li{
     left:0px;

@@ -6,7 +6,7 @@
     <div class="box-od">
         <p class="bar-order-sp">
             <label>售后类型:</label>
-            <span  class="color-balanced" ng-bind="(data_details.RepairType==0)?'维修':(data_details.RepairType==1)?'换货':'退款'"></span>
+            <span  class="color-balanced" ng-bind="(data_details.RepairType==0)?'退款':(data_details.RepairType==1)?'退货':'换货'"></span>
             <label>状态:</label>
             <span  class="color-org"
                     ng-bind="(data_details.RepairStatus==0)?'审核中':
@@ -69,7 +69,20 @@
         </div>
     </div>
 
-    <div class="box-logistics">
+
+    <form class="bar-kd-list" ng-show="data_details.RepairStatus==1">
+        <p>
+            <label class="color-balanced">您的申请已审核通过，请选择快递：</label>
+            <select ng-model="kd" ng-options="kd.Code as kd.Name group by kd.index for kd in data_kd_list" ng-change="test()" >
+                <!--<option>请选择快递</option>-->
+            </select>
+        </p>
+        <p>
+            <button ng-click="submit_kd()">提交</button>
+        </p>
+    </form>
+
+    <div class="box-logistics" ng-if="data_details.RepairStatus==4">
         <h3 class="title">物流信息</h3>
 
         <p class="item">
@@ -94,6 +107,7 @@
                         </li>
                     </ul>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -102,12 +116,12 @@
 
         <p>
             <label>收货人： </label>
-            <span ng-bind="data_order.ConsigneeInfo.consigneeName+'    '+data_order.ConsigneeInfo.consigneeMobile"></span>
+            <span ng-bind="data_consignee.ConsigneeName+'    '+data_consignee.ConsigneeMobile"></span>
         </p>
 
         <p>
             <label>收货地址： </label>
-            <span ng-bind="data_order.ConsigneeInfo.area+' '+data_order.ConsigneeInfo.consigneeAddress"></span>
+            <span ng-bind="data_consignee.Area+' '+data_consignee.ConsigneeAddress"></span>
         </p>
     </div>
 
@@ -126,5 +140,4 @@
             <span ng-bind="(data_details.Order.UnitPrice*data_details.Count*data_details.Order.DiscountVal).toFixed(2)"></span>
         </p>
     </div>
-</div>
 

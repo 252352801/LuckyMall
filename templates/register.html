@@ -34,8 +34,12 @@
                     <p ng-class="{'checked':form_register.mobile.$valid}">
                         <input class="input-reg-username"  placeholder="手机号" ng-model="mobile" autocomplete="false" name="mobile" ng-pattern="/^[1][3458]\d{9}$/" required ng-blur="isMobileCanRegister()"/>
                     </p>
+                    <p class="p-img-verify">
+                        <input type="text" placeholder="输入右边验证码" name="img_code" required ng-model="img_code"/>
+                        <img data-ng-src="data:image/png;base64,{{captchaCode}}"  alt="" title="点击刷新" ng-click="getCaptchaCode()" error-src="./res/images/default.png"/>
+                    </p>
                     <p class="p-verifyCode">
-                        <input  placeholder="验证码" ng-model="code"  autocomplete="false" maxlength="6" name="code" required ng-disabled="form_register.mobile.$invalid"/>
+                        <input  placeholder="手机验证码" ng-model="code"  autocomplete="false" maxlength="6" name="code" required ng-disabled="form_register.mobile.$invalid"/>
                         <input  class="btn-getCode" type="button" value="获取验证码"  btn-count-down="60" require={{isValid(mobile)&&form_register.mobile.$valid}} ng-click="getVerifyCode(mobile)" />
                     </p>
                     <p ng-class="{'checked':form_register.password.$valid}">
@@ -44,9 +48,6 @@
                     </p>
                     <p ng-class="{'checked':form_register.re_password.$valid&&form_register.re_password.$modelValue==form_register.password.$modelValue}">
                         <input  type="password" placeholder="再次输入密码" ng-model="re_password" autocomplete="false" name="re_password" required  onpaste="return false" />
-                    </p>
-                    <p>
-                        <input  type="text" placeholder="昵称（可选）" ng-model="nickname" autocomplete="false" name="nickname" />
                     </p>
                     <p>
                         <input class="btn btn-register" type="submit" ng-value="value_btn" />

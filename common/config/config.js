@@ -60,8 +60,16 @@ app.constant('API',{
         url: 'api/commodity/search'
     },
     getVerifyCode:{//获取手机验证码 后接手机号码
+        method:'post',
+        url: 'api/user/verificationcode'
+    },
+    getSessionKey:{//获取会话密钥
         method:'get',
-        url: 'api/user/verificationcode/'
+        url: 'api/user/sessionkey'
+    },
+    getCaptchaCode:{//base64验证码图片
+        method:'get',
+        url: 'api/user/captchacode/'
     },
     register: {//注册
         method:'post',
@@ -202,6 +210,10 @@ app.constant('API',{
     isMobileSignUp:{  //检测手机号码是否已经注册  后接手机号   返回true表示已注册
         method:'get',
         url:'api/user/checkmobile/'
+    },
+    logisticsList:{//获取所有快递
+        method:'get',
+        url:'api/system/kuaidi100contents'
     },
     getLogisticsInfo:{  //获取物流信息  后接 订单id/类型
         method:'get',
@@ -847,14 +859,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     /*===================接口配置 ==================*/
     initAPI();
     function initAPI(){
-        var cur_host=Host.develop;//##############当前环境
+        var cur_host=Host.test;//##############当前环境
         switch(cur_host){
             case Host.develop:
                 Host.game='http://120.24.175.151:9004';//开发
                 Host.gameOverPage='127.0.0.1/afterGame/';
                 break;
             case Host.test:
-                Host.game='http://120.25.60.19:9004';//测试
+                Host.game='http://www.xingyunmao.cn:9004';//测试
                 Host.gameOverPage='www.xingyunmao.cn/afterGame/';
                 break;
             case Host.prev:

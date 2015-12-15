@@ -40,21 +40,48 @@
                 <h1 ng-bind="data_goods.CommodityName"></h1>
                 <small ng-bind="data_goods.Description"></small>
                 <div class="pro-price">
-                    <!--<span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MaxDiscount)+'~'"></span>-->
-                    <!--<span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>-->
-                    <!--<span class="icon-discount" ng-bind="'低至'+data_goods.MaxDiscount*10+'折'"></span>-->
-                   <!-- <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>-->
-                    <span class="real-price amt-bigger" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
-                    <span class="icon-discount" ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></span>
-                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
 
-                    <div class="box-slider-container">
-                        <div class="box-price-slider">
-                            <ul ng-style="{top:-price_slide_index*20+'px'}" price-slider={"orgPrice":100,"minDiscount":9.5,"maxDiscount":1} >
+                   <!-- <div class="box-prices">
+                        <div class="item-price prices-slider">
+                            <label>￥</label>
+                            <div class="prices-slider">
+                                <span></span>
+                            </div>
+                            <div class="discount-slider">
+                                <ul>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="item-price price-interval">
+                            <p>市场价：<span>￥2999.00</span></p>
+                            <p>
+                                <span>￥2689</span><small>9折</small>
+                                <label>~</label>
+                                <span>￥168</span><small>1折</small>
+                            </p>
+                        </div>
+                    </div>-->
+
+
+                    <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)+'~'"></span>
+                    <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MaxDiscount)"></span>
+                    <span class="icon-discount" ng-bind="'低至'+(data_goods.MaxDiscount*10).toFixed(1)+'折'"></span>
+                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
+                   <!-- <span class="real-price amt-bigger" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
+                    <span class="icon-discount" ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></span>
+                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>-->
+
+                    <!--<div class="box-slider-container">
+                        <div class="box-price-slider" price-slider={"orgPrice":100,"minDiscount":9.5,"maxDiscount":1}>
+                            <ul ng-style="{top:-((prices.length-1)*20-price_slide_index1*20)+'px'}" ng-if="price_slide_index1<prices.length+1||price_slide_index2==prices.length">
+                                <li ng-repeat="price in prices" ng-bind="price"></li>
+                            </ul>
+                            <ul ng-style="{top:-((prices.length)*20-price_slide_index2*20)+'px'}"  ng-if="price_slide_index2<prices.length+1||price_slide_index1==prices.length">
                                 <li ng-repeat="price in prices" ng-bind="price"></li>
                             </ul>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">
                     <p class="tips">请勾选您需要的商品选项：</p>

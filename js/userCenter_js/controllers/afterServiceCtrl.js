@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer,FileUploader,UploadSer,TokenSer){
+ .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer,FileUploader,UploadSer,LogisticsSer){
         $scope.order_id=$stateParams.order_id;
         $scope.order_status=$stateParams.order_status;
         $scope.service_type=2;
@@ -181,6 +181,7 @@ angular.module('LuckyMall.controllers')
             }
 
             loadAddressList();         /*加载收货地址*/
+            getKuaiDi100List();
 
         }
 
@@ -199,12 +200,6 @@ angular.module('LuckyMall.controllers')
                 }
             });
         };
-
-
-
-
-
-
 
 
 

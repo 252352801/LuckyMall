@@ -9,8 +9,8 @@ angular.module('LuckyMall.controllers')
         function loadData(){
             OrderDetailsSer.requestData($scope.order_id,function(response,status){
                 if(status==1){
-                    console.log(angular.toJson(response));
                     $scope.data_order=OrderDetailsSer.getData();
+                    $scope.data_consignee=angular.fromJson($scope.data_order.ConsigneeInfo);
                     $scope.data_logistics=angular.fromJson($scope.data_order.LogisticsInfo);
                     $scope.$emit('changeMenu',$scope.data_order.OrderStatus);
                 }

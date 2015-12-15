@@ -13,21 +13,21 @@
             <span  ng-bind="data_order.CreateTime"></span>
         </p>
         <div class="AS-checkboxes">
-            <div ng-class="service_type==2?'checkbox checkbox2 checked':'checkbox checkbox2'" ng-click="changeType(2)">
+            <div ng-class="service_type==2?'checkbox checkbox2 checked':'checkbox checkbox2'" ng-click="changeType(0)">
                 退款
             </div>
             <div ng-class="service_type==1?'checkbox checkbox1 checked':'checkbox checkbox1'" ng-click="changeType(1)" ng-if="data_order.OrderStatus==4">
-                换货
+                退货
             </div>
-            <div ng-class="service_type==0?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(0)" ng-if="data_order.OrderStatus==4">
-                返修
+            <div ng-class="service_type==0?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(2)" ng-if="data_order.OrderStatus==4">
+                换货
             </div>
         </div>
         <h3 class="box-label">售后商品</h3>
         <div class="box-commodity">
             <div class="top">
-                <img/>
-                <a ng-bind="data_order.SupplierName"></a>
+                <img ng-src="{{imgHost+data_order.Brand.BrandImage}}"/>
+                <a ng-bind="data_order.Brand.BrandName"></a>
             </div>
             <div class="cont">
                 <div class="cont1">
@@ -124,6 +124,7 @@
             </li>
         </ul>
     </div>
+
 
     <div class="AS-bar-submit">
         <button class="AS-btn-submit" ng-click="submit()" ng-bind="value_btn_submit"></button>

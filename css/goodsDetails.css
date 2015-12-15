@@ -440,6 +440,7 @@
 
 
 
+/*
 .box-price-slider{
     width:100px;
     height:20px;
@@ -449,11 +450,13 @@
     background:#fff;
     border-radius:2px;
     position:relative;
-    overflow:hidden;
+   */
+/* overflow:hidden;*//*
+
 }
 .box-price-slider ul{
     transition:top 1s;
-    position:relative;
+    position:absolute;
     left:0px;
 }
 .box-slider-container{
@@ -479,4 +482,22 @@
     left:99px;
     top:0px;
     z-index: 2;
+}*/
+
+.box-prices{
+    overflow:hidden;
+    background:#F1F1F1;
+    padding:25px 23px;
+}
+.box-prices .item-price{
+    width:50%;
+    height:60px;
+    box-sizing:border-box;
+    float:left;
+}
+.box-prices .prices-slider{
+    border-right:1px solid #E2E2E2;
+}
+.price-interval p,.price-interval small{
+    display:inline-block;
 }
