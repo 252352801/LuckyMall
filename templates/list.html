@@ -11,7 +11,7 @@
             <div class="page-location">
                 <a>全部商品</a>
                 <a class="category-name" ng-bind="data_filter.CategoryName" class="cur"
-                   href="/list/{{'category='+cate_id}}"></a>
+                   href="/list/{{'category='+cate_id}}/"></a>
             </div>
             <p class="choices" ng-repeat="choice in data_filter.FilterModels"
                ng-if="hasSelectedItem(choice.FilterItemModels)&&!choice.isMultiSelected">

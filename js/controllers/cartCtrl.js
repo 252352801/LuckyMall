@@ -53,9 +53,17 @@ angular.module('LuckyMall.controllers')
                 });
         };
         $scope.freePlay=function(order_id){
+            ga('send', 'pageview', {
+                'page': '/enter_freegame',
+                'title': '进入免费游戏'
+            });
             location.href = Host.game+ '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
         };
         $scope.play=function(){
+            ga('send', 'pageview', {
+                'page': '/enter_paygame',
+                'title': '进入付定金游戏'
+            });
             location.href=$scope.gameUrl;
         }
         /*跳转订单确认页*/

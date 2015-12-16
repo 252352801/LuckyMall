@@ -482,7 +482,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'关于我们-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support.css'
+                    './css/support_css.css'
                 ])
             }
 
@@ -498,7 +498,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'联系我们-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support.css',
+                    './css/support_css.css',
                     './lib/BDMap/BaiDuMap.js',
                     './lib/BDMap/BaiDuMap.css',
                     './js/directives/contactDirectives.js'
@@ -541,7 +541,28 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         })
 
-        /*活动页*/
+        /*support*/
+        .state('support', {
+            url: '/support',
+            views: {
+                '': {
+                    templateUrl: "templates/support_templates/support.html",
+                    controller: 'SupportCtrl'
+                }
+            },
+            title:'',
+            resolve: {
+                loadFiles: load([
+                    './css/userCenter_css/userCenter.css',
+                    './css/support_css/support_css.css',
+                    './js/controllers/supportCtrl.js'
+                ])
+            }
+        })
+
+
+
+        /*游戏返回*/
         .state('afterGame', {
             url: '/afterGame/:params',
             views: {

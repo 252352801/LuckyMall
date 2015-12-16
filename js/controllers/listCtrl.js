@@ -1,5 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('ListCtrl', function ($scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state,$stateParams) {
+    .controller('ListCtrl', function ($scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state) {
+        $scope.cate_id=$stateParams.category.split('=')[1];
         var pageSize = 16;//每页大小（个数）
         initParams();
         function initParams(){

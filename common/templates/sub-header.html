@@ -48,10 +48,13 @@
             <ul class="cart-simple-list">
                 <li ng-repeat="list in sp_data_cart">
                     <div class="bar-img-goods">
-                        <img ng-src={{imgHost+list.imageUrl}} alt="商品图片" title=""/>
+                        <a href="/goodsDetails/{{list.CommodityId}}">
+                            <img ng-src={{imgHost+list.imageUrl}} alt="商品图片" title=""/>
+                        </a>
                     </div>
-
-                    <h2 ng-bind="list.CommodityName"></h2>
+                    <a href="/goodsDetails/{{list.CommodityId}}">
+                        <h2 ng-bind="list.CommodityName"></h2>
+                    </a>
 
                     <p>
                         <span class="property" ng-repeat="property in list.Specifications" ng-bind="property.value"></span>

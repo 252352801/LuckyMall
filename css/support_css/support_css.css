@@ -1,0 +1,171 @@
+
+.paragraph h6{
+    font-size: 14px;
+    color:#333;
+    font-weight: 500;
+    margin-bottom: 15px;
+    margin-top:-30px;
+}
+
+
+.question_z .title_z{
+    font-size:18px;
+    color:#ff6700;
+    width:100%;
+    display:inline-block;
+    border-bottom: dashed 1px #f1f1f1;
+    padding-bottom:10px;
+    margin-bottom:20px;
+}
+.question_z a{
+    width:100%;
+    display:inline-block;
+    font-size:14px;
+    margin-bottom:10px;
+    color:#666;
+}
+.question_z .answer_z{
+    font-size:14px;
+    color:#999999;
+}
+.related_z{
+    width:873px;
+    padding:30px;
+    background:#f8f8f8;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    margin-top:100px;
+}
+.related_z h3{
+    font-size:18px;
+    font-weight:400;
+    border-left:2px #2aa817 solid;
+    line-height:18px;
+    padding-left:10px;
+    margin-bottom:10px;
+}
+.relative_z{ position:relative;}
+.related_z a{ width:100%; display:inline-block; color:#666666; font-size:14px; margin-top:10px;}
+.question_z img{
+    width:100%; margin:20px 0;
+}
+.protocol_z{
+    text-align:left;
+    color:#757575;
+}
+.protocol_z h3{ font-size:24px; text-align:center; font-weight:400; margin-bottom:50px;}
+.protocol_z p{ text-indent:2em; line-height:24px;}
+.protocol_z b{  line-height:32px; display:inline-block; margin-top:20px;}
+.text_right{ text-align:right; }
+.container2 {
+    position: relative;
+    margin: 0 auto;
+}
+
+button {
+    background-color: #2cc185;
+    color: #fff;
+    border: 0;
+    padding: 1em 1.5em;
+}
+
+button:hover {
+    background-color: #239768;
+    color: #fff;
+}
+
+button:focus {
+    background-color: #239768;
+    color: #fff;
+}
+
+.accordion {
+    position: relative;
+    background-color: #fff;
+    display: inline-block;
+    width: 100%;
+
+    border-bottom: 1px solid #f1f4f3;
+    font-weight: 700;
+    color: #74777b;
+    vertical-align: middle;
+}
+
+.accordion .fa {
+    position: relative;
+    float: right;
+}
+
+.accordion h4 {
+    position: relative;
+    top: 0.8em;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+.accordion h4:before{
+    content:" ";
+    background:url(../img/wen.png);
+    width:15px;
+    height:15px;
+    display:inline-block;
+    vertical-align: sub;
+    margin-right:10px;
+}
+.accordion a {
+    position: relative;
+    display: block;
+    color: #74777b;
+    padding: 1em 1em 2.5em 1em;
+    text-decoration: none;
+}
+
+.accordion a:hover {
+    text-decoration: none;
+    color: #ff6700;
+    background-color: #f6f6f6;
+
+}
+
+.container2 div:nth-last-child(2){ border-bottom:none;}
+.accordion-desc {
+    background-color: #f6f6f6;
+    color: #757575;
+    z-index: 2;
+    text-indent:2em;
+    line-height:30px;
+    font-size:14px;
+    margin-bottom:30px;
+    padding: 20px 15px;
+}
+.accordion-desc span{
+    color:#87c143;
+}
+.accordion-desc img{
+    width:100%;
+    margin-top:20px;
+}
+
+.join_z h3{
+    width:100%;
+    font-size:22px;
+    font-weight:400;
+    color:#333;
+    display:inline-block;
+    padding-left:15px; line-height:22px; margin-bottom:10px;
+}
+.join_z h3.h1{border-left:solid 2px #FF9900; }
+.join_z h3.h2{border-left:solid 2px #7ac91c; }
+.join_z h3.h3{border-left:solid 2px #59aef5; }
+.join_z p{ margin-left:20px;line-height:24px; font-size:13px; color:#666; margin-top:10px; }
+.join_z b{ font-size:17px; margin-top:30px; display:inline-block;font-weight:500; }
+.top50{ margin-top:50px;}
+.top0{margin-top:0px !important;}
+
+
+
+
+
+
+
+ 	

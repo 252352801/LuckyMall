@@ -101,7 +101,7 @@
                     <label>数量</label>
                     <div class="div-btn">
                         <span class="btn-reduce txtUnSelect" ng-click="reduce()">-</span>
-                        <input type="text" ng-model="amount" ng-disabled="!finishSelect" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
+                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||data_goods.IsCanfree==true" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
                         <span class="btn-add txtUnSelect" ng-click="add()">+</span>
                        <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
                         <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>

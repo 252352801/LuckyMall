@@ -193,8 +193,8 @@ angular.module('LuckyMall')
     .directive('numberSlider', function ($timeout,$compile) {
         return {
             link: function (scope, element, attrs) {
-                scope.numbers=[0,1,2,3,4,5,6,7,8,9];
-
+                scope.numbers=['',0,1,2,3,4,5,6,7,8,9];
+                var change_time=1000;//切换的间隔时间
 
 
 
@@ -214,13 +214,15 @@ angular.module('LuckyMall')
                     scope.cur_disc=min_disc;
                     var cur_price=(price*min_disc).toFixed(0);
                     initPrice(cur_price);
-                    run();
+                    $timeout(function(){
+                        run();
+                    },change_time)
                     function run(){
                         if(scope.cur_disc==max_disc){
                             scope.cur_disc=min_disc;
                         }else {
                             var rand = Math.random();
-                            scope.cur_disc *= rand;
+                            scope.cur_disc -= (rand*min_disc)/10+0.01;
                         }
                         if(scope.cur_disc<max_disc){
                             scope.cur_disc=max_disc;
@@ -229,7 +231,7 @@ angular.module('LuckyMall')
                         initPrice(cur_price);
                         $timeout(function(){
                             run();
-                        },1000);
+                        },change_time);
                     }
                 }
 

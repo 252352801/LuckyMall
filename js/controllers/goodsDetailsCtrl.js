@@ -140,6 +140,10 @@ angular.module('LuckyMall.controllers')
                 GoodsDetailsSer.addToCart(params, function (response,status) {
                     if (status == 1) {
                         $scope.$emit('cart-update');
+                        ga('send', 'pageview', {
+                            'page': '/enter_freegame',
+                            'title': '进入免费游戏'
+                        });
                         location.href = Host.game + '?orderid=' + response.Data.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
                     } else if(status == 0) {
                         handleErrs(response.Code);

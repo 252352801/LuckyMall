@@ -38,6 +38,10 @@ angular.module('LuckyMall.controllers')
                 PaymentSer.getStatusOfTrade($scope.trade_id,function(response,status){
                     if(status===1){
                         $rootScope.$broadcast('orders-update');
+                        ga('send', 'pageview', {
+                            'page': '/complete_checkout',
+                            'title': '完成购买'
+                        });
                         $state.go('paySuccess');
                     }else{
                         pollingTradeStatus();

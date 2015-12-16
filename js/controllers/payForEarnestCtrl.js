@@ -67,6 +67,10 @@ angular.module('LuckyMall.controllers')
                 if(status===1){
                     $rootScope.$broadcast('user-update');
                     $rootScope.$broadcast('orders-update');
+                    ga('send', 'pageview', {
+                        'page': '/complete_checkout',
+                        'title': '完成购买'
+                    });
                     $state.go('paySuccess');
                 }else{
                     $scope.isTipsUnFinishShow=true;
@@ -132,6 +136,10 @@ angular.module('LuckyMall.controllers')
                     if(status===1){
                         $rootScope.$broadcast('user-update');
                         $rootScope.$broadcast('orders-update');
+                        ga('send', 'pageview', {
+                            'page': '/complete_checkout',
+                            'title': '完成购买'
+                        });
                         $state.go('paySuccess');
                     }else{
                         pollingTradeStatus(trade_id);

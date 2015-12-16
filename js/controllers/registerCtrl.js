@@ -56,7 +56,7 @@ angular.module('LuckyMall.controllers')
                    $scope.showTips('请先输入图片中的验证码喔！');
                }else if($scope.isValid($scope.mobile)) {
                    console.log(mobile_num+'-'+$scope.s_key+"-"+$scope.captchaCode);
-                    VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.captchaCode, function (response,status) {
+                    VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.img_code, function (response,status) {
                         if(status==1) {
                             console.log(response);
                             $scope.verify_code = response;
