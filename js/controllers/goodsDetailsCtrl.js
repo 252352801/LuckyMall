@@ -60,7 +60,7 @@ angular.module('LuckyMall.controllers')
         };
         /*计算价格*/
         $scope.computePrice = function (price) {
-            return price.toFixed(2);
+            return price.toFixed(0);
         };
         /* 是否没有选项被选择*/
         $scope.isNoSelection = function () {

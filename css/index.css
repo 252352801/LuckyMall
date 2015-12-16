@@ -150,7 +150,7 @@ margin-left: 70px;
 .today-list-l .info1,.today-list-l .info2{
     margin:0 auto;
     width:90%;
-    height:115px;
+    height:100px;
     padding:10px 0px;
     border-bottom:1px solid #f4f4f4;
 }
@@ -205,15 +205,12 @@ margin-left: 70px;
     margin:15px auto;
 }
 .today-pro-discount{
-    margin-top:20px;
+    margin-top:5px;
+    margin-bottom:10px;
 }
 .today-pro-discount span{
     color:#ff6700;
     font-size:30px;
-}
-.today-pro-sold{
-    font-size:12px;
-    color:#666;
 }
 .today-top{
 	margin-bottom:5px;

@@ -189,57 +189,59 @@ angular.module('LuckyMall')
         }
     })
 
-    /*价格滑动*/
-    .directive('priceSlider', function ($timeout,$compile) {
+    /*数字滑动*/
+    .directive('numberSlider', function ($timeout,$compile) {
         return {
             link: function (scope, element, attrs) {
-                var data = angular.fromJson(attrs.priceSlider);
-                var min = data.minDiscount;
-                var max = data.maxDiscount;
-                scope.cur=1;
-              //  element.parent().append($compile()(scope));
-                scope.$watch(scope.data_goods,function(new_val,old_val){
-                    if(new_val!=old_val) {
-                        start(scope.cur);
-                    }
-                });
-                start(scope.cur);
-                function start(item) {
-                    var prices = new Array();
-                    var index = max;
-                    var str = '';
-                    while (index < min) {
-                        str = index + '折：￥' + index * data.orgPrice / 10;
-                        prices.push(str);
-                        index+=5;
-                    }
-                    str = min + '折：￥' + min * data.orgPrice / 10;
-                    prices.push(str);
-                    scope.prices = prices;
+                scope.numbers=[0,1,2,3,4,5,6,7,8,9];
 
 
 
-                  //  scope.price_slide_index1 = 0;
-                    scope['price_slide_index'+item]=0;
+
+
+                if(attrs.numberSlider) {
+                    scope.$watch(attrs.numberSlider, function (new_val,old_val) {
+                        if(new_val!=old_val) {
+                            start(new_val);
+                        }
+                    });
+                }
+
+                function start(data_goods){
+                    var price=data_goods.RetailPrice;
+                    var max_disc=data_goods.MaxDiscount;
+                    var min_disc=data_goods.MinDiscount;
+                    scope.cur_disc=min_disc;
+                    var cur_price=(price*min_disc).toFixed(0);
+                    initPrice(cur_price);
                     run();
-                    function run() {
-                        $timeout(function () {
-                            scope['price_slide_index'+item]++;
-                            if (scope['price_slide_index'+item] > prices.length) {
-                                /*element.after($compile(element.clone())(scope));*/
-                                /*scope.price_slide_index1 = 0;
-                                scope.price_slide_index2=0;
-                                scope.cur=2;*/
-                                if(scope.cur==1){
-                                    scope.cur=2;
-                                }else{
-                                    scope.cur=1;
-                                }
-                                start(scope.cur);
-                            }else{
-                                run();
-                            }
-                        }, 1000);
+                    function run(){
+                        if(scope.cur_disc==max_disc){
+                            scope.cur_disc=min_disc;
+                        }else {
+                            var rand = Math.random();
+                            scope.cur_disc *= rand;
+                        }
+                        if(scope.cur_disc<max_disc){
+                            scope.cur_disc=max_disc;
+                        }
+                        cur_price=(price*scope.cur_disc).toFixed(0);
+                        initPrice(cur_price);
+                        $timeout(function(){
+                            run();
+                        },1000);
+                    }
+                }
+
+                function initPrice(val){
+                    scope.indexes=[0,0,0,0];
+                    var a=scope.indexes.length-1;
+                    var b=(''+val).split('');
+                    var c=b.length-1;
+                    while(c>=0){
+                        scope.indexes[a]=b[c];
+                        c--;
+                        a--;
                     }
                 }
             }

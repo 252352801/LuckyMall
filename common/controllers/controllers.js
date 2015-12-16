@@ -59,6 +59,13 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
         });
       /*监听购物车数据改变*/
         $scope.$on('cart-update',function(){
+            loadCartData();
+            initCartTime();//构建购物车时间
+        });
+
+
+        /*加载购物车数据*/
+        function loadCartData(){
             CartSer.requestCartData(function(respnose,status){ //加载购物车数据
                 if(status==1){
                     $timeout(function(){
@@ -72,8 +79,9 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                     },5);
                 }
             });
-            initCartTime();//构建购物车时间
-        });
+        }
+
+
       /*监听订单数据改变*/
         $scope.$on('orders-update',function(){
             loadOrdersData();
@@ -143,9 +151,10 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
 
         /*计算购物车剩余时间（秒）*/
-        $scope.initCartTimeRemain=function(end_time){
-            var time_now=new Date().getTime();
-            var res=(end_time-time_now)/1000;
+        $scope.initCartTimeRemain=function(now_time,end_time){
+            var t_n=now_time.getTime();
+            var t_e=end_time.getTime();
+            var res=(t_e-t_n)/1000;
             if(res>0){
                 return res;
             }else{
@@ -158,9 +167,10 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
             CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
                 if(status==1){
                     var time_str=CartSer.getDeadline();
-                    $scope.cart_end_time=initCartStartTime(time_str);
-                    console.log("购物车结束时间："+time_str);
-                    $scope.cartTimeRemain= $scope.initCartTimeRemain($scope.cart_end_time);
+                    $scope.cart_end_time=new Date(time_str[1]);
+                    console.log("购物车时间："+ time_str);
+                    var now_time=new Date(time_str[0]);
+                    $scope.cartTimeRemain= $scope.initCartTimeRemain(now_time,$scope.cart_end_time);
                     $scope.cartTimer=setInterval(function(){
                         if( $scope.cartTimeRemain>0){
                             $timeout(function(){
@@ -170,10 +180,10 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }else{
                             clearInterval($scope.cartTimer);
                             $timeout(function(){
-                                //$scope.$broadcast('cart-update');
+                                loadCartData();
                             },3000);
                             $scope.cartTimeRemainFormat='';
-                            console.log("购物车中商品已到达存放期限");
+                            console.log("购物车已超时");
                         }
                     },1000);
                 }

@@ -41,47 +41,48 @@
                 <small ng-bind="data_goods.Description"></small>
                 <div class="pro-price">
 
-                   <!-- <div class="box-prices">
-                        <div class="item-price prices-slider">
+                    <div class="box-prices">
+                        <div class="item-price item-price1 number-slider" number-slider="data_goods">
                             <label>￥</label>
-                            <div class="prices-slider">
-                                <span></span>
-                            </div>
+                            <ul class="prices-slider">
+                                <li ng-if="indexes.length>=0">
+                                    <div class="item-slider" ng-style={top:-indexes[0]*45+'px'}>
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                </li>
+                                <li ng-if="indexes.length>=0">
+                                    <div  class="item-slider" ng-style={top:-indexes[1]*45+'px'}>
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                </li>
+                                <li ng-if="indexes.length>=0">
+                                    <div  class="item-slider" ng-style={top:-indexes[2]*45+'px'}>
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                </li>
+                                <li ng-if="indexes.length>=0">
+                                    <div class="item-slider"  ng-style={top:-indexes[3]*45+'px'}>
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                </li>
+                            </ul>
                             <div class="discount-slider">
                                 <ul>
-                                    <li></li>
+                                    <li ng-bind="(cur_disc*10).toFixed(1)+'折'"></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price price-interval">
-                            <p>市场价：<span>￥2999.00</span></p>
-                            <p>
-                                <span>￥2689</span><small>9折</small>
+                        <div class="item-price item-price2 price-interval">
+                            <p>市场价：<span class="old-price" ng-bind="'￥'+data_goods.RetailPrice">￥2999.00</span></p>
+                            <p class="new_prices">
+                                <span ng-bind="'￥'+computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span><small ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></small>
                                 <label>~</label>
-                                <span>￥168</span><small>1折</small>
+                                <span ng-bind="'￥'+computePrice(data_goods.RetailPrice*data_goods.MaxDiscount)"></span><small ng-bind="(data_goods.MaxDiscount*10).toFixed(1)+'折'"></small>
                             </p>
                         </div>
-                    </div>-->
+                    </div>
 
 
-                    <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)+'~'"></span>
-                    <span class="real-price" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MaxDiscount)"></span>
-                    <span class="icon-discount" ng-bind="'低至'+(data_goods.MaxDiscount*10).toFixed(1)+'折'"></span>
-                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
-                   <!-- <span class="real-price amt-bigger" ng-bind="computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span>
-                    <span class="icon-discount" ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></span>
-                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>-->
-
-                    <!--<div class="box-slider-container">
-                        <div class="box-price-slider" price-slider={"orgPrice":100,"minDiscount":9.5,"maxDiscount":1}>
-                            <ul ng-style="{top:-((prices.length-1)*20-price_slide_index1*20)+'px'}" ng-if="price_slide_index1<prices.length+1||price_slide_index2==prices.length">
-                                <li ng-repeat="price in prices" ng-bind="price"></li>
-                            </ul>
-                            <ul ng-style="{top:-((prices.length)*20-price_slide_index2*20)+'px'}"  ng-if="price_slide_index2<prices.length+1||price_slide_index1==prices.length">
-                                <li ng-repeat="price in prices" ng-bind="price"></li>
-                            </ul>
-                        </div>
-                    </div>-->
                 </div>
                 <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">
                     <p class="tips">请勾选您需要的商品选项：</p>
@@ -102,7 +103,8 @@
                         <span class="btn-reduce txtUnSelect" ng-click="reduce()">-</span>
                         <input type="text" ng-model="amount" ng-disabled="!finishSelect" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
                         <span class="btn-add txtUnSelect" ng-click="add()">+</span>
-                        <p ng-show="inventory>=0&&inventory!=null">库存剩余<span ng-bind="inventory"></span>件</p>
+                       <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
+                        <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>
                     </div>
                 </div>
                 <div class="bar-btn">
