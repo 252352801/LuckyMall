@@ -112,9 +112,7 @@ angular.module('LuckyMall.controllers')
 
         /*赢折扣*/
         $scope.playForDiscount = function (goods_id) {
-            /*LoginSer.exit();
-            $scope.$emit("exit");
-            return;*/
+
             if (LoginSer.isLogin()) {
                 if (!isFinishSelect()) {//如果没有完成选择
                     $timeout(function () {
@@ -157,7 +155,6 @@ angular.module('LuckyMall.controllers')
                     }
                 });
             } else {
-                $scope.$emit("exit");
                 $scope.$emit("show-login-modal");
             }
         };

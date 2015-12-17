@@ -77,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="goodsDetailsCtrl.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="goodsDetailsCtrl.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.679245" vertical-offset="6191" max-vertical-offset="7828">
-              <caret line="364" column="22" selection-start-line="364" selection-start-column="20" selection-end-line="364" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.7063584" vertical-offset="2353" max-vertical-offset="7771">
+              <caret line="156" column="20" selection-start-line="156" selection-start-column="20" selection-end-line="156" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -90,8 +90,8 @@
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-91.2" vertical-offset="0" max-vertical-offset="7847">
-              <caret line="120" column="36" selection-start-line="120" selection-start-column="16" selection-end-line="120" selection-end-column="36" />
+            <state vertical-scroll-proportion="-21.28" vertical-offset="1824" max-vertical-offset="7847">
+              <caret line="124" column="18" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -107,10 +107,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="goodsDetails.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="goodsDetails.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/goodsDetails.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62713796" vertical-offset="1" max-vertical-offset="2812">
+            <state vertical-scroll-proportion="-19.642857" vertical-offset="1" max-vertical-offset="2812">
               <caret line="29" column="75" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="75" />
               <folding />
             </state>
@@ -182,12 +182,12 @@
         <option value="$PROJECT_DIR$/js/userCenter_js/controllers/editPasswordCtrl.js" />
         <option value="$PROJECT_DIR$/common/templates/header.html" />
         <option value="$PROJECT_DIR$/js/controllers/afterGameCtrl.js" />
-        <option value="$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js" />
         <option value="$PROJECT_DIR$/common/config/config.js" />
         <option value="$PROJECT_DIR$/templates/shoppingCart.html" />
         <option value="$PROJECT_DIR$/js/controllers/cartCtrl.js" />
         <option value="$PROJECT_DIR$/common/controllers/controllers.js" />
         <option value="$PROJECT_DIR$/templates/goodsDetails.html" />
+        <option value="$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js" />
       </list>
     </option>
   </component>
@@ -1107,22 +1107,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.679245" vertical-offset="6191" max-vertical-offset="7828">
-          <caret line="364" column="22" selection-start-line="364" selection-start-column="20" selection-end-line="364" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-91.2" vertical-offset="0" max-vertical-offset="7847">
-          <caret line="120" column="36" selection-start-line="120" selection-start-column="16" selection-end-line="120" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/cartCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3325">
@@ -1141,8 +1125,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/goodsDetails.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62713796" vertical-offset="1" max-vertical-offset="2812">
+        <state vertical-scroll-proportion="-19.642857" vertical-offset="1" max-vertical-offset="2812">
           <caret line="29" column="75" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.28" vertical-offset="1824" max-vertical-offset="7847">
+          <caret line="124" column="18" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/controllers/goodsDetailsCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7063584" vertical-offset="2353" max-vertical-offset="7771">
+          <caret line="156" column="20" selection-start-line="156" selection-start-column="20" selection-end-line="156" selection-end-column="20" />
           <folding />
         </state>
       </provider>
