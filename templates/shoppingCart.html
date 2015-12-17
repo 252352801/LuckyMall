@@ -30,8 +30,8 @@
                 <img real-src={{imgHost+list.Brand.BrandImage}} alt="" temp-src="./res/images/default.png"  />
                 <a href="#" ng-bind="list.Brand.BrandName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
-                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.Commodity.IsCanFree">赢折扣</a>
-                <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Id)" ng-if="list.Commodity.IsCanFree">赢折扣</a>
+                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.OrderType">赢折扣</a>
+                <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Id)" ng-if="list.OrderType">赢折扣</a>
             </div>
             <div class="cart-list-cont">
                 <div class="cont1">
@@ -51,17 +51,17 @@
                     <p ng-bind="property.name+'：'+property.value" ng-repeat="property in list.Specifications"></p>
                 </div>
                 <div class="cont2">
-                    <p ng-bind="'￥'+list.UnitPrice*list.Count"></p>
+                    <p ng-bind="'￥'+list.orgCost"></p>
                 </div>
                 <div class="cont3">
-                    <p class="price" ng-bind="'￥'+list.cost.toFixed(2)"></p>
+                    <p class="price" ng-bind="'￥'+list.cost"></p>
                     <p>
                         已享用折扣卡
                         <span class="icon-discount" ng-bind="(list.DiscountVal*10).toFixed(1)+'折'"></span>
                     </p>
                 </div>
                 <div class="cont4">
-                    <p class="wait-to-pay" ng-bind="'￥'+list.needToPay.toFixed(2)"></p>
+                    <p class="wait-to-pay" ng-bind="'￥'+list.needToPay"></p>
                     <p ng-if="list.EarnestMoney>0">
                         已付定金：
                         <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
@@ -77,7 +77,7 @@
         </div>
         <div class="cart-finally" ng-if="data_cart.length>0">
             <p>共有<span class="color-org" ng-bind="data_cart.totalAmount"></span>件商品</p>
-            <p class="cart-sum-cost">合计（免运费）：<span ng-bind="'￥'+data_cart.totalCost.toFixed(2)"></span></p>
+            <p class="cart-sum-cost">合计（免运费）：<span ng-bind="'￥'+data_cart.totalCost"></span></p>
             <p>
                 <input id="btn_sure_pay" type="submit" value="确认结算" ng-click="goConfirm()">
             </p>

@@ -61,18 +61,18 @@
                 </div>
                 <div class="cont2">
                     <div class="cont-container">
-                        <p ng-bind="'￥'+order.UnitPrice*order.Count"></p>
+                        <p ng-bind="'￥'+order.orgCost"></p>
                     </div>
                 </div>
                 <div class="cont3">
                     <div class="cont-container">
-                        <p class="discount-price"  ng-bind="'￥'+order.cost.toFixed(2)"></p>
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(order.DiscountVal.toFixed(2))*10+'折'"></span></p>
+                        <p class="discount-price"  ng-bind="'￥'+order.cost"></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(order.DiscountVal*10).toFixed(1)+'折'"></span></p>
                     </div>
                 </div>
                 <div class="cont4">
                     <div class="cont-container">
-                        <p class="unPay" ng-bind="'￥'+order.needToPay.toFixed(2)"></p>
+                        <p class="unPay" ng-bind="'￥'+order.needToPay"></p>
                         <p ng-if="order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+order.EarnestMoney"></span></p>
                     </div>
                 </div>

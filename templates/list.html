@@ -52,7 +52,8 @@
     <div class="pro-list-top">
         <h3 class="color-org">新品</h3>
         <span class="label-condition" ng-click="searchWidthPrice()">价格</span>
-        <span class="icon-double-arrow up" ng-class="{'icon-double-arrow up':sortByPrice,'icon-double-arrow down':!sortByPrice}"></span>
+        <span  ng-class="{'icon-db-arrow up cur':!price_order,'icon-db-arrow up':price_order}" ng-click="searchWidthPrice(0)"></span>
+        <span  ng-class="{'icon-db-arrow down':!price_order,'icon-db-arrow down cur':price_order}" ng-click="searchWidthPrice(1)"></span>
         <div class="pull-right">
             <p>共<span class="color-org" ng-bind="totalAmount"></span>件商品</p>
             <span class="arrow txtUnselect" title="上一页" ng-click="prevPage()"><</span>
@@ -62,7 +63,7 @@
         </div>
     </div>
     <ul class="pro-list-cont">
-        <li ng-repeat="list in data_list">
+        <li ng-repeat="list in data_list|orderBy:'maxPrice':price_order" >
             <a class="a-goodsImg" href="/goodsDetails/{{list.Id}}" title="">
                 <img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>
             </a>
@@ -71,7 +72,7 @@
                     <h2 ng-bind="list.CommodityName"></h2>
                 </a>
                 <p class="price">
-                    <span class="prices" ng-bind="'￥'+(list.RetailPrice*list.MaxDiscount).toFixed(2)+'-￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)"></span>
+                    <span class="prices" ng-bind="'￥'+list.maxPrice+'~￥'+list.minPrice"></span>
                     <span class="old-price" ng-bind="list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
                     <span class="icon-discount" ng-bind="'低至'+(list.MaxDiscount*10).toFixed(1)+'折'"></span>
                     <!--<span class="final-price" ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)" ></span>

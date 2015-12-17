@@ -7,11 +7,13 @@ angular.module('LuckyMall.controllers')
             type:str.split('&')[1].split('=')[1],
             orderId:str.split('&')[2].split('=')[1]
         };
-        console.log( params);
         if(!LoginSer.isLogin()){
             authorization(action);
         }else{
-            action();
+            $scope.$emit('game-over');
+            $scope.$on('game-over-handled',function(){
+                action();
+            });
         }
         /* 授权*/
         function authorization(callback){
@@ -19,11 +21,17 @@ angular.module('LuckyMall.controllers')
             LoginSer.authorization(function(response,status){
                 if(status==1){
                     $scope.$emit('user-login');
-                    callback();
+                    $timeout(function(){
+                        callback();
+                    },500);
                 }else{
+                    $scope.$emit('game-over');
                     $scope.$emit("show-login-modal");
                     $rootScope.$on('user-login',function(){
-                        callback();
+                        $scope.$emit('game-over');
+                        $scope.$on('game-over-handled',function(){
+                            callback();
+                        });
                     });
                 }
             },auth);
@@ -42,7 +50,7 @@ angular.module('LuckyMall.controllers')
                     break;
                 case '2':
                     MyOrdersSer.setTempOrder(params.orderId);
-                    $state.go('confirmOrders',{source:'source=game'});
+                    $state.go('confirmOrder',{source:'source=game'});
                     break;
             }
         }

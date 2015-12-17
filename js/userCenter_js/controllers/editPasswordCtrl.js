@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('EditPasswordCtrl',function($scope,$state,$stateParams,LoginSer,EditPasswordSer,$timeout){
+ .controller('EditPasswordCtrl',function($scope,$state,$stateParams,LoginSer,EditPasswordSer,$timeout,$rootScope){
         $scope.$emit('changeMenu',13);
         initPostData();//初始化数据
         $scope.input_tips='';
@@ -22,12 +22,23 @@ angular.module('LuckyMall.controllers')
                     $scope.value_btn = "正在处理...";
                     EditPasswordSer.updatePassword(param, function (response, status) {
                         if (status == 1) {
-                            $timeout(function () {
+                           /* $timeout(function () {
                                 $scope.show_update_success = true;
                                 $scope.return_time = 5;
                                 countDownReturn();
                                 $scope.value_btn = "确定";
+                            });*/
+                            swal({
+                                title: "修改密码成功!",
+                                text: '请您重新登陆！',
+                                type: "success",
+                                confirmButtonText: "确定"
                             });
+                            $rootScope.login_target={
+                              state:'UCIndex.safeAccount',
+                              params:{}
+                            };
+                            $state.go('login');
                         } else {
                             swal({
                                 title: "修改密码失败!",

@@ -1,6 +1,7 @@
 angular.module('LuckyMall.controllers')
     .controller('ListCtrl', function ($scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state) {
         $scope.cate_id=$stateParams.category.split('=')[1];
+        $scope.price_order=false;//价格排序方式  false:从小到大   true:从大到小
         var pageSize = 16;//每页大小（个数）
         initParams();
         function initParams(){
@@ -130,13 +131,18 @@ angular.module('LuckyMall.controllers')
         };
         /*价格排序*/
         $scope.searchWidthPrice = function (price_sort) {
-            if (price_sort) {
-                $scope.sortByPrice = price_sort;
+            if (price_sort==0||price_sort==1) {
+                if(price_sort==$scope.price_order){
+                    return;
+                }else{
+                    $scope.price_order = price_sort;
+                }
             } else {
-                $scope.sortByPrice = !$scope.sortByPrice;
+                $scope.price_order=!$scope.price_order;
             }
-            search({sort_price: $scope.sortByPrice});
         };
+
+
 
        /* 已选的多选项显示格式化*/
         $scope.formatMultiChoice=function(filter){

@@ -1,7 +1,7 @@
 var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies','angularFileUpload']);
 app.constant('Host',{
     develop: "http://120.24.175.151:9000/", //开发服务器
-    test: "http://www.xingyunmao.cn:9000/",//测试服务器
+    test: "http://webapi.xingyunmao.cn/",//测试服务器
     prev:"http://120.24.225.116:9000/", //运营服务器
     game:'http://120.24.175.151:9004', //游戏服务器
     gameOverPage:'http://www.xingyunmao.cn/shoppingCart'//游戏结束后返回地址
@@ -47,7 +47,7 @@ app.constant('API',{
         method:'get',
         url: 'api/commodity/'
     },
-    isFreePlayed:{//是否使用了免费玩游戏的次数
+    isCanFreePlay:{//是否
         method:'get',
         url: 'api/user/isfreeplay/'
     },

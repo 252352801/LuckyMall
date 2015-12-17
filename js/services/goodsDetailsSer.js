@@ -23,6 +23,8 @@ angular.module('LuckyMall.services')
                 }).success(function (response, status, headers, config) {
                     if(status==200&&response) {
                         data = response;
+                        data.minPrice=Math.ceil(data.RetailPrice*data.MaxDiscount);
+                        data.maxPrice=Math.ceil(data.RetailPrice*data.MinDiscount);
                         data.SmallImages = data.RollingImages.split('|');
                         data.BigImages = data.DetailImages.split('|');
                         data.Property = JSON.parse(data.Property);
@@ -35,17 +37,17 @@ angular.module('LuckyMall.services')
                 });
             },
             /*是否使用过免费次数*/
-            isFreePlayed:function(goods_id,callback){
+            isCanFreePlay:function(goods_id,callback){
                 $http({
-                    method: API.isFreePlayed.method,
-                    url: API.isFreePlayed.url+goods_id,
+                    method: API.isCanFreePlay.method,
+                    url: API.isCanFreePlay.url+goods_id,
                     headers: {
                         'Authorization':TokenSer.getAuth()
                     }
                 }).success(function (response, status, headers, config) {
-                    if(status==200&&response){
+                    if(status==200){
                         callback(response,1);
-                    }else if(status==200&&!response){
+                    }else{
                         callback(response,0);
                     }
                 })

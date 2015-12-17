@@ -150,8 +150,8 @@ angular.module('LuckyMall.controllers')
 
                     }else if(response.Code=='0X02'){
                         swal({
-                            title: "确认订单失败！",
-                            text:'请您不要重复提交订单',
+                            title: "确认订单失败，请勿重复提交订单！",
+                            text:'已提交的订单可以在“我的订单”里找到',
                             type: "error",
                             confirmButtonText: "确定"
                         });
@@ -225,7 +225,6 @@ angular.module('LuckyMall.controllers')
              $scope.data_orders=CartSer.getConfirmData();//取已选择订单
          }else if($scope.source=='repay'){
              $scope.data_orders=PaymentSer.getData().orders;
-             /*alert($scope.data_orders[0].Id);*/
          }else if($scope.source=='purchase'){
              var order_id=MyOrdersSer.getTempOrder().Id;
              $scope.data_orders=[CartSer.getOrderById(order_id)];
@@ -233,6 +232,7 @@ angular.module('LuckyMall.controllers')
          }else if($scope.source=='game'){
              var order_id=MyOrdersSer.getTempOrder();
              $scope.data_orders=[CartSer.getOrderById(order_id)];
+             console.log($scope.data_orders);
          }
          AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
              if(status==1){
@@ -258,7 +258,7 @@ angular.module('LuckyMall.controllers')
             cost+=$scope.data_orders[o].needToPay;
         }
         $scope.total_amount=amount;//商品总数量
-        $scope.total_cost=cost.toFixed(2);//商品总价
+        $scope.total_cost=cost;//商品总价
         $scope.invoice={
             type:-1,
             title:''

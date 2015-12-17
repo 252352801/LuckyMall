@@ -27,7 +27,7 @@
                 <div class="small-goods-img">
                     <ul class="goods-index" id="details_goods_index">
                         <li ng-class="{'cur': index==$index}" ng-repeat="sImg in data_goods.SmallImages"  ng-mouseenter="showBigImg($index)">
-                            <img  real-src={{imgHost+sImg}} alt="" temp-src="./res/images/default.png" />
+                            <img  real-src={{imgHost+sImg+'@70w_70h_100Q.png'}} alt="" temp-src="./res/images/default.png" />
                         </li>
                     </ul>
                 </div>
@@ -75,9 +75,9 @@
                         <div class="item-price item-price2 price-interval">
                             <p>市场价：<span class="old-price" ng-bind="'￥'+data_goods.RetailPrice">￥2999.00</span></p>
                             <p class="new_prices">
-                                <span ng-bind="'￥'+computePrice(data_goods.RetailPrice*data_goods.MinDiscount)"></span><small ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></small>
+                                <span ng-bind="'￥'+data_goods.maxPrice"></span><small ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></small>
                                 <label>~</label>
-                                <span ng-bind="'￥'+computePrice(data_goods.RetailPrice*data_goods.MaxDiscount)"></span><small ng-bind="(data_goods.MaxDiscount*10).toFixed(1)+'折'"></small>
+                                <span ng-bind="'￥'+data_goods.minPrice"></span><small ng-bind="(data_goods.MaxDiscount*10).toFixed(1)+'折'"></small>
                             </p>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                     <label>数量</label>
                     <div class="div-btn">
                         <span class="btn-reduce txtUnSelect" ng-click="reduce()">-</span>
-                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||data_goods.IsCanfree==true" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
+                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||data_goods.IsCanFree==true" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
                         <span class="btn-add txtUnSelect" ng-click="add()">+</span>
                        <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
                         <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>
@@ -110,7 +110,7 @@
                 <div class="bar-btn">
                     <input class="btn-buy" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" />
                     <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)">试玩赢折扣</a>
-                    <input class="btn-add" ng-if="data_goods.IsCanFree==false" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart/>
+                    <input class="btn-add" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart/>
                 </div>
             </form>
         </div>

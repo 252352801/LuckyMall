@@ -1,6 +1,12 @@
 angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
-.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer){
+.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer){
+
+    $rootScope.login_target={
+        state:'home',
+        params:{}
+    };
+
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
      $scope.isFeedbackModalShow=false;//反馈框是否显示
@@ -24,9 +30,10 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
       $scope.$on('exit',function(){
           CartSer.clearData();
           $timeout(function(){
+              $state.go("home");
               $scope.cartAmount=0;
               $scope.isLogin=false;
-              $state.go('home');
+              console.log($scope.isLogin);
           },5);
       });
         /* 监听用户登录*/
@@ -35,6 +42,25 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
           loadSomeUserData();//用户登录之后初始化和加载一些必要数据
           loadOrdersData();//加载部分订单数目
       });
+
+        /* 监听游戏结束*/
+        $scope.$on('game-over',function(){
+            UserSer.setData(LoginSer.getData());//设置用户数据
+            loadSomeUserData();//用户登录之后初始化和加载一些必要数据
+            CartSer.requestCartData(function(){ //加载购物车数据
+                $timeout(function(){
+                    $scope.sp_data_cart=CartSer.getData();
+                    if( $scope.sp_data_cart){
+                        $scope.cartAmount=$scope.sp_data_cart.totalAmount;
+                    }else{
+                        $scope.cartAmount=0;
+                    }
+                    $scope.$broadcast('game-over-handled');
+                },5);
+            });
+        });
+
+
         /*监听账号数据改变*/
         $scope.$on('user-update',function(){
             RefreshUserDataSer.requestUserData(function(response,status){
@@ -90,12 +116,22 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
      /*监听页面跳转*/
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-            if (toState.name == 'login') return; // 如果是进入登录界面则允许
+            if (toState.name == 'login'||toState.name=='home') return; // 如果是进入登录界面则允许
             // 如果用户未登录
-            if (!LoginSer.isLogin()) {
+            if (!TokenSer.getToken()) {
+                $rootScope.login_target={
+                    state:toState,
+                    params:toParams
+                };
                 if (toState.name == 'confirmOrder') {
                     event.preventDefault();
-                    $state.go('home');
+                    $state.go('shoppingCart');
+                }else if(toState.name == 'shoppingCart'){
+                    event.preventDefault();
+                    $state.go('login');
+                }else if(toState.name == 'UCIndex.myOrders'){
+                    event.preventDefault();
+                    $state.go('login');
                 }
             }else{
                 if(fromState.name=='confirmOrder'||fromState.name=='WXPay'){
@@ -103,6 +139,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 }
             }
         });
+
     /*获取阿里云图片服务器地址*/
      function getImgHost(){
          ImgSer.requestData(function(response,status){
@@ -128,6 +165,8 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
             }
         });
     }
+
+
      /*用户登录之后初始化和加载一些必要数据*/
     function loadSomeUserData(){
         $timeout(function(){ //初始化
@@ -167,9 +206,9 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
             CartSer.requestCartDeadline(LoginSer.getData().UserModel.Id,function(response,status){
                 if(status==1){
                     var time_str=CartSer.getDeadline();
-                    $scope.cart_end_time=new Date(time_str[1]);
+                    $scope.cart_end_time=new Date(time_str[1].replace(/-/g,"/"));
                     console.log("购物车时间："+ time_str);
-                    var now_time=new Date(time_str[0]);
+                    var now_time=new Date(time_str[0].replace(/-/g,"/"));
                     $scope.cartTimeRemain= $scope.initCartTimeRemain(now_time,$scope.cart_end_time);
                     $scope.cartTimer=setInterval(function(){
                         if( $scope.cartTimeRemain>0){
@@ -298,40 +337,31 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
         $state.go('register');
     };
 
-    $scope.hasInputError=false;//是否输入有误
     $scope.tips='';//提示信息
         /*显示提示信息*/
     $scope.showTips=function(msg){
-        $scope.tips=msg;
-        if(msg!=''){
-            $timeout(function() {
-                $scope.hasInputError = true;
-            },5);
-        }else{
-            $timeout(function(){
+        $timeout(function(){
+            $scope.tips=msg;
+            if(msg==''){
                 $scope.hasInputError=false;
-            },5);
-        }
+            }else{
+                $scope.hasInputError=true;
+            }
+        });
     };
      $scope.changeKeepLogin=function(){
          $scope.keepLogin=!$scope.keepLogin;
      };
     $scope.value_btn="登陆"; //登陆按钮显示字符串
        /* 登陆操作*/
-    $scope.login=function(username,password){
-        if(username!=''&&password!='') {
-            var reg = /^[1][358]\d{9}$/;
-            if(!reg.test(username)){
-                $scope.showTips(' 请正确输入手机号！');
-                console.log('手机号有误！');
-                return;
-            }
+    $scope.login=function(){
+        if($scope.form_login.$valid) {
+            $scope.showTips('');
             $scope.value_btn = "正在登陆···";
-            LoginSer.login(username, password, function (response,status) {
+            LoginSer.login($scope.username, $scope.password, function (response,status) {
                 switch(status){
                     case 1:
                         if($scope.keepLogin){
-                            console.log('设置了自动登录！');
                             var expire = new Date();
                             expire.setMinutes(expire.getMinutes() + 30);//cookie时间30分钟
                             $cookies.put('Token',response,{"expires": expire }); //设置token cookie
@@ -340,7 +370,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }
                         $rootScope.$broadcast("user-login");
                         if($state.current.name=='login'){
-                            $state.go('home');
+                            $state.go($rootScope.login_target.state,$rootScope.login_target.params);
                         }
                         $scope.$emit('close-login-modal');
                         break;
@@ -355,9 +385,13 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                     $scope.value_btn = "登陆";
                 },0);
             });
-        }else if(username==''){
-            $scope.showTips('请输入用户名！');
-        }else if(password==''){
+        }else if($scope.form_login.username.$invalid){
+            if($scope.form_login.username.$error.required) {
+                $scope.showTips('请输入用户名(手机号码)！');
+            }else{
+                $scope.showTips('您输入了错误的手机号码！');
+            }
+        }else if($scope.form_login.password.$invalid){
             $scope.showTips('请输入密码！');
         }
     };

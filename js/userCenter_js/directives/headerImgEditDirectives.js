@@ -1,7 +1,7 @@
 angular.module('LuckyMall')
 
     /*地址输入验证*/
-    .directive('btnEditImg', function ($timeout) {
+    .directive('btnEditImg', function ($timeout,API) {
         return {
             link: function (scope,element, attrs) {
                 var src=element.attr('img-src');
@@ -14,7 +14,7 @@ angular.module('LuckyMall')
                     xiuxiu.setUploadDataFieldName("upload_file");
                     xiuxiu.onInit = function ()
                     {
-                        xiuxiu.loadPhoto('http://127.0.0.1/res/test/headimg.jpg');//修改为要处理的图片url
+                        xiuxiu.loadPhoto('http://127.0.0.1/res/images/touxiang.jpg');//修改为要处理的图片url
                     }
                     xiuxiu.onUploadResponse = function (data)
                     {

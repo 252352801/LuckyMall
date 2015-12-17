@@ -8,28 +8,29 @@
       function initTodayData(obj){
           var result=new Array();
           for(var o in obj){
-              if(isOnline(obj[o].StartTime)) {
+             // if(isOnline(obj[o].CurrentTime,obj[o].StartTime)) {
                   if (obj[o].PromotionType == 1) {
                       obj[o].href = '/goodsDetails/' + obj[o].TypeId;
                   } else if (obj[o].PromotionType == 0) {
                       obj[o].href = '/newProduct';
                   }
-                  obj[o].remainTime = createRemainTime(obj[o].EndTime);
+                  obj[o].remainTime = createRemainTime(obj[o].CurrentTime,obj[o].EndTime);
                   result.push(obj[o]);
-              }
+             // }
           }
           return result;
       }
 
-      function createRemainTime(end_t){
-            var now_time=new Date();
-            var ent_time=new Date(end_t);
+      function createRemainTime(cur_t,end_t){
+            var now_time=new Date(cur_t.replace(/-/g,"/"));
+            var ent_time=new Date(end_t.replace(/-/g,"/"));
+          console.log(ent_time);
            return (ent_time-now_time)/1000;
       }
        /* 判断专题是否上线*/
-      function isOnline(start_time_str){
-          var now_time=new Date();
-          var start_time=new Date(start_time_str);
+      function isOnline(cur_time,start_time_str){
+          var now_time=new Date(cur_time.replace(/-/,"/"));
+          var start_time=new Date(start_time_str.replace(/-/,"/"));
           if(now_time>=start_time){
               return true;
           }else{

@@ -62,7 +62,7 @@
     margin: 0 auto;
 }
 
-button {
+/*button {
     background-color: #2cc185;
     color: #fff;
     border: 0;
@@ -77,7 +77,7 @@ button:hover {
 button:focus {
     background-color: #239768;
     color: #fff;
-}
+}*/
 
 .accordion {
     position: relative;

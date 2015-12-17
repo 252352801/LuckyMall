@@ -20,14 +20,19 @@ angular.module('LuckyMall.controllers')
         };
         /*数量减*/
         $scope.reduce = function () {
-            if ($scope.amount > 1) {
+            if ($scope.amount > 1&&!$scope.data_goods.IsCanFree) {
                 $scope.amount--;
             }
         };
         /*数量加*/
         $scope.add = function () {
-            if ($scope.amount < $scope.inventory) {
+            if ($scope.amount < $scope.inventory&&!$scope.data_goods.IsCanFree) {
                 $scope.amount++;
+            }else if($scope.data_goods.IsCanFree){
+                swal({
+                    title: "免费游戏模式的商品每次限购一件喔",
+                    type: "error",
+                    confirmButtonText: "确定"});
             }
         };
         /*选择属性*/
@@ -58,10 +63,6 @@ angular.module('LuckyMall.controllers')
         $scope.showTab = function (tab_name) {
             $scope.showingTab = tab_name;
         };
-        /*计算价格*/
-        $scope.computePrice = function (price) {
-            return price.toFixed(0);
-        };
         /* 是否没有选项被选择*/
         $scope.isNoSelection = function () {
             var len = 0;
@@ -83,11 +84,11 @@ angular.module('LuckyMall.controllers')
             $timeout(function () {
                 $scope.isLogin = LoginSer.isLogin();
             }, 5);
-            isFreePlay();
+            isCanFreePlay();
         });
-        function isFreePlay(){
+        function isCanFreePlay(){
             if ($scope.isCanFree) {//测试是否玩使用过免费机会
-                GoodsDetailsSer.isFreePlayed(goods_id, function (response, status) {
+                GoodsDetailsSer.isCanFreePlay(goods_id, function (response, status) {
                     if (status == 1) {
                         if (response) {
                             $scope.isFreePlayed = false;
@@ -111,6 +112,9 @@ angular.module('LuckyMall.controllers')
 
         /*赢折扣*/
         $scope.playForDiscount = function (goods_id) {
+            /*LoginSer.exit();
+            $scope.$emit("exit");
+            return;*/
             if (LoginSer.isLogin()) {
                 if (!isFinishSelect()) {//如果没有完成选择
                     $timeout(function () {
@@ -148,10 +152,12 @@ angular.module('LuckyMall.controllers')
                     } else if(status == 0) {
                         handleErrs(response.Code);
                     } else if (status == 2) {
+                        $scope.$emit("exit");
                         $scope.$emit("show-login-modal");
                     }
                 });
             } else {
+                $scope.$emit("exit");
                 $scope.$emit("show-login-modal");
             }
         };
@@ -188,6 +194,9 @@ angular.module('LuckyMall.controllers')
                 return;
             }
             var _type = ($scope.data_goods.IsCanFree == true) ? 1 : 0;
+            if($scope.isFreePlayed){ //如果已经玩过
+                _type=0;
+            }
             var params = {
                 "Type": _type,
                 "CommodityId": $scope.data_goods.Id,
@@ -222,13 +231,9 @@ angular.module('LuckyMall.controllers')
                     handleErrs(response.Code);
 
                 }else if (status == 2) {
-                    swal({
-                        title: "当前账号已过期，请退出后重新登陆!",
-                        type: "error",
-                        confirmButtonText: "确定"
-                    });
+                    $scope.$emit("exit");
+                    $scope.$emit("show-login-modal");
                 }
-
             });
         };
         /*加载本页数据*/
@@ -239,7 +244,7 @@ angular.module('LuckyMall.controllers')
                 $scope.data_goods = GoodsDetailsSer.getData();//产品数据
                 $scope.isCanFree = $scope.data_goods.IsCanFree;
                 if($scope.isLogin) {
-                    isFreePlay();
+                    isCanFreePlay();
                 }
                 $scope.choice = new Array();//产品规格选择器，存放被选的属性的下标（索引）
                 loaded++;
@@ -357,28 +362,28 @@ angular.module('LuckyMall.controllers')
             }else if(err_code == '0X51'){
                 swal({
                     title: "折扣卡与订单不匹配!",
-                    text: '错误码：0X51',
+                    /*text: '错误码：0X51',*/
                     type: "error",
                     confirmButtonText: "确定"
                 });
             }else if(err_code == '0X52'){
                 swal({
                     title: "订单状态异常!",
-                    text: '错误码：0X52',
+                    /*text: '错误码：0X52',*/
                     type: "error",
                     confirmButtonText: "确定"
                 });
             }else if(err_code == '0X60'){
                 swal({
-                    title: "已存在未处理完的免费订单，无法再添加免费订单!",
-                    text: '错误码：0X60',
+                    title: "购物车已有试玩订单，请处理后再加入商品!",
+/*                    text: '错误码：0X60',*/
                     type: "error",
                     confirmButtonText: "确定"
                 });
             }else if(err_code== '0X61'){
                 swal({
                     title: "商品的免费次数已用完!",
-                    text: '错误码：0X61',
+                    /*text: '错误码：0X61',*/
                     type: "error",
                     confirmButtonText: "确定"
                 });

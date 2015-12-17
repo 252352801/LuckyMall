@@ -109,6 +109,8 @@ angular.module('LuckyMall.controllers')
                         type: "success",
                         confirmButtonText: "确定"
                     });
+                    initNewAddressData();
+                    $scope.hideAddForm();
                     $scope.value_btn_add='提交';
                     loadData();
                 }

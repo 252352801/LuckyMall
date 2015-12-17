@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
-    .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host,PayForEarnest) {
+    .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host) {
         $scope.data_eo={};//要付定金的订单数据
         $scope.isModal1show = false;
         $scope.isModal2show = false;
@@ -7,10 +7,6 @@ angular.module('LuckyMall.controllers')
             isEnough: true,
             tips: ''
         };
-        if (!LoginSer.isLogin()) {
-            $state.go('login');
-            return;
-        }
         loadCartData();//加载购物车数据
         //"http://120.25.60.19:9004?orderid=307103168&from=120.24.175.151:9001/cart&authorization=b373119f-9670-4447-a5d2-781461191f17"
 
