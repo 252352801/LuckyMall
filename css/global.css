@@ -1095,6 +1095,7 @@ input:focus{
     padding-right:10px;
     color:#666;
 	font-size:12px;
+    cursor:pointer;
 }
 .header .content a.no-padding-l{
     padding-left:0;

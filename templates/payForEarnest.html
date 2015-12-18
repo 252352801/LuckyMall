@@ -23,16 +23,16 @@
         </div>
         <div class="goods-list" ng-show="data_order">
             <div class="bar-sellerInfo">
-                <img real-src={{imgHost+list.brandImg}} temp-src="./res/images/default.png" alt=""/>
+                <img real-src={{imgHost+data_order.Brand.BrandImage+'@32w_32h_100Q.png'}} temp-src="./res/images/default.png" alt=""/>
                 <p ng-bind="data_order.SupplierName"></p>
             </div>
             <div class="goods-list-cont">
                 <div class="cont1">
                     <div class="img-container">
-                        <img  ng-src={{imgHost+data_order.imageUrl}} alt=""/>
+                        <img  ng-src={{imgHost+data_order.imageUrl+'@100w_100h_100Q.jpg'}} alt=""/>
                     </div>
                     <a class="goods-name" href="/goodsDetails/{{data_order.CommodityId}}">
-                        <h2 ng-bind="data_order.CommodityName"></h2>
+                        <h2 ng-bind="data_order.CommodityName" title={{data_order.CommodityName}}></h2>
                         <small ng-bind="'×'+data_order.Count"></small>
                     </a>
                     <p ng-bind="property.name+'：'+property.value" ng-repeat="property in data_order.Specifications"></p>

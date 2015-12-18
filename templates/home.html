@@ -12,12 +12,12 @@
         <category></category>
     </sub-header>
     <!--banner图  begin-->
-    <div class="banner" id="banner" banner>
-        <ul class="test" id="banner_ul">
+ <!--   <div class="banner" id="banner" banner>
+        <ul  id="banner_ul">
             <li ng-repeat="img in data_banner">
                 <a href="#" title="">
                     <img ng-src={{imgHost+img.ImageData}} alt="" error-src="./res/images/default.png"/>
-                    <!--img ng-src={{img.ImageData}} alt="" />-->
+                    &lt;!&ndash;img ng-src={{img.ImageData}} alt="" />&ndash;&gt;
                 </a>
             </li>
 
@@ -29,8 +29,36 @@
             <a ng-class="{'cur-banner-index':banner_index==$index}" ng-repeat="index in data_banner"
                data-index={{$index}}></a>
         </div>
-    </div>
+    </div>-->
     <!--banner图  end-->
+
+
+    <!--css3-banner图  begin-->
+    <div class="banner banner-css3" banner-css3 banner-length="data_banner.length">
+        <ul>
+           <!-- <li ng-repeat="img in data_banner" ng-style="{opacity:(banner_index==$index)?1:0,transition:'opacity 1s'}">-->
+            <li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">
+                <a href="#" title="">
+                    <img ng-src={{imgHost+img.ImageData}} alt="" error-src="./res/images/default.png"/>
+                </a>
+            </li>
+
+        </ul>
+        <a class="prev" ng-click="prevBanner()"></a>
+        <a class="next" ng-click="nextBanner()"></a>
+
+        <div class="banner-index">
+            <a ng-class="{'cur-banner-index':banner_index==$index}" ng-repeat="index in data_banner"
+               data-index={{$index}} ng-click="showBanner($index)"></a>
+        </div>
+    </div>
+    <!--css3-banner图  end-->
+
+
+
+
+
+
     <!--中部 start-->
     <div class="container">
         <div class="content">

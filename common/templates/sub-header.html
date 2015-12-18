@@ -38,7 +38,7 @@
             <a href="/shoppingCart">购物车</a>
             <span class="icon-arrow-down"></span>
         </div>
-        <div class="hide-cart" ng-if="isLogin||cartAmount>0">
+        <div class="hide-cart" ng-if="isLogin&&cartAmount>0">
             <p class="hide-cart-tips" ng-show="cartTimeRemain>0">
                 <span class="icon-time"></span>
                 <!--<span ng-bind="cart(cart_time_remain/60)+'分'+cart_time_remain%60+'秒'"></span>-->
@@ -49,11 +49,11 @@
                 <li ng-repeat="list in sp_data_cart">
                     <div class="bar-img-goods">
                         <a href="/goodsDetails/{{list.CommodityId}}">
-                            <img ng-src={{imgHost+list.imageUrl}} alt="商品图片" title=""/>
+                            <img ng-src={{imgHost+list.imageUrl+'@70w_70h_100Q.jpg'}} alt="" title=""/>
                         </a>
                     </div>
                     <a href="/goodsDetails/{{list.CommodityId}}">
-                        <h2 ng-bind="list.CommodityName"></h2>
+                        <h2 ng-bind="list.CommodityName" title={{list.CommodityName}}></h2>
                     </a>
 
                     <p>
@@ -93,7 +93,7 @@
 <div class="nav">
     <a  ng-class="{'cur nav1':cur_nav==1,'nav1':cur_nav!=1}" href="/home"  title="首页">首页</a>
     <a ng-class="{'cur nav2':cur_nav==2,'nav2':cur_nav!=2}" href="#" title="正在热卖">正在热卖</a>
-    <a ng-class="{'cur nav3':cur_nav==3,'nav3':cur_nav!=3}" href="/newProduct" title="新品上市">新品上市</a>
+    <a ng-class="{'cur nav3':cur_nav==3,'nav3':cur_nav!=3}" href="/brand" title="新品上市">新品上市</a>
     <a ng-class="{'cur nav4':cur_nav==4,'nav4':cur_nav!=4}" href="/market" title="疯狂秒杀">疯狂秒杀</a>
     <a ng-class="{'cur nav5':cur_nav==5,'nav5':cur_nav!=5}"href="/market" title="最后疯抢">最后疯抢<span class="icon-new"></span></a>
     <a ng-class="{'cur nav6':cur_nav==6,'nav6':cur_nav!=6}" href="/help" title="新手指南">新手指南</a>

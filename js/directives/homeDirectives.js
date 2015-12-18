@@ -1,5 +1,67 @@
 angular.module('LuckyMall')
     /*banner*/
+
+    .directive('bannerCss3',function ($timeout){
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var change_time=3000;//切换时间
+                scope.banner_index = 0;
+                if(attrs.bannerLength) {
+                    scope.$watch(attrs.bannerLength, function (new_val,old_val) {
+                        if(new_val!=old_val) {
+                            start(new_val);
+                        }
+                    });
+                }
+                function start(val) {
+                    var len = val;
+                    run();
+                    function run() {
+                        element.timer=setTimeout(function(){
+                            if(scope.banner_index<len-1) {
+                                $timeout(function(){scope.banner_index++});
+                            }else{
+                                $timeout(function(){scope.banner_index=0});
+                            }
+                            run();
+                        },change_time)
+                    }
+                    scope.prevBanner=function(){
+                        if(scope.banner_index>0) {
+                            scope.banner_index--;
+                        }else{
+                            scope.banner_index = len-1;
+                        }
+                    };
+                    scope.nextBanner=function(){
+                        if(scope.banner_index<len-1) {
+                            scope.banner_index++;
+                        }else{
+                            scope.banner_index = 0;
+                        }
+                    };
+                    scope.showBanner=function(index){
+                        scope.banner_index = index;
+                    };
+
+
+                    element.bind('mouseenter',function(e){
+                        clearTimeout(element.timer);
+                    });
+                    element.bind('mouseleave',function(e){
+                        clearTimeout(element.timer);
+                        start(val);
+                    });
+                }
+            }
+        }
+    })
+
+
+
+
+
     .directive('banner', function () {
         return {
             restrict:'A',
@@ -128,6 +190,7 @@ angular.module('LuckyMall')
                                     $scope.banner_index++;
                                     lock=true;
                                 }, 5);
+
                             });
                         }else{
                             gradualChange($scope.banner_index, 0, function () {

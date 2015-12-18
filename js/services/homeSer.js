@@ -24,7 +24,6 @@
       function createRemainTime(cur_t,end_t){
             var now_time=new Date(cur_t.replace(/-/g,"/"));
             var ent_time=new Date(end_t.replace(/-/g,"/"));
-          console.log(ent_time);
            return (ent_time-now_time)/1000;
       }
        /* 判断专题是否上线*/

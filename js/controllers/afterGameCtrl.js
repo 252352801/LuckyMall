@@ -1,31 +1,34 @@
 angular.module('LuckyMall.controllers')
-    .controller('AfterGameCtrl', function ($scope, CartSer, LoginSer, $state,$cookies, $timeout, MyOrdersSer,
-                                            $rootScope) {
+    .controller('AfterGameCtrl', function ($scope, CartSer, LoginSer, $state,$cookies, $timeout, MyOrdersSer,TokenSer,
+                                           Host,$rootScope) {
+
         var str=location.href.split('?')[1];
         var params={
             auth:str.split('&')[0].split('=')[1],
             type:str.split('&')[1].split('=')[1],
             orderId:str.split('&')[2].split('=')[1]
         };
-        if(!LoginSer.isLogin()){
-            authorization(action);
+
+
+        if(params=='3'){
+            $rootScope.login_target={
+                state:'game',
+                params:Host.game + '?orderid=' +params.orderId + '&from=' + Host.gameOverPage + '&authorization='
+            }
+            $state.go('login');
         }else{
-            $scope.$emit('game-over');
-            $scope.$on('game-over-handled',function(){
-                action();
-            });
+            authorization(action);
         }
         /* 授权*/
         function authorization(callback){
             var auth=params.auth;
             LoginSer.authorization(function(response,status){
                 if(status==1){
-                    $scope.$emit('user-login');
-                    $timeout(function(){
-                        callback();
-                    },500);
-                }else{
                     $scope.$emit('game-over');
+                    $scope.$on('game-over-handled',function(){
+                        callback();
+                    });
+                }else{
                     $scope.$emit("show-login-modal");
                     $rootScope.$on('user-login',function(){
                         $scope.$emit('game-over');
@@ -36,7 +39,6 @@ angular.module('LuckyMall.controllers')
                 }
             },auth);
         }
-
 
 
         /*执行相应动作*/

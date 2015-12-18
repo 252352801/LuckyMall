@@ -47,6 +47,9 @@ angular.module('LuckyMall.services',[])
             isLogin:function(){
                 return isLogin;
             },
+            setLogin:function(new_status){
+                isLogin=new_status;
+            },
             login:function(username,password,callback){
                 $http({
                     method:API.login.method,
@@ -177,6 +180,11 @@ angular.module('LuckyMall.services',[])
             categoryId:null,
             filters:new Array()
         };
+        var data_select_brand={
+            isMultiSelect:false,
+            items:[]
+        };
+        var data_brands=null;
         var data_category=null;
         var filterData=function(data){//筛选出正在销售的商品
             var result=new Array();
@@ -244,8 +252,17 @@ angular.module('LuckyMall.services',[])
             setCategoryData:function(new_data){
                 data_category=initMulti(new_data);
             },
+            getBrandsData:function(){
+                return data_brands;
+            },
+            setBrandsData:function(new_data){
+                 data_brands=new_data;
+            },
             getSelectData:function(){
                 return data_select;
+            },
+            setSelectData:function(new_data){
+                data_select=new_data;
             },
             toggleMultiSelect:function(filter_id){
                 for(var o in data_category.FilterModels){
@@ -256,11 +273,19 @@ angular.module('LuckyMall.services',[])
                     }
                 }
             },
+            /*关闭多选框*/
             closeMultiSelect:function(filter_id){
                 getFilterById(filter_id).isMulti=false;
             },
-            setSelectData:function(new_data){
-                data_select=new_data;
+            /*单选品牌*/
+            selectBrand:function(brand_id){
+                data_select_brand.isMultiSelect=false;
+                data_select_brand.items=[brand_id];
+            },
+            /*多选品牌*/
+            multiSelectBrand:function(brands){
+                data_select_brand.isMultiSelect=true;
+                data_select_brand.items=brands;
             },
             /*增加筛选项*/
             addSelection:function(filter_id,item_id){
@@ -353,6 +378,10 @@ angular.module('LuckyMall.services',[])
                         }
                     }
                 }
+                for (var o in data_select_brand) {
+                   // for()
+                }
+
             },
             /*清除所有已选状态*/
             clearSelect:function(){
@@ -402,12 +431,12 @@ angular.module('LuckyMall.services',[])
                 $http({
                     method:API.search.method,
                     url:API.search.url,
-                    timeout:10000,
+                    timeout:20000,
                     data: post_data
                 }).success(function(response,status,headers,config){
                     params.callback(filterData(response));
                 }).error(function(data,status,headers,config){
-                    alert("请求超时，请检查网络设置");
+                    console.log("请求超时，请检查网络设置");
                 });
             }
         };

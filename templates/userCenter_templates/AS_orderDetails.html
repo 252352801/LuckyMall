@@ -25,16 +25,16 @@
             <h2 class="title">售后商品</h2>
         <div class="box-commodity">
             <div class="top">
-                <img real-src={{imgHost+data_details.Order.Brand.BrandImage}}  temp-src="./res/images/default.png"/>
+                <img real-src={{imgHost+data_details.Order.Brand.BrandImage+'@32w_32h_100Q.png'}}  temp-src="./res/images/default.png"/>
                 <a ng-bind="data_details.Order.Brand.BrandName"></a>
             </div>
             <div class="cont">
                 <div class="cont1">
                     <a class="img-container" href="/goodsDetails/{{data_details.Order.CommodityId}}">
-                        <img ng-src="{{imgHost+data_details.Order.imageUrl}}"/>
+                        <img ng-src="{{imgHost+data_details.Order.imageUrl+'@100w_100h_100Q.jpg'}}"/>
                     </a>
                     <a href="/goodsDetails/{{data_details.Order.CommodityId}}">
-                        <h2 ng-bind="data_details.Order.CommodityName"></h2>
+                        <h2 ng-bind="data_details.Order.CommodityName" title="{{data_details.Order.CommodityName}}"></h2>
                     </a>
                     <small ng-bind="'×'+data_details.Order.Count"></small>
                     <p class="property" ng-repeat="property in data_details.Order.Specifications" ng-bind="property.name+'：'+property.value"></p>

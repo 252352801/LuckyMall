@@ -276,3 +276,7 @@ margin-left: 70px;
     -webkit-transition:-webkit-transform 0.3s;
 }
 /*首页end*/
+
+.banner.banner-css3 li{
+    opacity:1;
+}

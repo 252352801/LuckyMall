@@ -9,22 +9,20 @@ angular.module('LuckyMall')
                 scope.prevImg = function (max_index) {
                     if (scope.index > 0) {
                         scope.index--;
-                    }else{
-                       scope.index=max_index;
+                    } else {
+                        scope.index = max_index;
                     }
                 };
                 scope.nextImg = function (max_index) {
                     if (scope.index < max_index) {
                         scope.index++;
-                    }else{
-                        scope.index=0;
+                    } else {
+                        scope.index = 0;
                     }
                 };
             }
         };
     })
-
-
 
 
     /*加入购物车按钮*/
@@ -81,18 +79,18 @@ angular.module('LuckyMall')
     .directive('magnifier', function ($timeout) {
         return {
             link: function (scope, element, attrs) {
-              //  if(element.attr('ng-src')) {
-                    //scope.$watch(attrs.ngSrc, function (val) {
-                element.bind('mouseover',function(){
+                //  if(element.attr('ng-src')) {
+                //scope.$watch(attrs.ngSrc, function (val) {
+                element.bind('mouseover', function () {
                     magnifier({
-                        elem:document.getElementById(attrs.id),
-                        width:200,
-                        height:200,
-                        src:attrs.magnifierImg
+                        elem: document.getElementById(attrs.id),
+                        width: 250,
+                        height: 250,
+                        src: attrs.magnifierImg
                     });
                 });
 
-                function magnifier(params){
+                function magnifier(params) {
                     var img = params.elem;
                     var s_box;
                     var big_img
@@ -101,7 +99,7 @@ angular.module('LuckyMall')
                         s_box = document['magnifier'];
                         document.body.appendChild(s_box);
 
-                        document['magnifier_img']=document.createElement('img');
+                        document['magnifier_img'] = document.createElement('img');
                         big_img = document['magnifier_img'];
                         big_img.style.position = 'absolute';
                         s_box.appendChild(big_img);
@@ -118,69 +116,75 @@ angular.module('LuckyMall')
                     s_box.style.backgroundClip = 'padding-clip';
                     big_img.src = params.src;
                     /*s_box.style.borderRadius='50%';*/
-                   /* var big_img = document.createElement('img');
+                    /* var big_img = document.createElement('img');
 
-                    big_img.style.position = 'absolute';
-                    big_img.src = params.src;
-                    s_box.appendChild(big_img);*/
-                        /*document.body.appendChild(s_box);*/
-                    s_box.onmousemove=function(e){
-                        var img_poit=getPosition(img);
-                        var mul=big_img.offsetWidth/img.offsetWidth;
-                        var e=e||window.event;
-                        var m_p=getMousePosition(e);
+                     big_img.style.position = 'absolute';
+                     big_img.src = params.src;
+                     s_box.appendChild(big_img);*/
+                    /*document.body.appendChild(s_box);*/
+                    s_box.onmousemove = function (e) {
+                        var img_poit = getPosition(img);
+                        var mul = big_img.offsetWidth / img.offsetWidth;
+                        var e = e || window.event;
+                        var m_p = getMousePosition(e);
                         var m_x = m_p.left;
-                        var m_y= m_p.top;
+                        var m_y = m_p.top;
                         s_box.style.left = m_x - s_box.offsetWidth / 2 + 'px';
-                        s_box.style.top = m_y -s_box.offsetHeight / 2 + 'px';
+                        s_box.style.top = m_y - s_box.offsetHeight / 2 + 'px';
 
-                        big_img.style.left=-(m_x -img_poit.left)*mul+params.width/2+'px';
-                        big_img.style.top=-(m_y - img_poit.top)*mul+params.height/2+'px';
+                        big_img.style.left = -(m_x - img_poit.left) * mul + params.width / 2 + 'px';
+                        big_img.style.top = -(m_y - img_poit.top) * mul + params.height / 2 + 'px';
 
 
-
-                        var p=getMousePosition(e);
-                        if(p.left>img_poit.left&& p.left<img_poit.left+img.offsetWidth&& p.top>img_poit.top&& p.top<img_poit.top+img.offsetHeight){
-                            s_box.style.display='';
-                        }else{
-                            s_box.style.display='none';
+                        var p = getMousePosition(e);
+                        if (p.left > img_poit.left && p.left < img_poit.left + img.offsetWidth && p.top > img_poit.top && p.top < img_poit.top + img.offsetHeight) {
+                            s_box.style.display = '';
+                        } else {
+                            s_box.style.display = 'none';
                         }
                     };
-                    s_box.onmousemout=function(){
-                        s_box.style.display='none';
-                    };
-                    img.onmousemout=function(){
-                        s_box.style.display='none';
-                    };
-                    img.onmousemove=function(e){
 
-                        var img_poit=getPosition(img);
-                        var e=e||window.event;
-                        var m_p=getMousePosition(e);
-                        var m_x = m_p.left;
-                        var m_y= m_p.top;
-                        s_box.style.left = m_x - s_box.offsetWidth / 2 + 'px';
-                        s_box.style.top = m_y -s_box.offsetHeight / 2 + 'px';
-                        s_box.style.display='';
+                    big_img.onload = function () {
+                        img.onmousemove = function (e) {
+                            var img_poit = getPosition(img);
+                            var e = e || window.event;
+                            var m_p = getMousePosition(e);
+                            var m_x = m_p.left;
+                            var m_y = m_p.top;
+                            s_box.style.left = m_x - s_box.offsetWidth / 2 + 'px';
+                            s_box.style.top = m_y - s_box.offsetHeight / 2 + 'px';
+                            s_box.style.display = '';
 
+                        };
                     };
-                    function getPosition(obj){
-                        var topValue= 0,leftValue= 0;
-                        while(obj){
-                            leftValue+= obj.offsetLeft;
-                            topValue+= obj.offsetTop;
-                            obj= obj.offsetParent;
+                    addEvent(document.body,'mouseover',hideSBox);
+                    function hideSBox() {
+                        var e = e || window.event;
+                        var target = e.target || e.srcElement;
+                        if (target != s_box && target != img && target != big_img) {
+                            s_box.style.display = 'none';
+                            removeEvent(document.body,'mouseover',hideSBox);
                         }
-                        return {left:leftValue,top:topValue};
                     }
-                    function getMousePosition(e){
+
+                    function getPosition(obj) {
+                        var topValue = 0, leftValue = 0;
+                        while (obj) {
+                            leftValue += obj.offsetLeft;
+                            topValue += obj.offsetTop;
+                            obj = obj.offsetParent;
+                        }
+                        return {left: leftValue, top: topValue};
+                    }
+
+                    function getMousePosition(e) {
                         var m_x = e.pageX || (e.clientX +
                             (document.documentElement.scrollLeft
                                 || document.body.scrollLeft));
-                        var m_y= e.pageY || (e.clientY +
+                        var m_y = e.pageY || (e.clientY +
                             (document.documentElement.scrollTop
                                 || document.body.scrollTop));
-                        return {left:m_x,top:m_y};
+                        return {left: m_x, top: m_y};
                     }
 
                 }
@@ -190,58 +194,56 @@ angular.module('LuckyMall')
     })
 
     /*数字滑动*/
-    .directive('numberSlider', function ($timeout,$compile) {
+    .directive('numberSlider', function ($timeout, $compile) {
         return {
             link: function (scope, element, attrs) {
-                scope.numbers=['',0,1,2,3,4,5,6,7,8,9];
-                var change_time=1000;//切换的间隔时间
+                scope.numbers = ['', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                var change_time = 1000;//切换的间隔时间
 
 
-
-
-                if(attrs.numberSlider) {
-                    scope.$watch(attrs.numberSlider, function (new_val,old_val) {
-                        if(new_val!=old_val) {
+                if (attrs.numberSlider) {
+                    scope.$watch(attrs.numberSlider, function (new_val, old_val) {
+                        if (new_val != old_val) {
                             start(new_val);
                         }
                     });
                 }
 
-                function start(data_goods){
-                    var price=data_goods.RetailPrice;
-                    var max_disc=data_goods.MaxDiscount;
-                    var min_disc=data_goods.MinDiscount;
-                    scope.cur_disc=min_disc;
-                    var cur_price=(price*min_disc).toFixed(0);
+                function start(data_goods) {
+                    var price = data_goods.RetailPrice;
+                    var max_disc = data_goods.MaxDiscount;
+                    var min_disc = data_goods.MinDiscount;
+                    scope.cur_disc = min_disc;
+                    var cur_price = (price * min_disc).toFixed(0);
                     initPrice(cur_price);
-                    $timeout(function(){
+                    $timeout(function () {
                         run();
-                    },change_time)
-                    function run(){
-                        if(scope.cur_disc==max_disc){
-                            scope.cur_disc=min_disc;
-                        }else {
+                    }, change_time)
+                    function run() {
+                        if (scope.cur_disc == max_disc) {
+                            scope.cur_disc = min_disc;
+                        } else {
                             var rand = Math.random();
-                            scope.cur_disc -= (rand*min_disc)/10+0.01;
+                            scope.cur_disc -= (rand * min_disc) / 10 + 0.01;
                         }
-                        if(scope.cur_disc<max_disc){
-                            scope.cur_disc=max_disc;
+                        if (scope.cur_disc < max_disc) {
+                            scope.cur_disc = max_disc;
                         }
-                        cur_price=(price*scope.cur_disc).toFixed(0);
+                        cur_price = (price * scope.cur_disc).toFixed(0);
                         initPrice(cur_price);
-                        $timeout(function(){
+                        $timeout(function () {
                             run();
-                        },change_time);
+                        }, change_time);
                     }
                 }
 
-                function initPrice(val){
-                    scope.indexes=[0,0,0,0];
-                    var a=scope.indexes.length-1;
-                    var b=(''+val).split('');
-                    var c=b.length-1;
-                    while(c>=0){
-                        scope.indexes[a]=b[c];
+                function initPrice(val) {
+                    scope.indexes = [0, 0, 0, 0];
+                    var a = scope.indexes.length - 1;
+                    var b = ('' + val).split('');
+                    var c = b.length - 1;
+                    while (c >= 0) {
+                        scope.indexes[a] = b[c];
                         c--;
                         a--;
                     }

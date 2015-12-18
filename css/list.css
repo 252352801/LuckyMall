@@ -220,6 +220,13 @@
     padding: 8px 0px;
     position: relative;
 }
+
+.filters ul li.show-a-part{
+    max-height:50px;
+    overflow:hidden;
+}
+
+
 .filters ul li:last-child{
     padding-bottom:15px;
 }
@@ -235,7 +242,7 @@
     font-size:12px;
     vertical-align:top;
     position: absolute;
-    left: 96%;
+    left: 96.7%;
     top: 12px;
 }
 .filters ul .btn-more:hover{
@@ -257,7 +264,7 @@
 }
 .filters ul li p{
     display:inline-block;
-    width:86%;
+    width: 82%;
     line-height:18px;
 }
 .filters ul li a{

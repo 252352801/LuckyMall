@@ -246,6 +246,10 @@ app.constant('API',{
     confirmReceive:{//确认收货
         method:'get',
         url:'api/order/complete/'
+    },
+    getBrandsByCategoryId:{//根据品类ID获取品牌集合 后接品类ID
+        method:'get',
+        url:'api/brand/bycategory/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -355,17 +359,19 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
 
         /*新品*/
-        .state('newProduct', {
-            url: '/newProduct',
+        .state('brand', {
+            url: '/brand',
             views: {
                 '': {
-                    templateUrl: "templates/newProduct.html"
+                    templateUrl: "templates/brand.html",
+                    controller: 'BrandPageCtrl'
                 }
             },
-            title:'新品上市-幸运猫',
+            title:'品牌-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/list.css'
+                    './css/list.css',
+                    './js/controllers/brandPageCtrl.js'
                 ])
             }
         })
@@ -409,7 +415,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './css/confirmOrders.css',
                     './js/controllers/confirmOrdersCtrl.js',
                     './lib/areaPicker/areaPicker.js',
-                    './lib/areaPicker/areaPicker.css'
+                    './lib/areaPicker/areaPicker.css',
+                    './lib/sweetAlert/sweetAlert.css',
+                    './lib/sweetAlert/sweetAlert.min.js'
                 ])
             }
 
@@ -567,7 +575,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/afterGame/:params',
             views: {
                 '': {
-                    templateUrl: "templates/afterGame.html",
+                   /* templateUrl: "templates/afterGame.html",*/
                     controller: 'AfterGameCtrl'
                 }
             },
@@ -888,7 +896,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 break;
             case Host.test:
                 Host.game='http://www.xingyunmao.cn:9004';//测试
-                Host.gameOverPage='www.xingyunmao.cn/afterGame/';
+              //Host.gameOverPage='www.xingyunmao.cn/afterGame/';
+                Host.gameOverPage='127.0.0.1/afterGame/';
                 break;
             case Host.prev:
                 Host.game='http://120.24.225.116:9004';//运营（前）

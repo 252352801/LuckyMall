@@ -56,7 +56,7 @@ angular.module('LuckyMall')
             templateUrl: 'common/templates/header.html',
             replace: true,
             transclude: true,
-            controller: function ($scope, LoginSer, $timeout, $rootScope) {
+            controller: function ($scope, LoginSer, $timeout, $rootScope,$state) {
                 if (document.documentElement.scrollTop) {//每次加载头部时，滚动条Y值为0（回到页面顶端）
                     document.documentElement.scrollTop = 0;
                 } else {
@@ -69,6 +69,13 @@ angular.module('LuckyMall')
                     $timeout(function () {
                         $scope.isLogin = LoginSer.isLogin();
                     }, 5)
+                };
+                $scope.goLogin=function(){
+                    $rootScope.login_target={
+                        state:'home',
+                        params:{}
+                    };
+                    $state.go('login');
                 };
             },
             link: function (scope, element, attrs) {
@@ -771,6 +778,7 @@ angular.module('LuckyMall')
                     });
                 }
                 function start() {
+                    clearInterval(element.timer);
                     element.time = parseInt(attrs.countDown);
                     var inner = element.time >= 60 ? parseInt(element.time / 60) + '分' + element.time % 60 + '秒' : element.time % 60 + '秒';
                     element.html(inner);

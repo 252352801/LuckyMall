@@ -33,9 +33,17 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
               $state.go("home");
               $scope.cartAmount=0;
               $scope.isLogin=false;
-              console.log($scope.isLogin);
           },5);
       });
+      $scope.$on('login-time-out',function(){
+          CartSer.clearData();
+          $timeout(function(){
+              LoginSer.exit();
+              $scope.cartAmount=0;
+              $scope.isLogin = LoginSer.isLogin();
+          });
+      });
+
         /* 监听用户登录*/
       $scope.$on('user-login',function(){
           UserSer.setData(LoginSer.getData());//设置用户数据
@@ -132,6 +140,11 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 }else if(toState.name == 'UCIndex.myOrders'){
                     event.preventDefault();
                     $state.go('login');
+                }else if(toState.name == 'register'){
+                    $rootScope.login_target={
+                        state:'home',
+                        params:{}
+                    };
                 }
             }else{
                 if(fromState.name=='confirmOrder'||fromState.name=='WXPay'){
@@ -219,7 +232,9 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }else{
                             clearInterval($scope.cartTimer);
                             $timeout(function(){
-                                loadCartData();
+                                CartSer.clearData();
+                                $scope.sp_data_cart=new Array();
+                                $scope.cartAmount=0;
                             },3000);
                             $scope.cartTimeRemainFormat='';
                             console.log("购物车已超时");
@@ -323,7 +338,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
 })
 
    /*登录controller*/
-.controller('LoginCtrl',function($scope,LoginSer,$state,$rootScope,$stateParams,$timeout,$cookies){
+.controller('LoginCtrl',function($scope,LoginSer,$state,$rootScope,$stateParams,$timeout,$cookies,TokenSer){
        $scope.username='';
        $scope.password='';
      $scope.keepLogin=false;//是否自动登录
@@ -370,9 +385,14 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }
                         $rootScope.$broadcast("user-login");
                         if($state.current.name=='login'){
-                            $state.go($rootScope.login_target.state,$rootScope.login_target.params);
+                            if($rootScope.login_target.state=='game') {
+                                location.href=$rootScope.login_target.params+TokenSer.getToken();
+                            }else{
+                                $state.go($rootScope.login_target.state, $rootScope.login_target.params);
+                            }
+                        }else {
+                            $scope.$emit('close-login-modal');
                         }
-                        $scope.$emit('close-login-modal');
                         break;
                     case 0:
                         $scope.showTips('用户名/密码错误 ！');

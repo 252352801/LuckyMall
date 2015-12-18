@@ -59,7 +59,7 @@ angular.module('LuckyMall.controllers')
                     if($scope.form_ud_pw.new_pw.$error.required){
                         $scope.input_tips='请输入您的新密码！';
                     }else{
-                        $scope.input_tips='密码必须为8-24位字母与数字或下划线组合！';
+                        $scope.input_tips='密码必须为6-24位字符（区分大小写）！';
                     }
                 }else if($scope.form_ud_pw.new_pw_rep.$invalid){
                     if($scope.form_ud_pw.new_pw_rep.$error.required){

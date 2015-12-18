@@ -112,7 +112,6 @@ angular.module('LuckyMall.controllers')
 
         /*赢折扣*/
         $scope.playForDiscount = function (goods_id) {
-
             if (LoginSer.isLogin()) {
                 if (!isFinishSelect()) {//如果没有完成选择
                     $timeout(function () {
@@ -155,7 +154,7 @@ angular.module('LuckyMall.controllers')
                     }
                 });
             } else {
-                $scope.$emit("show-login-modal");
+                handleLoginTimeOut();
             }
         };
 
@@ -228,8 +227,7 @@ angular.module('LuckyMall.controllers')
                     handleErrs(response.Code);
 
                 }else if (status == 2) {
-                    $scope.$emit("exit");
-                    $scope.$emit("show-login-modal");
+                    handleLoginTimeOut();
                 }
             });
         };
@@ -346,7 +344,12 @@ angular.module('LuckyMall.controllers')
             $scope.finishSelect = false;
         }
 
-
+        /*处理登陆超时*/
+        function handleLoginTimeOut(){
+            $scope.isLogin=false;
+            $scope.$emit('login-time-out');
+            $scope.$emit("show-login-modal");
+        }
         /*处理下单错误*/
         function handleErrs(err_code){
             if (err_code == '0X50') {

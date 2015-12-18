@@ -1,9 +1,20 @@
 angular.module('LuckyMall.controllers')
     .controller('ListCtrl', function ($scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state) {
+        /*执行流程：
+         *1.从url中取参数，存到$scope.params；------initParams()
+         *2.获取品类、品牌数据,重置FilterSer里相关数据的状态
+         *3.将品类、品牌数据存到FilterSer,并根据数据设置勾选状态FilterSer.select()  -------initData()
+         *4.从$scope.params中获取请求参数，执行搜索操作------------------------search()
+         *5.单选或多选时，根据FilterSer中数据构建URL，重新进入该页面 -------goListPage();
+        */
+
+
         $scope.cate_id=$stateParams.category.split('=')[1];
         $scope.price_order=false;//价格排序方式  false:从小到大   true:从大到小
+        $scope.showAllBrands=false;//显示所有品牌
         var pageSize = 16;//每页大小（个数）
         initParams();
+        loadBrands();//获取品牌集合
         function initParams(){
             var collect_ft = new Array();
             if($stateParams.filters) {
@@ -31,6 +42,17 @@ angular.module('LuckyMall.controllers')
                 }
             };
         }
+
+        /*获取品牌集合*/
+        function loadBrands(){
+            ListSer.requestBrandsData($scope.cate_id,function(response,status){
+                if(status==1){
+                    console.log(response);
+                    $scope.data_brands=response;
+                }
+            });
+        }
+
       console.log('已选筛选项：'+$scope.params.getItems());
         if (CategorySer.getData()== null) {
             /*如果分类数据为空则请求数据*/
@@ -42,6 +64,17 @@ angular.module('LuckyMall.controllers')
             FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
             initData();
         }
+
+       /* 显示/隐藏更多品牌*/
+        $scope.toggleShowBrands=function(){
+            $scope.showAllBrands=!$scope.showAllBrands;
+        };
+       /* 选择品牌*/
+        $scope.selectBrand = function (brand_id) {
+            FilterSer.selectBrand(brand_id);
+           // goListPage();
+        };
+
         /*选择筛选项*/
         $scope.select = function (filter_id,item_id) {
             FilterSer.addSelection(filter_id,item_id);

@@ -9,6 +9,7 @@ angular.module('LuckyMall.controllers')
         $scope.inputTips='';
         $scope.value_btn_save='保存';
         $scope.polling=false;
+        $scope.tips_unPay_showTime=5;
         loadConfirmOrderData();//加载本页必须的数据
         /*支付方式切换*/
         $scope.changePayType=function(new_type){

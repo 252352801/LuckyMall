@@ -19,7 +19,7 @@
     <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==0">
         <div class="order-list-top">
            <!-- <img src="./res/test/test_brand6.jpg" alt=""/>-->
-            <img real-src={{imgHost+list.Brand.BrandImage}}  temp-src="./res/images/default.png" />
+            <img real-src={{imgHost+list.Brand.BrandImage+'@32w_32h_100Q.png'}}  temp-src="./res/images/default.png" />
             <p class="seller-name"><a href="/login" title="" ng-bind="list.Brand.BrandName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
@@ -31,11 +31,11 @@
             <div class="cont1 pull-left">
                 <div class="cont-img">
                     <a href="/goodsDetails/{{list.CommodityId}}">
-                        <img real-src={{imgHost+list.imageUrl}} temp-src="./res/images/default.png" alt=""/>
+                        <img real-src={{imgHost+list.imageUrl+'@100w_100h_100Q.jpg'}} temp-src="./res/images/default.png" alt=""/>
                     </a>
                 </div>
                 <a class="goods-name" href="/goodsDetails/{{list.CommodityId}}">
-                    <h2 ng-bind="list.CommodityName"></h2>
+                    <h2 ng-bind="list.CommodityName" title="{{list.CommodityName}}"></h2>
                     <small ng-bind="'×'+list.Count"></small>
                 </a>
 

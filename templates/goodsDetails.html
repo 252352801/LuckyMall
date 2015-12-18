@@ -20,7 +20,7 @@
                    <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
                     <ul ng-style="{left:-index*520+'px',width:data_goods.SmallImages.length*520+'px'}">
                         <li ng-repeat="Img in data_goods.SmallImages">
-                            <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img}} />
+                            <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@520w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img+'@1000w_1000h_100Q.png'}} />
                         </li>
                     </ul>
                 </div>
