@@ -21,35 +21,48 @@ angular.module('LuckyMall.controllers')
                     };
                     $scope.value_btn = "正在处理...";
                     EditPasswordSer.updatePassword(param, function (response, status) {
+                        var resp=angular.fromJson(response);
+
                         if (status == 1) {
-                           /* $timeout(function () {
-                                $scope.show_update_success = true;
-                                $scope.return_time = 5;
-                                countDownReturn();
-                                $scope.value_btn = "确定";
-                            });*/
+                            switch (resp.code) {
+                                case '0X12':
+                                    swal({
+                                        title: "您输入的旧密码有误!",
+                                        type: "error",
+                                        confirmButtonText: "确定"
+                                    });
+                                    break;
+                                case '0X00' :
+                                    swal({
+                                        title: "修改密码成功!",
+                                        text: '请您重新登陆！',
+                                        type: "success",
+                                        confirmButtonText: "确定"
+                                    });
+                                    $rootScope.login_target={
+                                        state:'UCIndex.safeAccount',
+                                        params:{}
+                                    };
+                                    $state.go('login');
+                                    break;
+                            }
+                        } else if(status==0){
                             swal({
-                                title: "修改密码成功!",
-                                text: '请您重新登陆！',
-                                type: "success",
-                                confirmButtonText: "确定"
-                            });
-                            $rootScope.login_target={
-                              state:'UCIndex.safeAccount',
-                              params:{}
-                            };
-                            $state.go('login');
-                        } else {
-                            swal({
-                                title: "修改密码失败!",
-                                text: '请确认您输入的旧密码是否正确！',
+                                title: "请求失败，请重试!",
                                 type: "error",
                                 confirmButtonText: "确定"
                             });
                             $timeout(function () {
                                 $scope.value_btn = "确定";
                             });
+                        }else if(status==-1){
+                            swal({
+                                title: "网络错误!",
+                                type: "error",
+                                confirmButtonText: "确定"
+                            });
                         }
+                        $scope.value_btn = "确定";
                     });
                 }
             }else{

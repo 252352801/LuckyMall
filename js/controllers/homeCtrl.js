@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('HomeCtrl',function($scope,HomeSer,CategorySer){
+ .controller('HomeCtrl',function($scope,HomeSer){
     $scope.loadingToday=true;
      HomeSer.requestBannerData(function(response,status){
          if(status==1){

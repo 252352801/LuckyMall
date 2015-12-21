@@ -1,4 +1,4 @@
-﻿/*==============
+/*==============
  *商品详情begin
 ===============*/
 .G-details{
@@ -187,11 +187,30 @@
     max-height:36px;
     line-height:18px;
     overflow:hidden;
+    margin-bottom:10px;
+}
+.pro-info .bar-time{
+    display:inline-block;
+    background:#f1f1f1;
+    padding:3px 10px;
+    overflow:hidden;
+}
+.pro-info .bar-time p:before{
+    content: '';
+    width:16px;
+    height:16px;
+    background:url(../res/icon/icon_time_s.png) no-repeat;
+    margin-right:5px;
+    position: relative;
+    top:1px;
+    float:left;
+}
+.pro-info .bar-time p{
+    float:left;
 }
 .pro-price{
-    margin-top:24px;
     padding:24px 0px;
-    border-top:1px solid  #eee;
+    padding-top:15px;
     position:relative;
 
 }
@@ -243,7 +262,7 @@
     margin-left:12px;
     margin-top:10px;
     display:inline-block;
-    min-width:137px;
+    min-width:110px;
     height:36px;
     padding:0px 10px;
     line-height:36px;
@@ -313,7 +332,7 @@
 .bar-amount input{
     border-left:none;
     border-right:none;
-    padding:0px 24px;
+    padding:0px 10px;
     margin:0px;
     outline:none;
     font-size:16px;
@@ -365,6 +384,9 @@
 .pro-info .bar-btn input.btn-add:hover{
     color:#ff3300;
     border-color:#ff3300;
+}
+.pro-info .bar-btn .btn-playGame.disabled,.pro-info .bar-btn .btn-buy.disabled,.pro-info .bar-btn .btn-add.disabled{
+    background:#ccc !important;
 }
 .box-proIntro{
     margin-top:20px;
@@ -549,14 +571,14 @@
 }
 .number-slider .prices-slider li .item-slider{
     position:relative;
-    top:0px;
+    top:-1900%;
     font-family:SimHei;
-    transition:top 0.3s;
+ /*   transition:top 0.3s;
     -webkit-transition:top 0.3s;
     -moz-transition:top 0.3s;
     -o-transition:top 0.3s;
     -ms-transition:top 0.3s;
-    -ms-transition:top 0.3s;
+    -ms-transition:top 0.3s;*/
 }
 .number-slider label{
     float:left;
@@ -575,4 +597,97 @@
     text-align:center;
     position:relative;
     top:26px;
+    left:5px;
 }
+.number-slider .discount-slider:before{
+    content:'';
+    border:9px solid transparent;
+    border-right-color:#EDAB3A;
+    position:absolute;
+    left:-18px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*折扣卡begin*/
+
+.discount{
+    animation:discount 2s forwards;
+    -webkit-animation:discount 2s forwards;
+    -moz-animation:discount 2s forwards;
+    -o-animation:discount 2s forwards;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    position:absolute;
+    left:150px;
+    top:0px;
+    width:86px;
+    height:38px;
+}
+.discount-bg{
+    background:#ff6700;
+    background-size:100%;
+    width:86px;
+    height:38px;
+    font-family:'黑体';
+    font-size:12px;
+    color:#FFF;
+    line-height:38px;
+    text-align:center;
+
+}
+.discount-bg span{
+    font-size:18px;
+    line-height:38px;}
+
+
+
+@keyframes discount{
+    0%{
+        transform:scale(0.2);
+        -webkit-transform:scale(0.2);
+        -ms-transform:scale(0.2);
+        -moz-transform:scale(0.2);
+        -o-transform:scale(0.2);
+        opacity:0;
+        top:40px;
+    }
+    60%{
+        transform:scale(0.8) translate(0px,20px);
+        -webkit-transform:scale(0.8) translate(0px,20px);
+        -ms-transform:scale(0.8) translate(0px,20px);
+        -moz-transform:scale(0.8) translate(0px,20px);
+        -o-transform:scale(0.8) translate(0px,20px);
+        opacity:1;top:20px;}
+    100%{
+        transform:scale(0) translate(0px,40px);
+        -webkit-transform:scale(0) translate(0px,40px);
+        -ms-transform:scale(0) translate(0px,40px);
+        -moz-transform:scale(0) translate(0px,40px);
+        -o-transform:scale(0) translate(0px,40px);
+        opacity:0;
+        top:60px;
+    }
+}
+/*折扣卡end*/

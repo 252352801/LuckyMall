@@ -44,7 +44,7 @@
                 </div>
                 <div class="cont3">
                     <div class="inner-cont">
-                        <p class="disc-cost" ng-bind="'￥'+(data_details.Order.UnitPrice*data_details.Order.Count*data_details.Order.DiscountVal).toFixed(2)"></p>
+                        <p class="disc-cost" ng-bind="'￥'+MathCeilPrice(data_details.Order.UnitPrice*data_details.Order.Count*data_details.Order.DiscountVal)"></p>
 
                         <p ng-bind="'（含定金：￥'+data_details.Order.EarnestMoney+'）'" ng-if="data_details.Order.EarnestMoney>0"></p>
 
@@ -137,7 +137,7 @@
         </p>
         <p ng-if="data_details.RepairType==2">
             <label>应退金额：</label>
-            <span ng-bind="(data_details.Order.UnitPrice*data_details.Count*data_details.Order.DiscountVal).toFixed(2)"></span>
+            <span ng-bind="MathCeilPrice(data_details.Order.UnitPrice*data_details.Count*data_details.Order.DiscountVal)"></span>
         </p>
     </div>
 

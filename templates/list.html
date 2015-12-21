@@ -9,12 +9,23 @@
     <div class="filters">
         <div class="ctr-choice">
             <div class="page-location">
-                <a>全部商品</a>
-                <a class="category-name" ng-bind="data_filter.CategoryName" class="cur"
-                   href="/list/{{'category='+cate_id}}/"></a>
+                <a href="/home">全部商品</a>
+                <a class="category-name" ng-bind="cateName" class="cur"
+                   href="/list/{{'category='+cate_id}}/" ng-show="showLoading==false"></a>
             </div>
+            <p class="choices" ng-if="hasSelectedBrand()&&!data_brands.isMultiSelected"> <!--品牌已单选选项-->
+                <a ng-repeat="brand in data_brands|filter:{isSelected:true}">
+                    <span ng-bind="'品牌：'+brand.BrandName" title="{{brand.BrandName}}"></span>
+                    <b class="icon-delete" title="删除选项" ng-click="resetBrands()">×</b>
+                </a>
+            </p>
+            <p class="choices" ng-if="data_brands.isMultiSelected"> <!--品牌多选选项-->
+                <a ng-bind="formatBrandMultiChoice()" title={{formatBrandMultiChoice()}}></a>
+                <b class="icon-delete" title="删除选项" ng-click="resetBrands()">×</b>
+            </p>
+
             <p class="choices" ng-repeat="choice in data_filter.FilterModels"
-               ng-if="hasSelectedItem(choice.FilterItemModels)&&!choice.isMultiSelected">
+               ng-if="hasSelectedItem(choice.FilterItemModels)&&!choice.isMultiSelected"> <!--筛选项已单选选项-->
                 <a ng-repeat="item in choice.FilterItemModels|filter:{isSelected:true}">
                     <span ng-bind="choice.FilterName+'：'+item.ItemValue" title="{{choice.FilterName+'：'+item.ItemValue}}"></span>
                     <b class="icon-delete" title="删除选项" ng-click="removeChoice(choice.Id)">×</b>
@@ -22,29 +33,67 @@
             </p>
 
             <p class="choices" ng-repeat="mul_choice in data_filter.FilterModels"
-               ng-if="mul_choice.isMultiSelected">
+               ng-if="mul_choice.isMultiSelected"> <!--筛选项已多选选项-->
                 <a ng-bind="formatMultiChoice(mul_choice)" title={{formatMultiChoice(mul_choice)}}></a>
                 <b class="icon-delete" title="删除选项" ng-click="removeChoice(mul_choice.Id)">×</b>
             </p>
         </div>
         <ul>
-            <li ng-class="{'show-all':showAllBrands,'show-a-part':!showAllBrands}">
-                <span ng-bind="'品牌：'"></span>
-                <p ng-show="!filter.isMulti">
-                    <a ng-class="{'cur':!hasSelectedItem(filter.FilterItemModels)}" ng-click="resetFilter(filter.Id)">全部</a>
-                    <a ng-repeat="brand in data_brands" ng-bind="brand.BrandName">
+
+
+            <li ng-if="hasSubCate"> <!--子分类-->
+                <span ng-bind="category.CategoryName+'分类'"></span>
+                <p >
+                    <a ng-class="{'cur':!hasSelectedSubCate()}" ng-click="selectAllSubCategory()">全部</a>
+                    <a ng-class="{'cur':sub_cate.isSelected==true}" ng-repeat="sub_cate in category.SubCategories" ng-bind="sub_cate.CategoryName" ng-click="selectSubCate(sub_cate.Id)">
                     </a>
                 </p>
-                <button class="btn-more" ng-click="toggleShowBrands()" ng-bind="(showAllBrands)?'收起':'全部'"></button>
             </li>
+
+
+
+
+
+
+
+
+
+
+
+            <li ng-if="!data_brands.isMultiSelected&&data_brands.length>0">
+                <span ng-bind="'品牌：'"></span>
+                <p ng-show="!showBMSBox" ng-class="{'show-all':showAllBrands,'show-a-part':!showAllBrands}">
+                    <a ng-class="{'cur':!hasSelectedBrand()}" ng-click="resetBrands()">全部</a>
+                    <a ng-class="{'cur':brand.isSelected==true}" ng-repeat="brand in data_brands" ng-bind="brand.BrandName" ng-click="selectBrand(brand.Id)">
+                    </a>
+                </p>
+                <button class="btn-multi" ng-click="toggleBrandsMultiSelect()" ng-bind="(showBMSBox)?'收起':'多选'"></button>
+                    <button class="btn-more" ng-show="!showBMSBox" ng-click="toggleShowBrands()" ng-bind="(showAllBrands)?'收起':'更多'"></button>
+                 <div class="box-multi-select" ng-show="showBMSBox"> <!--品牌多选框-->
+                    <a ng-class="brand.isMultiSelected?'my-checkbox checked':'my-checkbox'" ng-repeat="brand in data_brands" ng-click="multiSelectBrand(brand.Id)">
+                        <i class="checkbox"></i>
+                        <label class="label-checkbox" ng-class="{'cur':brand.isSelected==true}" ng-bind="brand.BrandName" title={{brand.BrandName}}></label>
+                    </a>
+                    <p class="bar-buttons">
+                        <button ng-click="multiBrandSearch()">确定</button>
+                        <button ng-click="showBMSBox=false">取消</button>
+                    </p>
+                </div>    
+            </li>
+       
+            
+            
+            
+            
             <li ng-repeat="filter in data_filter.FilterModels" ng-if="!filter.isMultiSelected">
                 <span ng-bind="filter.FilterName+'：'"></span>
-                <p ng-show="!filter.isMulti">
+                <p ng-show="!filter.isMulti" ng-class="{'show-a-part-items':!filter.showMore}">
                     <a ng-class="{'cur':!hasSelectedItem(filter.FilterItemModels)}" ng-click="resetFilter(filter.Id)">全部</a>
                     <a  ng-class="{'cur':item.isSelected==true}" ng-repeat="item in filter.FilterItemModels" ng-bind="item.ItemValue" title={{item.ItemValue}} ng-click="select(filter.Id,item.Id)">
                     </a>
                 </p>
-                <button class="btn-more" ng-click="toggleMultiSelect(filter.Id)" ng-bind="(filter.isMulti)?'收起':'多选'"></button>
+                <button class="btn-multi" ng-click="toggleMultiSelect(filter.Id)" ng-bind="(filter.isMulti)?'收起':'多选'"></button>
+                <button class="btn-more" ng-show="!filter.isMulti" ng-click="filter.showMore=!filter.showMore" ng-bind="(filter.showMore)?'收起':'更多'"></button>
                 <div class="box-multi-select" ng-show="filter.isMulti">
                     <a ng-class="sub_c.isMultiSelected?'my-checkbox checked':'my-checkbox'" ng-repeat="sub_c in filter.FilterItemModels" ng-click="multiSelect(filter.Id,sub_c.Id)">
                         <i class="checkbox"></i>
@@ -58,7 +107,7 @@
             </li>
         </ul>
     </div>
-    <div class="pro-list-top">
+    <div class="pro-list-top" ng-show="showLoading==false">
         <h3 class="color-org">新品</h3>
         <span class="label-condition" ng-click="searchWidthPrice()">价格</span>
         <span  ng-class="{'icon-db-arrow up cur':!price_order,'icon-db-arrow up':price_order}" ng-click="searchWidthPrice(0)"></span>
@@ -72,7 +121,7 @@
         </div>
     </div>
     <ul class="pro-list-cont">
-        <li ng-repeat="list in data_list|orderBy:'maxPrice':price_order" >
+        <li ng-repeat="list in data_list" >
             <a class="a-goodsImg" href="/goodsDetails/{{list.Id}}" target="_blank" title="">
                 <img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>
             </a>
@@ -95,7 +144,7 @@
     <div class="tips-no-pro" ng-if="data_list.length<=0">
         暂时没有符合条件的商品喔！
     </div>
-    <div class="page-index">
+    <div class="page-index" ng-show="showLoading==false">
         <div class="prev" ng-click="prevPage()" btn-page-up><</div>
         <div class="indexes">
             <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-page-up></span>

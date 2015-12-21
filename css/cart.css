@@ -54,7 +54,7 @@
      margin-left:190px;
  }
 .cart-th .th5{
-    margin-left:150px;
+    margin-left: 165px;
 }
 .cart-list{
     margin-top:15px;
@@ -77,17 +77,18 @@
     float:left;
 }
 .cart-list-top .a-forDiscount{
-    margin-right:46px;
-    margin-top:11px;
-    width:58px;
-    height:28px;
-    line-height:28px;
-    border:1px solid #499946;
-    border-radius:3px;
-    color:#499946;
-    text-align:center;
+    margin-right: 38px;
+    margin-top: 7px;
+    width: 80px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 3px;
+    color: #fff;
+    text-align: center;
     float: right;
-    cursor:pointer;
+    cursor: pointer;
+    background: #499946;
+    font-size: 16px;
 }
 .cart-list-cont{
     min-height:120px;

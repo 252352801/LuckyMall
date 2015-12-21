@@ -207,7 +207,7 @@
                 <p><span class="cost" ng-bind="'￥'+total_cost"></span>元</p>
             </div>
             <div>
-                <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>
+                <button class="btn-submitOrder" ng-click="submitOrder()" ng-bind="btn_val_purchase"></button>
             </div>
         </div>
 
@@ -233,7 +233,7 @@
 
         <p>
             <label>地址</label>
-            <input class="input-area" name="area"  id="CO_area" readonly area-picker  area-picker-finish="areaInputFinish" area-picker-style="position:fixed" ng-model="modal_area" placeholder="请选择区域" required/>
+            <input class="input-area" name="area"  id="CO_area" readonly area-picker  area-picker-finish="areaInputFinish" area-picker-position="fixed" ng-model="modal_area" placeholder="请选择区域" required/>
             <span class="symbol">*</span>
         </p>
 

@@ -25,6 +25,18 @@
                     data=[];
             }
         },
+        sortByPriceUp:function(){ //从小到大
+            if(data){
+                data.sort(function(a,b){return a.maxPrice- b.maxPrice;});
+                console.log(data);
+            }
+        },
+        sortByPriceDown:function(){ //从大到小
+            if(data){
+               data.sort(function(a,b){return b.maxPrice- a.maxPrice;});
+                console.log(data);
+            }
+        },
         requestBrandsData:function(cate_id,callback){
             $http({
                 method:API.getBrandsByCategoryId.method,
@@ -33,8 +45,12 @@
                 if(response){
                     brands=response;
                     callback(response,1);
+                }else{
+                    callback('无法获取品牌数据/品牌数据为空',0);
                 }
-            })
+            }).error(function(){
+                callback('网络错误',-1);
+            });
         }
 
 	};

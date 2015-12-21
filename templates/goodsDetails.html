@@ -8,8 +8,8 @@
     <div class="content">
         <div class="page-location" ng-show="data_categoryName">
             <a href="/home">幸运猫</a>
-            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}/"></a>
-            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
+            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}/0/"></a>
+            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/0/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
             <div class="tag-free-played" ng-if="data_goods.IsCanFree&&isFreePlayed">
@@ -36,32 +36,41 @@
                     <a class="next txtUnSelect" ng-click="nextImg(data_goods.SmallImages.length-1)"></a>
                 </div>
             </div>
-            <form class="pro-info" ng-show="loaded==true">
+            <form class="pro-info" ng-show="loaded">
                 <h1 ng-bind="data_goods.CommodityName"></h1>
                 <small ng-bind="data_goods.Description"></small>
+                <div class="bar-time">
+                    <p class="remain-time" ng-if="data_goods.status==1">距下架时间：<span time-down="data_goods.remainTime"></span></p>
+                    <p ng-if="data_goods.status==0">未到开售时间</p>
+                    <p ng-if="data_goods.status==-1">已下架</p>
+                </div>
                 <div class="pro-price">
 
                     <div class="box-prices">
                         <div class="item-price item-price1 number-slider" number-slider="data_goods">
                             <label>￥</label>
                             <ul class="prices-slider">
-                                <li ng-if="indexes.length>=0">
-                                    <div class="item-slider" ng-style={top:-indexes[0]*45+'px'}>
+                                <li>
+                                    <div class="item-slider">
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
                                 </li>
-                                <li ng-if="indexes.length>=0">
-                                    <div  class="item-slider" ng-style={top:-indexes[1]*45+'px'}>
+                                <li >
+                                    <div  class="item-slider">
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
                                 </li>
-                                <li ng-if="indexes.length>=0">
-                                    <div  class="item-slider" ng-style={top:-indexes[2]*45+'px'}>
+                                <li >
+                                    <div  class="item-slider" >
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
                                 </li>
-                                <li ng-if="indexes.length>=0">
-                                    <div class="item-slider"  ng-style={top:-indexes[3]*45+'px'}>
+                                <li >
+                                    <div class="item-slider">
+                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
                                 </li>
@@ -70,6 +79,11 @@
                                 <ul>
                                     <li ng-bind="(cur_disc*10).toFixed(1)+'折'"></li>
                                 </ul>
+                            </div>
+                            <div class="discount" ng-show="new_disc">
+                                <div class="discount-bg">
+                                    <span ng-bind="(new_disc*10).toFixed(1)+'折卡'">1</span>
+                                </div>
                             </div>
                         </div>
                         <div class="item-price item-price2 price-interval">
@@ -108,9 +122,9 @@
                     </div>
                 </div>
                 <div class="bar-btn">
-                    <input class="btn-buy" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" />
-                    <a class="btn-playGame" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)">试玩赢折扣</a>
-                    <input class="btn-add" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart/>
+                    <input ng-class="{'btn-buy':data_goods.status==1,'btn-buy disabled':data_goods.status!=1}" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" ng-disabled="data_goods.status!=1"/>
+                    <input ng-class="{'btn-playGame':data_goods.status==1,'btn-playGame disabled':data_goods.status!=1}" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)" ng-value="btn_value.freePlay" ng-disabled="data_goods.status!=1"/>
+                    <input class="{'btn-add':data_goods.status==1,'btn-add disabled':data_goods.status!=1}" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart ng-disabled="data_goods.status!=1"/>
                 </div>
             </form>
         </div>

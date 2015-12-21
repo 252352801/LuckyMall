@@ -59,6 +59,10 @@ app.constant('API',{
         method:'post',
         url: 'api/commodity/search'
     },
+    searchOnline:{//根据搜索条件搜索在线商品
+        method:'post',
+        url: 'api/commodity/searchonline'
+    },
     getVerifyCode:{//获取手机验证码 后接手机号码
         method:'post',
         url: 'api/user/verificationcode'
@@ -143,13 +147,9 @@ app.constant('API',{
         method:'get',
         url:'api/user/sctime/'
     },
-    purchaseFromShoppingCart: { //确认订单(购物车)
+    purchase: { //确认订单(购物车)
         method:'post',
-        url:'api/order/purchase/0'
-    },
-    purchaseFromUnPayOrders: { //确认订单(待付款订单)
-        method:'post',
-        url: 'api/order/purchase/1'
+        url:'api/order/purchase/'
     },
     payForEarnest: { //支付定金获取能量 后接订单ID
         method:'post',
@@ -250,6 +250,10 @@ app.constant('API',{
     getBrandsByCategoryId:{//根据品类ID获取品牌集合 后接品类ID
         method:'get',
         url:'api/brand/bycategory/'
+    },
+    resetPassword:{ //重新设置密码（找回密码）
+        method:'post',
+        url:'api/user/resetpassword'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -280,15 +284,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './css/index.css',
                     './js/controllers/homeCtrl.js',
                     './js/services/homeSer.js',
-                    './js/directives/homeDirectives.js',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './js/directives/homeDirectives.js'
                 ])
             }
         })
         /*列表页*/
         .state('list', {
-            url: '/list/:category/:filters',
+            url: '/list/:category/:brands/:filters',
             views: {
                 '': {
                     templateUrl: "templates/list.html",
@@ -316,6 +318,25 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             },
             title:'登陆-幸运猫'
         })
+        /*找回密码*/
+        .state('lostPassword', {
+            url: '/lostPassword',
+            views: {
+                '': {
+                    templateUrl: "templates/lostPassword.html",
+                    controller: 'LostPasswordCtrl'
+                }
+            },
+            title:'找回密码-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './js/controllers/lostPasswordCtrl.js',
+                    './js/services/lostPasswordSer.js',
+                    './js/services/registerSer.js',
+                ])
+            }
+        })
+
         /*注册*/
         .state('register', {
             url: '/register',
@@ -330,9 +351,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './js/controllers/registerCtrl.js',
                     './js/services/registerSer.js',
-                    './css/modal-protocol.css',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './css/modal-protocol.css'
                 ])
             }
         })
@@ -350,9 +369,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './css/cart.css',
-                    './js/controllers/cartCtrl.js',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './js/controllers/cartCtrl.js'
                 ])
             }
         })
@@ -360,7 +377,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         /*新品*/
         .state('brand', {
-            url: '/brand',
+            url: '/brand/:brand_id',
             views: {
                 '': {
                     templateUrl: "templates/brand.html",
@@ -371,7 +388,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './css/list.css',
-                    './js/controllers/brandPageCtrl.js'
+                    './js/controllers/brandPageCtrl.js',
+                    './js/services/brandSer.js'
                 ])
             }
         })
@@ -391,9 +409,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './css/goodsDetails.css',
                     './js/controllers/goodsDetailsCtrl.js',
                     './js/services/goodsDetailsSer.js',
-                    './js/directives/goodsDetailsDirectives.js',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './js/directives/goodsDetailsDirectives.js'
                 ])
             }
 
@@ -415,9 +431,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './css/confirmOrders.css',
                     './js/controllers/confirmOrdersCtrl.js',
                     './lib/areaPicker/areaPicker.js',
-                    './lib/areaPicker/areaPicker.css',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './lib/areaPicker/areaPicker.css'
                 ])
             }
 
@@ -455,9 +469,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './css/confirmOrders.css',
-                    './js/controllers/payForEarnestCtrl.js',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js'
+                    './js/controllers/payForEarnestCtrl.js'
                 ])
             }
 
@@ -490,7 +502,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'关于我们-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support_css.css'
+                    './css/support.css'
                 ])
             }
 
@@ -506,7 +518,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'联系我们-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support_css.css',
+                    './css/support.css',
                     './lib/BDMap/BaiDuMap.js',
                     './lib/BDMap/BaiDuMap.css',
                     './js/directives/contactDirectives.js'
@@ -548,7 +560,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             }
 
         })
-
+/*--------------------------------------support--------------------------------------------------*/
         /*support*/
         .state('support', {
             url: '/support',
@@ -567,8 +579,145 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
         })
-
-
+        .state('sp_flow', {
+            url: '/sp_flow',
+            views: {
+                '': {
+                    templateUrl: "templates/support_templates/sp_flow.html"
+                }
+            },
+            title:'购物流程-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './css/userCenter_css/userCenter.css',
+                    './css/support_css/support_css.css'
+                ])
+            }
+        })
+        .state('business', {
+            url: '/business',
+            views: {
+                '': {
+                    templateUrl: "templates/support_templates/business.html"
+                }
+            },
+            title:'招商加盟-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './css/userCenter_css/userCenter.css',
+                    './css/support_css/support_css.css'
+                ])
+            }
+        })
+        .state('support.qa', {
+            url: '/qa',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/qa.html"
+                }
+            },
+            title:'常见问题-幸运猫'
+        })
+        .state('support.protocol', {
+            url: '/protocol',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/protocol.html"
+                }
+            },
+            title:'用户协议-幸运猫'
+        })
+        .state('support.payWay', {
+            url: '/payWay',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/payWay.html"
+                }
+            },
+            title:'支付方式-幸运猫'
+        })
+        .state('support.assure_pro', {
+            url: '/assure_pro',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/assure_pro.html"
+                }
+            },
+            title:'正品保障-幸运猫'
+        })
+        .state('support.assure_inv', {
+            url: '/assure_inv',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/assure_inv.html"
+                }
+            },
+            title:'发票保障-幸运猫'
+        })
+        .state('support.ol_svc', {
+            url: '/ol_svc',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/ol_svc.html"
+                }
+            },
+            title:'在线客服-幸运猫'
+        })
+        .state('support.logistics_cost', {
+            url: '/logistics_cost',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/logistics_cost.html"
+                }
+            },
+            title:'配送费用-幸运猫'
+        })
+        .state('support.logistics_exp', {
+            url: '/logistics_exp',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/logistics_exp.html"
+                }
+            },
+            title:'配送说明-幸运猫'
+        })
+        .state('support.receive_exp', {
+            url: '/receive_exp',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/receive_exp.html"
+                }
+            },
+            title:'验货说明-幸运猫'
+        })
+        .state('support.refund_flow', {
+            url: '/refund_flow',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/refund_flow.html"
+                }
+            },
+            title:'退货流程-幸运猫'
+        })
+        .state('support.refund_rule', {
+            url: '/refund_rule',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/refund_rule.html"
+                }
+            },
+            title:'退货政策-幸运猫'
+        })
+        .state('support.QT', {
+            url: '/QT',
+            views: {
+                'support_content': {
+                    templateUrl: "templates/support_templates/QT.html"
+                }
+            },
+            title:'七天无理由退换-幸运猫'
+        })
+ /*--------------------------------------game--------------------------------------------------*/
 
         /*游戏返回*/
         .state('afterGame', {
@@ -604,8 +753,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/userCenter_js/controllers/userCenterCtrl.js',
                     './js/userCenter_js/directives/headerImgEditDirectives.js',
                     './js/userCenter_js/services/userSer.js',
-                    './lib/sweetAlert/sweetAlert.css',
-                    './lib/sweetAlert/sweetAlert.min.js',
                     'http://open.web.meitu.com/sources/xiuxiu.js'
 
                 ])
@@ -896,8 +1043,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 break;
             case Host.test:
                 Host.game='http://www.xingyunmao.cn:9004';//测试
-              //Host.gameOverPage='www.xingyunmao.cn/afterGame/';
-                Host.gameOverPage='127.0.0.1/afterGame/';
+                Host.gameOverPage='www.xingyunmao.cn/';
+               // Host.gameOverPage='127.0.0.1/';
                 break;
             case Host.prev:
                 Host.game='http://120.24.225.116:9004';//运营（前）
@@ -919,8 +1066,22 @@ app.run(['$rootScope', '$location', '$window',function($rootScope, $location, $w
     // initialise google analytics
     $window.ga('create', 'UA-71031576-1', 'auto');  //UA-71031576-1为key
 
-
-
+    $rootScope.game={ //游戏
+       url:null,
+       orderId:null,
+       commodityId:null,
+       isOpen:false
+    };
+    $rootScope.openGame=function(url,order_id,com_id){//打开游戏
+        $rootScope.game.url=url;
+        $rootScope.game.orderId=order_id,
+        $rootScope.game.commodityId=com_id,
+        $rootScope.game.isOpen=true;
+    };
+    $rootScope.closeGame=function(){//关闭游戏
+        $rootScope.game.url=null;
+        $rootScope.game.isOpen=false;
+    };
     $rootScope.$on('$stateChangeStart', function() {
         $rootScope.page_loading=true;//loading图片显示
     });

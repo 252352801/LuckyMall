@@ -221,7 +221,7 @@
     position: relative;
 }
 
-.filters ul li.show-a-part{
+.filters ul li p.show-a-part{
     max-height:50px;
     overflow:hidden;
 }
@@ -233,7 +233,7 @@
 .filters ul{
     border-top:1px solid #eee;
 }
-.filters ul .btn-more{
+.filters ul .btn-multi,.filters ul .btn-more{
     border:1px solid #ddd;
     background:none;
     outline:none;
@@ -242,10 +242,17 @@
     font-size:12px;
     vertical-align:top;
     position: absolute;
-    left: 96.7%;
+    left: 93.3%;
     top: 12px;
 }
-.filters ul .btn-more:hover{
+.filters ul .btn-more{
+    border:none;
+    width: 42px;
+    left: 96.5%;
+    top: 12px;
+    margin-left:10px;
+}
+.filters ul .btn-multi:hover{
     color:#666;
     border-color:#aaa;
 }
@@ -266,6 +273,10 @@
     display:inline-block;
     width: 82%;
     line-height:18px;
+}
+.filters ul li p.show-a-part-items{
+    max-height:30px;
+    overflow:hidden;
 }
 .filters ul li a{
     display:inline-block;
@@ -392,6 +403,9 @@
     -ms-transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
 }
+.list .loading-tips{
+    margin-top:200px;
+}
  /*列表 end*/
 
 .list .pro-list-cont li:hover .prices{
@@ -405,4 +419,7 @@
 @keyframes font_jump{
     10%{top:-3px; }
     20%{top:0px; }
+}
+.brand.pro-list-top{
+    margin-top:30px;
 }

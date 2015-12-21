@@ -50,4 +50,11 @@ angular.module('LuckyMall.controllers')
                 }
             });
         }
+        $scope.MathCeilPrice=function(val){
+           return  Math.ceil(val);
+        };
+    
+        $scope.MathCeilPrice=function(val){
+            return Math.ceil(val);
+        };
 });

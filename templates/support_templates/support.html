@@ -1,71 +1,45 @@
 
 <!--顶部  begin-->
-<div class="simple sub-header">
-    <div class="content">
-        <div class="logo pull-left">
-            <img src="./res/logo/logo.png" alt="幸运猫"/>
-
-            <p class="logo-desc">新生代电商购物</p>
-        </div>
-        <div class="nav pull-right">
-            <a href="/home" title="">首页</a>
-            <a  href="/about" title="">关于幸运猫</a>
-            <a  href="#" title="">新手指南</a>
-            <a class="border-bottom4 icon-mb-link" href="#" title="手机幸运猫">手机抢购 更多低折扣</a>
-        </div>
-    </div>
-</div>
+<long-header nav="nav3"></long-header>
 <!--顶部  end-->
 
 <!--中部 begin-->
 <div class="about help  container ng-scope">
     <div class="content">
         <div class="page-location">
-            <a>幸运猫</a>
-            <a>常见问题</a>
+            <a href="/home">幸运猫</a>
+            <a ng-bind="cur_state_name"></a>
         </div>
-        <div class="UC-menu">
+        <div class="UC-menu support">
             <h2>新手指南</h2>
             <ul>
-                <li ng-class="{'cur':curMenu==1}"><a href="/UCIndex/myOrders/unPay">购物流程 </a></li>
-                <li ng-class="{'cur':curMenu==2}"><a href="/UCIndex/myOrders/paid">常见问题</a></li>
-                <li ng-class="{'cur':curMenu==3}"><a href="/UCIndex/myOrders/unReceive">用户协议</a></li>
+                <li ng-class="{'cur':cur_url=='/sp_flow'}"><a href="/sp_flow">购物流程 </a></li>
+                <li ng-class="{'cur':cur_url=='/qa'}"><a href="/support/qa">常见问题</a></li>
+                <li ng-class="{'cur':cur_url=='/protocol'}"><a href="/support/protocol">用户协议</a></li>
+                <li ng-class="{'cur':cur_url=='/payWay'}"><a href="/support/payWay">支付方式</a></li>
             </ul>
             <h2>服务保障</h2>
             <ul>
-                <li ng-class="{'cur':curMenu==7}"><a href="/UCIndex/myDiscountCards">正品保障</a></li>
-                <li ng-class="{'cur':curMenu==8}" class="cur"><a href="/UCIndex/editPassword">发票保障</a></li>
-                <li ng-class="{'cur':curMenu==9}"><a href="/UCIndex/myAddresses">在线客服</a></li>
+                <li ng-class="{'cur':cur_url=='/assure_pro'}"><a href="/support/assure_pro">正品保障</a></li>
+                <li ng-class="{'cur':cur_url=='/assure_inv'}"><a href="/support/assure_inv">发票保障</a></li>
+                <!--<li ng-class="{'cur':cur_url=='/ol_svc'}"><a href="/support/ol_svc">在线客服</a></li>-->
             </ul>
             <h2>配送方式</h2>
             <ul>
-                <li ng-class="{'cur':curMenu==10}"><a href="/help">配送费用</a></li>
-                <li ng-class="{'cur':curMenu==11}"><a href="/about">配送说明</a></li>
-                <li ng-class="{'cur':curMenu==12}"><a href="/UCIndex/adviceAndFeedback">验货说明</a></li>
+                <li ng-class="{'cur':cur_url=='/logistics_cost'}"><a href="/support/logistics_cost">配送费用</a></li>
+                <li ng-class="{'cur':cur_url=='/logistics_exp'}"><a href="/support/logistics_exp">配送说明</a></li>
+                <li ng-class="{'cur':cur_url=='/receive_exp'}"><a href="/support/receive_exp">验货说明</a></li>
             </ul>
             <h2>售后服务</h2>
             <ul>
-                <li ng-class="{'cur':curMenu==10}"><a href="/help">退货流程</a></li>
-                <li ng-class="{'cur':curMenu==11}"><a href="/about">退换政策</a></li>
-                <li ng-class="{'cur':curMenu==12}"><a href="/UCIndex/adviceAndFeedback">7天无理由退换</a></li>
+                <li ng-class="{'cur':cur_url=='/refund_flow'}"><a href="/support/refund_flow">退货流程</a></li>
+                <li ng-class="{'cur':cur_url=='/refund_rule'}"><a href="/support/refund_rule">退换政策</a></li>
+                <li ng-class="{'cur':cur_url=='/QT'}"><a href="/support/QT">7天无理由退换</a></li>
             </ul>
 
         </div>
-        <div class="UC-menu-cont relative_z">
-            <div class="box-introduction box-help">
-                <h2 class="box-title">发票保障</h2>
-                <div class="join_z">
-                    <p>幸运猫平台所售的商品均为品牌供应商提供的正品，因此当用户购买商品提交订单时，可以勾选要求提供发票，输入您的发票抬头，我们将会无偿提供正规的发票。</p>
-                </div>
+        <div class="UC-menu-cont support relative_z" ui-view="support_content" >
 
-
-
-
-
-
-
-
-            </div>
         </div>
     </div>
 </div>

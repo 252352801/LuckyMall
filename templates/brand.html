@@ -6,288 +6,58 @@
 
 <!--中部 start-->
 <div class="list content">
-    <div class="banner-s">
+<!--    <div class="banner-s">
         <ul>
             <li>
                 <a href="#" title="">
                     <img src="./res/test/newPro_ad1.jpg" alt="" />
                 </a>
             </li>
-<!--            <li>
-                <a href="#" title="">
-                    <img src="" alt="" />
-                </a>
-            </li>
-            <li>
-                <a href="#" title="">
-                    <img src="" alt="" />
-                </a>
-            </li>-->
         </ul>
-    </div>
-    <div class="pro-list-top">
+    </div>-->
+    <div class="brand pro-list-top">
         <h3 class="color-org">新品</h3>
-        <span class="label-condition">价格</span>
-        <span class="icon-double-arrow up"></span>
+        <span class="label-condition" ng-click="searchWidthPrice()">价格</span>
+        <span  ng-class="{'icon-db-arrow up cur':!price_order,'icon-db-arrow up':price_order}" ng-click="searchWidthPrice(0)"></span>
+        <span  ng-class="{'icon-db-arrow down':!price_order,'icon-db-arrow down cur':price_order}" ng-click="searchWidthPrice(1)"></span>
         <div class="pull-right">
-            <p>共<span class="color-org">87</span>件商品</p>
-            <span class="arrow" title="上一页"><</span>
-            <span class="color-org">1</span>/
-            <span>5</span>
-            <span class="arrow" title="下一页">></span>
+            <p>共<span class="color-org" ng-bind="totalAmount"></span>件商品</p>
+            <span class="arrow txtUnselect" title="上一页" ng-click="prevPage()"><</span>
+            <span class="color-org" ng-bind="pageIndex"></span>/
+            <span ng-bind="totalPage"></span>
+            <span class="arrow txtUnselect" title="下一页" ng-click="nextPage()">></span>
         </div>
     </div>
     <ul class="pro-list-cont">
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG1.jpg" alt="" />
+        <li ng-repeat="list in data_list|orderBy:'maxPrice':price_order" >
+            <a class="a-goodsImg" href="/goodsDetails/{{list.Id}}" target="_blank" title="">
+                <img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>
             </a>
             <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女粉色系保暖特色印花短外套女粉色系保暖特色印花短外套女粉色系保暖特色印花短外套女粉色系保暖特色印花短外套女</h2>
+                <a href="/goodsDetails/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
+                    <h2 ng-bind="list.CommodityName"></h2>
                 </a>
                 <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG2.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG3.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG4.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG1.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG2.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG3.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG4.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG1.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG2.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG3.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG4.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG1.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG2.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG3.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
-                </p>
-            </div>
-        </li>
-        <li>
-            <a class="a-goodsImg" href="#" title="">
-                <img src="./res/test/test-newG4.jpg" alt="" />
-            </a>
-            <div class="goods-info">
-                <a href="#" title="">
-                    <h2>粉色系保暖特色印花短外套女</h2>
-                </a>
-                <p class="price">
-                    <span>￥409</span>
-                    <span class="old-price">￥600</span>
-                    <span class="icon-discount">低至3.5折</span>
+                    <span class="prices" ng-bind="'￥'+list.maxPrice+'~￥'+list.minPrice"></span>
+                    <span class="old-price" ng-bind="list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
+                    <span class="icon-discount" ng-bind="'低至'+(list.MaxDiscount*10).toFixed(1)+'折'"></span>
+                    <!--<span class="final-price" ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)" ></span>
+                    <span class="old-price" ng-bind="list.RetailPrice"></span>
+                    <span class="icon-discount" ng-bind="(list.MinDiscount*10).toFixed(1)+'折'"></span>-->
                 </p>
             </div>
         </li>
     </ul>
+    <div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+    <div class="tips-no-pro" ng-if="data_list.length<=0">
+        暂时没有符合条件的商品喔！
+    </div>
     <div class="page-index">
-        <div class="prev"><</div>
+        <div class="prev" ng-click="prevPage()" btn-page-up><</div>
         <div class="indexes">
-            <span class="cur">1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
+            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-page-up></span>
         </div>
-        <div class="next">></div>
+        <div class="next" ng-click="nextPage()" btn-page-up>></div>
     </div>
 </div>
 <!--中部 end-->

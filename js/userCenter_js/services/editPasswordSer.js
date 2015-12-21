@@ -17,7 +17,7 @@
                     callback(response,0);
                 }
             }).error(function(data,status,headers,config){
-                    callback(data,0);
+                    callback(data,-1);
             });
         }
 	};

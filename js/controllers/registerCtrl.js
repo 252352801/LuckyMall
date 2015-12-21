@@ -113,7 +113,7 @@ angular.module('LuckyMall.controllers')
                     $scope.showTips('手机号'+mb+'已注册！');
                 }else{
                     RegisterSer.isSignUp(mb,function(response){
-                        if(response==true){
+                        if(response==false){
                             $scope.invalidMobile.push(mb);
                             setCurrentError('mobile');
                             $scope.showTips('手机号'+mb+'已注册！');

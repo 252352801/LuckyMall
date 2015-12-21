@@ -74,7 +74,7 @@
                     <div class="today-list-l">
                         <div class="info1">
                             <a class="today-pro-logo" href="#" title="">
-                                <img ng-src="./res/logo/logo.png" alt=""/>
+                                <img real-src="{{li_today.BrandImage?imgHost+li_today.BrandImage+'@120h_30h_100Q.png':''}}" error-src="./res/logo/logo.png" alt=""/>
                             </a>
                             <a href="#" title={{li_today.Description}}>
                                 <p class="today-pro-font" ng-bind="li_today.Description"></p>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="info2">
                             <p class="today-pro-discount"><span>1</span>折起</p>
-                            <p>剩余时间：<span class="color-org" time-down="li_today.remainTime"></span></p>
+                            <p ng-if="li_today.remainTime>0">剩余时间：<span class="color-org" time-down="li_today.remainTime" ></span></p>
                         </div>
                     </div>
                     <div class="today-list-r">
@@ -95,7 +95,7 @@
             </div>
             <div class="tomorrow-advance-notice">
                 <div class="tomorrow-top">
-                    <h3>明天预告</h3>
+                    <h3>明天上线</h3>
                 </div>
                 <ul class="tomorrow-content">
                     <li>

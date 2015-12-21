@@ -10,12 +10,14 @@ angular.module('LuckyMall.controllers')
         };
 
 
-        if(params=='3'){
+        if(params.type=='3'){
             $rootScope.login_target={
                 state:'game',
                 params:Host.game + '?orderid=' +params.orderId + '&from=' + Host.gameOverPage + '&authorization='
             }
             $state.go('login');
+        }else if(params.type=='4') {
+
         }else{
             authorization(action);
         }

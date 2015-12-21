@@ -1,4 +1,4 @@
-﻿angular.module('LuckyMall.services')
+angular.module('LuckyMall.services')
 .factory('HomeSer',function(API,$http){
 	var data={
         banner:null,
@@ -8,24 +8,25 @@
       function initTodayData(obj){
           var result=new Array();
           for(var o in obj){
-             // if(isOnline(obj[o].CurrentTime,obj[o].StartTime)) {
+              if(isOnline(obj[o].CurrentTime,obj[o].StartTime)) {
                   if (obj[o].PromotionType == 1) {
                       obj[o].href = '/goodsDetails/' + obj[o].TypeId;
                   } else if (obj[o].PromotionType == 0) {
-                      obj[o].href = '/newProduct';
+                      obj[o].href = '/brand/'+obj[o].TypeId;
                   }
-                  obj[o].remainTime = createRemainTime(obj[o].CurrentTime,obj[o].EndTime);
+                  obj[o].remainTime = setRemainTime(obj[o].CurrentTime,obj[o].EndTime);
                   result.push(obj[o]);
-             // }
+              }
           }
           return result;
       }
 
-      function createRemainTime(cur_t,end_t){
-            var now_time=new Date(cur_t.replace(/-/g,"/"));
-            var ent_time=new Date(end_t.replace(/-/g,"/"));
-           return (ent_time-now_time)/1000;
-      }
+              
+        function setRemainTime(cur_time,end_time){
+            var t_cur=new Date(cur_time.replace(/-/g,"/"));
+            var t_end=new Date(end_time.replace(/-/g,"/"));
+            return (t_end-t_cur)/1000;
+        }
        /* 判断专题是否上线*/
       function isOnline(cur_time,start_time_str){
           var now_time=new Date(cur_time.replace(/-/,"/"));

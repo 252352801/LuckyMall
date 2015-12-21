@@ -23,6 +23,9 @@
     <script type="text/javascript" src="./common/services/services.js"></script>
     <script type="text/javascript" src="./common/directives/directives.js"></script>
 
+    <script type="text/javascript" src="./lib/sweetAlert/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./lib/sweetAlert/sweetalert.css"><!--css样式文件-->
+
 </head>
 <body ng-controller="AppCtrl" ng-app="LuckyMall"  id="ng-app">
     <div ui-view ng-show="!page_loading">
@@ -30,6 +33,8 @@
     <modal-login ng-show="isLoginModalShow"></modal-login>
     <modal-feedback ng-show="isFeedbackModalShow"></modal-feedback>
     <loading ng-show="page_loading"></loading>
+
+    <game-window ng-show="game.isOpen"></game-window>
 </body>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

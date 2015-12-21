@@ -114,6 +114,7 @@ angular.module('LuckyMall')
                     s_box.style.overflow = "hidden";
                     s_box.style.border = "1px solid #fff";
                     s_box.style.backgroundClip = 'padding-clip';
+                    s_box.style.cursor='move';
                     big_img.src = params.src;
                     /*s_box.style.borderRadius='50%';*/
                     /* var big_img = document.createElement('img');
@@ -158,7 +159,7 @@ angular.module('LuckyMall')
                         };
                     };
                     addEvent(document.body,'mouseover',hideSBox);
-                    function hideSBox() {
+                    function hideSBox(e) {
                         var e = e || window.event;
                         var target = e.target || e.srcElement;
                         if (target != s_box && target != img && target != big_img) {
@@ -197,8 +198,8 @@ angular.module('LuckyMall')
     .directive('numberSlider', function ($timeout, $compile) {
         return {
             link: function (scope, element, attrs) {
-                scope.numbers = ['', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-                var change_time = 1000;//切换的间隔时间
+                scope.numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                var change_time = 2000;//切换的间隔时间
 
 
                 if (attrs.numberSlider) {
@@ -210,29 +211,105 @@ angular.module('LuckyMall')
                 }
 
                 function start(data_goods) {
+
+                    var h=45;//高度
+
+                    var slider=getByClass("item-slider");
                     var price = data_goods.RetailPrice;
                     var max_disc = data_goods.MaxDiscount;
                     var min_disc = data_goods.MinDiscount;
                     scope.cur_disc = min_disc;
                     var cur_price = (price * min_disc).toFixed(0);
                     initPrice(cur_price);
+                    for(var o=0;o<slider.length;o++){
+                        slider[o].style.top=-(10+parseInt(scope.indexes[o]))*h+'px';
+                    }
                     $timeout(function () {
                         run();
                     }, change_time)
                     function run() {
+                        var rand = Math.random();//随机数
                         if (scope.cur_disc == max_disc) {
                             scope.cur_disc = min_disc;
+                            scope.new_disc=0;
                         } else {
-                            var rand = Math.random();
-                            scope.cur_disc -= (rand * min_disc) / 10 + 0.01;
+                            scope.new_disc=rand *0.5+0.5;
+                            scope.cur_disc *= scope.new_disc;
                         }
                         if (scope.cur_disc < max_disc) {
                             scope.cur_disc = max_disc;
                         }
                         cur_price = (price * scope.cur_disc).toFixed(0);
+                        var old_index=scope.indexes;
                         initPrice(cur_price);
                         $timeout(function () {
-                            run();
+                            var new_index=scope.indexes;
+                            var val=[0,0,0,0];
+                            for(var o in new_index){
+                                if(parseInt(new_index[o])>parseInt(old_index[o])){
+                                    val[o]=10+parseInt(old_index[o])-parseInt(new_index[o]);
+                                }else{
+                                    val[o]=parseInt(old_index[o])-parseInt(new_index[o]);
+                                }
+                            }
+                            console.log(val);
+                            tweenMultiFixAnimate({
+                                obj: [
+                                    {
+                                        element: slider[0],
+                                        object: [
+                                            {
+                                                attr: 'top',//需要改变的属性
+                                                value: parseInt(val[0])*h,//改变的值 可以为正负
+                                                moveName: 'Linear',//动画名，默认为Linear
+                                                moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        element: slider[1],
+                                        object: [
+                                            {
+                                                attr: 'top',//需要改变的属性
+                                                value: parseInt(val[1])*h,//改变的值 可以为正负
+                                                moveName: 'Linear',//动画名，默认为Linear
+                                                moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        element: slider[2],
+                                        object: [
+                                            {
+                                                attr: 'top',//需要改变的属性
+                                                value:parseInt(val[2])*h,//改变的值 可以为正负
+                                                moveName: 'Linear',//动画名，默认为Linear
+                                                moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        element: slider[3],
+                                        object: [
+                                            {
+                                                attr: 'top',//需要改变的属性
+                                                value:parseInt(val[3])*h,//改变的值 可以为正负
+                                                moveName: 'Linear',//动画名，默认为Linear
+                                                moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                            }
+                                        ]
+                                    }
+                                ],
+                                time: 300,//执行动画的时间
+                                callback: function(){
+                                    for(var o in new_index){
+                                        if(parseInt(new_index[o])>parseInt(old_index[o])){
+                                            slider[o].style.top=slider[o].offsetTop-h*10+'px';
+                                        }
+                                    }
+                                    run();
+                                }
+                            });
                         }, change_time);
                     }
                 }

@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
-    .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host) {
+    .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host,$rootScope) {
         $scope.data_eo={};//要付定金的订单数据
         $scope.isModal1show = false;
         $scope.isModal2show = false;
@@ -12,6 +12,9 @@ angular.module('LuckyMall.controllers')
 
         $scope.$on('cart-update', function () {
             loadCartData();
+        });
+        $scope.$on('cart-time-over', function () {
+            $scope.data_cart=[];
         });
         $scope.gameHost = app.gameHost;
         $scope.callbackURL = app.gameOverPage;
@@ -48,19 +51,20 @@ angular.module('LuckyMall.controllers')
                     });
                 });
         };
-        $scope.freePlay=function(order_id){
+        $scope.freePlay=function(order_id,comm_id){
             ga('send', 'pageview', {
                 'page': '/enter_freegame',
                 'title': '进入免费游戏'
             });
-            location.href = Host.game+ '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
+            var g_url=Host.game+ '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
+            $rootScope.openGame(g_url,order_id,comm_id);
         };
         $scope.play=function(){
             ga('send', 'pageview', {
                 'page': '/enter_paygame',
                 'title': '进入付定金游戏'
             });
-            location.href=$scope.gameUrl;
+            $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
         }
         /*跳转订单确认页*/
         $scope.goConfirm = function () {
@@ -74,6 +78,8 @@ angular.module('LuckyMall.controllers')
                 $scope.energy.isEnough = false;
             }
             $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+            $scope.game_orderId=order.Id;
+            $scope.game_commodityId=order.CommodityId;
             $scope.isModal1show = true;
         };
         $scope.showModal2 = function () {

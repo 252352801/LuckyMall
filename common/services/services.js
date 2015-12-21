@@ -181,9 +181,10 @@ angular.module('LuckyMall.services',[])
             filters:new Array()
         };
         var data_select_brand={
-            isMultiSelect:false,
+            isMultiSelected:false,
             items:[]
         };
+        var data_subCategory=null;
         var data_brands=null;
         var data_category=null;
         var filterData=function(data){//筛选出正在销售的商品
@@ -198,6 +199,7 @@ angular.module('LuckyMall.services',[])
             }
             return result;
         };
+        var hasSubCategory=false;
         /*是否已经有筛选项*/
         var hasFilterSelected=function(filter_id){
             for(var o in data_select.filters){
@@ -215,9 +217,20 @@ angular.module('LuckyMall.services',[])
                 }
             }
         };
+        /*通过ID获取子分类*/
+        var getSubCategoryFilterById=function(filter_id){
+            for(var o in data_category.SubCategories){
+                for(var i in data_category.SubCategories[o].FilterModels){
+                    if(filter_id==data_category.SubCategories[o].FilterModels[i].Id){
+                        return data_category.SubCategories[o].FilterModels[i];
+                    }
+                }
+            }
+        };
         /*从容器中删除筛选项*/
         var removeFilter=function(filter_id){
-            getFilterById(filter_id).isMultiSelected=false;//多选状态重置
+            var filter=hasSubCategory?getSubCategoryFilterById(filter_id):getFilterById(filter_id);
+            filter.isMultiSelected=false;//多选状态重置
             for(var o in data_select.filters){
                 if(filter_id==data_select.filters[o].filterId){
                     data_select.filters.splice(o,1);
@@ -237,11 +250,18 @@ angular.module('LuckyMall.services',[])
         };
         var clearFilter=function(filter_id){
             removeFilter(filter_id);//将该选项的已选项从容器中移除
-            var filter = getFilterById(filter_id);
+            var filter = hasSubCategory?getSubCategoryFilterById(filter_id):getFilterById(filter_id);
             filter.isMultiSelected=false;
             for (var o in filter.FilterItemModels) {
                 filter.FilterItemModels[o].isSelected = false;//选择状态重置为false
                 filter.FilterItemModels[o].isMultiSelected = false;//选择状态重置为false
+            }
+        };
+        var getSubCategoryById=function(sub_id){
+            for(var o in data_category.SubCategories){
+                    if(sub_id==data_category.SubCategories[o].Id){
+                        return data_category.SubCategories[o];
+                    }
             }
         };
 
@@ -250,7 +270,16 @@ angular.module('LuckyMall.services',[])
                 return data_category;
             },
             setCategoryData:function(new_data){
-                data_category=initMulti(new_data);
+                if(new_data) {
+                    data_category = initMulti(new_data);
+                }
+            },
+            getSubCategory:function(){
+                return data_subCategory;
+            },
+            setSubCategory:function(new_data){
+                hasSubCategory=true;//有子类时设置状态为true
+                data_subCategory = new_data;
             },
             getBrandsData:function(){
                 return data_brands;
@@ -258,34 +287,92 @@ angular.module('LuckyMall.services',[])
             setBrandsData:function(new_data){
                  data_brands=new_data;
             },
+            getSelectBrandsData:function(){
+                return data_select_brand;
+            },
+            setSelectBrandData:function(new_data){
+                data_select_brand=new_data;
+            },
             getSelectData:function(){
                 return data_select;
             },
             setSelectData:function(new_data){
                 data_select=new_data;
             },
+            getSubCategoryById:function(sub_id){
+                return getSubCategoryById(sub_id);
+            },
             toggleMultiSelect:function(filter_id){
-                for(var o in data_category.FilterModels){
-                    if(filter_id!=data_category.FilterModels[o].Id){
-                        data_category.FilterModels[o].isMulti=false;
+                var obj=(!hasSubCategory)?data_category.FilterModels:getSubCategoryById(data_subCategory).FilterModels;
+                for(var o in obj){
+                    if(filter_id!=obj[o].Id){
+                        obj[o].isMulti=false;
                     }else{
-                        data_category.FilterModels[o].isMulti=!data_category.FilterModels[o].isMulti;
+                        obj[o].isMulti=!obj[o].isMulti;
                     }
                 }
             },
+           /* 选择子类*/
+            selectSubCategory:function(sub_id){
+                if(data_subCategory!=null){
+                    var old_obj=getSubCategoryById(data_subCategory);
+                    for(var o in old_obj.FilterModels){
+                        removeFilter(old_obj.FilterModels[o].Id);
+                    }
+                }
+                for(var o in data_category.SubCategories){
+                    data_category.SubCategories[o].isSelected=(data_category.SubCategories[o].Id==sub_id)?true:false;
+                }
+                data_subCategory=sub_id;
+            },
+            /* 子类选择重置*/
+            resetSubCategorySelection:function(){
+                 for(var o in data_category.SubCategories){
+                    data_category.SubCategories[o].isSelected=false;
+                     for(var i in data_category.SubCategories[o].FilterModels){
+                         removeFilter(data_category.SubCategories[o].FilterModels[i].Id);
+                     }
+                }
+                data_subCategory=null;
+            },
             /*关闭多选框*/
             closeMultiSelect:function(filter_id){
-                getFilterById(filter_id).isMulti=false;
+                if(!hasSubCategory){
+                    getFilterById(filter_id).isMulti=false;
+                }else{
+                    getSubCategoryFilterById(filter_id).isMulti=false;
+                }
             },
             /*单选品牌*/
             selectBrand:function(brand_id){
-                data_select_brand.isMultiSelect=false;
+                data_select_brand.isMultiSelected=false;
                 data_select_brand.items=[brand_id];
+                for(var o in data_brands){
+                    if(data_brands[o].Id==brand_id){
+                        data_brands[o].isSelected=true;
+                    }else{
+                        data_brands[o].isSelected=false;
+                    }
+                }
             },
-            /*多选品牌*/
-            multiSelectBrand:function(brands){
-                data_select_brand.isMultiSelect=true;
-                data_select_brand.items=brands;
+            /*多选勾选品牌*/
+            multiSelectBrand:function(brand_id){
+                for(var o in data_brands){
+                    if(data_brands[o].Id==brand_id){
+                        data_brands[o].isMultiSelected=!data_brands[o].isMultiSelected;
+                        break;
+                    }
+                }
+            },
+            addBrandMultiSelection:function(){
+                var result=[];
+                for(var o in data_brands){
+                    if(data_brands[o].isMultiSelected){
+                        result.push(data_brands[o].Id);
+                    }
+                }
+                data_select_brand.isMultiSelected=true;
+                data_select_brand.items=result;
             },
             /*增加筛选项*/
             addSelection:function(filter_id,item_id){
@@ -308,7 +395,7 @@ angular.module('LuckyMall.services',[])
             /*增加筛选项（多选）*/
             addMultiSelection:function(filter_id){
                 //clearFilter(filter_id);
-                var filter=getFilterById(filter_id);
+                var filter=(!hasSubCategory)?getFilterById(filter_id):getSubCategoryFilterById(filter_id);
                 var items=new Array();
                 for(var o in filter.FilterItemModels){
                     if(filter.FilterItemModels[o].isMultiSelected){
@@ -333,12 +420,32 @@ angular.module('LuckyMall.services',[])
             },
             /*一个筛选器的多选操作*/
             multiSelect:function(filter_id,item_id){
-                var filter=getFilterById(filter_id);
+                
+                var filter=(!hasSubCategory)?getFilterById(filter_id):getSubCategoryFilterById(filter_id);
                 for(var o in filter.FilterItemModels){
                     if(item_id==filter.FilterItemModels[o].Id){
                        filter.FilterItemModels[o].isMultiSelected=!filter.FilterItemModels[o].isMultiSelected;
                     }
                 }
+            },
+            /*重置品牌所有选项*/
+            resetBrandsSelection:function(){
+                data_select_brand={
+                    isMultiSelected:false,
+                    items:[]
+                };
+                for(var o in data_brands){
+                    data_brands[o].isMultiSelected=false;
+                    data_brands[o].isSelected=false;
+                }
+                data_brands.isMultiSelected=false;
+            },
+            /*重置品牌的多选选项*/
+            resetBrandsMultiSelection:function(){
+                for(var o in data_brands){
+                    data_brands[o].isMultiSelected=false;
+                }
+                data_brands.isMultiSelected=false;
             },
             /*重置该筛选器的多选*/
             resetMultiSelection:function(filter_id){
@@ -356,34 +463,90 @@ angular.module('LuckyMall.services',[])
                 removeFilter(filter_id);
             },
             select:function(){
-                if(data_category&&data_category.FilterModels) {
-                    for(var o in data_select.filters){
-                        var filter=getFilterById(data_select.filters[o].filterId);
-                        var isMultiSelected=(data_select.filters[o].type==1)?true:false;//是否是多选
-                        if (isMultiSelected) {
-                            filter.isMultiSelected = true;
-                        } else {
-                            filter.isMultiSelected = false;
-                        }
-                        for (var i in filter.FilterItemModels) {
-                            for (var j in data_select.filters[o].items) {
-                                if (data_select.filters[o].items[j] == filter.FilterItemModels[i].Id) {
-                                    if (isMultiSelected) {
-                                        filter.FilterItemModels[i].isMultiSelected = true;
-                                    } else {
-                                        filter.FilterItemModels[i].isSelected = true;
+
+                if(data_category&&data_category.FilterModels) {//如果没有子类
+                    if(data_category.FilterModels.length>0) {
+                        for (var o in data_select.filters) {
+                            var filter = getFilterById(data_select.filters[o].filterId);
+                            var isMultiSelected = (data_select.filters[o].type == 1) ? true : false;//是否是多选
+                            if (isMultiSelected) {
+                                filter.isMultiSelected = true;
+                            } else {
+                                filter.isMultiSelected = false;
+                            }
+                            for (var i in filter.FilterItemModels) {
+                                for (var j in data_select.filters[o].items) {
+                                    if (data_select.filters[o].items[j] == filter.FilterItemModels[i].Id) {
+                                        if (isMultiSelected) {
+                                            filter.FilterItemModels[i].isMultiSelected = true;
+                                        } else {
+                                            filter.FilterItemModels[i].isSelected = true;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-                for (var o in data_select_brand) {
-                   // for()
+                if(data_select_brand!=null) {
+                    for (var o in data_select_brand.items) {
+                        for (var i in data_brands) {
+                            if (data_brands[i].Id == data_select_brand.items[o]) {
+                                if (data_select_brand.isMultiSelected) {
+                                    data_brands[i].isMultiSelected = true;
+                                } else {
+                                    data_brands[i].isSelected = true;
+                                }
+                            }
+                        }
+                    }
+                    data_brands.isMultiSelected=data_select_brand.isMultiSelected;//品牌是否多选
                 }
-
             },
-            /*清除所有已选状态*/
+            selectWithSubCategory:function(){//有子类时的勾选
+                for (var o in data_select.filters) {
+                    var filter = getSubCategoryFilterById(data_select.filters[o].filterId);
+                    var isMultiSelected = (data_select.filters[o].type == 1) ? true : false;//是否是多选
+                    if (isMultiSelected) {
+                        filter.isMultiSelected = true;
+                    } else {
+                        filter.isMultiSelected = false;
+                    }
+                    for (var i in filter.FilterItemModels) {
+                        for (var j in data_select.filters[o].items) {
+                            if (data_select.filters[o].items[j] == filter.FilterItemModels[i].Id) {
+                                if (isMultiSelected) {
+                                    filter.FilterItemModels[i].isMultiSelected = true;
+                                } else {
+                                    filter.FilterItemModels[i].isSelected = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(data_select_brand!=null) {
+                    for (var o in data_select_brand.items) {
+                        for (var i in data_brands) {
+                            if (data_brands[i].Id == data_select_brand.items[o]) {
+                                if (data_select_brand.isMultiSelected) {
+                                    data_brands[i].isMultiSelected = true;
+                                } else {
+                                    data_brands[i].isSelected = true;
+                                }
+                            }
+                        }
+                    }
+                    data_brands.isMultiSelected=data_select_brand.isMultiSelected;//品牌是否多选
+                }
+                if(data_subCategory!=null){
+                    for(var o in data_category.SubCategories){
+                        if(data_subCategory==data_category.SubCategories[o].Id){
+                            data_category.SubCategories[o].isSelected=true;
+                        }
+                    }
+                }
+            },
+            /*清除所有已选状态(无子类时)*/
             clearSelect:function(){
                 if (data_category&&data_category.FilterModels) {
                     for (var i = 0; i < data_category.FilterModels.length;i++) {
@@ -394,8 +557,32 @@ angular.module('LuckyMall.services',[])
                         }
                     }
                 }
+                data_subCategory=null;
+                hasSubCategory=false;
             },
-
+            /*清除所有已选状态(有子类时)*/
+            clearSelectWithSubCategory:function(){
+                if(data_category&&data_category.SubCategories) {
+                    for(var o in data_category.SubCategories) {
+                        data_category.SubCategories[o].isSelected=false;
+                        for (var i = 0; i < data_category.SubCategories[o].FilterModels.length; i++) {
+                            data_category.SubCategories[o].FilterModels[i].isMultiSelected = false;
+                            for (var j = 0; j < data_category.SubCategories[o].FilterModels[i].FilterItemModels.length; j++) {
+                                data_category.SubCategories[o].FilterModels[i].FilterItemModels[j].isMultiSelected = false;
+                                data_category.SubCategories[o].FilterModels[i].FilterItemModels[j].isSelected = false;
+                            }
+                        }
+                    }
+                }
+                
+            },
+            clearBrandsSelect:function(){
+                data_brands.isMultiSelected=false;
+                for(var o in data_brands){
+                    data_brands[o].isMultiSelected=false;
+                    data_brands[o].isSelected=false;
+                }
+            },
 
             requestCategoryById:function(cate_id,callback){
                 $http({
@@ -415,6 +602,8 @@ angular.module('LuckyMall.services',[])
 
             search:function(params){
                 var post_data={
+                    "FilterBrand":params.FilterBrand,
+                    "Brands":params.Brands,
                     "Status":3,//3表示已上架商品
                     "CategoryId":""+params.category,
                     "FilterItems":params.items,
@@ -429,8 +618,8 @@ angular.module('LuckyMall.services',[])
                     "TotalPage": 10//总页数
                 };
                 $http({
-                    method:API.search.method,
-                    url:API.search.url,
+                    method:API.searchOnline.method,
+                    url:API.searchOnline.url,
                     timeout:20000,
                     data: post_data
                 }).success(function(response,status,headers,config){
@@ -454,6 +643,7 @@ angular.module('LuckyMall.services',[])
                     url:API.getAllCategory.url
                 }).success(function(response,status,headers,config){
                     data=response;
+                    console.log(data);
                     if(typeof callback=='function'){
                         callback();
                     }
@@ -515,6 +705,7 @@ angular.module('LuckyMall.services',[])
                 },
                 clearData:function(){
                     data=null;
+                    deadline=0;
                 },
                 getTotalAmount:function(){
                     if(data!=null){
@@ -899,9 +1090,8 @@ angular.module('LuckyMall.services',[])
                     }
                 }).success(function(response,status,headers,config){
                     if(response){
-                        var new_data=initData(response);
-                        data=new_data;
-                        callback(new_data,1);
+                        data=initData(response);
+                        callback(data,1);
                     }else{
                         callback(response,0);
                     }
@@ -918,6 +1108,7 @@ angular.module('LuckyMall.services',[])
             orders:null,
             tempOrder:null //临时订单  存放立即购买时下的订单
         };
+        var isBackToPay=false;
         return {
             getData:function(){
                 return data;
@@ -931,6 +1122,14 @@ angular.module('LuckyMall.services',[])
             setTempOrder:function(new_data){
                 data.tempOrder=new_data;
             },
+            /*是否返回支付*/
+            isBackToPay:function(){
+                return isBackToPay;
+            },
+           /*返回支付*/
+            setIsBacktoPay:function(status){
+                isBackToPay=status;
+            },
             clearData:function(){
                 data={
                     addressId:null,
@@ -939,11 +1138,9 @@ angular.module('LuckyMall.services',[])
             },
             /*支付订单*/
             purchaseOrders:function(type,params,callback){
-                var url=(type==0)?API.purchaseFromShoppingCart.url:API.purchaseFromUnPayOrders.url;
-                var method=(type==0)?API.purchaseFromShoppingCart.method:API.purchaseFromUnPayOrders.method;
                 $http({
-                    method: method,
-                    url: url,
+                    method: API.purchase.method,
+                    url: API.purchase.url+type,
                     data:params,
                     headers: {
                         'Authorization':TokenSer.getAuth()
@@ -953,6 +1150,10 @@ angular.module('LuckyMall.services',[])
                         callback(response,1);
                     }else{
                         callback(response,0);
+                    }
+                }).error(function(response,status){
+                    if(status==401) {
+                        callback('请求失败！', -1);
                     }
                 });
             },
@@ -971,6 +1172,8 @@ angular.module('LuckyMall.services',[])
                     }else{
                         callback(response,0);
                     }
+                }).error(function(){
+                    callback('请求失败！',-1);
                 });
             },
             getStatusOfTrade:function(trade_id,callback){
@@ -1251,7 +1454,7 @@ angular.module('LuckyMall.services',[])
                     callback("网络错误",-1);
                 });
             },
-            getKuidiList:function(callback){
+            getKDiList:function(callback){
                 $http.get(API.logisticsList.url)
                     .success(function(response,status){
                         var result=[{Code:'auto',Name:'请选择快递',index:''}];

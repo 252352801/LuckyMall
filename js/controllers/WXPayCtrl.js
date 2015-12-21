@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('WXPayCtrl',function($rootScope,$scope,$state,WXPaySer,$stateParams,$timeout,PaymentSer,API){
+ .controller('WXPayCtrl',function($rootScope,$scope,$state,WXPaySer,$stateParams,$timeout,PaymentSer,API,$cookies){
         $scope.trade_id=$stateParams.trade_id;
         $scope.time_over=false;
         $scope.totalCost=WXPaySer.getData().totalCost;
@@ -10,6 +10,7 @@ angular.module('LuckyMall.controllers')
         });
     
         $scope.goBack=function(){
+            PaymentSer.setIsBacktoPay(true);
             window.history.back(-1);
         };
         $scope.repay=function(order){

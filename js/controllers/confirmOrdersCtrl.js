@@ -1,13 +1,16 @@
 angular.module('LuckyMall.controllers')
- .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer){
+ .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
+        var submit_time=0;//提交次数v
         $scope.source=$stateParams.source.split('=')[1];
+       $scope.purchaseType=($scope.source=='repay')?1:0;//支付方式
         $scope.isModalAddressShow=false;
         $scope.isModalWaitingShow=false;
         $scope.inputTips='';
         $scope.value_btn_save='保存';
+        $scope.btn_val_purchase='确认支付';
         $scope.polling=false;
         $scope.tips_unPay_showTime=5;
         loadConfirmOrderData();//加载本页必须的数据
@@ -102,6 +105,9 @@ angular.module('LuckyMall.controllers')
         };
         /*提交订单*/
         $scope.submitOrder=function(){
+            $scope.polling=false;//取消轮询是否已支付
+            clearTimeout($scope.timer_trade_status);
+
             if($scope.selected_address==null){
                 swal('请选择收货地址！');
                 return;
@@ -115,7 +121,6 @@ angular.module('LuckyMall.controllers')
             var pay_type=(pay_method==1)?0:($scope.pay_type=='zhifubao')?0:1;
             var post_data=(pay_method==0)?{"ShowUrl":'',"BankSimpleCode":initBankSimpleCode($scope.pay_type)}
                 :{"ProductId":$scope.data_orders[0].Commodity.Id};
-            var type=($scope.source=='shoppingCart')?0:1;
             var param={
                 "AddressId":$scope.selected_address.Id,
                 InvoiceTitle:($scope.invoice.type!=-1)?$scope.invoice.title:'',
@@ -125,9 +130,12 @@ angular.module('LuckyMall.controllers')
                 "Data":angular.toJson(post_data)
             };
             console.log(angular.toJson(param));
-            PaymentSer.purchaseOrders(type,param,function(response,status){
+            $scope.btn_val_purchase='正在处理...';
+            PaymentSer.purchaseOrders($scope.purchaseType,param,function(response,status){
+                $scope.btn_val_purchase='确认支付';
                 if(status==1){
                     if(response.Code=='0X00') {
+                        submit_time++;
                         $scope.$emit('cart-update');
                         $rootScope.$broadcast('orders-update');
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
@@ -137,6 +145,7 @@ angular.module('LuckyMall.controllers')
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;
                             },5);
+                            $scope.pay_url=API.aliPaySubmit.url+response.Data.OutTradeNo;
                             window.open(API.aliPaySubmit.url+response.Data.OutTradeNo);
                             $scope.polling=true;
                             pollingTradeStatus(response.Data.OutTradeNo);
@@ -150,12 +159,18 @@ angular.module('LuckyMall.controllers')
                         });
 
                     }else if(response.Code=='0X02'){
-                        swal({
-                            title: "确认订单失败，请勿重复提交订单！",
-                            text:'已提交的订单可以在“我的订单”里找到',
-                            type: "error",
-                            confirmButtonText: "确定"
-                        });
+                        submit_time++;
+                        if(submit_time>=1&&submit_time<2){
+                            $scope.purchaseType=1;//第二次提交时改为重新支付方式
+                            $scope.submitOrder();
+                        }else{
+                            swal({
+                                title: "确认订单失败，请勿重复提交订单！",
+                                text:'已提交的订单可以在“我的订单”里找到',
+                                type: "error",
+                                confirmButtonText: "确定"
+                            });
+                        }
 
                     }else if(response.Code=='0X03'){
                         swal({
@@ -170,6 +185,11 @@ angular.module('LuckyMall.controllers')
                             text:'错误码：0XXX',
                             confirmButtonText: "确定"
                         });
+                    }
+                }else{
+                    if(status==401){
+                        swal( "账号过期，请重新登陆！");
+                        $state.go('login');
                     }
                 }
             });
@@ -222,25 +242,38 @@ angular.module('LuckyMall.controllers')
         };
       /*初始化显示数据*/
      function loadConfirmOrderData(){
-         if($scope.source=='shoppingCart'){
-             $scope.data_orders=CartSer.getConfirmData();//取已选择订单
-         }else if($scope.source=='repay'){
-             $scope.data_orders=PaymentSer.getData().orders;
-         }else if($scope.source=='purchase'){
-             var order_id=MyOrdersSer.getTempOrder().Id;
-             $scope.data_orders=[CartSer.getOrderById(order_id)];
-             console.log(angular.toJson($scope.data_orders));
-         }else if($scope.source=='game'){
-             var order_id=MyOrdersSer.getTempOrder();
-             $scope.data_orders=[CartSer.getOrderById(order_id)];
+         if($scope.source=='game'){
+             var order_id = MyOrdersSer.getTempOrder();
+             OrderDetailsSer.requestData(order_id, function (resp, status) {
+                 if (status == 1) {
+                     $scope.data_orders = [OrderDetailsSer.getData()];
+                     AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
+                         if(status==1){
+                             $scope.data_addresses=AddressSer.getData();
+                             initPostData();  //初始化提交数据
+                         }
+                     });
+                 }
+             });
              console.log($scope.data_orders);
-         }
-         AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
-             if(status==1){
-                 $scope.data_addresses=AddressSer.getData();
-                 initPostData();  //初始化提交数据
+         }else {
+             if ($scope.source == 'shoppingCart') {
+                 $scope.data_orders = CartSer.getConfirmData();//取已选择订单
+             } else if ($scope.source == 'repay') {
+                 $scope.data_orders = PaymentSer.getData().orders;
+             } else if ($scope.source == 'purchase') {
+                 var order_id = MyOrdersSer.getTempOrder().Id;
+                 $scope.data_orders = [CartSer.getOrderById(order_id)];
+                 console.log(angular.toJson($scope.data_orders));
+             } else if ($scope.source == 'game') {
              }
-         });
+             AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
+                 if(status==1){
+                     $scope.data_addresses=AddressSer.getData();
+                     initPostData();  //初始化提交数据
+                 }
+             });
+         }
      }
       /*初始化提交数据*/
      function initPostData(){

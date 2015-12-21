@@ -30,13 +30,17 @@ angular.module('LuckyMall')
         };
     })
     /*登陆弹出框*/
-    .directive('modalLogin', function () {
+    .directive('modalLogin', function ($state) {
         return {
             restrict: 'E',
             templateUrl: 'common/templates/modal-login.html',
             replace: true,
             controller: 'LoginCtrl',
             link: function (scope, element, attrs) {
+                scope.goLostPWPage=function(){
+                    scope.$emit('close-login-modal');
+                    $state.go("lostPassword");
+                }
             }
         };
     })
@@ -246,6 +250,9 @@ angular.module('LuckyMall')
                 /*隐藏反馈窗口*/
                 scope.showFeedbackModal = function () {
                     scope.$emit('show-feedback-modal');
+                };
+                scope.showQRCode=function(){
+                    scope.isQRCodeShow=true;
                 };
             }
         };
@@ -602,18 +609,20 @@ angular.module('LuckyMall')
 
 
     /* 图片预加载和错误处理*/
-    .directive('tempSrc', function () {
+    .directive('tempSrc', function ($timeout) {
         return {
             link: function (scope, element, attrs) {
                 var src = attrs.realSrc;
                 attrs.$set('src', attrs.tempSrc);
                 var img = document.createElement("img");
                 img.src = src;
-                element.addClass('img-loading');
                 img.onload = function () {
-                    attrs.$set('src', src);
-                    element.removeClass('img-loading');
-                    element.addClass('img-loaded');
+                    element.css('opacity','0');
+                    $timeout(function(){
+                        element.css('transition','opacity 1s');
+                        element.css('opacity','1');
+                        attrs.$set('src', src);
+                    },300);
                 };
                 img.onerror = function () {
                     element.removeClass('img-loading');
@@ -773,13 +782,13 @@ angular.module('LuckyMall')
             restrict: 'A',
             link: function (scope, element, attrs) {
                 if(attrs.countDown) {
-                    scope.$watch(attrs.countDown, function () {
-                        start();
+                    scope.$watch(attrs.countDown, function (new_val,old_val) {
+                        start(new_val);
                     });
                 }
-                function start() {
+                function start(val) {
                     clearInterval(element.timer);
-                    element.time = parseInt(attrs.countDown);
+                    element.time = parseInt(val);
                     var inner = element.time >= 60 ? parseInt(element.time / 60) + '分' + element.time % 60 + '秒' : element.time % 60 + '秒';
                     element.html(inner);
                     countDown();
@@ -791,6 +800,7 @@ angular.module('LuckyMall')
                                 element.html(new_inner);
                             } else {
                                 clearInterval(element.timer);
+                                element.time=parseInt(val);
                                 if (typeof scope[attrs.timeOver] == "function") {
                                     scope[attrs.timeOver]();
                                 }
@@ -871,6 +881,63 @@ angular.module('LuckyMall')
     }
 })
 
+    /*剩余时间*/
+    .directive('timeDown', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                if(attrs.timeDown){
+                    scope.$watch(attrs.timeDown,function(new_val,old_val){
+                        if(new_val!=undefined&&new_val!='') {
+                            start(new_val);
+                        }
+                    });
+                }
+
+                function start(time_second){
+                    element.time = parseInt(time_second);
+                    var inner = initTime(element.time);
+                    element.html(inner);
+                    countDown();
+                    function countDown() {
+                        element.timer = setInterval(function () {
+                            if (element.time > 0) {
+                                element.time--;
+                                var new_inner = initTime(element.time);
+                                element.html(new_inner);
+                            } else {
+                                clearInterval(element.timer);
+                                if (typeof scope[attrs.timeOver] == "function") {
+                                    scope[attrs.timeOver]();
+                                }
+                            }
+                        }, 1000);
+                    }
+
+                }
+
+                function initTime(time){
+                    var t=time;
+                    var str='';
+                    if(t>3600*24){
+                        str+=parseInt(t/(3600*24))+'天';
+                        t=t%(3600*24);
+                    }
+                    if(t>3600){
+                        str+=parseInt(t/3600)+'时';
+                        t=t%3600;
+                    }
+                    if(t>60){
+                        str+=parseInt(t/60)+'分';
+                        t=t%60;
+                    }
+                    str+=t+'秒';
+                    return str;
+                }
+            }
+        };
+    })
+
 /*图片出错*/
 .directive('errorSrc', function ($compile) {
     return {
@@ -879,6 +946,59 @@ angular.module('LuckyMall')
             element.bind('error',function(){
                 element.attr('src',attrs.errorSrc);
             });
+        }
+    }
+})
+
+
+/*游戏窗口*/
+.directive('gameWindow', function ($rootScope,$state,MyOrdersSer) {
+    return {
+        restrict: 'E',
+        templateUrl: 'common/templates/iFrame-game.html',
+        replace: true,
+        link: function (scope, element, attrs) {
+
+              scope.isLoadingGame=true;
+                var iframe_game=element.find('iframe');
+                scope.$watch("game.url", function (new_val, old_val) {
+                     if (new_val!=old_val) {
+                        iframe_game.attr('src', new_val);
+                     }
+                });
+                window.addEventListener('message',gameHandler,false);
+
+                function gameHandler(e){
+                    if(e.origin=='http://www.xingyunmao.cn:9004'){
+                        if(e.data==true){
+                            scope.isLoadingGame=false;
+                        }else {
+                            switch (e.data.mode) {
+                                case 0://返回购物车
+                                    $rootScope.$broadcast('cart-update');
+                                    $state.go('shoppingCart');
+                                    break;
+                                case 1://付定金
+                                    $rootScope.$broadcast('cart-update');
+                                    $state.go('payForEarnest', {params: 'order_id=' + $rootScope.game.orderId});
+                                    break;
+                                case 2://支付
+                                    $rootScope.$broadcast('cart-update');
+                                    MyOrdersSer.setTempOrder($rootScope.game.orderId);
+                                    $state.go('confirmOrder', {source: 'source=game'});
+                                    break;
+                                case 3://登陆
+                                    $state.go('login');
+                                    break;
+                                case 4://详情页
+                                    $rootScope.$broadcast('cart-update');
+                                    $state.go('goodsDetails', {goods_id: $rootScope.game.commodityId});
+                                    break;
+                            }
+                            $rootScope.closeGame();
+                        }
+                    }
+                }
         }
     }
 });

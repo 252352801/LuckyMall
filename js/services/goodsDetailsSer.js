@@ -10,6 +10,25 @@ angular.module('LuckyMall.services')
                 }
             }
         };
+        var setRemainTime=function(cur_time,end_time){
+            var t_cur=new Date(cur_time.replace(/-/g,"/"));
+            var t_end=new Date(end_time.replace(/-/g,"/"));
+            return (t_end-t_cur)/1000;
+        };
+       var testStatus=function(cur_time,sale_time,end_time){
+           var t_cur=new Date(cur_time.replace(/-/g,"/"));
+           var t_sale=new Date(sale_time.replace(/-/g,"/"));
+           var t_end=new Date(end_time.replace(/-/g,"/"));
+           if(t_cur>t_sale&&t_cur<t_end){
+               return 1;//正在销售
+           }else{
+               if(t_cur>=t_sale){
+                   return -1;//已下架
+               }else if(t_cur<=t_sale){
+                   return 0; //未开售
+               }
+           }
+       };
         return {
             /*外部获取数据途径*/
             getData: function () {
@@ -28,6 +47,8 @@ angular.module('LuckyMall.services')
                         data.SmallImages = data.RollingImages.split('|');
                         data.BigImages = data.DetailImages.split('|');
                         data.Property = JSON.parse(data.Property);
+                        data.remainTime=setRemainTime(data.CurrentTime,data.ExpiryDate);
+                        data.status=testStatus(data.CurrentTime,data.OnSaleTime,data.ExpiryDate);
                         initDisabled();
                         callback();
                     }
@@ -187,7 +208,9 @@ angular.module('LuckyMall.services')
                 })
                 .error(function(response,status){
                     if(status==401){
-                        callback("您的账号在别处登陆，请退出后重新登陆",2);
+                        callback("账号过期！",2);
+                    }else{
+                        callback('请求失败！',-2);
                     }
                 });
             }

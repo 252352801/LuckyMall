@@ -181,7 +181,6 @@ angular.module('LuckyMall.controllers')
             }
 
             loadAddressList();         /*加载收货地址*/
-            getKuaiDi100List();
 
         }
 

@@ -16,19 +16,19 @@
             <p class="bar-lost-pw">
                 <input type="checkbox" id="login_auto" ng-checked="keepLogin" />
                 <label class="label-ck" for="login_auto">自动登录</label>
-                <a class="a-lost-pw" href="#" title="">忘记密码？</a>
+                <a class="a-lost-pw" ng-click="goLostPWPage()" title="">忘记密码？</a>
             </p>
             <p>
                 <input class="btn-sigIn" type="submit" ng-value="value_btn" />
             </p>
         </form>
         <div class="box-quick-login">
-        <h3>快捷登录</h3>
+<!--        <h3>快捷登录</h3>
         <div>
             <a href="" title="" class="ql-QQ">腾讯QQ</a>
             <a href="" title="" class="ql-WX">微信</a>
             <a href="" title="" class="ql-XL">新浪微博</a>
-        </div>
+        </div>-->
     </div>
     </div>
     <span class="btn-close" title="关闭" ng-click="closeLoginModal()">×</span>
