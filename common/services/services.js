@@ -656,7 +656,15 @@ angular.module('LuckyMall.services',[])
                     if(cg_id==data[i].Id){
                         return data[i];
                     }
+                    if(data[i].SubCategories!=null){
+                        for(var o in data[i].SubCategories){
+                            if(cg_id==data[i].SubCategories[o].Id){
+                                return data[i].SubCategories[o];
+                            }
+                        }
+                    }
                 }
+                return null;
             }
         };
     })
@@ -767,6 +775,23 @@ angular.module('LuckyMall.services',[])
                         }
                     });
                 },
+
+             /*是否可以免费试玩*/
+             isCanFreePlay:function(goods_id,callback){
+                $http({
+                    method: API.isCanFreePlay.method,
+                    url: API.isCanFreePlay.url+goods_id,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }).success(function (response, status, headers, config) {
+                    if(status==200){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                })
+             },
 
                 /*根据id删除购物车里的订单*/
                 cancelOrder:function(order_id,callback){
@@ -1397,7 +1422,7 @@ angular.module('LuckyMall.services',[])
                 var spe=data[o].Order.Specifications;
                 data[o].Order.goodsProperty=angular.fromJson(spe);
                 data[o].Order.imgUrl=data[o].Order.Commodity.RollingImages.split('|')[0];
-                data[o].discountPrice=(data[o].BaseDiscount*data[o].Order.UnitPrice).toFixed(2);
+                data[o].discountPrice=Math.ceil(data[o].BaseDiscount*data[o].Order.UnitPrice);
                 data[o].BaseDiscount=10*(data[o].BaseDiscount.toFixed(2));
             }
             return data;

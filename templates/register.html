@@ -51,10 +51,13 @@
                         <input  type="password" placeholder="再次输入密码" ng-model="re_password" autocomplete="false" name="re_password" required  onpaste="return false" ng-change="clearError('repPassword')" />
                     </p>
                     <p>
-                        <input class="btn btn-register" type="submit" ng-value="value_btn" />
+                        <input class="ck_protocol" type="checkbox" name="ck_protocol" required ng-model="ck_protocol"/>
+                        <a href="/support/protocol" target="_blank" class="color-org">
+                            《幸运猫用户协议》
+                        </a>
                     </p>
                     <p>
-                        <a href="/support/protocol" target="_blank" class="color-org">《幸运猫用户协议》</a>
+                        <input ng-style="{'background':form_register.ck_protocol.$invalid?'#ccc':'#ff6700'}"class="btn btn-register" type="submit" ng-value="value_btn" ng-disabled="form_register.ck_protocol.$invalid"/>
                     </p>
                 </form>
             </div>
@@ -62,24 +65,6 @@
     </div>
 </div>
 <!--中部 end-->
-<div class="modal-protocol" ng-show="isModalProtocolShow">
-    <span class="btn_close" ng-click="hideProtocol()">×</span>
-    <div class="modal-content">
-        <h1>《幸运猫用户协议》</h1>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-        <p>1.幸运猫用户协议幸运猫用户协议幸运猫用户协议幸运猫用户协议</p>
-    </div>
-    <p class="bar-button">
-        <button ng-click="hideProtocol()">确定</button>
-    </p>
-</div>
 <introduction></introduction>
 
 <sub-footer></sub-footer>

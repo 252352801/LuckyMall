@@ -57,7 +57,7 @@ angular.module('LuckyMall.services')
 
                 });
             },
-            /*是否使用过免费次数*/
+            /*是否可以免费试玩*/
             isCanFreePlay:function(goods_id,callback){
                 $http({
                     method: API.isCanFreePlay.method,

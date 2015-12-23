@@ -61,12 +61,6 @@ angular.module('LuckyMall')
             replace: true,
             transclude: true,
             controller: function ($scope, LoginSer, $timeout, $rootScope,$state) {
-                if (document.documentElement.scrollTop) {//每次加载头部时，滚动条Y值为0（回到页面顶端）
-                    document.documentElement.scrollTop = 0;
-                } else {
-                    document.body.scrollTop = 0;
-                }
-
                 $scope.exit = function () {
                     LoginSer.exit();
                     $rootScope.$broadcast('exit');
@@ -143,18 +137,13 @@ angular.module('LuckyMall')
             templateUrl: 'common/templates/long-header.html',
             replace: true,
             link: function (scope, element, attrs) {
-                if (document.documentElement.scrollTop) {//每次加载头部时，滚动条Y值为0（回到页面顶端）
-                    document.documentElement.scrollTop = 0;
-                } else {
-                    document.body.scrollTop = 0;
-                }
                 scope.cur_nav = attrs.nav;
             }
         };
     })
 
     /*商品分类*/
-    .directive('category', function () {
+    .directive('category', function ($state) {
         return {
             restrict: 'E',
             templateUrl: 'common/templates/category.html',
@@ -170,6 +159,11 @@ angular.module('LuckyMall')
                 scope.hideMore = function () {
                     scope.showMoreCategory = false;
                 };
+                if($state.current.name=='home'){
+                    scope.isShowCategoryBtn=false;
+                }else{
+                    scope.isShowCategoryBtn=true;
+                }
             }
         };
     })
@@ -406,57 +400,6 @@ angular.module('LuckyMall')
         }
     })
 
-
-    /*滚动加载图片脚本*/
-    .directive('lazyImg', function ($timeout) {
-        return {
-            restrict: 'A',
-            scope: true,
-            controller: function ($scope) {
-
-            },
-            link: function (scope, element, attrs) {
-                scope.$watch(attrs.lazyImg, function (val) {
-                    if(val) {
-                        start();
-                    }
-                });
-                function start() {
-                    var temp = -1;//用来判断是否是向下滚动（向上滚动就不需要判断延迟加载图片了）
-                    var imgElements = document.getElementsByTagName("img");
-                    var lazyImgArr = new Array();
-                    var bodyHeight = window.screen.availHeight;//body（页面）可见区域的总高度
-                    for (var i = 0; i < imgElements.length; i++) {
-                        if (imgElements[i].getAttribute("real-src") != null) {
-                            //addClass(imgElements[i], 'img-loading');
-                            lazyImgArr.push(imgElements[i]);
-                        }
-                    }
-                    var run = function () {
-                        var scrollHeight = (document.body.scrollTop == 0) ? document.documentElement.scrollTop : document.body.scrollTop;//滚动的高度
-                        if (temp < scrollHeight) {//为true表示是向下滚动，否则是向上滚动，不需要执行动作。
-                            for (var k = 0; k < lazyImgArr.length; k++) {
-                                var imgTop = getPosition(lazyImgArr[k]).top;//（图片纵坐标）
-                                if (imgTop - scrollHeight + 150 <= bodyHeight) {
-                                    lazyImgArr[k].setAttribute('src', lazyImgArr[k].getAttribute("real-src"));
-                                  //  addClass(lazyImgArr[k], 'img-loaded');
-                                    //removeClass(lazyImgArr[k],'img-loading');
-                                    lazyImgArr.splice(k, 1);
-                                }
-                            }
-                        }
-
-                    };
-                    $timeout(function () {
-
-                        run();
-                    }, 5);
-                    window.onscroll = run;
-                }
-            }
-
-        };
-    })
 
     /*倒计时按钮*/
     .directive('btnCountDown', function ($timeout) {
@@ -1001,4 +944,134 @@ angular.module('LuckyMall')
                 }
         }
     }
-});
+})
+
+
+    /*免费试玩按钮*/
+    .directive('btnFreePlay', function (CartSer,$timeout) {
+        return {
+            restrict: 'A',
+            replace: true,
+            link: function (scope, element, attrs) {
+                scope.canPlay=false;
+                var goods_id=attrs.btnFreePlay;
+                CartSer.isCanFreePlay(goods_id,function(response,status){
+                    if(status==1){
+                        if(response==true){
+                            $timeout(function(){
+                                scope.canPlay=true;
+                            })
+                        }
+                    }
+                });
+            }
+        }
+    })
+
+
+    /*进入游戏前的modal*/
+/*    .directive('modalBeforeGame', function () {
+        return {
+            restrict: 'E',
+            templateUrl: './common/templates/modal-beforeGame.html',
+            replace: true,
+            link:function(scope, element, attrs){
+            }
+        };
+    })*/
+    /*进入游戏前的modal*/
+    .directive('modalBeforeGame', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/modal-beforeGame.html',
+            replace: true,
+           /* scope:{
+
+            },*/
+            link:function(scope, element, attrs){
+            },
+            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host){
+                loadUserData();
+                $scope.play=function(){
+                    ga('send', 'pageview', {
+                        'page': '/enter_paygame',
+                        'title': '进入付定金游戏'
+                    });
+                    $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
+                }
+                $scope.showModal1 = function (order, total_cost) {
+                    $scope.data_eo=order;
+                    if (testEnergy(total_cost,order.EarnestPercent,order.EarnestMoney,$scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
+                        $scope.energy.isEnough = true;
+                    }else {
+                        $scope.energy.isEnough = false;
+                    }
+                    $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.game_orderId=order.Id;
+                    $scope.game_commodityId=order.CommodityId;
+                    $scope.isModal1show = true;
+                };
+                $scope.closeModal1 = function () {
+                    $scope.isModal1show = false;
+                    $scope.agree = false;
+                    $scope.energy.tips = '';
+                };
+                $scope.showModal2 = function () {
+                    $scope.isModal1show = false;
+                    $scope.isModal2show = true;
+                };
+                $scope.closeModal2 = function () {
+                    $scope.agree = false;
+                    $scope.isModal2show = false;
+                };
+                $scope.returnModal1 = function () {
+                    $scope.isModal1show = true;
+                    $scope.isModal2show = false;
+                };
+
+                $scope.payForEarnest = function () {
+                    if ($scope.agree) {
+                        $state.go('payForEarnest',{params:'order_id='+$scope.data_eo.Id});
+                    } else {
+                    }
+                };
+
+                 /**检查能量是否够4发炮弹**/
+                function testEnergy(total_cost,percent,paid_value,remain_energy) {
+                    var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
+                    var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
+                    if(remain_amount>=10){
+                        $scope.energy.tips = '喵喵体力充足，快去赢取更多折扣吧！';
+                        return true;
+                    }else{
+                        if(paid_value>0){
+                            if(remain_amount>=1){
+                                $scope.energy.tips = '进入游戏赢取更多折扣吧！';
+                                return true;
+                            }else{
+                                $scope.energy.tips = '喵喵体力不支，可先去付定金获得赠送体力！';
+                                return false;
+                            }
+                        }else{
+                            if(remain_amount<4){
+                                $scope.energy.tips = '喵喵体力不足，可先去付定金获得赠送体力！';
+                                return false;
+                            }else if(remain_amount>=4){
+                                $scope.energy.tips = '喵喵体力不多，建议先去支付定金获赠体力！';
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                function loadUserData() {
+                    RefreshUserDataSer.requestUserData(function (response, status) {
+                        if (status == 1) {
+                            $scope.data_user = RefreshUserDataSer.getData();
+                        }
+                    });
+
+                }
+            }
+        }
+    })

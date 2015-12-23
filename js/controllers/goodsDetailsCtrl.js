@@ -12,15 +12,15 @@ angular.module('LuckyMall.controllers')
         $scope.isFreePlayed = false;
         $scope.btn_value = {//按钮文字
             addToCart: '加入购物车',
-            buyNow: '立即购买',
-            freePlay:'试玩赢折扣'
+            buyNow: '立即抢折扣',
+            freePlay:'试玩抢折扣'
         };
         $scope.discount = function (cur_price, old_price) {
             return ((cur_price / old_price) * 10).toFixed(1);
         };
         /*数量减*/
         $scope.reduce = function () {
-            if ($scope.amount > 1&&!$scope.data_goods.IsCanFree) {
+            if ($scope.amount > 1&&$scope.isFreePlayed) {
                 $scope.amount--;
             }
         };
@@ -225,8 +225,9 @@ angular.module('LuckyMall.controllers')
                         callback();
                     } else if (act == 1) {
                         MyOrdersSer.setTempOrder(response.Data);
+                        $scope.purchase_order=response.Data;//立即购买的订单
                         CartSer.requestCartData(function (response, status) {
-                            $scope.btn_value.buyNow = '立即购买';
+                            $scope.btn_value.buyNow = '立即抢折扣';
                             if (status == 1) {
                                 $state.go('confirmOrder', {source: 'source=purchase'});
                             }
@@ -234,7 +235,7 @@ angular.module('LuckyMall.controllers')
                     }
                 } else if (status == 0) {
                     $scope.btn_value.addToCart = '加入购物车';
-                    $scope.btn_value.buyNow = '立即购买';
+                    $scope.btn_value.buyNow = '立即抢折扣';
                     handleErrs(response.Code);
 
                 }else if (status == 2) {
@@ -266,11 +267,9 @@ angular.module('LuckyMall.controllers')
             GoodsDetailsSer.requestCategoryByGoodsId(goods_id, function (response, status) {
                 if (status == 1) {
                     $scope.data_category = response;//品类数据  包含所属项和品类ID
-                    console.log(angular.toJson($scope.data_category));
                     if (CategorySer.getData() == null) {
                         CategorySer.requestData(function () {
-                            $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.Id).CategoryName;//通过品类ID获取品类名
-                            alert($scope.data_category.Id);
+                            $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;//通过品类ID获取品类名
                         });
                     } else {
                         $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.Id).CategoryName;

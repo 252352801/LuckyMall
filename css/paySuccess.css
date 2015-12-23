@@ -63,6 +63,7 @@
     width:140px;
     height:40px;
     line-height:40px;
+    cursor:pointer;
 }
 .box-status .buttons .btn:nth-child(2){
     margin-left:15px;

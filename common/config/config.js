@@ -302,7 +302,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './css/list.css',
                     './js/controllers/listCtrl.js',
-                    './js/services/listSer.js'
+                    './js/services/listSer.js',
+                    './js/directives/listDirectives.js'
                 ])
             }
 
@@ -439,7 +440,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         /*微信支付页*/
         .state('WXPay', {
-            url: '/WXPay/:trade_id',
+            url: '/WXPay/:trade_id/:type', //trade_id交易单号  type 0付定金 1支付
             views: {
                 '': {
                     templateUrl: "templates/WXPay.html",
@@ -487,6 +488,24 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './css/paySuccess.css'
+                ])
+            }
+
+        })
+        /*支付定金成功页*/
+        .state('payEarnestSuccess', {
+            url: '/payEarnestSuccess/:order_id/:commodity_id',
+            views: {
+                '': {
+                    templateUrl: "templates/payEarnestSuccess.html",
+                    controller:'PayEarnestSuccessCtrl'
+                }
+            },
+            title:'支付定金成功-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './css/paySuccess.css',
+                    './js/controllers/payEarnestSuccessCtrl.js'
                 ])
             }
 
@@ -1044,7 +1063,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             case Host.test:
                 Host.game='http://www.xingyunmao.cn:9004';//测试
                 Host.gameOverPage='www.xingyunmao.cn/';
-               // Host.gameOverPage='127.0.0.1/';
+              // Host.gameOverPage='127.0.0.1/';
                 break;
             case Host.prev:
                 Host.game='http://120.24.225.116:9004';//运营（前）

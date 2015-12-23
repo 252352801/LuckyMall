@@ -1,4 +1,4 @@
-<header ng-title="data_filter.CategoryName+'_幸运猫'"></header>
+<header ng-title="cateName+'_幸运猫'"></header>
 <aside-right></aside-right>
 <sub-header>
     <category has-sub-category="false"></category>
@@ -6,7 +6,7 @@
 
 <!--中部 start-->
 <div class="list content">
-    <div class="filters">
+    <div class="filters" elem-top id="list_filter">
         <div class="ctr-choice">
             <div class="page-location">
                 <a href="/home">全部商品</a>
@@ -123,7 +123,8 @@
     <ul class="pro-list-cont">
         <li ng-repeat="list in data_list" >
             <a class="a-goodsImg" href="/goodsDetails/{{list.Id}}" target="_blank" title="">
-                <img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>
+                <!--<img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>-->
+                <img lazy-src="{{imgHost+list.RollingImages[0]}}" />
             </a>
             <div class="goods-info">
                 <a href="/goodsDetails/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
@@ -131,7 +132,7 @@
                 </a>
                 <p class="price">
                     <span class="prices" ng-bind="'￥'+list.maxPrice+'~￥'+list.minPrice"></span>
-                    <span class="old-price" ng-bind="list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
+                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
                     <span class="icon-discount" ng-bind="'低至'+(list.MaxDiscount*10).toFixed(1)+'折'"></span>
                     <!--<span class="final-price" ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)" ></span>
                     <span class="old-price" ng-bind="list.RetailPrice"></span>
@@ -145,16 +146,21 @@
         暂时没有符合条件的商品喔！
     </div>
     <div class="page-index" ng-show="showLoading==false">
-        <div class="prev" ng-click="prevPage()" btn-page-up><</div>
+        <div class="prev" ng-click="prevPage()" btn-scroll-filter><</div>
         <div class="indexes">
-            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-page-up></span>
+            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-scroll-filter></span>
         </div>
-        <div class="next" ng-click="nextPage()" btn-page-up>></div>
+        <div class="next" ng-click="nextPage()" btn-scroll-filter>></div>
     </div>
 </div>
 <!--中部 end-->
 
 
+<ul class="category-menu" toggle-menu ng-style="{opacity:showMenu?1:0}">
+    <li ng-repeat="menu in data_menu">
+        <a href="/list/{{'category='+menu.Id}}/0/" ng-bind="menu.CategoryName" btn-scroll-filter></a>
+    </li>
+</ul>
 <introduction></introduction>
 <sub-footer></sub-footer>
 <footer></footer>

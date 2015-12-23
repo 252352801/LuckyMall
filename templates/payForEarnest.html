@@ -44,13 +44,13 @@
                 </div>
                 <div class="cont3">
                     <div class="cont-container">
-                        <p class="discount-price"  ng-bind="'￥'+data_order.cost.toFixed(2)"></p>
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_order.DiscountVal.toFixed(2))*10+'折'"></span></p>
+                        <p class="discount-price"  ng-bind="'￥'+mathCeilPrice(data_order.cost)"></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_order.DiscountVal*10).toFixed(1)+'折'"></span></p>
                     </div>
                 </div>
                 <div class="cont4">
                     <div class="cont-container">
-                        <p class="unPay" ng-bind="'￥'+earnest_cost.toFixed(2)"></p>
+                        <p class="unPay" ng-bind="'￥'+(mathCeilPrice(earnest_cost)-data_order.EarnestMoney)"></p>
                         <p ng-if="data_order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+data_order.EarnestMoney"></span></p>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
         </div>
         <div>
             <label>合计金额：</label>
-            <p><span class="cost" ng-bind="'￥'+earnest_cost.toFixed(2)"></span>元</p>
+            <p><span class="cost" ng-bind="'￥'+mathCeilPrice(earnest_cost)"></span>元</p>
         </div>
         <div>
             <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>

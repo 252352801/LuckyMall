@@ -23,14 +23,14 @@ angular.module('LuckyMall.controllers')
             switch($scope.pay_type){
                 case 'zhifubao':return '支付宝';break;
                 case 'weixin':return '微信支付';break;
-                case 'bank_icbc':return '中国工商银行网银支付';break;
-                case 'bank_jianshe':return '中国建设银行网银支付';break;
-                case 'bank_nongye':return '中国农业银行网银支付';break;
-                case 'bank_zhaoshang':return '中国招商银行网银支付';break;
-                case 'bank_zhongguo':return '中国银行网银支付';break;
-                case 'bank_xingye':return '兴业银行网银支付';break;
-                case 'bank_pingan':return '平安银行网银支付';break;
-                case 'bank_youzheng':return '中国邮政储蓄银行银行网银支付';break;
+                case 'bank_icbc':return '(支付宝)工商银行网银支付';break;
+                case 'bank_jianshe':return '(支付宝)建设银行网银支付';break;
+                case 'bank_nongye':return '(支付宝)农业银行网银支付';break;
+                case 'bank_zhaoshang':return '(支付宝)招商银行网银支付';break;
+                case 'bank_zhongguo':return '(支付宝)中国银行网银支付';break;
+                case 'bank_xingye':return '(支付宝)兴业银行网银支付';break;
+                case 'bank_pingan':return '(支付宝)平安银行网银支付';break;
+                case 'bank_youzheng':return '(支付宝)邮政储蓄银行银行网银支付';break;
             }
         };
         /*收货地址切换*/
@@ -140,7 +140,7 @@ angular.module('LuckyMall.controllers')
                         $rootScope.$broadcast('orders-update');
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
                             WXPaySer.setTotalCost($scope.total_cost);
-                            $state.go('WXPay',{trade_id:response.Data.OutTradeNo});
+                            $state.go('WXPay',{trade_id:response.Data.OutTradeNo,type:1});
                         }else{
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;

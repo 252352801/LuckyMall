@@ -198,9 +198,10 @@ angular.module('LuckyMall')
     .directive('numberSlider', function ($timeout, $compile) {
         return {
             link: function (scope, element, attrs) {
-                scope.numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                scope.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10];
+                scope.overlay=[0,0,0,0];
                 var change_time = 2000;//切换的间隔时间
-
+                var num_len=scope.numbers.length;
 
                 if (attrs.numberSlider) {
                     scope.$watch(attrs.numberSlider, function (new_val, old_val) {
@@ -212,47 +213,58 @@ angular.module('LuckyMall')
 
                 function start(data_goods) {
 
-                    var h=45;//高度
 
                     var slider=getByClass("item-slider");
+                    scope.h=45;//高度
                     var price = data_goods.RetailPrice;
                     var max_disc = data_goods.MaxDiscount;
                     var min_disc = data_goods.MinDiscount;
                     scope.cur_disc = min_disc;
                     var cur_price = (price * min_disc).toFixed(0);
                     initPrice(cur_price);
-                    for(var o=0;o<slider.length;o++){
-                        slider[o].style.top=-(10+parseInt(scope.indexes[o]))*h+'px';
+                    initOverlayStatus();
+                    for(var o=0;o<scope.indexes.length;o++){
+                        slider[o].style.top=-(num_len+parseInt(scope.indexes[o]))*scope.h+'px';
                     }
+                    var rand = Math.random();//随机数
                     $timeout(function () {
                         run();
                     }, change_time)
                     function run() {
-                        var rand = Math.random();//随机数
-                        if (scope.cur_disc == max_disc) {
-                            scope.cur_disc = min_disc;
-                            scope.new_disc=0;
-                        } else {
-                            scope.new_disc=rand *0.5+0.5;
-                            scope.cur_disc *= scope.new_disc;
-                        }
-                        if (scope.cur_disc < max_disc) {
-                            scope.cur_disc = max_disc;
-                        }
-                        cur_price = (price * scope.cur_disc).toFixed(0);
-                        var old_index=scope.indexes;
-                        initPrice(cur_price);
+
                         $timeout(function () {
+                            scope.new_disc=rand+0.1;//构建新的折扣卡
+                            scope.new_disc=scope.new_disc.toFixed(1);
+                            if(scope.new_disc>=1){
+                                scope.new_disc-=0.2;
+                            }
+                            scope.dc_animate = true;//开启动画
+                        });
+                        $timeout(function () {
+                            scope.dc_animate=false;//暂停动画
+                            /*#################计算当前折扣、价格数组####################*/
+                            if (scope.cur_disc == max_disc) {
+                                scope.cur_disc = min_disc;
+                                scope.dc_animate=0;
+                            } else {
+                                scope.cur_disc *= scope.new_disc;
+                            }
+                            if (scope.cur_disc < max_disc) {
+                                scope.cur_disc = max_disc;
+                            }
+                            cur_price = Math.ceil(price * scope.cur_disc);
+                            var old_index=scope.indexes;
+                            initPrice(cur_price);
+                            /*#################end####################*/
                             var new_index=scope.indexes;
                             var val=[0,0,0,0];
                             for(var o in new_index){
                                 if(parseInt(new_index[o])>parseInt(old_index[o])){
-                                    val[o]=10+parseInt(old_index[o])-parseInt(new_index[o]);
+                                    val[o]=num_len+parseInt(old_index[o])-parseInt(new_index[o]);
                                 }else{
                                     val[o]=parseInt(old_index[o])-parseInt(new_index[o]);
                                 }
                             }
-                            console.log(val);
                             tweenMultiFixAnimate({
                                 obj: [
                                     {
@@ -260,7 +272,7 @@ angular.module('LuckyMall')
                                         object: [
                                             {
                                                 attr: 'top',//需要改变的属性
-                                                value: parseInt(val[0])*h,//改变的值 可以为正负
+                                                value: parseInt(val[0])*scope.h,//改变的值 可以为正负
                                                 moveName: 'Linear',//动画名，默认为Linear
                                                 moveType: 'easeIn'//动画的缓动方式，默认为easeIn
                                             }
@@ -271,7 +283,7 @@ angular.module('LuckyMall')
                                         object: [
                                             {
                                                 attr: 'top',//需要改变的属性
-                                                value: parseInt(val[1])*h,//改变的值 可以为正负
+                                                value: parseInt(val[1])*scope.h,//改变的值 可以为正负
                                                 moveName: 'Linear',//动画名，默认为Linear
                                                 moveType: 'easeIn'//动画的缓动方式，默认为easeIn
                                             }
@@ -282,7 +294,7 @@ angular.module('LuckyMall')
                                         object: [
                                             {
                                                 attr: 'top',//需要改变的属性
-                                                value:parseInt(val[2])*h,//改变的值 可以为正负
+                                                value:parseInt(val[2])*scope.h,//改变的值 可以为正负
                                                 moveName: 'Linear',//动画名，默认为Linear
                                                 moveType: 'easeIn'//动画的缓动方式，默认为easeIn
                                             }
@@ -293,7 +305,7 @@ angular.module('LuckyMall')
                                         object: [
                                             {
                                                 attr: 'top',//需要改变的属性
-                                                value:parseInt(val[3])*h,//改变的值 可以为正负
+                                                value:parseInt(val[3])*scope.h,//改变的值 可以为正负
                                                 moveName: 'Linear',//动画名，默认为Linear
                                                 moveType: 'easeIn'//动画的缓动方式，默认为easeIn
                                             }
@@ -302,11 +314,13 @@ angular.module('LuckyMall')
                                 ],
                                 time: 300,//执行动画的时间
                                 callback: function(){
+                                    initOverlayStatus();
                                     for(var o in new_index){
                                         if(parseInt(new_index[o])>parseInt(old_index[o])){
-                                            slider[o].style.top=slider[o].offsetTop-h*10+'px';
+                                            slider[o].style.top=slider[o].offsetTop-scope.h*num_len+'px';
                                         }
                                     }
+                                    rand = Math.random();//生成新的随机数
                                     run();
                                 }
                             });
@@ -324,6 +338,17 @@ angular.module('LuckyMall')
                         c--;
                         a--;
                     }
+                }
+                function initOverlayStatus(){
+                   scope.overlay=[0,0,0,0];
+                    for(var o in scope.indexes){
+                        if(parseInt(scope.indexes[o])==0){
+                            scope.overlay[o]=1;
+                        }else{
+                            break;
+                        }
+                    }
+                    console.log(scope.overlay);
                 }
             }
         }

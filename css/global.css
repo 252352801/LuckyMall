@@ -324,6 +324,9 @@ input:focus{
     color:#666;
     text-decoration:underline;
 }
+.footer-item{
+    margin-left:20px;
+}
 /*页脚end*/
 
 /*==============
@@ -422,7 +425,7 @@ input:focus{
     padding:15px;
     position:relative;
     left:-160px;
-    top:-200px;
+    top:-170px;
     z-index:200;
     background:#fff;
     border:1px solid #ff6700;
@@ -1177,7 +1180,7 @@ input:focus{
     min-width:1200px;
     background:#fff;
     height:140px;
-    border-bottom:2px solid #ff6700;
+    border-bottom:1px solid #ff6700;
 }
 .sub-header .content{
     position:relative;
@@ -1482,22 +1485,24 @@ a.btn-to-pay{
     color:#ff6700;
 }
 .nav1,.nav2{
-    border-bottom:2px solid #FF5200;
+    border-bottom:1px solid #FF5200;
 }
 .nav3,.nav4{
-    border-bottom:2px solid #53b401;
+    border-bottom:1px solid #53b401;
 }
 .nav5,.nav6{
-    border-bottom:2px solid #0d96da;
+    border-bottom:1px solid #0d96da;
 }
 .border-bottom4{
-    border-bottom:2px solid #a64ef2;
+    border-bottom:1px solid #a64ef2;
 }
 a.icon-mb-link{
     color:#ff6700;
     padding-left:80px;
     padding-right:0;
-    position:relative;
+    position:absolute;
+    left:750px;
+    top:0px;
 }
  .sub-h-QR{
     position: absolute;
@@ -1526,11 +1531,11 @@ a.icon-mb-link{
 ===============*/
 .category{
     width:250px;
-    background:rgba(0,0,0,0.7);
+    background:rgba(30,30,0,0.7);
     color:#fff;
     position:absolute;
     left:0px;
-    top: 142px;
+    top: 141px;
     z-index:20;
 }
 .category-cont{
@@ -1548,14 +1553,16 @@ a.icon-mb-link{
 .category-top{
     height: 40px;
 	background: #ff6700;
-
-	margin-top: -42px;
+	margin-top: -40px;
+    position:relative;
 }
 .category-top .category-title{
+    width:82%;
     font-size:16px;
-    line-height:40px;
+    line-height:42px;
     font-weight:normal;
     color:#fff;
+    cursor:pointer;
 }
 .category-title:before{
     display: block;
@@ -1567,6 +1574,25 @@ a.icon-mb-link{
     margin-left:15px;
     margin-right:7px;
     margin-top:7px;
+}
+.category-top .btn-slide-down{
+    content:'';
+    display:block;
+    border:8px solid transparent;
+    border-top-color:#fff;
+    position:absolute;
+    left:87%;
+    top:18px;
+    cursor:pointer;
+}
+.category-top .btn-slide-down:before{
+    content:'';
+    display:block;
+    border:8px solid transparent;
+    border-top-color:#ff6700;
+    position:absolute;
+    left:-8px;
+    top:-10px;
 }
 .category ul{
     overflow:hidden;
@@ -1595,7 +1621,7 @@ a.icon-mb-link{
 .category ul li h3{
     width:220px;
     border-top:1px solid rgba(255,255,255,.1);
-    line-height:45px;
+    line-height:42px;
     font-size:15px;
     font-weight: normal;
     color:#fff;
@@ -1686,6 +1712,7 @@ a.icon-mb-link{
     line-height:24px;
     padding-right:15px;
     padding-left:20px;
+    text-indent:5px;
     overflow:auto;
 }
 .dynamic.category-cont li{
@@ -1701,6 +1728,14 @@ ul.dynamic li h3 a{
     color:#444!important;
     font-weight:600;
     font-size:14px;
+    color:#666;
+    font-weight:500;
+}
+ul.dynamic li h3 a:after{
+    content: '>';
+    font-family:'仿宋';
+    margin-left:10px;
+    color:#999;
 }
 ul.dynamic li h3 a:before{
     content: '';
@@ -1723,9 +1758,9 @@ ul.dynamic li p a:hover{
 .left{
     position:fixed;
     height:100%;
-    width:360px;
+    width:150px;
     z-index:500;
-    left:-360px;
+    left:-150px;
     box-sizing:border-box;
     padading-top:40px;
     padding-bottom:50px;
@@ -1770,7 +1805,7 @@ ul.dynamic li p a:hover{
     left:0px;
 }
 .right.move-right{
-    margin-left:360px;
+    margin-left:150px;
 }
 
 .hidden-category-title{
@@ -1913,6 +1948,12 @@ ul.dynamic li p a:hover{
     padding:0px 15px;
     outline:none;
     border:1px solid #ccc;
+}
+.form-register p input.ck_protocol{
+    width:15px;
+    height:15px;
+    position: relative;
+    top: 3px;
 }
 .form-register .p-verifyCode input:last-child{
     width:40%; float:right;
@@ -2606,6 +2647,13 @@ ul.dynamic li p a:hover{
     position:relative;
     top:10%;
     animation:openGame 0.5s;
+}
+@media screen and (max-height:720px) {
+    .window-game{
+        width:auto;
+        height:100%;
+        top:0px;
+    }
 }
 .btn-close-game{
     display:inline-block;

@@ -14,7 +14,7 @@ angular.module('LuckyMall.controllers')
             loadCartData();
         });
         $scope.$on('cart-time-over', function () {
-            $scope.data_cart=[];
+            loadCartData();
         });
         $scope.gameHost = app.gameHost;
         $scope.callbackURL = app.gameOverPage;
@@ -51,6 +51,10 @@ angular.module('LuckyMall.controllers')
                     });
                 });
         };
+        /*跳转订单确认页*/
+        $scope.goConfirm = function () {
+            $state.go('confirmOrder', {source: 'source=shoppingCart'});
+        };
         $scope.freePlay=function(order_id,comm_id){
             ga('send', 'pageview', {
                 'page': '/enter_freegame',
@@ -59,17 +63,20 @@ angular.module('LuckyMall.controllers')
             var g_url=Host.game+ '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
             $rootScope.openGame(g_url,order_id,comm_id);
         };
-        $scope.play=function(){
+
+
+
+
+
+
+
+      /*  $scope.play=function(){
             ga('send', 'pageview', {
                 'page': '/enter_paygame',
                 'title': '进入付定金游戏'
             });
             $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
         }
-        /*跳转订单确认页*/
-        $scope.goConfirm = function () {
-            $state.go('confirmOrder', {source: 'source=shoppingCart'});
-        };
         $scope.showModal1 = function (order, total_cost) {
             $scope.data_eo=order;
             if (testEnergy(total_cost,order.EarnestPercent,order.EarnestMoney,$scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
@@ -82,14 +89,14 @@ angular.module('LuckyMall.controllers')
             $scope.game_commodityId=order.CommodityId;
             $scope.isModal1show = true;
         };
-        $scope.showModal2 = function () {
-            $scope.isModal1show = false;
-            $scope.isModal2show = true;
-        };
         $scope.closeModal1 = function () {
             $scope.isModal1show = false;
             $scope.agree = false;
             $scope.energy.tips = '';
+        };
+        $scope.showModal2 = function () {
+            $scope.isModal1show = false;
+            $scope.isModal2show = true;
         };
         $scope.closeModal2 = function () {
             $scope.agree = false;
@@ -106,8 +113,8 @@ angular.module('LuckyMall.controllers')
             } else {
             }
         };
-        /*
-         *检查能量是否够4发炮弹* */
+        *//*
+         *检查能量是否够4发炮弹* *//*
         function testEnergy(total_cost,percent,paid_value,remain_energy) {
             var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
             var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
@@ -133,7 +140,7 @@ angular.module('LuckyMall.controllers')
                     }
                 }
             }
-        }
+        }*/
 
         function loadCartData() {
             CartSer.requestCartData(function (response, status) {
@@ -148,28 +155,11 @@ angular.module('LuckyMall.controllers')
                 }
             });
 
-            RefreshUserDataSer.requestUserData(function (response, status) {
+          /*  RefreshUserDataSer.requestUserData(function (response, status) {
                 if (status == 1) {
                     $scope.data_user = RefreshUserDataSer.getData();
                 }
-            });
-            /* if(CartSer.getData()==null) {
-             CartSer.requestCartData(function (response, status) {
-             if (status == 1) {
-             $timeout(function () {
-             $scope.data_cart = CartSer.getData();
-             }, 5);
-             } else { //购物车数据为空
-             $timeout(function () {
-             $scope.data_cart = new Array();
-             }, 5);
-             }
-             });
-             }else{
-             $scope.data_cart = new Array();
-             $timeout(function () {
-             $scope.data_cart = new Array();
-             }, 5);
-             }*/
+            });*/
+
         }
     });

@@ -31,7 +31,7 @@
                 <a href="#" ng-bind="list.Brand.BrandName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.OrderType">赢折扣</a>
-                <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Id,list.CommodityId)" ng-if="list.OrderType">赢折扣</a>
+                <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Id,list.CommodityId)" ng-if="list.OrderType==1" ng-show="canPlay"  btn-free-play="{{list.CommodityId}}">赢折扣</a>
             </div>
             <div class="cart-list-cont">
                 <div class="cont1">
@@ -68,7 +68,7 @@
                     </p>
                 </div>
                 <div class="cont5">
-                    <span class="icon-remove" title="从购物车移除该商品" ng-click="removeOrder(list.Id)"></span>
+                    <span ng-if="list.EarnestMoney==0" class="icon-remove" title="从购物车移除该商品" ng-click="removeOrder(list.Id)"></span>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
 </div>
 <!--中部 end-->
 
-<div class="modal-before-game" ng-show="isModal1show">
+<!--<div class="modal-before-game" ng-show="isModal1show">
     <div class="modal-content" ng-class="{'modal1-show':isModal1show,'modal1-hide':!isModal1show}">
         <div class="luckyEnergy-info">
             <img src="./res/logo/logo_cat.png" alt=""/>
@@ -103,7 +103,7 @@
             <p ng-bind="energy.tips"></p>
         </div>
         <div class="bar-btn">
-            <button ng-class="{'btn btn-org':data_eo.EarnestMoney<=0,'btn btn-gray':data_eo.EarnestMoney>0}" ng-click="showModal2()" ng-disabled="data_eo.EarnestMoney>0">支付定金</button>
+            <button ng-class="{'btn btn-org':data_eo.EarnestMoney<data_eo.EarnestPercent*data_eo.orgCost,'btn btn-gray':data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost}" ng-click="showModal2()" ng-disabled="data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost">支付定金</button>
             <button ng-class="{'btn btn-balanced':energy.isEnough,'btn btn-gray':!energy.isEnough}" ng-click="play()" ng-disabled="!energy.isEnough" >进入游戏</button>
         </div>
         <span class="btn-close" title="取消"  ng-click="closeModal1()">×</span>
@@ -116,15 +116,14 @@
             <h1>支付须知条款</h1>
             <p class="warning">进入支付定金页面前请先认真阅读以下条款！</p>
             <div class="protocol-content">
-                <p>① 定金的作用主要是用来确认用户的购买意向。</p>
+                <p>① 支付定金是为了确认您的购买意向。</p>
 
-                <p>② 若事后产生退货或者取消订单问题，如果是因商品质量原因而退货的，已支付的定金随同商品退款一同退还；否则已支付的定金在订单取消或退货后将退回到定金钱包里，不随同商品退款一同退还。</p>
+                <p>② 支付定金后，若订单未完成尾款支付，系统将会在取消订单之后，把已支付的定金退回到您的定金钱包里；如出现退货情况，此前支付的定金依然是退回到您的定金钱包里，尾款直接退回到您的支付宝或微信账户中，下次购买时，定金余额可以直接用来支付其他商品的定金。</p>
 
-                <p>③ 定金钱包里的钱只可用于支付商品的定金，不可提现，且使用定金钱包的钱支付定金时不再赠送幸运能量</p>
+                <p>③ 定金钱包里的余额只可用于支付商品的定金，不可提现，且第二次使用定金钱包里的余额来支付其他商品的定金时，不再赠送游戏机会。</p>
 
-                <p>④ 当定金钱包里有余额时，首先默认使用定金钱包的余额支付定金，直到定金钱包的余额为零时才能使用其他方式支付定金；</p>
+                <p>④ 当定金钱包里有余额时，首先默认使用定金钱包里的余额来支付商品定金，直到定金钱包的余额为零时，才能使用其他方式来支付定金。</p>
 
-                <p>⑤ 为保证用户利益，防止用户无意识地去支付大量的定金导致定金钱包余额过多，我们会为用户在一定时期内所支付的定金设定一个上限值。当所支付的定金总额达到钱该上限值时，用户将暂时无法进行支付定金操作。</p>
             </div>
         <p class="bar-agree">
             <input type="checkbox" id="ckb-protocol-payForEnergy" ng-model="agree" />
@@ -137,8 +136,16 @@
         </div>
         <span class="btn-close" title="取消"  ng-click="closeModal2()">×</span>
     </div>
-</div>
+</div>-->
 
+
+
+
+
+
+
+
+<modal-before-game></modal-before-game>
 <introduction></introduction>
 <sub-footer></sub-footer>
 <footer></footer>

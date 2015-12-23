@@ -221,6 +221,10 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 return 0;
             }
         };
+        /*价格向上取整*/
+        $rootScope.mathCeilPrice=function(val){
+            return Math.ceil(val);
+        };
         /*初始化购物车时间*/
         function initCartTime(){
             clearInterval($scope.cartTimer);
@@ -240,10 +244,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }else{
                             clearInterval($scope.cartTimer);
                             $timeout(function(){
-                                CartSer.clearData();
-                                $scope.sp_data_cart=CartSer.getData();
                                 $scope.$broadcast('cart-time-over');
-                                $scope.cartAmount=0;
                                 loadCartData();
                             },1000);
                             $scope.cartTimeRemainFormat='';

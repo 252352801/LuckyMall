@@ -52,27 +52,31 @@
                             <ul class="prices-slider">
                                 <li>
                                     <div class="item-slider">
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
+                                    <div class="item-overlay" ng-show="overlay[0]"></div>
                                 </li>
                                 <li >
                                     <div  class="item-slider">
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
+                                    <div class="item-overlay" ng-show="overlay[1]"></div>
                                 </li>
                                 <li >
                                     <div  class="item-slider" >
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
+                                    <div class="item-overlay" ng-show="overlay[2]"></div>
                                 </li>
                                 <li >
                                     <div class="item-slider">
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
-                                        <div ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
+                                    <div class="item-overlay" ng-show="overlay[3]"></div>
                                 </li>
                             </ul>
                             <div class="discount-slider">
@@ -80,11 +84,11 @@
                                     <li ng-bind="(cur_disc*10).toFixed(1)+'折'"></li>
                                 </ul>
                             </div>
-                            <div class="discount" ng-show="new_disc">
+<!--                            <div class="discount"  ng-show="new_disc>0"ng-style="{'animation-play-state':dc_animate?'running':'paused'}">
                                 <div class="discount-bg">
-                                    <span ng-bind="(new_disc*10).toFixed(1)+'折卡'">1</span>
+                                    <span ng-bind="(new_disc*10)">1</span>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="item-price item-price2 price-interval">
                             <p>市场价：<span class="old-price" ng-bind="'￥'+data_goods.RetailPrice">￥2999.00</span></p>
@@ -115,7 +119,7 @@
                     <label>数量</label>
                     <div class="div-btn">
                         <span class="btn-reduce txtUnSelect" ng-click="reduce()">-</span>
-                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||data_goods.IsCanFree==true" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
+                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||(data_goods.IsCanFree==true&&!isFreePlayed)" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
                         <span class="btn-add txtUnSelect" ng-click="add()">+</span>
                        <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
                         <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>

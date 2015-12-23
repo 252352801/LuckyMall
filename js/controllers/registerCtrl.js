@@ -3,7 +3,7 @@ angular.module('LuckyMall.controllers')
     .controller('RegisterCtrl', function ($scope, VerifyCodeSer, $timeout, RegisterSer, $state) {
         $scope.hasInputError = false;//是否有错误输入
         $scope.tips = '';//提示信息初始化
-        $scope.value_btn = '同意协议并注册';
+        $scope.value_btn = '立即注册';
         $scope.isModalProtocolShow=false;
         $scope.invalidMobile=new Array();
         $scope.s_key='';//会话密钥
@@ -151,7 +151,7 @@ angular.module('LuckyMall.controllers')
                                 confirmButtonText: "确定"
                             });
                         }
-                        $scope.value_btn = '同意协议并注册';
+                        $scope.value_btn = '立即注册';
                     });
                 }else{
                     setCurrentError('mobile');

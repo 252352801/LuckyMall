@@ -80,10 +80,9 @@
     position:relative;
 }
 .list .pro-list-cont li{
-    width:286px;
+    width:284px;
     height:86px;
-    border:1px solid #f1f1f1;
-    padding-top:364px;
+    padding-top:284px;
     background:#fff;
     float:left;
     margin-left:15px;
@@ -98,8 +97,8 @@
 .list .pro-list-cont .a-goodsImg{
     display:table-caption;
     width:284px;
-    height:364px;
-    line-height:364px;
+    height:284px;
+    line-height:284px;
     position:absolute;
     left:0px;
     top:0px;
@@ -166,7 +165,7 @@
     color:#666;
     font-size:12px;
     text-decoration:line-through;
-    margin-left:5px;
+    margin-left:15px;
 }
 .list .icon-discount{
     width: 60px;
@@ -405,6 +404,44 @@
 }
 .list .loading-tips{
     margin-top:200px;
+}
+.category-menu{
+    width:75px;
+    background:#fff;
+    box-sizing:border-box;
+    text-align: center;
+    border:1px solid #ddd;
+    position:fixed;
+    left:50%;
+    top:190px;
+    margin-left:-680px;
+    line-height:40px;
+    border-radius:4px;
+    transition:opacity 1s;
+    -webkit-transition:opacity 0.5s;
+    opacity:0;
+}
+@media screen and (max-width:1400px) {
+    .category-menu{
+        display:none;
+    }
+}
+.category-menu li:hover{
+    background:#ff6700;
+}
+.category-menu li:hover a{
+    color:#fff;
+    transition:none;
+}
+.category-menu li a{
+    color:#666;
+    display:block;
+    width:100%;
+    height:100%;
+    border-bottom:1px dashed #ddd;
+}
+.category-menu li:last-child a{
+    border-bottom:none;
 }
  /*列表 end*/
 

@@ -8,7 +8,7 @@
     </div>
 
     <aside-right></aside-right>
-    <sub-header nav="1">
+    <sub-header nav="2">
         <category></category>
     </sub-header>
     <!--banner图  begin-->
@@ -36,8 +36,8 @@
     <!--css3-banner图  begin-->
     <div class="banner banner-css3" banner-css3 banner-length="data_banner.length">
         <ul>
-           <!-- <li ng-repeat="img in data_banner" ng-style="{opacity:(banner_index==$index)?1:0,transition:'opacity 1s'}">-->
-            <li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">
+            <li ng-repeat="img in data_banner" ng-style="{opacity:(banner_index==$index)?1:0,transition:'opacity 1s'}">
+            <!--<li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">-->
                 <a href="#" title="">
                     <img ng-src={{imgHost+img.ImageData}} alt="" error-src="./res/images/default.png"/>
                 </a>
@@ -62,7 +62,7 @@
     <!--中部 start-->
     <div class="container">
         <div class="content">
-            <div class="today-update" lazy-img="data_todayList">
+            <div class="today-update">
                 <div class="today-top">
                     <h3>每日上新</h3>
 
@@ -74,7 +74,7 @@
                     <div class="today-list-l">
                         <div class="info1">
                             <a class="today-pro-logo" href="#" title="">
-                                <img real-src="{{li_today.BrandImage?imgHost+li_today.BrandImage+'@120h_30h_100Q.png':''}}" error-src="./res/logo/logo.png" alt=""/>
+                                <img real-src="{{li_today.BrandImage?imgHost+li_today.BrandImage+'@120h_30h_100Q.png':''}}" temp-src="./res/logo/logo.png" error-src="./res/logo/logo.png" alt=""/>
                             </a>
                             <a href="#" title={{li_today.Description}}>
                                 <p class="today-pro-font" ng-bind="li_today.Description"></p>
@@ -87,8 +87,7 @@
                     </div>
                     <div class="today-list-r">
                         <a ng-href={{li_today.href}} title={{li_today.Description}}>
-                            <img class="lazy" src="./res/images/default.png" alt="{{li_today.Description}}"
-                                 real-src="{{imgHost+li_today.ImageData}}" error-src="./res/images/default.png"/>
+                            <img class="lazy"  alt="{{li_today.Description}}" lazy-src="{{imgHost+li_today.ImageData}}" />
                         </a>
                     </div>
                 </div>

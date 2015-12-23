@@ -1,8 +1,9 @@
 angular.module('LuckyMall.controllers')
  .controller('WXPayCtrl',function($rootScope,$scope,$state,WXPaySer,$stateParams,$timeout,PaymentSer,API,$cookies){
         $scope.trade_id=$stateParams.trade_id;
+        $scope.type=$stateParams.type;
         $scope.time_over=false;
-        $scope.totalCost=WXPaySer.getData().totalCost;
+        $scope.totalCost=Math.ceil(WXPaySer.getData().totalCost);
         $scope.polling=false;
         getQRCodeData();
         $scope.$on('stop-polling-tradeStatus',function(){
@@ -43,7 +44,11 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
-                        $state.go('paySuccess');
+                        if($scope.type==1) {
+                            $state.go('paySuccess');
+                        }else{
+                            $state.go('payEarnestSuccess',{order_id:$rootScope.game.orderId,commodity_id:$rootScope.game.commodityId});
+                        }
                     }else{
                         pollingTradeStatus();
                     }

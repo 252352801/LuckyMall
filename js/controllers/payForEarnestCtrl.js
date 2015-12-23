@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API,OrderDetailsSer){
+ .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API,OrderDetailsSer,Host,TokenSer){
 
         $scope.isModalWaitingShow=false;
         $scope.pay_type='zhifubao';//支付方式
@@ -13,14 +13,14 @@ angular.module('LuckyMall.controllers')
             switch($scope.pay_type){
                 case 'zhifubao':return '支付宝';break;
                 case 'weixin':return '微信支付';break;
-                case 'bank_icbc':return '中国工商银行网银支付';break;
-                case 'bank_jianshe':return '中国建设银行网银支付';break;
-                case 'bank_nongye':return '中国农业银行网银支付';break;
-                case 'bank_zhaoshang':return '中国招商银行网银支付';break;
-                case 'bank_zhongguo':return '中国银行网银支付';break;
-                case 'bank_xingye':return '兴业银行网银支付';break;
-                case 'bank_pingan':return '平安银行网银支付';break;
-                case 'bank_youzheng':return '中国邮政储蓄银行银行网银支付';break;
+                case 'bank_icbc':return '(支付宝)工商银行网银支付';break;
+                case 'bank_jianshe':return '(支付宝)建设银行网银支付';break;
+                case 'bank_nongye':return '(支付宝)农业银行网银支付';break;
+                case 'bank_zhaoshang':return '(支付宝)招商银行网银支付';break;
+                case 'bank_zhongguo':return '(支付宝)中国银行网银支付';break;
+                case 'bank_xingye':return '(支付宝)兴业银行网银支付';break;
+                case 'bank_pingan':return '(支付宝)平安银行网银支付';break;
+                case 'bank_youzheng':return '(支付宝)邮政储蓄银行银行网银支付';break;
             }
         };
 
@@ -42,7 +42,12 @@ angular.module('LuckyMall.controllers')
                         $rootScope.$broadcast('orders-update');
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
                             WXPaySer.setTotalCost($scope.earnest_cost);
-                            $state.go('WXPay',{trade_id:response.OutTradeNo});
+                            var order_id=$stateParams.params.split('=')[1];
+                            var g_url=Host.game + '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
+                            $rootScope.game.url=g_url;
+                            $rootScope.game.orderId=order_id;
+                            $rootScope.game.commodityId=$scope.commodityId;
+                            $state.go('WXPay',{trade_id:response.OutTradeNo,type:0});
                         }else{
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;
@@ -69,9 +74,9 @@ angular.module('LuckyMall.controllers')
                     $rootScope.$broadcast('orders-update');
                     ga('send', 'pageview', {
                         'page': '/complete_checkout',
-                        'title': '完成购买'
+                        'title': '完成支付定金'
                     });
-                    $state.go('paySuccess');
+                    $state.go('payEarnestSuccess',{order_id:$stateParams.params.split('=')[1],commodity_id:$scope.commodityId});
                 }else{
                     $scope.isTipsUnFinishShow=true;
                     $scope.r_t=5000;
@@ -111,7 +116,8 @@ angular.module('LuckyMall.controllers')
          OrderDetailsSer.requestData(order_id,function(resp,status){
              if(status==1){
                  $scope.data_order=OrderDetailsSer.getData();
-                 $scope.earnest_cost=$scope.data_order.UnitPrice*$scope.data_order.Count*$scope.data_order.EarnestPercent.toFixed(2);//需支付的定金总额
+                 $scope.commodityId=$scope.data_order.CommodityId;
+                 $scope.earnest_cost=$scope.data_order.UnitPrice*$scope.data_order.Count*$scope.data_order.EarnestPercent.toFixed(2)-$scope.data_order.EarnestMoney;//需支付的定金总额
              }
          });
 
@@ -138,9 +144,9 @@ angular.module('LuckyMall.controllers')
                         $rootScope.$broadcast('orders-update');
                         ga('send', 'pageview', {
                             'page': '/complete_checkout',
-                            'title': '完成购买'
+                            'title': '完成支付定金'
                         });
-                        $state.go('paySuccess');
+                        $state.go('payEarnestSuccess',{order_id:$stateParams.params.split('=')[1],commodity_id:$scope.commodityId});
                     }else{
                         pollingTradeStatus(trade_id);
                     }

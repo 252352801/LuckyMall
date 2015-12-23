@@ -102,6 +102,7 @@ angular.module('LuckyMall.controllers')
 
 
             function handleResult(){
+                $scope.data_menu=CategorySer.getData();
                 var cate=CategorySer.getCategoryById($scope.cate_id);
                 $scope.category=cate;
                 $scope.cateName=cate.CategoryName;
