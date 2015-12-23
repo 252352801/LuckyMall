@@ -990,8 +990,13 @@ angular.module('LuckyMall')
             },*/
             link:function(scope, element, attrs){
             },
-            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host){
+            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout){
+                $scope.isModal1show=false;
                 loadUserData();
+                $scope.energy = {
+                    isEnough: true,
+                    tips: ''
+                };
                 $scope.play=function(){
                     ga('send', 'pageview', {
                         'page': '/enter_paygame',
@@ -1009,7 +1014,10 @@ angular.module('LuckyMall')
                     $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.game_orderId=order.Id;
                     $scope.game_commodityId=order.CommodityId;
-                    $scope.isModal1show = true;
+                    $timeout(function(){
+                        $scope.isModal1show = true;
+                    });
+
                 };
                 $scope.closeModal1 = function () {
                     $scope.isModal1show = false;

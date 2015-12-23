@@ -156,12 +156,9 @@ angular.module('LuckyMall.services')
                         remain_sku.push(sku[i].specify);
                     }
                 }
-                console.log(angular.toJson(remain_sku));
                 for(var i=0;i<remain_sku.length;i++){
-                        console.log('【可选属性'+(i+1)+'】:');
                         for(var j=0;j<remain_sku[i].length;j++){
                             data.Property[j].attributes[parseInt(remain_sku[i][j])].disabled=false;
-                            console.log(data.Property[j].attributes[remain_sku[i][j]].value);
                         }
                 }
                 callback();

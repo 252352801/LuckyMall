@@ -643,7 +643,6 @@ angular.module('LuckyMall.services',[])
                     url:API.getAllCategory.url
                 }).success(function(response,status,headers,config){
                     data=response;
-                    console.log(data);
                     if(typeof callback=='function'){
                         callback();
                     }

@@ -226,12 +226,15 @@ angular.module('LuckyMall.controllers')
                     } else if (act == 1) {
                         MyOrdersSer.setTempOrder(response.Data);
                         $scope.purchase_order=response.Data;//立即购买的订单
-                        CartSer.requestCartData(function (response, status) {
+                        var order_cost=Math.ceil($scope.purchase_order.UnitPrice*$scope.purchase_order.Count);
+                        $scope.showModal1($scope.purchase_order,order_cost);
+                        $scope.btn_value.buyNow = '立即抢折扣';
+                       /* CartSer.requestCartData(function (response, status) {
                             $scope.btn_value.buyNow = '立即抢折扣';
                             if (status == 1) {
                                 $state.go('confirmOrder', {source: 'source=purchase'});
                             }
-                        });
+                        });*/
                     }
                 } else if (status == 0) {
                     $scope.btn_value.addToCart = '加入购物车';

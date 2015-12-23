@@ -1,53 +1,63 @@
 <div>
-<div class="modal-before-game" ng-show="isModal1show">
-    <div class="modal-content" ng-class="{'modal1-show':isModal1show,'modal1-hide':!isModal1show}">
-        <div class="luckyEnergy-info">
-            <img src="./res/logo/logo_cat.png" alt=""/>
+    <h1>{{isModal1show}}</h1>
+    <div class="modal-before-game" ng-show="isModal1show">
+        <div class="modal-content" ng-class="{'modal1-show':isModal1show,'modal1-hide':!isModal1show}">
+            <div class="luckyEnergy-info">
+                <img src="./res/logo/logo_cat.png" alt=""/>
 
-            <h2>喵喵幸运物</h2>
+                <h2>喵喵幸运物</h2>
 
-            <p class="level">体力级： <span ng-class="'icon icon-energy-level icon-lucky-energy-level'+luckyEnergy.level"></span></p>
+                <p class="level">体力级： <span
+                        ng-class="'icon icon-energy-level icon-lucky-energy-level'+luckyEnergy.level"></span></p>
 
-            <p class="box-energy">
-                <span class="energy-value" style={{'width:'+luckyEnergy.percent+'%;'}} ></span>
+                <p class="box-energy">
+                    <span class="energy-value" style={{'width:'+luckyEnergy.percent+'%;'}}></span>
+                </p>
+            </div>
+            <div class="tips">
+                <p ng-bind="energy.tips"></p>
+            </div>
+            <div class="bar-btn">
+                <button ng-class="{'btn btn-org':data_eo.EarnestMoney<data_eo.EarnestPercent*data_eo.orgCost,'btn btn-gray':data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost}"
+                        ng-click="showModal2()"
+                        ng-disabled="data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost">支付定金
+                </button>
+                <button ng-class="{'btn btn-balanced':energy.isEnough,'btn btn-gray':!energy.isEnough}"
+                        ng-click="play()" ng-disabled="!energy.isEnough">进入游戏
+                </button>
+            </div>
+            <span class="btn-close" title="取消" ng-click="closeModal1()">×</span>
+        </div>
+
+    </div>
+
+    <div class="modal-protocol-payForEnergy" ng-show="isModal2show">
+        <div class="modal-content" ng-class="{'modal2-show':isModal2show,'modal2-hide':!isModal2show}">
+            <h1>支付须知条款</h1>
+
+            <p class="warning">进入支付定金页面前请先认真阅读以下条款！</p>
+
+            <div class="protocol-content">
+                <p>① 支付定金是为了确认您的购买意向。</p>
+
+                <p>②
+                    支付定金后，若订单未完成尾款支付，系统将会在取消订单之后，把已支付的定金退回到您的定金钱包里；如出现退货情况，此前支付的定金依然是退回到您的定金钱包里，尾款直接退回到您的支付宝或微信账户中，下次购买时，定金余额可以直接用来支付其他商品的定金。</p>
+
+                <p>③ 定金钱包里的余额只可用于支付商品的定金，不可提现，且第二次使用定金钱包里的余额来支付其他商品的定金时，不再赠送游戏机会。</p>
+
+                <p>④ 当定金钱包里有余额时，首先默认使用定金钱包里的余额来支付商品定金，直到定金钱包的余额为零时，才能使用其他方式来支付定金。</p>
+
+            </div>
+            <p class="bar-agree">
+                <input type="checkbox" id="ckb-protocol-payForEnergy" ng-model="agree"/>
+                <label for="ckb-protocol-payForEnergy">我已阅读并同意上述条款</label>
             </p>
+
+            <div class="bar-btn">
+                <a class="btn btn-outline" ng-click="returnModal1()">取消</a>
+                <a ng-class="{'btn btn-org':agree,'btn btn-gray':!agree}" ng-click="payForEarnest()">支付定金</a>
+            </div>
+            <span class="btn-close" title="取消" ng-click="closeModal2()">×</span>
         </div>
-        <div class="tips">
-            <p ng-bind="energy.tips"></p>
-        </div>
-        <div class="bar-btn">
-            <button ng-class="{'btn btn-org':data_eo.EarnestMoney<data_eo.EarnestPercent*data_eo.orgCost,'btn btn-gray':data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost}" ng-click="showModal2()" ng-disabled="data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost">支付定金</button>
-            <button ng-class="{'btn btn-balanced':energy.isEnough,'btn btn-gray':!energy.isEnough}" ng-click="play()" ng-disabled="!energy.isEnough" >进入游戏</button>
-        </div>
-        <span class="btn-close" title="取消"  ng-click="closeModal1()">×</span>
     </div>
-
-</div>
-
-<div class="modal-protocol-payForEnergy" ng-show="isModal2show">
-    <div class="modal-content" ng-class="{'modal2-show':isModal2show,'modal2-hide':!isModal2show}">
-        <h1>支付须知条款</h1>
-        <p class="warning">进入支付定金页面前请先认真阅读以下条款！</p>
-        <div class="protocol-content">
-            <p>① 支付定金是为了确认您的购买意向。</p>
-
-            <p>② 支付定金后，若订单未完成尾款支付，系统将会在取消订单之后，把已支付的定金退回到您的定金钱包里；如出现退货情况，此前支付的定金依然是退回到您的定金钱包里，尾款直接退回到您的支付宝或微信账户中，下次购买时，定金余额可以直接用来支付其他商品的定金。</p>
-
-            <p>③ 定金钱包里的余额只可用于支付商品的定金，不可提现，且第二次使用定金钱包里的余额来支付其他商品的定金时，不再赠送游戏机会。</p>
-
-            <p>④ 当定金钱包里有余额时，首先默认使用定金钱包里的余额来支付商品定金，直到定金钱包的余额为零时，才能使用其他方式来支付定金。</p>
-
-        </div>
-        <p class="bar-agree">
-            <input type="checkbox" id="ckb-protocol-payForEnergy" ng-model="agree" />
-            <label for="ckb-protocol-payForEnergy">我已阅读并同意上述条款</label>
-        </p>
-
-        <div class="bar-btn">
-            <a class="btn btn-outline" ng-click="returnModal1()">取消</a>
-            <a ng-class="{'btn btn-org':agree,'btn btn-gray':!agree}" ng-click="payForEarnest()">支付定金</a>
-        </div>
-        <span class="btn-close" title="取消"  ng-click="closeModal2()">×</span>
-    </div>
-</div>
 </div>
