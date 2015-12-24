@@ -46,7 +46,9 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
         /* 监听用户登录*/
       $scope.$on('user-login',function(){
-          $rootScope.isLogin=true;
+          $timeout(function(){
+              $rootScope.isLogin=true;
+          });
           UserSer.setData(LoginSer.getData());//设置用户数据
           loadSomeUserData();//用户登录之后初始化和加载一些必要数据
           loadOrdersData();//加载部分订单数目

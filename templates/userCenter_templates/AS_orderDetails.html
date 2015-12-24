@@ -30,10 +30,10 @@
             </div>
             <div class="cont">
                 <div class="cont1">
-                    <a class="img-container" href="/goodsDetails/{{data_details.Order.CommodityId}}">
+                    <a class="img-container" href="/item/{{data_details.Order.CommodityId}}">
                         <img ng-src="{{imgHost+data_details.Order.imageUrl+'@100w_100h_100Q.jpg'}}"/>
                     </a>
-                    <a href="/goodsDetails/{{data_details.Order.CommodityId}}">
+                    <a href="/item/{{data_details.Order.CommodityId}}">
                         <h2 ng-bind="data_details.Order.CommodityName" title="{{data_details.Order.CommodityName}}"></h2>
                     </a>
                     <small ng-bind="'×'+data_details.Order.Count"></small>
@@ -48,12 +48,12 @@
 
                         <p ng-bind="'（含定金：￥'+data_details.Order.EarnestMoney+'）'" ng-if="data_details.Order.EarnestMoney>0"></p>
 
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_details.Order.DiscountVal*10).toFixed(1)+'折'"></span>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="data_details.Order.finalDiscount+'折'"></span>
                         </p>
                     </div>
                 </div>
                 <div class="cont4">
-                    <a>取消售后</a>
+                    <!--<a>取消售后</a>-->
                 </div>
             </div>
         </div>

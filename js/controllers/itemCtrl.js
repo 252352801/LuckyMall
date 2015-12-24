@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('GoodsDetailsCtrl',
-    function ($scope, GoodsDetailsSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host, MyOrdersSer, CartSer) {
+    .controller('ItemCtrl',
+    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host, MyOrdersSer, CartSer) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
         $scope.isLogin = LoginSer.isLogin();//是否应经登录
@@ -10,6 +10,7 @@ angular.module('LuckyMall.controllers')
         loadGoodsDetailsData();//加载本页数据
         $scope.amount = 1;//当前数量
         $scope.isFreePlayed = false;
+        $scope.data_eo={};
         $scope.btn_value = {//按钮文字
             addToCart: '加入购物车',
             buyNow: '立即抢折扣',
@@ -54,7 +55,7 @@ angular.module('LuckyMall.controllers')
                 }
                 checkedAttr(attr, val, attr_index, val_index);
                 if (isFinishSelect()) {//选择完毕显示库存
-                    var selected_sku = GoodsDetailsSer.getSkuByChoice($scope.choice);//已选的sku
+                    var selected_sku = ItemSer.getSkuByChoice($scope.choice);//已选的sku
                     $scope.sku_id = selected_sku.Id;//sku_id，用以提交
                     $scope.inventory = selected_sku.Stock;//库存
                     $scope.showTips = false;
@@ -94,7 +95,7 @@ angular.module('LuckyMall.controllers')
         });
         function isCanFreePlay(){
             if ($scope.isCanFree) {//测试是否玩使用过免费机会
-                GoodsDetailsSer.isCanFreePlay(goods_id, function (response, status) {
+                ItemSer.isCanFreePlay(goods_id, function (response, status) {
                     if (status == 1) {
                         if (response) {
                             $scope.isFreePlayed = false;
@@ -142,10 +143,10 @@ angular.module('LuckyMall.controllers')
                     "UserId": LoginSer.getData().UserModel.Id,
                     "SkuId": $scope.sku_id,
                     "Count": $scope.amount,
-                    "Specifications": angular.toJson(GoodsDetailsSer.getSelectedAttributes())
+                    "Specifications": angular.toJson(ItemSer.getSelectedAttributes())
                 };
                 $scope.btn_value.freePlay='正在处理...';
-                GoodsDetailsSer.addToCart(params, function (response,status) {
+                ItemSer.addToCart(params, function (response,status) {
                     $scope.btn_value.freePlay='试玩赢折扣';
                     if (status == 1) {
                         $scope.$emit('cart-update');
@@ -210,28 +211,29 @@ angular.module('LuckyMall.controllers')
                 "UserId": LoginSer.getData().UserModel.Id,
                 "SkuId": $scope.sku_id,
                 "Count": $scope.amount,
-                "Specifications": angular.toJson(GoodsDetailsSer.getSelectedAttributes())
+                "Specifications": angular.toJson(ItemSer.getSelectedAttributes())
             };
             if (act == 0) {
                 $scope.btn_value.addToCart = '正在处理...';
             } else if (act == 1) {
                 $scope.btn_value.buyNow = '正在处理...';
             }
-            GoodsDetailsSer.addToCart(params, function (response, status) {
+            ItemSer.addToCart(params, function (response, status) {
                 if (status == 1) {
+                    $scope.$emit('cart-update');
                     if (act == 0) {
-                        $scope.$emit('cart-update');
                         $scope.btn_value.addToCart = '加入购物车';
                         callback();
                     } else if (act == 1) {
-                        MyOrdersSer.setTempOrder(response.Data);
                         $scope.purchase_order=response.Data;//立即购买的订单
-                        CartSer.requestCartData(function (response, status) {
+                        $scope.showModal1($scope.purchase_order);
+                        $scope.btn_value.buyNow = '立即抢折扣';
+                       /* CartSer.requestCartData(function (response, status) {
                             $scope.btn_value.buyNow = '立即抢折扣';
                             if (status == 1) {
                                 $state.go('confirmOrder', {source: 'source=purchase'});
                             }
-                        });
+                        });*/
                     }
                 } else if (status == 0) {
                     $scope.btn_value.addToCart = '加入购物车';
@@ -246,17 +248,17 @@ angular.module('LuckyMall.controllers')
         /*加载本页数据*/
         function loadGoodsDetailsData() {
             $scope.loaded = false;
-            GoodsDetailsSer.requestData(goods_id, function () { //加载商品详细信息数据
-                $scope.data_goods = GoodsDetailsSer.getData();//产品数据
+            ItemSer.requestData(goods_id, function () { //加载商品详细信息数据
+                $scope.data_goods = ItemSer.getData();//产品数据
                 $scope.isCanFree = $scope.data_goods.IsCanFree;
                 if($scope.isLogin) {
                     isCanFreePlay();
                 }
                 $scope.choice = new Array();//产品规格选择器，存放被选的属性的下标（索引）
                 $scope.loaded=true;
-                if (GoodsDetailsSer.getData().StockKeepingUnitModels != null) {
+                if (ItemSer.getData().StockKeepingUnitModels != null) {
                     /*根据sku产品属性的长度初始化选择器choice*/
-                    var len = GoodsDetailsSer.getData().StockKeepingUnitModels[0].Specifications.split(',').length;
+                    var len = ItemSer.getData().StockKeepingUnitModels[0].Specifications.split(',').length;
                     for (var i = 0; i < len; i++) { //sku数组字符串分离
                         $scope.choice.push(-1);
                     }
@@ -264,7 +266,7 @@ angular.module('LuckyMall.controllers')
 
                 }
             });
-            GoodsDetailsSer.requestCategoryByGoodsId(goods_id, function (response, status) {
+            ItemSer.requestCategoryByGoodsId(goods_id, function (response, status) {
                 if (status == 1) {
                     $scope.data_category = response;//品类数据  包含所属项和品类ID
                     if (CategorySer.getData() == null) {
@@ -280,7 +282,7 @@ angular.module('LuckyMall.controllers')
 
         /*清空选择*/
         function clearChecked() {
-            GoodsDetailsSer.clearSelections();//重置所有isSelected属性
+            ItemSer.clearSelections();//重置所有isSelected属性
             clearChoice();//重置选择器
             $scope.inventory = null;//重置库存显示
             $scope.amount = 1;
@@ -289,24 +291,24 @@ angular.module('LuckyMall.controllers')
         /*勾选商品属性*/
         function checkedAttr(attr, val, attr_index, val_index) {
             $scope.choice[attr_index] = val_index;
-            GoodsDetailsSer.testSku($scope.choice, function () {
+            ItemSer.testSku($scope.choice, function () {
                 $timeout(function () {
-                    $scope.data_goods = GoodsDetailsSer.getData();//产品数据
+                    $scope.data_goods = ItemSer.getData();//产品数据
                 }, 5);
             });
-            GoodsDetailsSer.selectAttr(attr, val, function () { //function:所选属性已被选择时的回调
-                GoodsDetailsSer.cancelSelection(val);
+            ItemSer.selectAttr(attr, val, function () { //function:所选属性已被选择时的回调
+                ItemSer.cancelSelection(val);
                 cancelChoice(attr_index);
-                GoodsDetailsSer.testSku($scope.choice, function () {
+                ItemSer.testSku($scope.choice, function () {
                     $timeout(function () {
-                        $scope.data_goods = GoodsDetailsSer.getData();//产品数据
+                        $scope.data_goods = ItemSer.getData();//产品数据
                     }, 5);
                 });
                 $scope.inventory = null;//库存
                 $scope.amount = 1;//数量重置为1
             });
             if (isFinishSelect()) {//选择完毕显示库存
-                var selected_sku = GoodsDetailsSer.getSkuByChoice($scope.choice);//已选的sku
+                var selected_sku = ItemSer.getSkuByChoice($scope.choice);//已选的sku
                 $scope.sku_id = selected_sku.Id;//sku_id，用以提交
                 $scope.inventory = selected_sku.Stock;//库存
                 $scope.finishSelect = true;

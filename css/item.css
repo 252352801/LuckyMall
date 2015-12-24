@@ -42,6 +42,13 @@
     width:410px;
     height:410px;
     overflow:hidden;
+    position:relative;
+}
+.box-goods-img .big-goods-img .img-so{
+    position:absolute;
+    left:10px;
+    top:0px;
+    z-index:10;
 }
 .box-goods-img .big-goods-img ul{
     position:relative;
@@ -653,69 +660,4 @@ float:left;
 
 
 
-/*折扣卡begin*/
 
-.discount{
-    animation:discount 2s forwards;
-    -webkit-animation-play-state:paused;
-    -webkit-animation:discount 2s forwards;
-    -moz-animation:discount 2s forwards;
-    -o-animation:discount 2s forwards;
-    animation-iteration-count:infinite;
-    -webkit-animation-iteration-count: infinite;
-    -o-animation-iteration-count: infinite;
-    -ms-animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
-    position:absolute;
-    left:150px;
-    top:0px;
-    width:86px;
-    height:38px;
-}
-.discount-bg{
-    background:url(../res/images/bg_disc.png) no-repeat;
-    background-size:100%;
-    width:100px;
-    height:60px;
-    font-family:'黑体';
-    color:#FFF;
-    line-height:65px;
-    text-align:left;
-
-}
-.discount-bg span{
-    font-size: 56px;
-    line-height: 56px;
-    margin-left: 10px;
-}
-
-
-
-@keyframes discount{
-    0%{
-        transform:scale(0.2);
-        -webkit-transform:scale(0.2);
-        -ms-transform:scale(0.2);
-        -moz-transform:scale(0.2);
-        -o-transform:scale(0.2);
-        opacity:0;
-        top:20px;
-    }
-    60%{
-        transform:scale(0.8) translate(0px,0px);
-        -webkit-transform:scale(0.8) translate(0px,0px);
-        -ms-transform:scale(0.8) translate(0px,0px);
-        -moz-transform:scale(0.8) translate(0px,0px);
-        -o-transform:scale(0.8) translate(0px,0px);
-        opacity:1;top:10px;}
-    100%{
-        transform:scale(0) translate(0px,40px);
-        -webkit-transform:scale(0) translate(0px,40px);
-        -ms-transform:scale(0) translate(0px,40px);
-        -moz-transform:scale(0) translate(0px,40px);
-        -o-transform:scale(0) translate(0px,40px);
-        opacity:0;
-        top:60px;
-    }
-}
-/*折扣卡end*/

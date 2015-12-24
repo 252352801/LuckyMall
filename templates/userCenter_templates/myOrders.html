@@ -30,11 +30,11 @@
         <div class="order-list-cont">
             <div class="cont1 pull-left">
                 <div class="cont-img">
-                    <a href="/goodsDetails/{{list.CommodityId}}">
+                    <a href="/item/{{list.CommodityId}}">
                         <img real-src={{imgHost+list.imageUrl+'@100w_100h_100Q.jpg'}} temp-src="./res/images/default.png" alt=""/>
                     </a>
                 </div>
-                <a class="goods-name" href="/goodsDetails/{{list.CommodityId}}">
+                <a class="goods-name" href="/item/{{list.CommodityId}}">
                     <h2 ng-bind="list.CommodityName" title="{{list.CommodityName}}"></h2>
                     <small ng-bind="'×'+list.Count"></small>
                 </a>
@@ -44,12 +44,12 @@
             <div class="cont2 pull-left" ng-bind="'￥'+list.UnitPrice">
             </div>
             <div class="cont3 pull-left">
-                <p class="cost" ng-bind="'￥'+(list.cost).toFixed(2)"></p>
+                <p class="cost" ng-bind="'￥'+list.cost"></p>
 
                 <p ng-bind="'（含定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestMoney>0"></p>
 
                 <p class="discount">已享用折扣卡<span class="icon-discount"
-                                                ng-bind="(list.DiscountVal*10).toFixed(1)+'折'"></span></p>
+                                                ng-bind="list.finalDiscount+'折'"></span></p>
             </div>
             <div class="cont4 pull-left">
                 <div>
@@ -69,7 +69,7 @@
                 <div>
                     <p><a class="btn btn-org" ng-if="list.OrderStatus==1" ng-click="repay(list)">立即支付</a></p>
 
-                    <p><a  class="btn" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)">取消订单</a></p>
+                    <p><a  class="btn" ng-if="list.OrderStatus==1&&list.EarnestMoney==0" ng-click="removeOrder(list.Id)">取消订单</a></p>
 
                     <p><a href="/UCIndex/logisticsInfo/0/{{list.Id}}" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
@@ -100,11 +100,11 @@
         <div class="order-list-cont">
             <div class="cont1 pull-left">
                 <div class="cont-img">
-                    <a href="/goodsDetails/{{list.Order.CommodityId}}">
+                    <a href="/item/{{list.Order.CommodityId}}">
                         <img real-src={{imgHost+list.Order.imageUrl}} temp-src="./res/images/default.png" alt=""/>
                     </a>
                 </div>
-                <a class="goods-name" href="/goodsDetails/{{list.Order.CommodityId}}">
+                <a class="goods-name" href="/item/{{list.Order.CommodityId}}">
                     <h2 ng-bind="list.Order.CommodityName"></h2>
                     <small ng-bind="'×'+list.Order.Count"></small>
                 </a>
@@ -114,12 +114,12 @@
             <div class="cont2 pull-left" ng-bind="'￥'+list.Order.UnitPrice">
             </div>
             <div class="cont3 pull-left">
-                <p class="cost" ng-bind="'￥'+(list.Order.cost).toFixed(2)"></p>
+                <p class="cost" ng-bind="'￥'+list.Order.cost"></p>
 
                 <p ng-bind="'（含定金：￥'+list.Order.EarnestMoney+'）'" ng-if="list.Order.EarnestMoney>0"></p>
 
                 <p class="discount">已享用折扣卡<span class="icon-discount"
-                                                ng-bind="(list.Order.DiscountVal*10).toFixed(1)+'折'"></span></p>
+                                                ng-bind="list.finalDiscount+'折'"></span></p>
             </div>
             <div class="cont4 pull-left">
                 <div>

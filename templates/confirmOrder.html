@@ -51,9 +51,11 @@
             <div class="goods-list-cont">
                 <div class="cont1">
                     <div class="img-container">
-                        <img  ng-src={{imgHost+order.imageUrl+'@100w_100h_100Q.jpg'}} alt=""/>
+                        <a href="/item/{{order.CommodityId}}">
+                            <img  ng-src={{imgHost+order.imageUrl+'@100w_100h_100Q.jpg'}} alt=""/>
+                        </a>
                     </div>
-                    <a class="goods-name" href="/goodsDetails/{{order.CommodityId}}">
+                    <a class="goods-name" href="/item/{{order.CommodityId}}">
                         <h2 ng-bind="order.CommodityName" title={{order.CommodityName}}></h2>
                         <small ng-bind="'×'+order.Count"></small>
                     </a>
@@ -67,7 +69,7 @@
                 <div class="cont3">
                     <div class="cont-container">
                         <p class="discount-price"  ng-bind="'￥'+order.cost"></p>
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(order.DiscountVal*10).toFixed(1)+'折'"></span></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="order.finalDiscount+'折'"></span></p>
                     </div>
                 </div>
                 <div class="cont4">
@@ -159,6 +161,18 @@
                     <img src="./res/images/bank_youzheng.png" alt=""/>
                 </div>
             </li>
+            <li ng-class="{'cur':pay_type=='bank_guangfa'}" ng-click="changePayType('bank_guangfa')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/images/bank_guangfa.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_jiaotong'}" ng-click="changePayType('bank_jiaotong')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/images/bank_jiaotong.png" alt=""/>
+                </div>
+            </li>
         </ul>
         <p class="label-cont-name">
             <label>发票信息</label>
@@ -207,7 +221,7 @@
                 <p><span class="cost" ng-bind="'￥'+total_cost"></span>元</p>
             </div>
             <div>
-                <button class="btn-submitOrder" ng-click="submitOrder()" ng-bind="btn_val_purchase"></button>
+                <a href="javascript:void(0)" class="btn-submitOrder" ng-click="submitOrder()" ng-bind="btn_val_purchase"></a>
             </div>
         </div>
 

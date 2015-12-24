@@ -348,7 +348,6 @@ angular.module('LuckyMall')
                             break;
                         }
                     }
-                    console.log(scope.overlay);
                 }
             }
         }

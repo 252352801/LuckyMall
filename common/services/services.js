@@ -643,7 +643,6 @@ angular.module('LuckyMall.services',[])
                     url:API.getAllCategory.url
                 }).success(function(response,status,headers,config){
                     data=response;
-                    console.log(data);
                     if(typeof callback=='function'){
                         callback();
                     }
@@ -694,15 +693,16 @@ angular.module('LuckyMall.services',[])
                     data[o].Specifications=angular.fromJson(data[o].Specifications);//产品规格字符串转换json
                     data[o].imageUrl=data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                     data[o].orgCost=Math.ceil(data[o].UnitPrice)*data[o].Count;//原价
-                    data[o].discountUnitPrice=Math.ceil(data[o].UnitPrice*data[o].DiscountVal);//折后单件价
-                    data[o].cost=data[o].discountUnitPrice*data[o].Count;//折后价
+                    data[o].cost=Math.ceil(data[o].UnitPrice*data[o].Count*data[o].BaseDiscount-data[o].DiscountMoney);//折后价
                     data[o].needToPay=Math.ceil(data[o].cost-data[o].EarnestMoney);//待支付
+                    data[o].finalDiscount=Math.ceil(Math.round(data[o].DiscountVal*10000)/100)/10;
                     data[o].isSelected=true;//勾选状态，默认勾选
                     total_amount+=data[o].Count;
                     total_cost+=data[o].needToPay;
               }
               data.totalAmount=total_amount;
               data.totalCost=total_cost;
+             data.isCheckedAll=true;
         };
         return {
                 getData:function(){
@@ -738,6 +738,29 @@ angular.module('LuckyMall.services',[])
                     }
                     return result;
                 },
+                 /*全选*/
+                checkedAll:function(){
+                    for(var o in data){
+                        data[o].isSelected=true;
+                    }
+                },
+             /*取消全选*/
+               cancelCheckedAll:function(){
+                   for(var o in data){
+                       data[o].isSelected=false;
+                   }
+                },
+               /*检测是否是全选*/
+            testChecked:function(){
+                for(var o in data){
+                    if(data[o].isSelected==false){
+                        data.isCheckedAll=false;
+                        return;
+                    }
+                }
+                data.isCheckedAll=true
+
+            },
                 requestCartData:function(callback) {
                     var params = { "PageIndex": 0, "PageSize": 100,"TotalSize": 0, "TotalPage": 0};
                     $http({
@@ -924,9 +947,9 @@ angular.module('LuckyMall.services',[])
                 obj.Specifications=angular.fromJson(obj.Specifications);//产品规格字符串转换json
                 obj.imageUrl=obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                 obj.orgCost=Math.ceil(obj.UnitPrice)*obj.Count;//原价
-                obj.discountUnitPrice=Math.ceil(obj.UnitPrice*obj.DiscountVal);//折后单件价
-                obj.cost=obj.discountUnitPrice*obj.Count;//折后价
+                obj.cost=Math.ceil(obj.UnitPrice*obj.Count*obj.BaseDiscount-obj.DiscountMoney);//折后价
                 obj.needToPay=Math.ceil(obj.cost-obj.EarnestMoney);//待支付
+                obj.finalDiscount=Math.ceil(Math.round(obj.DiscountVal*10000)/100)/10;
                 if(obj.ConsigneeInfo!=(''||null)){
                     obj.ConsigneeInfo=angular.fromJson(obj.ConsigneeInfo);//收货地址
                 }
@@ -1094,9 +1117,9 @@ angular.module('LuckyMall.services',[])
             data.Specifications=angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl=data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
             data.orgCost=Math.ceil(data.UnitPrice)*data.Count;//原价
-            data.discountUnitPrice=Math.ceil(data.UnitPrice*data.DiscountVal);//折后单件价
-            data.cost=data.discountUnitPrice*data.Count;//折后价
+            data.cost=Math.ceil(data.UnitPrice*data.Count*data.BaseDiscount-data.DiscountMoney);//折后价
             data.needToPay=data.cost-data.EarnestMoney;//待支付
+            data.finalDiscount=Math.ceil(Math.round(data.DiscountVal*10000)/100)/10;//最终折扣
             if(data.ConsigneeInfo){
                 data.ConsigneeInfo=angular.fromJson(data.ConsigneeInfo);//收货地址
             }

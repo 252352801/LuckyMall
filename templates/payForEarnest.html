@@ -29,9 +29,11 @@
             <div class="goods-list-cont">
                 <div class="cont1">
                     <div class="img-container">
-                        <img  ng-src={{imgHost+data_order.imageUrl+'@100w_100h_100Q.jpg'}} alt=""/>
+                        <a href="/item/{{data_order.CommodityId}}">
+                            <img  ng-src={{imgHost+data_order.imageUrl+'@100w_100h_100Q.jpg'}} alt=""/>
+                        </a>
                     </div>
-                    <a class="goods-name" href="/goodsDetails/{{data_order.CommodityId}}">
+                    <a class="goods-name" href="/item/{{data_order.CommodityId}}">
                         <h2 ng-bind="data_order.CommodityName" title={{data_order.CommodityName}}></h2>
                         <small ng-bind="'×'+data_order.Count"></small>
                     </a>
@@ -45,7 +47,7 @@
                 <div class="cont3">
                     <div class="cont-container">
                         <p class="discount-price"  ng-bind="'￥'+mathCeilPrice(data_order.cost)"></p>
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_order.DiscountVal*10).toFixed(1)+'折'"></span></p>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="data_order.finalDiscount+'折'"></span></p>
                     </div>
                 </div>
                 <div class="cont4">
@@ -61,7 +63,21 @@
         <p class="label-cont-name">
             <label>支付方式</label>
         </p>
-
+        <div class="box-wallet" ng-if="data_balance>0">
+            <div class="bar-balance">
+                <a class="my-checkbox checked">
+                    <i class="checkbox"></i>
+                    <label class="label-checkbox">喵喵钱包</label>
+                </a>
+                <span>可用余额：</span>
+                <span class="color-red val" ng-bind="'￥'+data_balance">￥100</span>
+                <span>元</span>
+            </div>
+            <p>
+                还需支付：
+                <span class="color-red val" ng-bind="'￥'+(mathCeilPrice(earnest_cost)-data_balance)"></span>
+            </p>
+        </div>
         <p class="s-label">
             <small>在线支付</small>
         </p>
@@ -131,6 +147,18 @@
                     <img src="./res/images/bank_youzheng.png" alt=""/>
                 </div>
             </li>
+            <li ng-class="{'cur':pay_type=='bank_guangfa'}" ng-click="changePayType('bank_guangfa')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/images/bank_guangfa.png" alt=""/>
+                </div>
+            </li>
+            <li ng-class="{'cur':pay_type=='bank_jiaotong'}" ng-click="changePayType('bank_jiaotong')">
+                <span></span>
+                <div class="img-container">
+                    <img src="./res/images/bank_jiaotong.png" alt=""/>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="content confirmOrder-bottom">
@@ -144,7 +172,7 @@
         </div>
         <div>
             <label>合计金额：</label>
-            <p><span class="cost" ng-bind="'￥'+mathCeilPrice(earnest_cost)"></span>元</p>
+            <p><span class="cost" ng-bind="'￥'+(mathCeilPrice(earnest_cost)-data_balance)"></span>元</p>
         </div>
         <div>
             <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>

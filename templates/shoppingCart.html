@@ -19,6 +19,10 @@
             </div>
         </div>
         <div class="cart-th" ng-if="data_cart.length>0">
+            <p class="cart-checkedAll">
+                <input type="checkbox" id="cart_ck_all" ng-model="data_cart.isCheckedAll" ng-click="toggleCheckedAll()"/>
+                <label for="cart_ck_all">全选</label>
+            </p>
             <span class="th1">商品信息</span>
             <span class="th2">原价</span>
             <span class="th3">折后价</span>
@@ -27,7 +31,8 @@
         </div>
         <div class="cart-list" ng-repeat="list in data_cart" ng-if="data_cart.length>0">
             <div class="cart-list-top">
-                <img real-src={{imgHost+list.Brand.BrandImage+'@32w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"  />
+                <input class="cart-ck-order" type="checkbox" ng-model="list.isSelected" ng-click="testChecked()" />
+                <img ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@32w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
                 <a href="#" ng-bind="list.Brand.BrandName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.OrderType">赢折扣</a>
@@ -35,12 +40,12 @@
             </div>
             <div class="cart-list-cont">
                 <div class="cont1">
-                    <a class="a-cart-goodsImg" href="/goodsDetails/{{list.CommodityId}}" title="">
+                    <a class="a-cart-goodsImg" href="/item/{{list.CommodityId}}" title="">
                         <img  ng-src={{imgHost+list.imageUrl+'@100w_100h_100Q.jpg'}} alt=""/>
                     </a>
                     <div class="goods-name">
                         <h2>
-                                <a href="/goodsDetails/{{list.CommodityId}}" title={{list.CommodityName}} ng-bind="list.CommodityName"></a>
+                                <a href="/item/{{list.CommodityId}}" title={{list.CommodityName}} ng-bind="list.CommodityName"></a>
                         </h2>
                         <small ng-bind="'×'+list.Count"></small>
                     </div>
@@ -57,7 +62,7 @@
                     <p class="price" ng-bind="'￥'+list.cost"></p>
                     <p>
                         已享用折扣卡
-                        <span class="icon-discount" ng-bind="(list.DiscountVal*10).toFixed(1)+'折'"></span>
+                        <span class="icon-discount" ng-bind="list.finalDiscount+'折'"></span>
                     </p>
                 </div>
                 <div class="cont4">

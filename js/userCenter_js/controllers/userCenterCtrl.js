@@ -1,7 +1,7 @@
 angular.module('LuckyMall.controllers')
  .controller('UserCenterCtrl',function($scope,LoginSer,$state,$timeout,UserSer){
     $scope.isMTXXShow=false;
-
+    $scope.e_val=LoginSer.getData().UserModel.LuckyEnergy.PaidValue;//幸运能量
     if(LoginSer.getData()!=null){//判断是否登陆
         $scope.data_user=UserSer.getData();
         $scope.simpleMobile=hideSomeStr($scope.data_user.UserModel.Mobile,3,8,'*');

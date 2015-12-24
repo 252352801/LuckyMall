@@ -10,7 +10,7 @@ angular.module('LuckyMall.services')
           for(var o in obj){
               if(isOnline(obj[o].CurrentTime,obj[o].StartTime)) {
                   if (obj[o].PromotionType == 1) {
-                      obj[o].href = '/goodsDetails/' + obj[o].TypeId;
+                      obj[o].href = '/item/' + obj[o].TypeId;
                   } else if (obj[o].PromotionType == 0) {
                       obj[o].href = '/brand/'+obj[o].TypeId;
                   }
