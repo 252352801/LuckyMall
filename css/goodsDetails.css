@@ -26,21 +26,21 @@
 }
 .box-goodsDetails{
     margin-top:15px;
-    min-height:660px;
+
     background:#fff;
-    padding-left:560px;
+    padding-left:450px;
     position:relative;
 }
 .box-goods-img{
-    width:520px;
+    width:410px;
     padding:20px;
     position:absolute;
     left:0px;
     top:0px;
 }
 .box-goods-img .big-goods-img{
-    width:520px;
-    height:500px;
+    width:410px;
+    height:410px;
     overflow:hidden;
 }
 .box-goods-img .big-goods-img ul{
@@ -90,7 +90,7 @@
     cursor:pointer;
     background-size:80%;
     position:absolute;
-    left:540px;
+    left:430px;
     top:228px;
 }
 .G-details .prev:hover,.G-details .next:hover{
@@ -98,7 +98,7 @@
 }
 .small-goods-img{
     margin-top:25px;
-    width:520px;
+    width:410px;
     height:80px;
     position:relative;
     text-align:center;
@@ -110,18 +110,19 @@
     left:0px;
     top:0px;
     overflow:hidden;
-    text-align:center;
+    text-align:left;
 }
+.small-goods-img li:first-child{ margin-left:0 !important;}
 .small-goods-img li{
     margin-left:10px;
-    width:70px;
-    height:70px;
+    width:64px;
+    height:64px;
     line-height:78px;
     border:1px solid #eaeaea;
     padding:4px;
     background:#fff;
     position:relative;
-    left:-20px;
+
     top:0px;
     display:inline-block;
     overflow:hidden;
@@ -140,9 +141,9 @@
     border-color:#ff6700;
 }
 .G-details .pro-info{
-    min-height:620px;
+    min-height:520px;
     border-left:1px solid #e5e5e5;
-    padding:20px 60px;
+    padding:20px 30px;
     overflow:hidden;
 }
 .G-details .pro-property{
@@ -152,6 +153,7 @@
     border-radius:1px;
     border:1px solid transparent;
     position:relative;
+	margin-top:30px;
 }
 .G-details .pro-property .tips{
     position:absolute;
@@ -206,8 +208,12 @@
     float:left;
 }
 .pro-info .bar-time p{
+	color:#999;
     float:left;
 }
+.pro-info .bar-time p span{
+	color:#333;
+	}
 .pro-price{
     padding:24px 0px;
     padding-top:15px;
@@ -254,13 +260,16 @@
 }
 .pro-property li label{
     color:#666;
+	float:left;
+	width:66px;
+	text-align:left;
 }
 .pro-property li p{
-    margin-top:5px;
+
 }
 .pro-property li p a{
     margin-left:12px;
-    margin-top:10px;
+    margin-top:-10px;
     display:inline-block;
     min-width:110px;
     height:36px;
@@ -297,8 +306,14 @@
 }
 .bar-amount label{
     display:block;
+	float:left;
     color:#666;
     margin-bottom:8px;
+	margin-top:10px;
+	width:66px;
+}
+.bar-amount .div-btn{ 
+float:left;
 }
 .bar-amount .btn-add,.bar-amount .btn-reduce,.bar-amount input{
     display:block;
@@ -395,7 +410,7 @@
     position:relative;
 }
 .box-proIntro.tabs .tab-item span:first-child{
-    padding:0px 80px;
+    padding:0px 56px;
 }
 .box-proIntro.tabs .tab-item span:last-child.cur{
     border-right:1px solid #eaeaea;
@@ -507,7 +522,7 @@
 .box-prices{
     overflow:hidden;
     background:#F1F1F1;
-    padding:25px 23px;
+    padding:15px 23px;
     padding-right:10px;
 }
 .box-prices .item-price{
@@ -530,7 +545,7 @@
     display:inline-block;
 }
 .price-interval p{
-    margin-left:25px;
+	text-align:right;
     color:#999;
 }
 .price-interval .new_prices{
@@ -544,7 +559,7 @@
     color:#999;
     margin-left:1px;
     position:relative;
-    top:5px;
+	vertical-align:text-top;
 }
 .price-interval .new_prices label{
     font-size:22px;

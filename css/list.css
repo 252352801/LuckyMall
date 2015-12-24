@@ -80,9 +80,9 @@
     position:relative;
 }
 .list .pro-list-cont li{
-    width:284px;
+    width:238px;
     height:86px;
-    padding-top:284px;
+    padding-top:238px;
     background:#fff;
     float:left;
     margin-left:15px;
@@ -96,9 +96,9 @@
 }
 .list .pro-list-cont .a-goodsImg{
     display:table-caption;
-    width:284px;
-    height:284px;
-    line-height:284px;
+    width:238px;
+    height:238px;
+
     position:absolute;
     left:0px;
     top:0px;
@@ -141,7 +141,7 @@
 	transform: scale(1.1);
 	}
 .list .goods-info{
-    padding:20px 15px;
+    padding:15px 10px;
     height:46px;
     overflow:hidden;
     position:relative;
@@ -162,13 +162,13 @@
     font-size:24px;
 }
 .list .goods-info .old-price{
-    color:#666;
+    color:#999;
     font-size:12px;
     text-decoration:line-through;
-    margin-left:15px;
+    margin-left:0px;
 }
 .list .icon-discount{
-    width: 60px;
+    width: 45px;
     height: 18px;
     line-height: 18px;
     position: absolute;
@@ -214,7 +214,7 @@
     font-weight:normal;
     color:#666;
 }
-.filters ul li:first-child{ padding-top:10px;}
+.filters ul li:first-child{ padding-top:15px;}
 .filters ul li{
     padding: 8px 0px;
     position: relative;
@@ -227,7 +227,7 @@
 
 
 .filters ul li:last-child{
-    padding-bottom:15px;
+    padding-bottom:10px;
 }
 .filters ul{
     border-top:1px solid #eee;
@@ -414,7 +414,7 @@
     position:fixed;
     left:50%;
     top:190px;
-    margin-left:-680px;
+    margin-left:-585px;
     line-height:40px;
     border-radius:4px;
     transition:opacity 1s;

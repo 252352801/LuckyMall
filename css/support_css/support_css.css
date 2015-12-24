@@ -154,6 +154,7 @@ button:focus {
     display:inline-block;
     padding-left:15px; line-height:22px; margin-bottom:10px;
 }
+.join_z img{ width:100%;}
 .join_z h3.h1{border-left:solid 2px #FF9900; }
 .join_z h3.h2{border-left:solid 2px #7ac91c; }
 .join_z h3.h3{border-left:solid 2px #59aef5; }
@@ -206,6 +207,9 @@ button:focus {
 .box-introduction .paragraph{
     margin-top:56px;
 }
+.box-introduction .paragraph img{
+	width:100%;
+	}
 .box-introduction .paragraph h3{
     font-size:18px;
     font-weight:500;
@@ -315,7 +319,7 @@ button:focus {
 }
 .help .steps li{
     display:inline-block;
-    width:223px;
+    width:185px;
     height:125px;
     background-color:#f8f8f8;
     text-align:center;

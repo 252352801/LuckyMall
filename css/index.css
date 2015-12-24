@@ -60,15 +60,14 @@
     position:absolute;
     left:50%;
     top:200px;
-    margin-left:-350px;
+    margin-left:-280px;
     font-size:24px;
     color:#fff;
     font-family: Terminal;
     text-align:center;
     line-height:50px;
     cursor:pointer;
-	border-top-left-radius:3px;
-	border-top-right-radius:3px;
+
 }
 .banner:hover .prev,.banner:hover .next{
     display:block;
@@ -77,22 +76,20 @@
     background-image:url(../res/icon/icon_prev.png);
     background-repeat:no-repeat;
     background-position:0px 12px;
-	border-top-right-radius:3px;
-	border-bottom-right-radius:3px;
+
 }
 .banner .next{
     background-image:url(../res/icon/icon_next.png);
     background-repeat:no-repeat;
     background-position:3px 12px;
-	border-top-left-radius:3px;
-	border-bottom-left-radius:3px;
+
 }
 .banner .prev:hover,.banner .next:hover{
     background-color:rgba(0,0,0,0.6);
 
 }
 .banner .next{
-    margin-left:560px;
+    margin-left:465px;
 }
 .banner-index{
 padding: 5px 10px;
@@ -123,26 +120,28 @@ margin-left: 70px;
     background:rgba(255,102,0,0.7);
 }
 .today-update{
-    width:77.5%;
+    width:75.2%;
     margin-top:30px;
-    float:left;
+    float:left; 
+
 }
 .tomorrow-advance-notice{
-    width:20.83%;
-    margin-left:20px;
+    width:22.8%;
+    margin-left:15px;
     margin-top:30px;
     float: left;
+	overflow:hidden;
 }
 .today-content{
     margin-bottom:20px;
-    height:270px;
+    height:211px;
     background:#fff;
     overflow:hidden;
     position:relative;
 	-webkit-transition:all .3s;
 }
 .today-list-l{
-    width:250px;
+    width:220px;
     height:100%;
     float:left;
     text-align:center;
@@ -150,18 +149,19 @@ margin-left: 70px;
 .today-list-l .info1,.today-list-l .info2{
     margin:0 auto;
     width:90%;
-    height: 115px;
-    padding:10px 0px;
     border-bottom:1px solid #f4f4f4;
 }
+.today-list-l .info2{
+	border-bottom:0px solid #f4f4f4;
+	}
 .today-list-r{
     display:table-caption;
-    width:680px;
+    width:532px;
     height:100%;
     top:0px;
     overflow:hidden;
-    text-align:center;
-    line-height:240px;
+    text-align:right;
+
 }
 .today-list-r img{
     vertical-align:middle;
@@ -186,7 +186,7 @@ margin-left: 70px;
     display:block;
     margin-left:auto;
     margin-right:auto;
-    margin-top:30px;
+    margin-top:20px;
     width:120px;
     height:40px;
     text-align:center;
@@ -243,15 +243,16 @@ margin-left: 70px;
 }
 .tomorrow-content li{
     list-style: none;
-    width:123px;
+    width:113.5px;
     height:96px;
     background:#fff;
-    margin-left:1px;
+
     margin-top:1px;
     text-align:center;
     float:left;
     overflow:hidden;
 }
+.tomorrow-content li:nth-child(even){ margin-left:1px;}
 .tomorrow-content li a{
     display:block;
     width:100%;

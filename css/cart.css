@@ -45,16 +45,16 @@
     margin-left:188px;
 }
 .cart-th .th2{
-    margin-left:254px;
+    margin-left:264px;
 }
 .cart-th .th3{
-    margin-left:155px;
+    margin-left:140px;
 }
 .cart-th .th4{
-     margin-left:190px;
+     margin-left:100px;
  }
 .cart-th .th5{
-    margin-left: 165px;
+    margin-left: 85px;
 }
 .cart-list{
     margin-top:15px;
@@ -103,7 +103,7 @@
     float:left;
 }
 .cart-list-cont .cont1{
-    width:280px;
+    width:295px;
     text-align:left;
     padding-left:140px;
     position:relative;
@@ -115,18 +115,18 @@
     line-height:120px;
  }
 .cart-list-cont .cont3{
-    width:260px;
+    width:200px;
     line-height:26px;
 }
 .cart-list-cont .cont3 p:first-child,.cart-list-cont .cont4 p:first-child{
     margin-top:30px;
 }
 .cart-list-cont .cont4{
-     width:210px;
-    line-height:26px;
+     width:100px;
+    line-height:60px;
  }
 .cart-list-cont .cont5{
-    width:140px;
+    width:100px;
     position:relative;
 }
 .a-cart-goodsImg{
@@ -190,7 +190,7 @@
     background:url(../res/icon/icon_delete.png);
     position:relative;
     left:50%;
-    top:35px;
+    top:45px;
     opacity:0.5;
 }
 .cart-list .icon-remove:hover{
@@ -217,7 +217,7 @@
 #btn_sure_pay{
     padding:10px 45px;
     font-size:18px;
-    background:#ea3127;
+    background:#ff6700;
     color:#fff;
     border:none;
     margin-top:10px;

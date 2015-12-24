@@ -67,6 +67,7 @@
 .box-touch .title-img{
     height:336px;
 }
+.box-touch .title-img img{ width:100%;}
 .box-touch .boxes{
     overflow:hidden;
 }
