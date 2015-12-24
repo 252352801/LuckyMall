@@ -396,21 +396,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         })
 
         /*商品详情*/
-        .state('goodsDetails', {
-            url: '/goodsDetails/:goods_id',
+        .state('item', {
+            url: '/item/:goods_id',
             views: {
                 '': {
-                    templateUrl: "templates/goodsDetails.html",
-                    controller: 'GoodsDetailsCtrl'
+                    templateUrl: "templates/item.html",
+                    controller: 'ItemCtrl'
                 }
             },
             title:'商品详情-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/goodsDetails.css',
-                    './js/controllers/goodsDetailsCtrl.js',
-                    './js/services/goodsDetailsSer.js',
-                    './js/directives/goodsDetailsDirectives.js'
+                    './css/item.css',
+                    './js/controllers/itemCtrl.js',
+                    './js/services/itemSer.js',
+                    './js/directives/itemDirectives.js'
                 ])
             }
 
@@ -1063,7 +1063,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             case Host.test:
                 Host.game='http://www.xingyunmao.cn:9004';//测试
                 Host.gameOverPage='www.xingyunmao.cn/';
-              // Host.gameOverPage='127.0.0.1/';
+               //Host.gameOverPage='127.0.0.1/';
                 break;
             case Host.prev:
                 Host.game='http://120.24.225.116:9004';//运营（前）

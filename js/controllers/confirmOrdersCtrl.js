@@ -30,7 +30,9 @@ angular.module('LuckyMall.controllers')
                 case 'bank_zhongguo':return '(支付宝)中国银行网银支付';break;
                 case 'bank_xingye':return '(支付宝)兴业银行网银支付';break;
                 case 'bank_pingan':return '(支付宝)平安银行网银支付';break;
-                case 'bank_youzheng':return '(支付宝)邮政储蓄银行银行网银支付';break;
+                case 'bank_youzheng':return '(支付宝)邮政储蓄银行网银支付';break;
+                case 'bank_guangfa':return '(支付宝)广发银行网银支付';break;
+                case 'bank_jiaotong':return '(支付宝)交通银行网银支付';break;
             }
         };
         /*收货地址切换*/
@@ -146,7 +148,6 @@ angular.module('LuckyMall.controllers')
                                 $scope.isModalWaitingShow=true;
                             },5);
                             $scope.pay_url=API.aliPaySubmit.url+response.Data.OutTradeNo;
-                            window.open(API.aliPaySubmit.url+response.Data.OutTradeNo);
                             $scope.polling=true;
                             pollingTradeStatus(response.Data.OutTradeNo);
                             $scope.trade_id=response.Data.OutTradeNo;
@@ -310,6 +311,8 @@ angular.module('LuckyMall.controllers')
                 case 'bank_xingye':return 'CIB';break;
                 case 'bank_pingan':return 'SPABANK';break;
                 case 'bank_youzheng':return 'POSTGC';break;
+                case 'bank_guangfa':return 'GDB';break;
+                case 'bank_jiaotong':return 'COMM';break;
             }
         }
 

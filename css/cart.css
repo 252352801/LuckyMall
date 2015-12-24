@@ -40,6 +40,7 @@
     background:#fff;
     color:#333;
     line-height:50px;
+    position:relative;
 }
 .cart-th .th1{
     margin-left:188px;
@@ -76,6 +77,9 @@
     margin-left:20px;
     float:left;
 }
+.cart-list-top .cart-ck-order{
+    margin-left:25px;
+}
 .cart-list-top .a-forDiscount{
     margin-right: 38px;
     margin-top: 7px;
@@ -89,6 +93,11 @@
     cursor: pointer;
     background: #499946;
     font-size: 16px;
+}
+.cart-th .cart-checkedAll{
+    position:absolute;
+    left:20px;
+    top:5px;
 }
 .cart-list-cont{
     min-height:120px;

@@ -935,7 +935,7 @@ angular.module('LuckyMall')
                                     break;
                                 case 4://详情页
                                     $rootScope.$broadcast('cart-update');
-                                    $state.go('goodsDetails', {goods_id: $rootScope.game.commodityId});
+                                    $state.go('item', {goods_id: $rootScope.game.commodityId});
                                     break;
                             }
                             $rootScope.closeGame();
@@ -990,7 +990,7 @@ angular.module('LuckyMall')
             },*/
             link:function(scope, element, attrs){
             },
-            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout){
+            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout,MyOrdersSer){
                 $scope.isModal1show=false;
                 loadUserData();
                 $scope.energy = {
@@ -1004,9 +1004,10 @@ angular.module('LuckyMall')
                     });
                     $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
                 }
-                $scope.showModal1 = function (order, total_cost) {
+                $scope.showModal1 = function (order) {
                     $scope.data_eo=order;
-                    if (testEnergy(total_cost,order.EarnestPercent,order.EarnestMoney,$scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
+                    $scope.data_orgCost=Math.ceil($scope.data_eo.UnitPrice*$scope.data_eo.Count);//打折前总花费
+                    if (testEnergy($scope.data_orgCost,order.EarnestPercent,order.EarnestMoney,$scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
                         $scope.energy.isEnough = true;
                     }else {
                         $scope.energy.isEnough = false;
@@ -1014,6 +1015,8 @@ angular.module('LuckyMall')
                     $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.game_orderId=order.Id;
                     $scope.game_commodityId=order.CommodityId;
+                    MyOrdersSer.setTempOrder(order);
+                    $scope.btn_buyNow_href='/confirmOrder/source=purchase';
                     $timeout(function(){
                         $scope.isModal1show = true;
                     });

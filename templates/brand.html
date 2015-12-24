@@ -30,11 +30,11 @@
     </div>
     <ul class="pro-list-cont">
         <li ng-repeat="list in data_list|orderBy:'maxPrice':price_order" >
-            <a class="a-goodsImg" href="/goodsDetails/{{list.Id}}" target="_blank" title="">
+            <a class="a-goodsImg" href="/item/{{list.Id}}" target="_blank" title="">
                 <img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>
             </a>
             <div class="goods-info">
-                <a href="/goodsDetails/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
+                <a href="/item/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
                     <h2 ng-bind="list.CommodityName"></h2>
                 </a>
                 <p class="price">

@@ -1,8 +1,9 @@
 angular.module('LuckyMall.controllers')
- .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API,OrderDetailsSer,Host,TokenSer){
+ .controller('PayForEarnestCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,$timeout,WXPaySer,PaymentSer,API,OrderDetailsSer,Host,TokenSer,RefreshUserDataSer){
 
         $scope.isModalWaitingShow=false;
         $scope.pay_type='zhifubao';//支付方式
+        loadWallet();//钱包数据
         loadPageData();//加载本页必须的数据
         /*支付方式切换*/
         $scope.changePayType=function(new_type){
@@ -20,7 +21,9 @@ angular.module('LuckyMall.controllers')
                 case 'bank_zhongguo':return '(支付宝)中国银行网银支付';break;
                 case 'bank_xingye':return '(支付宝)兴业银行网银支付';break;
                 case 'bank_pingan':return '(支付宝)平安银行网银支付';break;
-                case 'bank_youzheng':return '(支付宝)邮政储蓄银行银行网银支付';break;
+                case 'bank_youzheng':return '(支付宝)邮政储蓄银行网银支付';break;
+                case 'bank_guangfa':return '(支付宝)广发银行网银支付';break;
+                case 'bank_jiaotong':return '(支付宝)交通银行网银支付';break;
             }
         };
 
@@ -134,7 +137,17 @@ angular.module('LuckyMall.controllers')
                 case 'bank_xingye':return 'CIB';break;
                 case 'bank_pingan':return 'SPABANK';break;
                 case 'bank_youzheng':return 'POSTGC';break;
+                case 'bank_guangfa':return 'GDB';break;
+                case 'bank_jiaotong':return 'COMM';break;
             }
+        }
+        function loadWallet(){
+            RefreshUserDataSer.requestUserData(function(resp,status){
+                if(status==1){
+                    var blc=RefreshUserDataSer.getData().EarnestValue
+                    $scope.data_balance=blc>=0?blc:0;
+                }
+            });
         }
         function pollingTradeStatus(trade_id){
             $timeout(function(){
@@ -147,6 +160,7 @@ angular.module('LuckyMall.controllers')
                             'title': '完成支付定金'
                         });
                         $state.go('payEarnestSuccess',{order_id:$stateParams.params.split('=')[1],commodity_id:$scope.commodityId});
+
                     }else{
                         pollingTradeStatus(trade_id);
                     }

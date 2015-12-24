@@ -31,10 +31,10 @@
             </div>
             <div class="cont">
                 <div class="cont1">
-                    <a class="img-container" href="/goodsDetails/{{data_order.Commodity.Id}}">
+                    <a class="img-container" href="/item/{{data_order.Commodity.Id}}">
                         <img ng-src="{{imgHost+data_order.imageUrl+'@100w_100h_100Q.jpg'}}"/>
                     </a>
-                    <a href="/goodsDetails/{{data_order.Commodity.Id}}">
+                    <a href="/item/{{data_order.Commodity.Id}}">
                         <h2 ng-bind="data_order.Commodity.CommodityName" title="{{data_order.Commodity.CommodityName}}" ></h2>
                     </a>
                     <small ng-bind="'×'+data_order.Count"></small>

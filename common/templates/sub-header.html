@@ -40,7 +40,7 @@
             <span>购物车</span>
             <span class="icon-arrow-down"></span>
         </a>
-        <div class="hide-cart" ng-if="isLogin&&cartAmount>0">
+        <div class="hide-cart" ng-show="isLogin&&cartAmount>0">
             <p class="hide-cart-tips" ng-show="cartTimeRemain>0">
                 <span class="icon-time"></span>
                 <!--<span ng-bind="cart(cart_time_remain/60)+'分'+cart_time_remain%60+'秒'"></span>-->
@@ -50,11 +50,11 @@
             <ul class="cart-simple-list">
                 <li ng-repeat="list in sp_data_cart">
                     <div class="bar-img-goods">
-                        <a href="/goodsDetails/{{list.CommodityId}}">
+                        <a href="/item/{{list.CommodityId}}">
                             <img ng-src={{imgHost+list.imageUrl+'@70w_70h_100Q.jpg'}} alt="" title=""/>
                         </a>
                     </div>
-                    <a href="/goodsDetails/{{list.CommodityId}}">
+                    <a href="/item/{{list.CommodityId}}">
                         <h2 ng-bind="list.CommodityName" title={{list.CommodityName}}></h2>
                     </a>
 
@@ -63,7 +63,7 @@
                     </p>
 
                     <p>
-                        <span class="price" ng-bind="'￥'+list.discountUnitPrice.toFixed(2)"></span>
+                        <span class="price" ng-bind="'￥'+list.cost"></span>
                         <span ng-bind="'×'+list.Count"></span>
                     </p>
                     <span class="icon-remove" ng-click="removeGoodsInCart(list.Id)" ng-if="list.EarnestMoney==0">×</span>
