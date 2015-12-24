@@ -61,11 +61,11 @@
 }
 .box-goods-img .big-goods-img li{
     display:table-caption;
-    width:520px;
-    height:500px;
+    width: 410px;
+    height: 410px;
     text-align:center;
     overflow:hidden;
-    line-height:530px;
+    line-height:410px;
     float:left;
 }
 .big-goods-img .big-img{
@@ -264,21 +264,26 @@
 }
 .pro-property li{
     margin-bottom:24px;
+    padding-left:66px;
+    position: relative;
 }
 .pro-property li label{
     color:#666;
-	float:left;
 	width:66px;
 	text-align:left;
+    position:absolute;
+    line-height:50px;
+    left:0px;
+    top:0px;
 }
 .pro-property li p{
 
 }
 .pro-property li p a{
     margin-left:12px;
-    margin-top:-10px;
+    margin-top:10px;
     display:inline-block;
-    min-width:110px;
+    min-width:106px;
     height:36px;
     padding:0px 10px;
     line-height:36px;
@@ -367,6 +372,7 @@ float:left;
     border-color:#ff6700;
 }
 .pro-info .bar-btn{
+    margin-left:66px;
     margin-top:56px;
     margin-bottom:40px;
 }

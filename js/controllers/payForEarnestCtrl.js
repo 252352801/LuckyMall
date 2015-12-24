@@ -55,7 +55,8 @@ angular.module('LuckyMall.controllers')
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;
                             },5);
-                            window.open(API.aliPaySubmit.url+response.OutTradeNo);
+                          //  window.open(API.aliPaySubmit.url+response.OutTradeNo);
+                            location.href=API.aliPaySubmit.url+response.OutTradeNo;
                             pollingTradeStatus(response.OutTradeNo);
                             $scope.trade_id=response.OutTradeNo;
                         }

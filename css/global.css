@@ -36,7 +36,7 @@ a:hover{
 }
 img{
     opacity:1;
-    transition:opacity 1.5s;
+    transition:transform 1.5s;
 }
 .img-loading{
     opacity:0;
@@ -2232,7 +2232,6 @@ ul.dynamic li p a:hover{
     background:#fff;
     box-sizing:border-box;
     padding:30px;
-    min-height:670px;
 }
 .lost-pw .title{
     font-size:18px;
@@ -2243,12 +2242,11 @@ ul.dynamic li p a:hover{
 }
 .lost-pw .box-lost-pw{
     width:100%;
-    padding-left:670px;
+    padding-left:500px;
     position:relative;
 }
 .lost-pw form{
     display: block;
-    margin-left: 45px;
     width: 280px;
     min-height: 500px;
     padding-left: 100px;
@@ -2256,8 +2254,7 @@ ul.dynamic li p a:hover{
     position: relative;
 }
 .box-lost-pw .big-img{
-    width: 630px;
-    height: 510px;
+    width: 500px;
     position: absolute;
     left: 45px;
     top: 45px;

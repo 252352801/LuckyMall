@@ -281,3 +281,10 @@ margin-left: 70px;
 .banner.banner-css3 li{
     opacity:1;
 }
+.today-list-r img{
+    -webkit-transition: all .5s!important;
+    -moz-transition: all .5s!important;
+    -ms-transition: all .5s!important;
+    -o-transition: all .5s!important;
+    transition: all .5s!important;
+}

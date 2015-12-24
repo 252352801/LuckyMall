@@ -1236,14 +1236,14 @@
 }
 
 .account-details .cont1{
-    width: 715px;
+    width: 80%;
     float: left;
 }
 .account-details .cont2 {
     width: 90px;
     line-height: 60px;
-    text-align:center;
-    float: left;
+    text-align:right;
+    float: right;
     font-size: 14px;
 }
 .account-details .cont1 h2{

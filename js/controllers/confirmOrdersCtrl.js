@@ -147,7 +147,8 @@ angular.module('LuckyMall.controllers')
                             $timeout(function(){
                                 $scope.isModalWaitingShow=true;
                             },5);
-                            $scope.pay_url=API.aliPaySubmit.url+response.Data.OutTradeNo;
+                            $scope.pay_url=API.aliPaySubmit.url+response.Data.OutTradeNo;//支付url
+                            location.href=$scope.pay_url;
                             $scope.polling=true;
                             pollingTradeStatus(response.Data.OutTradeNo);
                             $scope.trade_id=response.Data.OutTradeNo;
