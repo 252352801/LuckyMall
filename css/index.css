@@ -97,6 +97,7 @@ position: absolute;
 left: 50%;
 top: 92%;
 margin-left: 70px;
+    z-index:3;
 }
 .banner-index a{
     display:block;
@@ -160,7 +161,7 @@ margin-left: 70px;
     height:100%;
     top:0px;
     overflow:hidden;
-    text-align:right;
+    text-align:center;
 
 }
 .today-list-r img{

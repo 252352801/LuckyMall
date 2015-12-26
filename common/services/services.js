@@ -610,8 +610,8 @@ angular.module('LuckyMall.services',[])
                     "Keyword": "",
                     "MinPrice":0,
                     "MaxPrice":0,
-                    "OrderNames": ["RetailPrice"],
-                    "Asc": params.sortByPrice,//升序   true升序  false非升序
+                    "OrderNames": [params.orderName],
+                    "Asc": params.asc,//升序   true升序  false非升序
                     "PageIndex": 0,//当前页
                     "PageSize": 1000,//每页大小
                     "TotalSize":10000,//总条数
@@ -693,16 +693,25 @@ angular.module('LuckyMall.services',[])
                     data[o].Specifications=angular.fromJson(data[o].Specifications);//产品规格字符串转换json
                     data[o].imageUrl=data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                     data[o].orgCost=Math.ceil(data[o].UnitPrice)*data[o].Count;//原价
-                    data[o].cost=Math.ceil(data[o].UnitPrice*data[o].Count*data[o].BaseDiscount-data[o].DiscountMoney);//折后价
+                    data[o].cost=Math.ceil((data[o].UnitPrice*data[o].Count*data[o].BaseDiscount-data[o].DiscountMoney).toFixed(2));//折后价
                     data[o].needToPay=Math.ceil(data[o].cost-data[o].EarnestMoney);//待支付
-                    data[o].finalDiscount=Math.ceil(Math.round(data[o].DiscountVal*10000)/100)/10;
+                    data[o].finalDiscount=data[o].DiscountValue;
                     data[o].isSelected=true;//勾选状态，默认勾选
-                    total_amount+=data[o].Count;
-                    total_cost+=data[o].needToPay;
               }
-              data.totalAmount=total_amount;
-              data.totalCost=total_cost;
-             data.isCheckedAll=true;
+              setTotalData();
+              data.isCheckedAll=true;
+        };
+        var setTotalData=function(){
+            var cost=0;
+            var count=0;
+            for(var o in data){
+                if(data[o].isSelected){
+                    cost+=data[o].needToPay;
+                    count++;
+                }
+            }
+            data.totalCost=cost;
+            data.totalAmount=count;
         };
         return {
                 getData:function(){
@@ -738,27 +747,30 @@ angular.module('LuckyMall.services',[])
                     }
                     return result;
                 },
-                 /*全选*/
-                checkedAll:function(){
-                    for(var o in data){
-                        data[o].isSelected=true;
-                    }
-                },
-             /*取消全选*/
-               cancelCheckedAll:function(){
-                   for(var o in data){
-                       data[o].isSelected=false;
-                   }
-                },
+                 toggleCheckedAll:function(){
+                     if(data.isCheckedAll==true){
+                         for(var o in data){
+                             data[o].isSelected=true;
+                         }
+                     }else{
+                         for(var o in data){
+                             data[o].isSelected=false;
+                         }
+                     }
+                     setTotalData();
+                 },
+
                /*检测是否是全选*/
-            testChecked:function(){
-                for(var o in data){
-                    if(data[o].isSelected==false){
-                        data.isCheckedAll=false;
-                        return;
+            testChecked: function () {
+                var flag=true;
+                for (var o in data) {
+                    if (data[o].isSelected == false) {
+                        flag = false;
+                        break;
                     }
                 }
-                data.isCheckedAll=true
+                data.isCheckedAll = flag;
+                setTotalData();
 
             },
                 requestCartData:function(callback) {
@@ -942,19 +954,23 @@ angular.module('LuckyMall.services',[])
         var orders_temp=null;
         var orders_after=null;
         var initData=function(data,type){ //type 0 售前单   1 售后单
-            for(var o in data){
-                var obj=(type==0)?data[o]:data[o].Order;
-                obj.Specifications=angular.fromJson(obj.Specifications);//产品规格字符串转换json
-                obj.imageUrl=obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-                obj.orgCost=Math.ceil(obj.UnitPrice)*obj.Count;//原价
-                obj.cost=Math.ceil(obj.UnitPrice*obj.Count*obj.BaseDiscount-obj.DiscountMoney);//折后价
-                obj.needToPay=Math.ceil(obj.cost-obj.EarnestMoney);//待支付
-                obj.finalDiscount=Math.ceil(Math.round(obj.DiscountVal*10000)/100)/10;
-                if(obj.ConsigneeInfo!=(''||null)){
-                    obj.ConsigneeInfo=angular.fromJson(obj.ConsigneeInfo);//收货地址
-                }
-            }
-                return data;
+          try {
+              for (var o in data) {
+                  var obj = (type == 0) ? data[o] : data[o].Order;
+                  obj.Specifications = angular.fromJson(obj.Specifications);//产品规格字符串转换json
+                  obj.imageUrl = obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
+                  obj.orgCost = Math.ceil(obj.UnitPrice) * obj.Count;//原价
+                  obj.cost = Math.ceil((obj.UnitPrice * obj.Count * obj.BaseDiscount - obj.DiscountMoney).toFixed(2));//折后价
+                  obj.needToPay = Math.ceil(obj.cost - obj.EarnestMoney);//待支付
+                  obj.finalDiscount = obj.DiscountValue;
+                  if (obj.ConsigneeInfo != ('' || null)) {
+                      obj.ConsigneeInfo = angular.fromJson(obj.ConsigneeInfo);//收货地址
+                  }
+              }
+              return data;
+          }catch(error){
+              console.log(error);
+          }
         };
         return {
             getAllOrders:function(){
@@ -1013,7 +1029,7 @@ angular.module('LuckyMall.services',[])
                         'Authorization':TokenSer.getAuth()
                     }
                 }).success(function(response,status,headers,config){
-                    if(response){
+                    if(status==200&&response!=null){
                         switch(order_type){
                             case 1:orders_unPay=initData(response,0);break;
                             case 2:orders_paid=initData(response,0);break;
@@ -1042,7 +1058,7 @@ angular.module('LuckyMall.services',[])
                         'Authorization':TokenSer.getAuth()
                     }
                 }).success(function(response,status,headers,config){
-                    if(response){
+                    if(status==200){
                         orders_after=initData(response,1);
                         callback(response,1);
                     }else{
@@ -1117,9 +1133,9 @@ angular.module('LuckyMall.services',[])
             data.Specifications=angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl=data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
             data.orgCost=Math.ceil(data.UnitPrice)*data.Count;//原价
-            data.cost=Math.ceil(data.UnitPrice*data.Count*data.BaseDiscount-data.DiscountMoney);//折后价
+            data.cost=Math.ceil((data.UnitPrice*data.Count*data.BaseDiscount-data.DiscountMoney).toFixed(2));//折后价
             data.needToPay=data.cost-data.EarnestMoney;//待支付
-            data.finalDiscount=Math.ceil(Math.round(data.DiscountVal*10000)/100)/10;//最终折扣
+            data.finalDiscount=data.DiscountValue;//最终折扣
             if(data.ConsigneeInfo){
                 data.ConsigneeInfo=angular.fromJson(data.ConsigneeInfo);//收货地址
             }
@@ -1206,23 +1222,41 @@ angular.module('LuckyMall.services',[])
                 });
             },
            /* 支付定金*/
-            payForEarnest:function(order_id,params,callback){
-                $http({
-                    method:API.payForEarnest.method,
-                    url: API.payForEarnest.url+order_id,
-                    data:params,
-                    headers: {
-                        'Authorization':TokenSer.getAuth()
-                    }
-                }) .success(function(response){
-                    if(response){
-                        callback(response,1);
-                    }else{
-                        callback(response,0);
-                    }
-                }).error(function(){
-                    callback('请求失败！',-1);
-                });
+            payForEarnest:function(type,order_id,params,callback){//type 支付类型 0 喵喵余额支付  1.网上支付
+                if(type==1) {
+                    $http({
+                        method: API.payForEarnest.method,
+                        url: API.payForEarnest.url + order_id,
+                        data: params,
+                        headers: {
+                            'Authorization': TokenSer.getAuth()
+                        }
+                    }).success(function (response) {
+                        if (response) {
+                            callback(response, 1);
+                        } else {
+                            callback(response, 0);
+                        }
+                    }).error(function () {
+                        callback('请求失败！', -1);
+                    });
+                }else{
+                    $http({
+                        method: API.payEarnestUseBalance.method,
+                        url: API.payEarnestUseBalance.url + order_id,
+                        headers: {
+                            'Authorization': TokenSer.getAuth()
+                        }
+                    }).success(function (response) {
+                        if (response) {
+                            callback(response, 1);
+                        } else {
+                            callback(response, 0);
+                        }
+                    }).error(function () {
+                        callback('请求失败！', -1);
+                    });
+                }
             },
             getStatusOfTrade:function(trade_id,callback){
                 var url=API.getTradeStatus.url+trade_id;
@@ -1251,6 +1285,24 @@ angular.module('LuckyMall.services',[])
                 $http({
                     method: API.getTradeInfo.method,
                     url: API.getTradeInfo.url+order_id,
+                    timeout: 10000,
+                    headers: {
+                        'Authorization':TokenSer.getAuth()
+                    }
+                }) .success(function(response){
+                    if(response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(){
+                    callback(null,-1);
+                });
+            },
+            getOrderByTradeId:function(trade_id,callback){
+                $http({
+                    method: API.getTradeInfoById.method,
+                    url: API.getTradeInfoById.url+trade_id,
                     timeout: 10000,
                     headers: {
                         'Authorization':TokenSer.getAuth()
@@ -1444,9 +1496,9 @@ angular.module('LuckyMall.services',[])
             for(var o in data){
                 var spe=data[o].Order.Specifications;
                 data[o].Order.goodsProperty=angular.fromJson(spe);
-                data[o].Order.imgUrl=data[o].Order.Commodity.RollingImages.split('|')[0];
+                data[o].imgUrl=data[o].Order.Commodity.RollingImages.split('|')[0];
                 data[o].discountPrice=Math.ceil(data[o].BaseDiscount*data[o].Order.UnitPrice);
-                data[o].BaseDiscount=10*(data[o].BaseDiscount.toFixed(2));
+                data[o].BaseDiscount=Math.ceil(Math.round(data[o].BaseDiscount*10000)/100)/10;
             }
             return data;
         }
@@ -1605,4 +1657,50 @@ angular.module('LuckyMall.services',[])
                 return uploader;
             }
         }
+    })
+
+    .factory('MarketSer',function(API,$http){
+        var cur_url='';
+        var data={
+            marketOnline:null,
+            pageData:null
+        };
+        return {
+            getUrl:function(){
+              return  cur_url;
+            },
+            setUrl:function(val){
+                   cur_url=val;
+            },
+            getData:function(){
+                return data;
+            },
+            requestMarketList:function(callback){
+                $http({
+                    method:API.marketOnline.method,
+                    url:API.marketOnline.url
+                }).success(function(response){
+                    if(response){
+                        data.marketOnline=response;
+                        callback(response,1);
+                    }
+                }).error(function(data,status,headers,config){
+
+                });
+            },
+            requestMarketPage:function(param,callback){
+                $http({
+                    method:API.marketView.method,
+                    url:API.marketView.url,
+                    data:param
+                }).success(function(response){
+                    if(response){
+                        data.pageData=response;
+                        callback(response,1);
+                    }
+                }).error(function(data,status,headers,config){
+
+                });
+            }
+        };
     })

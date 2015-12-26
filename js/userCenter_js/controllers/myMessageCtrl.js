@@ -74,7 +74,7 @@ angular.module('LuckyMall.controllers')
             for(var o in data){
                 var str =data[o].CreateTime;
                 str = str.replace(/-/g,"/");
-                var date_time = new Date(str );
+                var date_time = new Date(str);
                 var date_time_now=new Date();
                 var past_time=(date_time_now.getTime()-date_time.getTime())/1000/60;//经过的时间（分）
                 if(past_time<=0){

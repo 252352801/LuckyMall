@@ -4,8 +4,9 @@
 </sub-header>
 <aside-right></aside-right>
 <!--中部 start-->
+<spinner ng-show="!loaded"></spinner>
 <div class="G-details container">
-    <div class="content">
+    <div class="content" ng-show="loaded">
         <div class="page-location" ng-show="data_categoryName">
             <a href="/home">幸运猫</a>
             <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}/0/"></a>
@@ -18,7 +19,7 @@
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img tx-center" >
                    <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
-                    <img src="./res/images/out.png" class="img-so" ng-if="data_goods.status==4"/>
+                    <img src="./res/images/item_out.png" class="img-so" ng-if="data_goods.status==4"/>
                     <ul ng-style="{left:-index*410+'px',width:data_goods.SmallImages.length*410+'px'}">
                         <li ng-repeat="Img in data_goods.SmallImages">
                             <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@520w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img+'@1000w_1000h_100Q.png'}} />
@@ -40,10 +41,12 @@
             <form class="pro-info" ng-show="loaded">
                 <h1 ng-bind="data_goods.CommodityName"></h1>
                 <small ng-bind="data_goods.Description"></small>
-                <div class="bar-time" ng-if="data_goods.status!=4">
+                <div class="bar-time" ng-if="data_goods.status!=-2">
                     <p class="remain-time" ng-if="data_goods.status==1">距下架时间：<span time-down="data_goods.remainTime"></span></p>
-                    <p ng-if="data_goods.status==0">未到开售时间</p>
+                    <p ng-if="data_goods.status==0" class="color-red">未到开售时间</p>
                     <p ng-if="data_goods.status==-1">已下架</p>
+                    <p ng-if="data_goods.status==5">已过销售时间</p>
+                    <p ng-if="data_goods.status==4">已售完</p>
                 </div>
                 <div class="pro-price">
 
@@ -92,7 +95,7 @@
                             </div>-->
                         </div>
                         <div class="item-price item-price2 price-interval">
-                            <p>市场价：<span class="old-price" ng-bind="'￥'+data_goods.RetailPrice">￥2999.00</span></p>
+                            <p><span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span></p>
                             <p class="new_prices">
                                 <span ng-bind="'￥'+data_goods.maxPrice"></span><small ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></small>
                                 <label>~</label>
@@ -119,9 +122,9 @@
                 <div class="bar-amount">
                     <label>数量</label>
                     <div class="div-btn">
-                        <span class="btn-reduce txtUnSelect" ng-click="reduce()">-</span>
-                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||(data_goods.IsCanFree==true&&!isFreePlayed)" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
-                        <span class="btn-add txtUnSelect" ng-click="add()">+</span>
+                        <span class="btn-reduce txtUnSelect" ng-click="reduce()" ng-disabled="data_goods.status!=1">-</span>
+                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||(data_goods.IsCanFree==true&&!isFreePlayed)||data_goods.status!=1" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
+                        <span class="btn-add txtUnSelect" ng-click="add()" ng-disabled="data_goods.status!=1">+</span>
                        <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
                         <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>
                     </div>
@@ -129,7 +132,7 @@
                 <div class="bar-btn">
                     <input ng-class="{'btn-buy':data_goods.status==1,'btn-buy disabled':data_goods.status!=1}" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" ng-disabled="data_goods.status!=1"/>
                     <input ng-class="{'btn-playGame':data_goods.status==1,'btn-playGame disabled':data_goods.status!=1}" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)" ng-value="btn_value.freePlay" ng-disabled="data_goods.status!=1"/>
-                    <input class="{'btn-add':data_goods.status==1,'btn-add disabled':data_goods.status!=1}" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart ng-disabled="data_goods.status!=1"/>
+                    <input ng-class="{'btn-add':data_goods.status==1,'btn-add disabled':data_goods.status!=1}" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart ng-disabled="data_goods.status!=1"/>
                 </div>
             </form>
         </div>

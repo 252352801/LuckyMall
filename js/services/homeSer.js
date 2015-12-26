@@ -21,6 +21,18 @@ angular.module('LuckyMall.services')
           return result;
       }
 
+        function initBannerData(obj){
+            var result=new Array();
+            for(var o in obj){
+                    if (obj[o].PromotionType == 1) {
+                        obj[o].href = '/item/' + obj[o].TypeId;
+                    } else if (obj[o].PromotionType == 0) {
+                        obj[o].href = '/brand/'+obj[o].TypeId;
+                    }
+                    result.push(obj[o]);
+            }
+            return result;
+        }
               
         function setRemainTime(cur_time,end_time){
             var t_cur=new Date(cur_time.replace(/-/g,"/"));
@@ -66,8 +78,8 @@ angular.module('LuckyMall.services')
                     for(var o in response){
                         response[o].ImageData=response[o].ImageData.split('|')[0];
                     }
-                    data.banner=response;
-                    callback(response,1);
+                    data.banner=initBannerData(response);
+                    callback(data.banner,1);
                 }else{
                     callback(response,0);
                 }

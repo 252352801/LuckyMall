@@ -13,7 +13,19 @@ angular.module('LuckyMall')
         };
     })
 
-
+    .directive('spinner', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/spinner.html',
+            replace: true,
+            transclude: true,
+            link: function (scope, element, attrs) {
+                if(attrs.text){
+                    element.html(attrs.text);
+                }
+            }
+        };
+    })
 
     /*回到顶部*/
     .directive('btnPageUp', function () {
@@ -77,6 +89,13 @@ angular.module('LuckyMall')
                 };
             },
             link: function (scope, element, attrs) {
+                var obj;
+                if (document.documentElement.scrollTop) {
+                    obj = document.documentElement;
+                } else {
+                    obj = document.body;
+                }
+                obj.scrollTop=0;
             }
         };
     })
@@ -138,6 +157,13 @@ angular.module('LuckyMall')
             replace: true,
             link: function (scope, element, attrs) {
                 scope.cur_nav = attrs.nav;
+                var obj;
+                if (document.documentElement.scrollTop) {
+                    obj = document.documentElement;
+                } else {
+                    obj = document.body;
+                }
+                obj.scrollTop=0;
             }
         };
     })
@@ -991,8 +1017,10 @@ angular.module('LuckyMall')
             link:function(scope, element, attrs){
             },
             controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout,MyOrdersSer){
+                if(TokenSer.getToken()){//存有token时请求用户数据
+                    loadUserData();
+                }
                 $scope.isModal1show=false;
-                loadUserData();
                 $scope.energy = {
                     isEnough: true,
                     tips: ''
@@ -1005,21 +1033,13 @@ angular.module('LuckyMall')
                     $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
                 }
                 $scope.showModal1 = function (order) {
-                    $scope.data_eo=order;
-                    $scope.data_orgCost=Math.ceil($scope.data_eo.UnitPrice*$scope.data_eo.Count);//打折前总花费
-                    if (testEnergy($scope.data_orgCost,order.EarnestPercent,order.EarnestMoney,$scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
-                        $scope.energy.isEnough = true;
-                    }else {
-                        $scope.energy.isEnough = false;
+                    if($scope.data_user!=undefined) {
+                        show(order);
+                    }else{
+                        loadUserData(function(){
+                            show(order);
+                        });
                     }
-                    $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken(); //设置游戏地址
-                    $scope.game_orderId=order.Id;
-                    $scope.game_commodityId=order.CommodityId;
-                    MyOrdersSer.setTempOrder(order);
-                    $scope.btn_buyNow_href='/confirmOrder/source=purchase';
-                    $timeout(function(){
-                        $scope.isModal1show = true;
-                    });
 
                 };
                 $scope.closeModal1 = function () {
@@ -1041,11 +1061,25 @@ angular.module('LuckyMall')
                 };
 
                 $scope.payForEarnest = function () {
-                    if ($scope.agree) {
                         $state.go('payForEarnest',{params:'order_id='+$scope.data_eo.Id});
-                    } else {
-                    }
                 };
+                function show(order){
+                    $scope.data_eo = order;
+                    $scope.data_orgCost = Math.ceil($scope.data_eo.UnitPrice * $scope.data_eo.Count);//打折前总花费
+                    if (testEnergy($scope.data_orgCost, order.EarnestPercent, order.EarnestMoney, $scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
+                        $scope.energy.isEnough = true;
+                    } else {
+                        $scope.energy.isEnough = false;
+                    }
+                    $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.game_orderId = order.Id;
+                    $scope.game_commodityId = order.CommodityId;
+                    MyOrdersSer.setTempOrder(order);
+                    $scope.btn_buyNow_href = '/confirmOrder/source=purchase';
+                    $timeout(function () {
+                        $scope.isModal1show = true;
+                    });
+                }
 
                  /**检查能量是否够4发炮弹**/
                 function testEnergy(total_cost,percent,paid_value,remain_energy) {
@@ -1075,10 +1109,13 @@ angular.module('LuckyMall')
                     }
                 }
 
-                function loadUserData() {
+                function loadUserData(callback) {
                     RefreshUserDataSer.requestUserData(function (response, status) {
                         if (status == 1) {
                             $scope.data_user = RefreshUserDataSer.getData();
+                            if(callback){
+                                callback();
+                            }
                         }
                     });
 

@@ -79,11 +79,7 @@ angular.module('LuckyMall.controllers')
             return true;
         };
        $scope.toggleCheckedAll=function(){
-            if(!$scope.data_cart.isCheckedAll){
-                CartSer.cancelCheckedAll();
-            }else{
-                CartSer.checkedAll();
-            }
+                CartSer.toggleCheckedAll();
        };
         $scope.testChecked=function(){
             CartSer.testChecked();

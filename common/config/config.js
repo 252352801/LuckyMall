@@ -179,9 +179,13 @@ app.constant('API',{
         method:'get',
         url:  'api/order/tradestatus/'
     },
-    getTradeInfo:{ //获取交易单信息
+    getTradeInfo:{ //根据订单号获取交易单信息
         method:'get',
         url:'api/order/trade/'
+    },
+    getTradeInfoById:{ //根据交易单获取订单信息 后接交易单号
+        method:'get',
+        url:'api/order/bytrade/'
     },
     getAreas: {//获取行政区域地址数据
         method:'get',
@@ -254,6 +258,14 @@ app.constant('API',{
     resetPassword:{ //重新设置密码（找回密码）
         method:'post',
         url:'api/user/resetpassword'
+    },
+    payEarnestUseBalance:{//使用余额支付定金
+        method:'get',
+        url:'api/order/payfromuserearnest/'
+    },
+    getBrandById:{
+        method:'get',
+        url:'api/brand/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -390,7 +402,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './css/list.css',
                     './js/controllers/brandPageCtrl.js',
-                    './js/services/brandSer.js'
+                    './js/services/brandSer.js',
+                    './js/directives/listDirectives.js'
                 ])
             }
         })
@@ -563,7 +576,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         })
         /*活动页*/
         .state('market', {
-            url: '/market',
+            url: '/market/:id',
             views: {
                 '': {
                     templateUrl: "templates/market.html",
@@ -1046,6 +1059,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/logisticsInfoCtrl.js'
+                ])
+            }
+        })
+
+        /*(支付宝)支付处理*/
+        .state('payHandler', {
+            url: '/payHandler/:type/:trade_id/:auth',
+            views: {
+                '': {
+                    templateUrl: "templates/payHandler.html",
+                    controller: 'PayHandlerCtrl'
+                }
+            },
+            title:'正在处理...-幸运猫-享玩享购享折扣',
+            resolve: {
+                loadFiles: load([
+                    './js/controllers/payHandlerCtrl.js'
                 ])
             }
         })

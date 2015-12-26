@@ -73,15 +73,15 @@
                 <span class="color-red val" ng-bind="'￥'+data_balance">￥100</span>
                 <span>元</span>
             </div>
-            <p>
+            <p ng-if="needToPay>0">
                 还需支付：
-                <span class="color-red val" ng-bind="'￥'+(mathCeilPrice(earnest_cost)-data_balance)"></span>
+                <span class="color-red val" ng-bind="'￥'+needToPay"></span>
             </p>
         </div>
-        <p class="s-label">
+        <p class="s-label" ng-if="needToPay>0">
             <small>在线支付</small>
         </p>
-        <ul class="btn-pay-models">
+        <ul class="btn-pay-models" ng-if="needToPay>0">
             <li ng-class="{'cur':pay_type=='zhifubao'}" ng-click="changePayType('zhifubao')">
                 <span>√</span>
                 <div class="img-container">
@@ -95,10 +95,10 @@
                 </div>
             </li>
         </ul>
-        <p class="s-label">
+        <p class="s-label" ng-if="needToPay>0">
             <small>网银支付</small>
         </p>
-        <ul class="btn-pay-models">
+        <ul class="btn-pay-models" ng-if="needToPay>0">
             <li ng-class="{'cur':pay_type=='bank_icbc'}" ng-click="changePayType('bank_icbc')">
                 <span></span>
                 <div class="img-container">
@@ -162,7 +162,7 @@
         </ul>
     </div>
     <div class="content confirmOrder-bottom">
-        <div>
+        <div ng-if="needToPay>0">
             <label>支付方式：</label>
             <p ng-bind="showPayType()"></p>
         </div>
@@ -170,9 +170,9 @@
             <label>支付类型：</label>
             <p>定金支付</p>
         </div>
-        <div>
+        <div ng-if="needToPay>0">
             <label>合计金额：</label>
-            <p><span class="cost" ng-bind="'￥'+(mathCeilPrice(earnest_cost)-data_balance)"></span>元</p>
+            <p><span class="cost" ng-bind="'￥'+needToPay"></span>元</p>
         </div>
         <div>
             <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>
@@ -190,10 +190,10 @@
         <span class="btn-close" title="关闭" ng-click="closeWaitingPayModal()">×</span>
         <div class="tips-unFinish" ng-if="isTipsUnFinishShow==true">
             <p class="bar-tips">检测到您并<span class="color-org">未支付</span>，请您在<span class="color-org">新打开的页面</span>中完成支付</p>
-            <p class="bar-time">
+<!--            <p class="bar-time">
                 <span class="color-org" count-down="5" time-over="returnWaitingModal"></span>
                 后返回
-            </p>
+            </p>-->
             <p class="bar-btn">
                 <a ng-click="returnWaitingModal()">确定</a>
             </p>

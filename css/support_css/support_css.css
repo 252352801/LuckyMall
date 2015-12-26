@@ -319,7 +319,7 @@ button:focus {
 }
 .help .steps li{
     display:inline-block;
-    width:185px;
+    width:183px;
     height:125px;
     background-color:#f8f8f8;
     text-align:center;
@@ -335,22 +335,22 @@ button:focus {
 }
 .box-help .step1,.box-help .step2,.box-help .step3,.box-help .step4,.box-help .step5{
     background-repeat:no-repeat;
-    background-position:80px 10px;
+    background-position:60px 10px;
 }
 .box-help .step1{
-    background-image:url(../res/icon/icon_shopping_step1.png);
+    background-image:url(../../res/icon/icon_shopping_step1.png);
 }
 .box-help .step2{
-    background-image:url(../res/icon/icon_shopping_step2.png);
+    background-image:url(../../res/icon/icon_shopping_step2.png);
 }
 .box-help .step3{
-    background-image:url(../res/icon/icon_shopping_step3.png);
+    background-image:url(../../res/icon/icon_shopping_step3.png);
 }
 .box-help .step4{
-    background-image:url(../res/icon/icon_shopping_step4.png);
+    background-image:url(../../res/icon/icon_shopping_step4.png);
 }
 .box-help .step5{
-    background-image:url(../res/icon/icon_shopping_step5.png);
+    background-image:url(../../res/icon/icon_shopping_step5.png);
 }
 .QA{
     overflow:hidden;

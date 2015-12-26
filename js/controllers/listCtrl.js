@@ -7,8 +7,7 @@ angular.module('LuckyMall.controllers')
          *4.从$scope.params中获取请求参数，执行搜索操作------------------------search()
          *5.单选或多选时，根据FilterSer中数据构建URL，重新进入该页面 -------goListPage();
         */
-
-
+        $scope.search_condition=0;//搜索条件 0-新品 1价格
         $scope.cate=$stateParams.category.split('=')[1];
         if($scope.cate.split('_').length==1){
             $scope.cate_id=$scope.cate;
@@ -19,7 +18,7 @@ angular.module('LuckyMall.controllers')
         $scope.price_order=false;//价格排序方式  false:从小到大   true:从大到小
         $scope.showAllBrands=false;//显示所有品牌
         $scope.showBMSBox=false;//品牌多选框是否显示
-        var pageSize = 16;//每页大小（个数）
+        var pageSize = 40;//每页大小（个数）
         initParams();
         testCategory();
         function initParams(){
@@ -284,6 +283,15 @@ angular.module('LuckyMall.controllers')
             $scope.pageIndex = index;
             $scope.data_list = ListSer.getData().slice(($scope.pageIndex - 1) * pageSize, $scope.pageIndex * pageSize);//从返回的数据数组中取当前页的数据
         };
+        /*新品筛选*/
+        $scope.searchNew=function() {
+            if ($scope.search_condition != 0) {
+                $scope.search_condition = 0;
+                search();
+
+            }
+            ;
+        }
         /*价格排序*/
         $scope.searchWidthPrice = function (price_sort) {
             if (price_sort==0||price_sort==1) {
@@ -293,7 +301,9 @@ angular.module('LuckyMall.controllers')
                     $scope.price_order=price_sort;
                 }
             } else {
-                $scope.price_order=!$scope.price_order;
+                if($scope.search_condition==1) {
+                    $scope.price_order = !$scope.price_order;
+                }
             }
             if($scope.price_order){
                 ListSer.sortByPriceDown();
@@ -305,6 +315,7 @@ angular.module('LuckyMall.controllers')
             $timeout(function(){
                 $scope.data_list = data.slice(($scope.pageIndex - 1) * pageSize, $scope.pageIndex * pageSize);//当前显示数据
             });
+            $scope.search_condition=1;
         };
 
        /* 已多选品牌显示格式化*/
@@ -340,7 +351,6 @@ angular.module('LuckyMall.controllers')
 
         /*初始化数据*/
         function initData() {
-            $scope.showLoading = false;
             FilterSer.setSelectData($scope.params);
             FilterSer.setSelectBrandData($scope.brandParams);
             if(!$scope.hasSubCate){
@@ -361,16 +371,18 @@ angular.module('LuckyMall.controllers')
 
         /*搜索*/
         function search(params) {
+            $scope.loaded=false;
             $scope.data_list = null;
-            $scope.showLoading = true;
             var search_id=$scope.cate_sub_id?$scope.cate_sub_id:$scope.cate_id;
             FilterSer.search({
-                sortByPrice: params.sort_price,//价格默认排序：从低到高
+                asc:($scope.search_condition==0)?false:false,// false降序   true升序
+                orderName:($scope.search_condition==0)?'CreateTime':'',
                 category:search_id,
                 items: $scope.params.getItems(),
                 FilterBrand:($scope.brandParams.items.length<=0)?false:true,
                 Brands:($scope.brandParams==null)?[]:$scope.brandParams.items,
                 callback: function (new_data) {
+                    $scope.loaded=true;
                     ListSer.setData(new_data);//把请求道的搜索结果存到ListSer服务
                     var data = ListSer.getData();
                     $scope.pageIndex = 1;//当前页
@@ -379,7 +391,6 @@ angular.module('LuckyMall.controllers')
                     var total_page = Math.ceil($scope.totalAmount / pageSize);
                     $scope.totalPage = (total_page <= 0) ? 1 : total_page;
                     createPage(data);//创建页码数组
-                    $scope.showLoading = false;
                 }
             });
         }

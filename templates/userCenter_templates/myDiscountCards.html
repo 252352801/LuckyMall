@@ -11,11 +11,12 @@
 <ul>
     <li class="dc-cart-li" ng-repeat="list in data_card">
         <div class="details">
-            <a class="img-container">
-                <img real-src={{imgHost+list.imgUrl}} alt="" temp-src="./res/images/default.png" />
+            <a class="img-container" href="list.Order.CommodityId">
+                <img real-src={{imgHost+list.imgUrl+'@80w_80h_100Q.png'}} alt="" temp-src="./res/images/default.png"/>
             </a>
-
-            <h2 ng-bind="list.Order.CommodityName"></h2>
+            <a href="list.Order.CommodityId">
+                <h2 ng-bind="list.Order.CommodityName"></h2>
+            </a>
 
             <p ng-repeat="property in list.Order.goodsProperty" ng-bind="property.name+'：'+property.value"></p>
         </div>
@@ -37,135 +38,9 @@
            <!-- <p>使用期限：2015.08.15-2015.12.03</p>-->
         </div>
     </li>
-<!--    <li class="dc-cart-li">
-        <div class="details">
-            <a class="img-container">
-                <img src="./res/test/g_dt_bimg.jpg" alt=""/>
-            </a>
-
-            <h2>小米note顶配版</h2>
-
-            <p>型号：标准版</p>
-
-            <p>颜色：金色</p>
-
-            <p>网络制式：全网通16G</p>
-        </div>
-        <div class="price">
-            <div class="cont">
-                <p>
-                    <label>折后价：</label>
-                    <span class="dc-price">￥2100</span>
-                </p>
-                <p class="old-price">原价￥3000</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-top">
-                <label></label>
-                <span><font>7</font>折</span>
-            </div>
-            <p>使用说明：限本商品使用</p>
-            <p>使用期限：2015.08.15-2015.12.03</p>
-        </div>
-    </li>
-    <li class="dc-cart-li">
-        <div class="details">
-            <a class="img-container">
-                <img src="./res/test/g_dt_bimg.jpg" alt=""/>
-            </a>
-
-            <h2>小米note顶配版</h2>
-
-            <p>型号：标准版</p>
-
-            <p>颜色：金色</p>
-
-            <p>网络制式：全网通16G</p>
-        </div>
-        <div class="price">
-            <div class="cont">
-                <p>
-                    <label>折后价：</label>
-                    <span class="dc-price">￥2100</span>
-                </p>
-                <p class="old-price">原价￥3000</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-top">
-                <label></label>
-                <span><font>7</font>折</span>
-            </div>
-            <p>使用说明：限本商品使用</p>
-            <p>使用期限：2015.08.15-2015.12.03</p>
-        </div>
-    </li>
-    <li class="dc-cart-li">
-        <div class="details">
-            <a class="img-container">
-                <img src="./res/test/g_dt_bimg.jpg" alt=""/>
-            </a>
-
-            <h2>小米note顶配版</h2>
-
-            <p>型号：标准版</p>
-
-            <p>颜色：金色</p>
-
-            <p>网络制式：全网通16G</p>
-        </div>
-        <div class="price">
-            <div class="cont">
-                <p>
-                    <label>折后价：</label>
-                    <span class="dc-price">￥2100</span>
-                </p>
-                <p class="old-price">原价￥3000</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-top">
-                <label></label>
-                <span><font>7</font>折</span>
-            </div>
-            <p>使用说明：限本商品使用</p>
-            <p>使用期限：2015.08.15-2015.12.03</p>
-        </div>
-    </li>
-    <li class="dc-cart-li">
-        <div class="details">
-            <a class="img-container">
-                <img src="./res/test/g_dt_bimg.jpg" alt=""/>
-            </a>
-
-            <h2>小米note顶配版小米note顶配版</h2>
-
-            <p>型号：标准版</p>
-
-            <p>颜色：金色</p>
-
-            <p>网络制式：全网通16G</p>
-        </div>
-        <div class="price">
-            <div class="cont">
-                <p>
-                    <label>折后价：</label>
-                    <span class="dc-price">￥2100</span>
-                </p>
-                <p class="old-price">原价￥3000</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-top">
-                <label></label>
-                <span><font>7</font>折</span>
-            </div>
-            <p>使用说明：限本商品使用</p>
-            <p>使用期限：2015.08.15-2015.12.03</p>
-        </div>
-    </li>-->
 </ul>
+
+<p class="tips-nothing" ng-show="data_card.length<=0">暂无</p>
 <!--<div class="UC page-index">
     <div class="prev"><</div>
     <div class="indexes">

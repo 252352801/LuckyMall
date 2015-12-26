@@ -2,9 +2,12 @@
 <div class="right" ng-class="{'right move-right':showHiddenCategory,'right':!showHiddenCategory}">
     <header></header>
     <div class="ad_top">
-        <a href="/register">
-            <img src="./res/images/ad_top.gif" />
-        </a>
+        <div class="content">
+            <a href="/register">
+                <img src="./res/images/banner_top.gif" />
+            </a>
+        </div>
+
     </div>
 
     <aside-right></aside-right>
@@ -36,9 +39,9 @@
     <!--css3-banner图  begin-->
     <div class="banner banner-css3" banner-css3 banner-length="data_banner.length">
         <ul>
-            <li ng-repeat="img in data_banner" ng-style="{opacity:(banner_index==$index)?1:0,transition:'opacity 1s'}">
+            <li ng-repeat="img in data_banner" ng-style="{'opacity':(banner_index==$index)?1:0,transition:'opacity 1s','z-index':(banner_index==$index)?1:0}">
             <!--<li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">-->
-                <a href="#" title="">
+                <a ng-href="{{img.href}}" title="">
                     <img ng-src={{imgHost+img.ImageData}} alt="" error-src="./res/images/default.png"/>
                 </a>
             </li>
@@ -73,20 +76,20 @@
                 <div class="today-content" ng-repeat="li_today in data_todayList">
                     <div class="today-list-l">
                         <div class="info1">
-                            <a class="today-pro-logo" href="#" title="">
-                                <img real-src="{{li_today.BrandImage?imgHost+li_today.BrandImage+'@120h_30h_100Q.png':''}}" temp-src="./res/logo/logo.png" error-src="./res/logo/logo.png" alt=""/>
+                            <a class="today-pro-logo" ng-href={{li_today.href}} title="">
+                                <img real-src="{{li_today.BrandLogo?imgHost+li_today.BrandLogo+'@120h_30h_100Q.png':''}}" temp-src="./res/images/img_td_lo_df.png" error-src="./res/images/img_td_lo_df.png" alt=""/>
                             </a>
-                            <a href="#" title={{li_today.Description}}>
+                            <a ng-href={{li_today.href}} title={{li_today.Description}}>
                                 <p class="today-pro-font" ng-bind="li_today.Description"></p>
                             </a>
                         </div>
                         <div class="info2">
-                            <p class="today-pro-discount"><span>1</span>折起</p>
+                            <p class="today-pro-discount"><span ng-bind="li_today.PromoInfo!=''?li_today.PromoInfo:1"></span>折起</p>
                             <p ng-if="li_today.remainTime>0">剩余时间：<span class="color-org" time-down="li_today.remainTime" ></span></p>
                         </div>
                     </div>
                     <div class="today-list-r">
-                        <a ng-href={{li_today.href}} title={{li_today.Description}}>
+                        <a ng-href={{li_today.href}} target="_blank" title={{li_today.Description}}>
                             <img   alt="{{li_today.Description}}" lazy-src="{{imgHost+li_today.ImageData}}" />
                         </a>
                     </div>

@@ -45,10 +45,11 @@
     position:relative;
 }
 .box-goods-img .big-goods-img .img-so{
-    position:absolute;
-    left:10px;
-    top:0px;
-    z-index:10;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    max-width: 100%;
 }
 .box-goods-img .big-goods-img ul{
     position:relative;
@@ -376,6 +377,10 @@ float:left;
     margin-top:56px;
     margin-bottom:40px;
 }
+.pro-info .bar-btn .btn-add{
+    background:#fff;
+    border-color:#ddd;
+}
 .pro-info .bar-btn input,.pro-info .bar-btn a{
     display:inline-block;
     width:160px;
@@ -405,7 +410,7 @@ float:left;
 .pro-info .bar-btn input.btn-add{
     background:none;
     border:1px solid #858585;
-    margin-left:50px;
+    margin-left:20px;
 	color: #464646;
 }
 
@@ -413,8 +418,11 @@ float:left;
     color:#ff3300;
     border-color:#ff3300;
 }
+
 .pro-info .bar-btn .btn-playGame.disabled,.pro-info .bar-btn .btn-buy.disabled,.pro-info .bar-btn .btn-add.disabled{
     background:#ccc !important;
+    color:#fff !important;
+    border-color:transparent!important;
 }
 .box-proIntro{
     margin-top:20px;
@@ -449,7 +457,7 @@ float:left;
     left:-3%;
 }
 .G-details .box-pro-show{
-    min-height:300px;
+    min-height:10px;
 }
 .pro-showing-images{
    text-align:center;

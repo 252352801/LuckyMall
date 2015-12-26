@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
-.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer){
+.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer,MarketSer){
 
     $rootScope.login_target={
         state:'home',
@@ -13,6 +13,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
      $rootScope.isLogin=false;//是否已经登陆
      getImgHost();//获取图片服务器地址
      authorization();//授权登录
+       loadMarketData();//市场活动专题
      $scope.welcome_word=setWelcomeWord();//设置欢迎词
         /* 监听显示登陆模态框*/
      $scope.$on('show-login-modal',function(){
@@ -349,6 +350,17 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
             time.setSeconds(parseInt(arr2[2]));
             return time.getTime();
         }
+        function loadMarketData(){
+            MarketSer.requestMarketList(function(response,status){
+                if(status==1){
+                    $rootScope.data_market=MarketSer.getData().marketOnline;//;
+                }
+            });
+        }
+        $scope.goMarket=function(url,id){
+            MarketSer.setUrl(url,id);
+            $state.go('market',{id:id});
+        };
 })
 
    /*登录controller*/

@@ -28,7 +28,7 @@
                 <li><a href="/UCIndex/myOrders/paid">待收货({{simpleData_paid_count}})</a></li>
             </ul>
             <ul class="simple-menu">
-                <li><a href="/UCIndex/myDiscountCards/status=0">我的折扣卡</a></li>
+                <li><a href="/UCIndex/myMessage/0">我的消息</a></li>
                 <li><a href="/UCIndex/myWallet">喵喵钱包</a></li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
         <div class="icon-amount-cart" ng-bind="cartAmount"></div>
         <a href="/shoppingCart">
             <span class="icon-shoppingCart"></span>
-            <span>购物车</span>
+            <span class="label">购物车</span>
             <span class="icon-arrow-down"></span>
         </a>
         <div class="hide-cart" ng-show="isLogin&&cartAmount>0">
@@ -98,10 +98,12 @@
 <!--    <a ng-class="{'cur nav3':cur_nav==3,'nav3':cur_nav!=3}" href="/brand/2" title="新品上市">新品上市</a>
     <a ng-class="{'cur nav4':cur_nav==4,'nav4':cur_nav!=4}" href="/market" title="疯狂秒杀">疯狂秒杀</a>
     <a ng-class="{'cur nav5':cur_nav==5,'nav5':cur_nav!=5}"href="/market" title="最后疯抢">最后疯抢<span class="icon-new"></span></a>-->
-    <a ng-class="{'cur nav6':cur_nav==6,'nav6':cur_nav!=6}" href="/support/qa" title="新手指南">新手指南</a>
-    <a class="border-bottom4 icon-mb-link" href="#" title="手机幸运猫">
+ <!--   <a ng-class="{'cur nav6':cur_nav==5,'nav6':cur_nav!=5}" href="/market" title="圣诞嘉年华">圣诞嘉年华</a>
+    <a ng-class="{'cur nav6':cur_nav==6,'nav6':cur_nav!=6}" href="/support/qa" title="新手指南">新手指南</a>-->
+    <a  ng-class="{'cur':curMarket==market.Id}" ng-repeat="market in data_market"   ng-bind="market.MarketName" ng-click="goMarket(market.DesktopPage,market.Id)"></a>
+    <a class="border-bottom4 icon-mb-link" href="#" title="">
         <div class="sub-h-QR">
-            <img  src="./res/images/img_2dcode.jpg" alt=""/>
+            <img  src="http://webapi.xingyunmao.cn/api/system/appqrcode" alt=""/>
         </div>
     </a>
 </div>

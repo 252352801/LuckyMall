@@ -48,7 +48,7 @@ angular.module('LuckyMall.services')
                     method:API.goodsDetailsData.method,
                     url: API.goodsDetailsData.url+ goods_id
                 }).success(function (response, status, headers, config) {
-                    if(status==200&&response) {
+                    if(status==200&&response!=null) {
                         data = response;
                         data.minPrice=Math.ceil(data.RetailPrice*data.MaxDiscount);
                         data.maxPrice=Math.ceil(data.RetailPrice*data.MinDiscount);
@@ -58,7 +58,9 @@ angular.module('LuckyMall.services')
                         data.remainTime=setRemainTime(data.CurrentTime,data.ExpiryDate);
                         data.status=testStatus(data.CurrentTime,data.OnSaleTime,data.ExpiryDate,data.CommodityStatus);
                         initDisabled();
-                        callback();
+                        callback(data,1);
+                    }else{
+                        callback('',0);
                     }
 
                 }).error(function (data, status, headers, config) {
@@ -107,6 +109,8 @@ angular.module('LuckyMall.services')
                             items:item_data
                         };
                         callback(category_info,1);
+                    }else{
+                        callback('',0);
                     }
                 })
             },

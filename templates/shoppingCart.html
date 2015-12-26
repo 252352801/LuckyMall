@@ -32,8 +32,8 @@
         <div class="cart-list" ng-repeat="list in data_cart" ng-if="data_cart.length>0">
             <div class="cart-list-top">
                 <input class="cart-ck-order" type="checkbox" ng-model="list.isSelected" ng-click="testChecked()" />
-                <img ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@32w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
-                <a href="#" ng-bind="list.Brand.BrandName"></a>
+                <img class="brand-img" ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@32w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
+                <a class="brand-name" href="#" ng-bind="list.Brand.BrandName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.OrderType">赢折扣</a>
                 <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlay(list.Id,list.CommodityId)" ng-if="list.OrderType==1" ng-show="canPlay"  btn-free-play="{{list.CommodityId}}">赢折扣</a>

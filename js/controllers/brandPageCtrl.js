@@ -1,11 +1,11 @@
 angular.module('LuckyMall.controllers')
     .controller('BrandPageCtrl', function ($scope, $stateParams,BrandSer,FilterSer, CategorySer, $timeout, $state) {
        var brand_id=$stateParams.brand_id;
-       var page_size=16;
+       var page_size=40;
+        $scope.search_condition=0;//搜索条件 0-新品 1价格
         $scope.price_order=false;//价格排序方式  false:从小到大   true:从大到小
-        console.log(brand_id);
-
-        loadData();
+        loadBrandData()
+        search();
         $scope.pageIndex = 1;//当前页
         /*前一页*/
         $scope.prevPage = function () {
@@ -25,6 +25,14 @@ angular.module('LuckyMall.controllers')
             $scope.pageIndex = index;
             $scope.data_list = BrandSer.getData().slice(($scope.pageIndex - 1) * page_size, $scope.pageIndex * page_size);//从返回的数据数组中取当前页的数据
         };
+
+        /*新品筛选*/
+        $scope.searchNew=function(){
+            if($scope.search_condition!=0){
+                $scope.search_condition = 0;
+                search();
+            }
+        };
         /*价格排序*/
         $scope.searchWidthPrice = function (price_sort) {
             if (price_sort==0||price_sort==1) {
@@ -34,10 +42,32 @@ angular.module('LuckyMall.controllers')
                     $scope.price_order = price_sort;
                 }
             } else {
-                $scope.price_order=!$scope.price_order;
+                if($scope.search_condition==1) {
+                    $scope.price_order = !$scope.price_order;
+                }
             }
+            if($scope.price_order){
+                BrandSer.sortByPriceDown();
+            }else{
+                BrandSer.sortByPriceUp();
+            }
+            var data = BrandSer.getData();
+            $scope.pageIndex = 1;//当前页
+            $timeout(function(){
+                $scope.data_list = data.slice(($scope.pageIndex - 1) * page_size, $scope.pageIndex * page_size);//当前显示数据
+            });
+            $scope.search_condition=1;
         };
-        function loadData() {
+        function loadBrandData(){
+            BrandSer.getBrandById(brand_id,function(response){
+                $scope.data_brand=response;
+                console.log($scope.data_brand);
+            });
+        }
+        function search() {
+            $scope.loaded=false;
+            var order_name=($scope.search_condition==0)?'CreateTime':'';
+            var asc=($scope.search_condition==0)?false:false;
             var params={
                 "FilterBrand":true,
                 "Brands":[brand_id],
@@ -47,8 +77,8 @@ angular.module('LuckyMall.controllers')
                 "Keyword": "",
                 "MinPrice":0,
                 "MaxPrice":0,
-                "OrderNames": ["RetailPrice"],
-                "Asc": true,//升序   true升序  false非升序
+                "OrderNames": [order_name],
+                "Asc": asc,//升序   true升序  false非升序
                 "PageIndex": 0,//当前页
                 "PageSize": 1000,//每页大小
                 "TotalSize":10000,//总条数
@@ -64,7 +94,7 @@ angular.module('LuckyMall.controllers')
                     var total_page = Math.ceil($scope.totalAmount /page_size);
                     $scope.totalPage = (total_page <= 0) ? 1 : total_page;
                     createPage(data);//创建页码数组
-                    $scope.showLoading = false;
+                    $scope.loaded=true;
                 }
             })
         }

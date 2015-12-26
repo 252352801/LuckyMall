@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer){
+ .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer,TokenSer){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
@@ -121,8 +121,8 @@ angular.module('LuckyMall.controllers')
             console.log('收货地址id:'+$scope.selected_address.Id+'\n'+'订单id:'+angular.toJson(order_id)+'\n'+'支付方式：'+$scope.pay_type+'\n'+'交易总额：'+$scope.total_cost);
             var pay_method=($scope.pay_type=='weixin')?1:0;//1：微信支付，0：支付宝支付
             var pay_type=(pay_method==1)?0:($scope.pay_type=='zhifubao')?0:1;
-            var post_data=(pay_method==0)?{"ShowUrl":'',"BankSimpleCode":initBankSimpleCode($scope.pay_type)}
-                :{"ProductId":$scope.data_orders[0].Commodity.Id};
+            var post_data=(pay_method==0)?{"ShowUrl":'',"BankSimpleCode":initBankSimpleCode($scope.pay_type),"Token":TokenSer.getToken(),"RedirectUrl":'http://www.xingyunmao.cn/payHandler/'}
+                :{"ProductId":$scope.data_orders[0].Commodity.Id,"Token":'',"RedirectUrl":''};
             var param={
                 "AddressId":$scope.selected_address.Id,
                 InvoiceTitle:($scope.invoice.type!=-1)?$scope.invoice.title:'',
@@ -133,6 +133,9 @@ angular.module('LuckyMall.controllers')
             };
             console.log(angular.toJson(param));
             $scope.btn_val_purchase='正在处理...';
+            if($scope.pay_type!= 'weixin'){
+                var newWin=window.open('_blank');//新窗口
+            }
             PaymentSer.purchaseOrders($scope.purchaseType,param,function(response,status){
                 $scope.btn_val_purchase='确认支付';
                 if(status==1){
@@ -148,11 +151,21 @@ angular.module('LuckyMall.controllers')
                                 $scope.isModalWaitingShow=true;
                             },5);
                             $scope.pay_url=API.aliPaySubmit.url+response.Data.OutTradeNo;//支付url
-                            location.href=$scope.pay_url;
+                           // var newWin=window.open('_blank');
+                            newWin.location.href=$scope.pay_url;
+                            //location.href=$scope.pay_url;
                             $scope.polling=true;
                             pollingTradeStatus(response.Data.OutTradeNo);
                             $scope.trade_id=response.Data.OutTradeNo;
                         }
+                    }else if(response.Code=='0X10'){
+                        $rootScope.$broadcast('orders-update');
+                        ga('send', 'pageview', {
+                            'page': '/complete_checkout',
+                            'title': '完成购买'
+                        });
+                        $state.go('paySuccess');
+
                     }else if(response.Code=='0X01'){
                         swal({
                             title: "地址信息有误!",

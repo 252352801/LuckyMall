@@ -1708,7 +1708,7 @@
     overflow:hidden;
 }
 .AS-checkboxes .checkbox{
-    width:260px;
+    width: 29.0%;
     height:125px;
     line-height:125px;
     border:1px solid #c4c4c4;
@@ -1929,4 +1929,13 @@
     left:50%;
     top:100px;
     margin-left:-50px;
+}
+.UC .tips-nothing{
+    width:100%;
+    position:absolute;
+    left:0px;
+    top:148px;
+    text-align:center;
+    font-size: 24px;
+    color:#ddd;
 }

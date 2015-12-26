@@ -11,6 +11,7 @@ angular.module('LuckyMall.controllers')
                 DiscountCardSer.requestData(function(resp,status){
                     if(status==1){
                         $scope.data_card=DiscountCardSer.getData();
+                        console.log($scope.data_card);
                     }
                     $scope.showLoading=false;
                 })

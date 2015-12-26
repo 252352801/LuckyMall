@@ -57,7 +57,7 @@
                 </div>
                 <div class="cont3">
                     <div class="inner-cont">
-                        <p class="disc-cost" ng-bind="'￥'+MathCeilPrice(data_order.UnitPrice*data_order.Count*data_order.DiscountVal)"></p>
+                        <p class="disc-cost" ng-bind="'￥'+data_order.cost"></p>
 
                         <p ng-bind="'（含定金：￥'+data_order.EarnestMoney+'）'" ng-if="data_order.EarnestMoney>0"></p>
 

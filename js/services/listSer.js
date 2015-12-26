@@ -28,13 +28,11 @@
         sortByPriceUp:function(){ //从小到大
             if(data){
                 data.sort(function(a,b){return a.maxPrice- b.maxPrice;});
-                console.log(data);
             }
         },
         sortByPriceDown:function(){ //从大到小
             if(data){
                data.sort(function(a,b){return b.maxPrice- a.maxPrice;});
-                console.log(data);
             }
         },
         requestBrandsData:function(cate_id,callback){

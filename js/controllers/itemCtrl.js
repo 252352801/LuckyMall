@@ -21,13 +21,23 @@ angular.module('LuckyMall.controllers')
         };
         /*数量减*/
         $scope.reduce = function () {
-            if ($scope.amount > 1&&$scope.isFreePlayed) {
+            if(!isFinishSelect()){
+                $timeout(function () {
+                    $scope.showTips = true;
+                });
+                return;
+            }else if($scope.amount > 1) {
                 $scope.amount--;
             }
         };
         /*数量加*/
         $scope.add = function () {
-            if ($scope.amount < $scope.inventory) {
+            if(!isFinishSelect()){
+                $timeout(function () {
+                    $scope.showTips = true;
+                });
+                return;
+            }else  if ($scope.amount < $scope.inventory) {
                 if(!$scope.data_goods.IsCanFree){
                     $scope.amount++;
                 }else{
@@ -147,7 +157,7 @@ angular.module('LuckyMall.controllers')
                 };
                 $scope.btn_value.freePlay='正在处理...';
                 ItemSer.addToCart(params, function (response,status) {
-                    $scope.btn_value.freePlay='试玩赢折扣';
+                    $scope.btn_value.freePlay='试玩抢折扣';
                     if (status == 1) {
                         $scope.$emit('cart-update');
                         ga('send', 'pageview', {
@@ -250,6 +260,10 @@ angular.module('LuckyMall.controllers')
             $scope.loaded = false;
             ItemSer.requestData(goods_id, function () { //加载商品详细信息数据
                 $scope.data_goods = ItemSer.getData();//产品数据
+                if($scope.data_goods==null){
+                    $state.go("home");
+                    return;
+                }
                 $scope.isCanFree = $scope.data_goods.IsCanFree;
                 if($scope.isLogin) {
                     isCanFreePlay();
@@ -276,6 +290,8 @@ angular.module('LuckyMall.controllers')
                     } else {
                         $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.Id).CategoryName;
                     }
+                }else if(status==0){
+
                 }
             });
         }
@@ -382,7 +398,7 @@ angular.module('LuckyMall.controllers')
                 });
             }else if(err_code== '0X61'){
                 swal({
-                    title: "商品的免费次数已用完!",
+                    title: "商品的试玩次数已用完!",
                     /*text: '错误码：0X61',*/
                     type: "error",
                     confirmButtonText: "确定"
