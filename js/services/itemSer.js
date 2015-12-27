@@ -3,11 +3,14 @@ angular.module('LuckyMall.services')
         var data = null;//商品数据
         var category_info=null;//商品品类信息
         /*初始化产品规格的可选属性*/
-        var initDisabled=function(){
+        var initData=function(){
             for(var i=0;i<data.Property.length;i++){
                 for(var j=0;j<data.Property[i].attributes.length;j++){
                     data.Property[i].attributes[j].disabled=true;//disabled=true表示不可选
                 }
+/*                if(data.Property[i].attributes.length==1){
+                    data.Property[i].attributes[0].isSelected=true;
+                }*/
             }
         };
         var setRemainTime=function(cur_time,end_time){
@@ -24,7 +27,7 @@ angular.module('LuckyMall.services')
                    return 1;//正在销售
                } else {
                    if (t_cur >= t_sale) {
-                       return -1;//已下架
+                       return -1;//已过出售时间
                    } else if (t_cur <= t_sale) {
                        return 0; //未开售
                    }
@@ -57,7 +60,7 @@ angular.module('LuckyMall.services')
                         data.Property = JSON.parse(data.Property);
                         data.remainTime=setRemainTime(data.CurrentTime,data.ExpiryDate);
                         data.status=testStatus(data.CurrentTime,data.OnSaleTime,data.ExpiryDate,data.CommodityStatus);
-                        initDisabled();
+                        initData();
                         callback(data,1);
                     }else{
                         callback('',0);
@@ -152,7 +155,7 @@ angular.module('LuckyMall.services')
             },
             /*检测库存*/
             testSku:function(choice,callback){
-                initDisabled();
+                initData();
                 var sku=data.StockKeepingUnitModels;
                 var remain_sku=new Array();
                 for(var i=0;i<sku.length;i++){

@@ -181,12 +181,16 @@
 }*/
 .list .mark-canFree{
   position:absolute;
-    left:100%;
-    top:88%;
-    margin-left:-55px;
-    color:#fff;
-    padding:3px 5px;
-    background:#56C155;
+    left: -8.5%;
+    top:86%;
+    color: #fff;
+    padding: 3px 25px;
+    background: #56C155;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
 }
 .list .goods-info .price{
     color:#ff6700;

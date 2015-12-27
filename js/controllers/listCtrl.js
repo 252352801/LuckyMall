@@ -364,7 +364,6 @@ angular.module('LuckyMall.controllers')
                  FilterSer.clearSelectWithSubCategory();
                  FilterSer.selectWithSubCategory();
             }
-            console.log("cate_data:"+$scope.data_filter);
             $scope.sortByPrice = true;//价格排序方式 true:升序,false:降序
             search({sort_price: $scope.sortByPrice});//搜索数据
         }
@@ -376,7 +375,7 @@ angular.module('LuckyMall.controllers')
             var search_id=$scope.cate_sub_id?$scope.cate_sub_id:$scope.cate_id;
             FilterSer.search({
                 asc:($scope.search_condition==0)?false:false,// false降序   true升序
-                orderName:($scope.search_condition==0)?'CreateTime':'',
+                orderNames:($scope.search_condition==0)?['CreateTime']:[],
                 category:search_id,
                 items: $scope.params.getItems(),
                 FilterBrand:($scope.brandParams.items.length<=0)?false:true,

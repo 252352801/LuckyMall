@@ -28,6 +28,8 @@ angular.module('LuckyMall.services')
                         obj[o].href = '/item/' + obj[o].TypeId;
                     } else if (obj[o].PromotionType == 0) {
                         obj[o].href = '/brand/'+obj[o].TypeId;
+                    }else if(obj[o].PromotionType == 2){
+                        obj[o].href = '/market/'+obj[o].TypeId;
                     }
                     result.push(obj[o]);
             }
@@ -41,8 +43,8 @@ angular.module('LuckyMall.services')
         }
        /* 判断专题是否上线*/
       function isOnline(cur_time,start_time_str){
-          var now_time=new Date(cur_time.replace(/-/,"/"));
-          var start_time=new Date(start_time_str.replace(/-/,"/"));
+          var now_time=new Date(cur_time.replace(/-/g,"/"));
+          var start_time=new Date(start_time_str.replace(/-/g,"/"));
           if(now_time>=start_time){
               return true;
           }else{

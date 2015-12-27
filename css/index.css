@@ -67,7 +67,7 @@
     text-align:center;
     line-height:50px;
     cursor:pointer;
-
+    z-index:100;
 }
 .banner:hover .prev,.banner:hover .next{
     display:block;
@@ -158,7 +158,7 @@ margin-left: 70px;
 .today-list-r{
     display:table-caption;
     width:532px;
-    height:100%;
+    height:211px;
     top:0px;
     overflow:hidden;
     text-align:center;
@@ -247,7 +247,8 @@ margin-left: 70px;
     width:113.5px;
     height:96px;
     background:#fff;
-
+    display:table-caption;
+    line-height:96px;
     margin-top:1px;
     text-align:center;
     float:left;
@@ -260,8 +261,9 @@ margin-left: 70px;
     height:100%;
 }
 .tomorrow-content li img{
-    width:100%;
-    height:100%;
+    max-width:90%;
+    max-height:90%;
+    vertical-align:middle;
     transition:transform 0.3s;
     -moz-transition:transform 0.3s;
     -o-transition:transform 0.3s;

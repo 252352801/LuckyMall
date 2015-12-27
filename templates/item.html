@@ -44,9 +44,8 @@
                 <div class="bar-time" ng-if="data_goods.status!=-2">
                     <p class="remain-time" ng-if="data_goods.status==1">距下架时间：<span time-down="data_goods.remainTime"></span></p>
                     <p ng-if="data_goods.status==0" class="color-red">未到开售时间</p>
-                    <p ng-if="data_goods.status==-1">已下架</p>
-                    <p ng-if="data_goods.status==5">已过销售时间</p>
-                    <p ng-if="data_goods.status==4">已售完</p>
+                    <p ng-if="data_goods.status==5||data_goods.status==-1">已过销售时间</p>
+                    <p ng-if="data_goods.status==4">该商品已下架</p>
                 </div>
                 <div class="pro-price">
 
@@ -143,8 +142,8 @@
             </div>
             <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
                 <ul class="pro-showing-images">
-                    <li ng-repeat="images in data_goods.BigImages">
-                        <img lazy-src="{{imgHost+images}}" alt="" />
+                    <li ng-repeat="img in data_goods.BigImages">
+                        <img lazy-src="{{imgHost+img}}" alt="" />
                     </li>
                 </ul>
                 <div class="box-pro-show">

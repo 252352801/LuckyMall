@@ -103,14 +103,32 @@ angular.module('LuckyMall.controllers')
             }, 5);
             isCanFreePlay();
         });
+        /*玩游戏之后刷新状态*/
+        $rootScope.$on('refresh-item-isCanFree',function(){
+            isCanFreePlay();
+        });
+
+        /*只有一个选项时默认勾选*/
+        function autoSelected(){
+            var obj=$scope.data_goods.Property;
+            for(var o in obj){
+                if(obj[o].attributes.length==1){
+                    $scope.selectAttr(obj[o].name,obj[o].attributes[0].value,o,0,obj[o].attributes[0].disabled);
+                }
+            }
+        }
         function isCanFreePlay(){
             if ($scope.isCanFree) {//测试是否玩使用过免费机会
                 ItemSer.isCanFreePlay(goods_id, function (response, status) {
                     if (status == 1) {
                         if (response) {
-                            $scope.isFreePlayed = false;
+                            $timeout(function(){
+                                $scope.isFreePlayed = false;
+                            });
                         } else {
-                            $scope.isFreePlayed = true;
+                            $timeout(function(){
+                                $scope.isFreePlayed = true;
+                            });
                         }
                     }
                 });
@@ -255,8 +273,7 @@ angular.module('LuckyMall.controllers')
                 }
             });
         };
-        /*加载本页数据*/
-        function loadGoodsDetailsData() {
+        function loadItemData(){
             $scope.loaded = false;
             ItemSer.requestData(goods_id, function () { //加载商品详细信息数据
                 $scope.data_goods = ItemSer.getData();//产品数据
@@ -279,7 +296,12 @@ angular.module('LuckyMall.controllers')
                 } else {
 
                 }
+                autoSelected();
             });
+        }
+        /*加载本页数据*/
+        function loadGoodsDetailsData() {
+            loadItemData();
             ItemSer.requestCategoryByGoodsId(goods_id, function (response, status) {
                 if (status == 1) {
                     $scope.data_category = response;//品类数据  包含所属项和品类ID

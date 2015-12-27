@@ -927,7 +927,6 @@ angular.module('LuckyMall')
         templateUrl: 'common/templates/iFrame-game.html',
         replace: true,
         link: function (scope, element, attrs) {
-
               scope.isLoadingGame=true;
                 var iframe_game=element.find('iframe');
                 scope.$watch("game.url", function (new_val, old_val) {
@@ -961,6 +960,7 @@ angular.module('LuckyMall')
                                     break;
                                 case 4://详情页
                                     $rootScope.$broadcast('cart-update');
+                                    $rootScope.$broadcast('refresh-item-isCanFree');
                                     $state.go('item', {goods_id: $rootScope.game.commodityId});
                                     break;
                             }

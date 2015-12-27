@@ -35,10 +35,10 @@
                     <p class="input-tips" ng-bind="tips" ng-show="hasInputError"></p>
                     <p>
                         <input class="input-username" type="text" placeholder="用户名(手机号)" ng-model="username" name="username" required ng-pattern="/^[1][3458]\d{9}$/"
-                                ng-change="showTips('')" />
+                                ng-change="showTips('')"  autocomplete="false"/>
                     </p>
                     <p>
-                        <input  class="input-password"type="password" placeholder="密码" ng-model="password" name="password" required/>
+                        <input  class="input-password"type="password" placeholder="密码" ng-model="password" name="password" required autocomplete="false"/>
                     </p>
                     <p class="bar-lost-pw">
                         <input type="checkbox" id="login_auto" ng-checked="keepLogin" ng-click="changeKeepLogin()"/>

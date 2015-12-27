@@ -257,6 +257,10 @@ angular.module('LuckyMall.controllers')
         };
       /*初始化显示数据*/
      function loadConfirmOrderData(){
+         if(!MyOrdersSer.getTempOrder()){
+             $state.go('shoppingCart');
+             return;
+         }
          if($scope.source=='game'){
              var order_id = MyOrdersSer.getTempOrder();
              OrderDetailsSer.requestData(order_id, function (resp, status) {

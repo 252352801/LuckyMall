@@ -12,7 +12,6 @@ angular.module('LuckyMall')
                     } else {
                         scroll_top = document.body.scrollTop;
                     }
-                    console.log(scroll_top);
                     if(scroll_top>=200){
                         $timeout(function(){
                             scope.showMenu=true;

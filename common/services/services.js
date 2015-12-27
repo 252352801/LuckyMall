@@ -610,7 +610,7 @@ angular.module('LuckyMall.services',[])
                     "Keyword": "",
                     "MinPrice":0,
                     "MaxPrice":0,
-                    "OrderNames": [params.orderName],
+                    "OrderNames": params.orderNames,
                     "Asc": params.asc,//升序   true升序  false非升序
                     "PageIndex": 0,//当前页
                     "PageSize": 1000,//每页大小
@@ -1021,6 +1021,9 @@ angular.module('LuckyMall.services',[])
                 }
             },
             requestData:function(order_type,callback){ //order_type:1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
+                if(order_type==3){
+                    order_type=23;
+                }
                 $http({
                     method:API.orderList.method,
                     url:API.orderList.url+order_type,

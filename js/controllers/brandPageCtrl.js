@@ -66,7 +66,7 @@ angular.module('LuckyMall.controllers')
         }
         function search() {
             $scope.loaded=false;
-            var order_name=($scope.search_condition==0)?'CreateTime':'';
+            var OrderNames=($scope.search_condition==0)?['CreateTime']:[];
             var asc=($scope.search_condition==0)?false:false;
             var params={
                 "FilterBrand":true,
@@ -77,7 +77,7 @@ angular.module('LuckyMall.controllers')
                 "Keyword": "",
                 "MinPrice":0,
                 "MaxPrice":0,
-                "OrderNames": [order_name],
+                "OrderNames": OrderNames,
                 "Asc": asc,//升序   true升序  false非升序
                 "PageIndex": 0,//当前页
                 "PageSize": 1000,//每页大小

@@ -13,6 +13,7 @@ angular.module('LuckyMall.controllers')
     HomeSer.requestTodayData(function(){
        $scope.loadingToday=false;
        $scope.data_todayList=HomeSer.getTodayData();
+        console.log($scope.data_todayList);
        $scope.ready=true;
     });
 });

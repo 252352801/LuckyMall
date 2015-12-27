@@ -183,13 +183,14 @@
     display:block;
 }
 .pro-info h1{
-    font-size:20px;
-    margin-bottom:10px;
-    max-height:50px;
-    line-height:25px;
-    overflow:hidden;
-    text-overflow:clip;
-    color:#333;
+    max-width: 98%;
+    font-size: 20px;
+    margin-bottom: 10px;
+    max-height: 50px;
+    line-height: 25px;
+    overflow: hidden;
+    text-overflow: clip;
+    color: #333;
 }
 .pro-info small{
     display:block;
@@ -469,28 +470,29 @@ float:left;
     margin: 0 auto;
 }
 .tag-free-played{
-    width:0px;
-    height:0px;
-    border-top:50px solid #ff6700;
-    border-right:50px solid #ff6700;
-    border-bottom:50px solid transparent;
-    border-left:50px solid transparent;
+    width: 0px;
+    height: 0px;
+    border-top: 40px solid #ff6700;
+    border-right: 40px solid #ff6700;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid transparent;
     position: absolute;
-    left:100%;
-    top:-2px;
-    margin-left:-98px;
+    left: 100%;
+    top: -2px;
+    margin-left: -79px;
+    opacity: 0.8;
 }
 .tag-free-played span{
-    display:block;
-    width:50px;
-    position:relative;
-    left:0px;
-    top:-25px;
-    color:#fff;
-    font-size:16px;
-    transform:rotate(45deg);
-    -ms-transform:rotate(45deg);
-    -webkit-transform:rotate(45deg);
+    display: block;
+    width: 50px;
+    position: relative;
+    left: -7px;
+    top: -25px;
+    color: #fff;
+    font-size: 16px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
 }
 /*商品详情end*/
 

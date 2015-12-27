@@ -174,7 +174,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
    /* 授权*/
     function authorization(){
         if($cookies.get('Token')==null){
-            console.log('未找到cookie');
+            console.log('tk null');
             return;
         }
         LoginSer.authorization(function(response,status){
@@ -252,7 +252,6 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                             },1000);
                             $scope.cartTimeRemainFormat='';
                             console.log("购物车已超时");
-
                         }
                     },1000);
                 }
@@ -377,7 +376,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
         $scope.$emit('close-login-modal');
         $state.go('register');
     };
-
+    $scope.hasInputError=false;
     $scope.tips='';//提示信息
         /*显示提示信息*/
     $scope.showTips=function(msg){

@@ -1,4 +1,4 @@
-<div class="UC loading-tips" ng-show="showLoading==true">正在加载...</div>
+<div class="UC loading-tips" ng-show="showLoading">正在加载...</div>
 <div ng-show="showLoading==false">
     <div class="tabs">
         <div class="tab-item">
@@ -55,13 +55,15 @@
                 <div>
                     <p class="color-org" ng-if="list.OrderStatus==1">等待付款</p>
 
-                    <p><a href="/UCIndex/orderDetails/{{list.OrderStatus}}/{{list.Id}}">订单详情</a></p>
+                    <p ng-if="list.OrderStatus==2">待发货</p>
 
                     <p ng-if="list.OrderStatus==3">已发货</p>
 
                     <p ng-if="list.OrderStatus==4" class="color-balanced">已完成</p>
 
                     <p ng-if="list.OrderStatus==5">退换中</p>
+
+                    <p><a href="/UCIndex/orderDetails/{{list.OrderStatus}}/{{list.Id}}">订单详情</a></p>
 
                 </div>
             </div>
@@ -150,7 +152,7 @@
         </div>
     </div>
 
-    <p class="tips-nothing" ng-show="data_orders.curPage.length<=0">暂无订单</p>
+    <p class="tips-nothing" ng-show="data_orders.curPage.length<=0&&!showLoading">暂无订单</p>
     
 
     <div class="UC page-index" ng-show="data_orders.curPage.length>0&&!showLoading">
