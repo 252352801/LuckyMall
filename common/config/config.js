@@ -1,6 +1,6 @@
 var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies','angularFileUpload']);
 app.constant('Host',{
-    develop: "http://120.24.175.151:9000/", //开发服务器
+    develop: "http://120.24.225.116:9000/", //开发服务器
     test: "http://webapi.xingyunmao.cn/",//测试服务器
     prev:"http://120.24.225.116:9000/", //运营服务器
     game:'http://120.24.175.151:9004', //游戏服务器

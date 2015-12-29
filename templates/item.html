@@ -19,7 +19,9 @@
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img tx-center" >
                    <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
-                    <img src="./res/images/item_out.png" class="img-so" ng-if="data_goods.status==4"/>
+                    <img src="./res/images/item_before_sell.png" class="img-so" ng-if="data_goods.status==0||data_goods.status==-2"/>
+                    <img src="./res/images/item_out6.png" class="img-so" ng-if="data_goods.status==6"/>
+                   <!-- <img src="./res/images/item_out4.png" class="img-so" ng-if="data_goods.status==4"/>-->
                     <ul ng-style="{left:-index*410+'px',width:data_goods.SmallImages.length*410+'px'}">
                         <li ng-repeat="Img in data_goods.SmallImages">
                             <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@520w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img+'@1000w_1000h_100Q.png'}} />
@@ -41,11 +43,13 @@
             <form class="pro-info" ng-show="loaded">
                 <h1 ng-bind="data_goods.CommodityName"></h1>
                 <small ng-bind="data_goods.Description"></small>
-                <div class="bar-time" ng-if="data_goods.status!=-2">
+                <div class="bar-time">
+                    <p ng-if="data_goods.status==-2">未到开售时间</p>
                     <p class="remain-time" ng-if="data_goods.status==1">距下架时间：<span time-down="data_goods.remainTime"></span></p>
+                    <p ng-if="data_goods.status==6">该商品已售罄</p>
                     <p ng-if="data_goods.status==0" class="color-red">未到开售时间</p>
-                    <p ng-if="data_goods.status==5||data_goods.status==-1">已过销售时间</p>
-                    <p ng-if="data_goods.status==4">该商品已下架</p>
+                    <p ng-if="data_goods.status==5||data_goods.status==-1">该商品已售罄</p>
+                    <p ng-if="data_goods.status==4">该商品已售罄</p>
                 </div>
                 <div class="pro-price">
 

@@ -27,7 +27,7 @@
 }
 .cart-top .cart-tips{
     margin-left:16px;
-    font-size:16px;
+    font-size:14px;
     color:#666;
     white-space:nowrap;
     line-height:42px;
@@ -67,23 +67,19 @@
 }
 .cart-list-top a{
     color:#333;
+    display: inline-block;
 }
 .cart-list-top img{
-    margin-top:9px;
-    width:32px;
-    height:32px;
-    background:#f1f1f1;
-    float:left;
+    max-width:64px;
+    max-height:32px;
     margin-right:10px;
+    vertical-align:middle;
 }
 .cart-list-top input{
     float:left;
     position:relative;
     top:15px;
     margin-right:10px;
-}
-.cart-list-top .brand-img{
-    float:left;
 }
 .cart-list-top .cart-ck-order{
     margin-left:25px;
@@ -99,8 +95,11 @@
     text-align: center;
     float: right;
     cursor: pointer;
-    background: #499946;
+    background: #49bb46;
     font-size: 16px;
+}
+.cart-list-top .a-forDiscount:hover{
+    background-color:#499946;
 }
 .cart-th .cart-checkedAll{
     position:absolute;

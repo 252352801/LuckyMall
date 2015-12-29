@@ -22,11 +22,16 @@
                 <img src="./res/logo/logo_cat.png" alt=""/>
             </div>
             <h3>喵喵幸运物</h3>
-            <p>体力级：<span class="icon_level_uc" ng-bind="luckyEnergy.level"></span></p>
-            <p class="exp" title="{{'幸运能量：'+e_val}}">
-                <span class="exp-value" style={{'width:'+luckyEnergy.percent+'%;'}}></span>
+           <!-- <p class="bar-chance">试玩机会：<span class="chance">5</span>次<span class="btn-sign-in">签到送机会</span></p>-->
+            <p class="bar-energy">
+                <label>体力级：</label>
+                <!--<span class="icon_level_uc" ng-bind="luckyEnergy.level"></span>-->
+                <span ng-class="'icon icon-lucky-energy-level'+(luckyEnergy.level)"></span>
             </p>
-            <small>?</small>
+            <p class="exp" title="{{'幸运能量：'+e_val}}">
+                <span class="exp-value" style={{'width:'+(luckyEnergy.percent)+'%;'}}></span>
+            </p>
+            <small title="幸运能量用于游戏，您的能量越多，进入游戏时的初始弹药越多">?</small>
         </div>
     </div>
 </div>

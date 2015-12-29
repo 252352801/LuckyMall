@@ -713,8 +713,8 @@ angular.module('LuckyMall')
                         iElement.css({
                             'background-color': '#fff',
                             'opacity': 0,
-                            '-webkit-transition': 'opacity 1s',
-                            'transition': 'opacity 1s'
+                            '-webkit-transition': 'all 1s!important',
+                            'transition': 'all 1s!important'
                         });
                         elements[uid] = {
                             iElement: iElement,
@@ -937,7 +937,7 @@ angular.module('LuckyMall')
                 window.addEventListener('message',gameHandler,false);
 
                 function gameHandler(e){
-                    if(e.origin=='http://www.xingyunmao.cn:9004'){
+                  //  if(e.origin=='http://www.xingyunmao.cn:9004'){
                         if(e.data==true){
                             scope.isLoadingGame=false;
                         }else {
@@ -966,7 +966,7 @@ angular.module('LuckyMall')
                             }
                             $rootScope.closeGame();
                         }
-                    }
+                    //}
                 }
         }
     }

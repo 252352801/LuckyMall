@@ -68,7 +68,7 @@
     width:20px;
     height:20px;
     border:1px solid #b8b8b8;
-    border-radius:10px;
+    border-radius:50%;
     color:#fff;
     margin-left:20px;
     margin-top:17px;
@@ -231,14 +231,14 @@
     overflow:hidden;
 }
 .box-confirmOrder .bar-sellerInfo p{
-    float:left;
+    display:inline-block;
 }
 .box-confirmOrder .bar-sellerInfo img{
-    float:left;
     margin-right:5px;
-    width:26px;
-    height:26px;
-    margin-top:7px;
+    max-width:64px;
+    max-height:32px;
+   display:inline-block;
+    vertical-align:middle;
 }
 .box-confirmOrder .bar-sellerInfo p:after{
     content:'>';

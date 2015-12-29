@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer,FileUploader,UploadSer,LogisticsSer){
+ .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer,FileUploader,UploadSer,OrderDetailsSer,LogisticsSer){
         $scope.order_id=$stateParams.order_id;
         $scope.order_status=$stateParams.order_status;
         $scope.service_type=2;
@@ -153,7 +153,7 @@ angular.module('LuckyMall.controllers')
              }
              
          };
-        function loadData(){
+  /*      function loadData(){
             var flag=-1;//订单是否为空的标志
             switch(parseInt($scope.order_status)) {
                 case 1:
@@ -180,8 +180,21 @@ angular.module('LuckyMall.controllers')
                 $scope.data_order=MyOrdersSer.getOrder($scope.order_status,$scope.order_id);
             }
 
-            loadAddressList();         /*加载收货地址*/
+            loadAddressList();         *//*加载收货地址*//*
 
+        }*/
+
+        function loadData(){
+            OrderDetailsSer.requestData($scope.order_id,function(response,status){
+                if(status==1){
+                    $scope.data_order=OrderDetailsSer.getData();
+                    $scope.data_consignee=$scope.data_order.ConsigneeInfo;
+                    $scope.data_logistics=$scope.data_order.LogisticsInfo;
+                    console.log($scope.data_logistics);
+                    $scope.$emit('changeMenu',$scope.data_order.OrderStatus);
+                }
+            });
+            loadAddressList();
         }
 
 

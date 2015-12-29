@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
 
-    .controller('RegisterCtrl', function ($scope, VerifyCodeSer, $timeout, RegisterSer, $state) {
+    .controller('RegisterCtrl', function ($rootScope,$scope, VerifyCodeSer, $timeout, RegisterSer, $state,LoginSer,$cookies) {
         $scope.hasInputError = false;//是否有错误输入
         $scope.tips = '';//提示信息初始化
         $scope.value_btn = '立即注册';
@@ -144,6 +144,11 @@ angular.module('LuckyMall.controllers')
                                 'page': '/register_success',
                                 'title': '注册成功'
                             });
+                            LoginSer.setData(response);
+                            $cookies.put('Token',response.Token); //设置token cookie
+                            $rootScope.$broadcast("user-login");
+                            $rootScope.isLogin=true;
+                            $state.go('home');
                         } else {
                             swal({
                                 title: "注册失败！",
@@ -172,9 +177,10 @@ angular.module('LuckyMall.controllers')
                 else if($scope.form_register.code.$invalid){
                     setCurrentError('code');
                     if($scope.form_register.code.$error.required) {
-                        $scope.showTips('请输入验证码！');
+                        $scope.showTips('请输入短信验证码！');
                     }else{
-                        $scope.showTips('您输入的验证码有误！');
+                        $scope.showTips('您输入的短信验证码有误！');
+                        $scope.getCaptchaCode();
                     }
                 }else if($scope.form_register.password.$invalid){
                     setCurrentError('password');

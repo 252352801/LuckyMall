@@ -113,10 +113,10 @@
    /* opacity:0.8;*/
 }
 .list .pro-list-cont .a-goodsImg img{
-	transition:all .3s!important;
-	-webkit-transition:all .3s!important;
-	-moz-transition:all .3s!important;
-	-o-transition:all .3s!important;
+	transition:all .5s!important;
+	-webkit-transition:all .5s!important;
+	-moz-transition:all .5s!important;
+	-o-transition:all .5s!important;
    max-width:100%;
    max-height:100%;
     vertical-align:middle;
@@ -397,6 +397,7 @@
     background:#fff;
 }
 .filters .box-multi-select .bar-buttons{
+    display: block;
     text-align:center;
     margin-top:10px;
     margin-bottom:10px;

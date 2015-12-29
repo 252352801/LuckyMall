@@ -1,10 +1,25 @@
 <p class="menu-cont-title">
     <label>物流信息</label>
 </p>
-<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
 <div class="OD UC-menu-cont-wrap">
 
-    <div class="box-logistics">
+    <div class="uc-spinner" ng-show="!loaded">
+        <spinner></spinner>
+    </div>
+    <div class="box-consignee" ng-show="loaded&&data_logistics" >
+        <h3>收货信息</h3>
+
+        <p>
+            <label>收货人： </label>
+            <span ng-bind="data_consignee.ConsigneeName+'    '+data_consignee.ConsigneeMobile"></span>
+        </p>
+
+        <p>
+            <label>收货地址： </label>
+            <span ng-bind="data_consignee.Area+' '+data_consignee.ConsigneeAddress"></span>
+        </p>
+    </div>
+    <div class="box-logistics" ng-show="loaded&&data_logistics">
         <h3 class="title">物流信息</h3>
 
         <p class="item">
@@ -23,7 +38,10 @@
             <div class="logistics-info">
                 <div class="logistics-list">
                     <ul>
-                        <li ng-repeat="trace in data_logistics.lastResult.data">
+                        <li>
+                            <p ng-bind="data_logistics.TrackingData.message" class="color-balanced"></p>
+                        </li>
+                        <li ng-repeat="trace in data_logistics.TrackingData.lastResult.data">
                             <span class="time" ng-bind="trace.ftime"></span>
                             <span class="info" ng-bind="trace.context"></span>
                         </li>
@@ -32,5 +50,5 @@
             </div>
         </div>
     </div>
+    <p class="tips-nothing" ng-show="loaded&&!data_logistics">暂无物流信息</p>
 </div>
-

@@ -18,13 +18,18 @@ angular.module('LuckyMall.services')
             var t_end=new Date(end_time.replace(/-/g,"/"));
             return (t_end-t_cur)/1000;
         };
-       var testStatus=function(cur_time,sale_time,end_time,item_status){
+       var testStatus=function(is_sold_out,cur_time,sale_time,end_time,item_status){
            var t_cur=new Date(cur_time.replace(/-/g,"/"));
            var t_sale=new Date(sale_time.replace(/-/g,"/"));
            var t_end=new Date(end_time.replace(/-/g,"/"));
-           if(item_status==3) {
+           if(item_status==0||item_status==1||item_status==2){
+               return -2;//未上架
+           }else if(item_status==3) {
+               if(is_sold_out){
+                   return 6;//卖完了
+               }
                if (t_cur > t_sale && t_cur < t_end) {
-                   return 1;//正在销售
+                   return 1;//正在销售(唯一可下单状态)
                } else {
                    if (t_cur >= t_sale) {
                        return -1;//已过出售时间
@@ -33,11 +38,9 @@ angular.module('LuckyMall.services')
                    }
                }
            }else if(item_status==4){
-               return 4;//售完
+               return 4;//下架
            }else if(item_status==5){
                return 5;//已过出售时间
-           }else{
-               return -2;
            }
        };
         return {
@@ -59,7 +62,7 @@ angular.module('LuckyMall.services')
                         data.BigImages = data.DetailImages.split('|');
                         data.Property = JSON.parse(data.Property);
                         data.remainTime=setRemainTime(data.CurrentTime,data.ExpiryDate);
-                        data.status=testStatus(data.CurrentTime,data.OnSaleTime,data.ExpiryDate,data.CommodityStatus);
+                        data.status=testStatus(data.SoldOut,data.CurrentTime,data.OnSaleTime,data.ExpiryDate,data.CommodityStatus);
                         initData();
                         callback(data,1);
                     }else{

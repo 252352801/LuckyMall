@@ -10,8 +10,9 @@ angular.module('LuckyMall.controllers')
             OrderDetailsSer.requestData($scope.order_id,function(response,status){
                 if(status==1){
                     $scope.data_order=OrderDetailsSer.getData();
-                    $scope.data_consignee=angular.fromJson($scope.data_order.ConsigneeInfo);
-                    $scope.data_logistics=angular.fromJson($scope.data_order.LogisticsInfo);
+                    $scope.data_consignee=$scope.data_order.ConsigneeInfo;
+                    $scope.data_logistics=$scope.data_order.LogisticsInfo;
+                    console.log($scope.data_logistics);
                     $scope.$emit('changeMenu',$scope.data_order.OrderStatus);
                 }
             });
@@ -20,4 +21,5 @@ angular.module('LuckyMall.controllers')
     $scope.MathCeilPrice=function(val){
         return Math.ceil(val);
     };
+
 });

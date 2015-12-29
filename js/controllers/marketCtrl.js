@@ -18,6 +18,7 @@ angular.module('LuckyMall.controllers')
             for(var o in $rootScope.data_market){
                 if(id==$rootScope.data_market[o].Id){
                     $scope.url=$rootScope.data_market[o].DesktopPage;
+                    $scope.marketName=$rootScope.data_market[o].MarketName;
                 }
             }
             MarketSer.requestMarketPage([$scope.url],function(response,status){

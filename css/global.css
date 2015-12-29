@@ -87,6 +87,9 @@ input:focus{
 .color-balanced{
     color:#6dd17b!important;
 }
+.color-gray{
+    color:#ccc!important;
+}
 .color-red{
     color:#ff0000!important;
 }
@@ -455,7 +458,7 @@ a{
 }
 .shopping-steps span{
     display:block;
-    width:170px;
+    width:140px;
     height:100%;
     background:#fff;
     float:left;
@@ -675,6 +678,7 @@ a{
     padding-top:5px;
     border-bottom:1px solid #f1f1f1;
     font-weight:normal;
+    font-size:12px;
 }
 .address-list h3 span{
     font-size:18px;
@@ -683,7 +687,7 @@ a{
 .address-list p{
     margin-bottom:10px;
     color:#666;
-    font-size:13px;
+    font-size:12px;
 }
 .address-list .mark{
     display:block;
@@ -871,6 +875,7 @@ a{
     width:64px;
     height:64px;
     background:url(../res/icon/icon_cart_null.png) no-repeat;
+    margin-bottom: 10px;
 }
 
 
@@ -1472,6 +1477,9 @@ a.btn-to-pay{
     padding-right:35px;
     float: left;
     position:relative;
+}
+.nav.sub-h-nav a:nth-child(2){
+    border-bottom:1px solid #24861f;
 }
 .nav .icon-new{
     display:block;

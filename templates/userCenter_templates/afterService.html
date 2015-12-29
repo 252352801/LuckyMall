@@ -26,7 +26,7 @@
         <h3 class="box-label">售后商品</h3>
         <div class="box-commodity">
             <div class="top">
-                <img ng-src="{{imgHost+data_order.Brand.BrandImage+'@32w_32h_100Q.png'}}"/>
+                <img ng-src="{{imgHost+data_order.Brand.BrandImage+'@64w_32h_100Q.png'}}"/>
                 <a ng-bind="data_order.Brand.BrandName"></a>
             </div>
             <div class="cont">
@@ -45,11 +45,11 @@
                 </div>
                 <div class="cont3">
                     <div class="inner-cont">
-                        <p class="disc-cost" ng-bind="'￥'+(data_order.UnitPrice*data_order.Count*data_order.DiscountVal).toFixed(2)"></p>
+                        <p class="disc-cost" ng-bind="'￥'+data_order.cost"></p>
 
                         <p ng-bind="'（含定金：￥'+data_order.EarnestMoney+'）'" ng-if="data_order.EarnestMoney>0"></p>
 
-                        <p>已享用折扣卡<span class="icon-discount" ng-bind="(data_order.DiscountVal*10).toFixed(1)+'折'"></span>
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="data_order.finalDiscount+'折'"></span>
                         </p>
                     </div>
                 </div>

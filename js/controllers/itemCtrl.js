@@ -21,59 +21,66 @@ angular.module('LuckyMall.controllers')
         };
         /*数量减*/
         $scope.reduce = function () {
-            if(!isFinishSelect()){
-                $timeout(function () {
-                    $scope.showTips = true;
-                });
-                return;
-            }else if($scope.amount > 1) {
-                $scope.amount--;
+            if($scope.data_goods.status==1) {
+                if (!isFinishSelect()) {
+                    $timeout(function () {
+                        $scope.showTips = true;
+                    });
+                    return;
+                } else if ($scope.amount > 1) {
+                    $scope.amount--;
+                }
             }
         };
         /*数量加*/
         $scope.add = function () {
-            if(!isFinishSelect()){
-                $timeout(function () {
-                    $scope.showTips = true;
-                });
-                return;
-            }else  if ($scope.amount < $scope.inventory) {
-                if(!$scope.data_goods.IsCanFree){
-                    $scope.amount++;
-                }else{
-                    if($scope.isFreePlayed){
+            if($scope.data_goods.status==1) {
+                if (!isFinishSelect()) {
+                    $timeout(function () {
+                        $scope.showTips = true;
+                    });
+                    return;
+                } else if ($scope.amount < $scope.inventory) {
+                    if (!$scope.data_goods.IsCanFree) {
                         $scope.amount++;
-                    }else{
-                        swal({
-                            title: "免费游戏模式的商品每次限购一件喔",
-                            type: "error",
-                            confirmButtonText: "确定"});
+                    } else {
+                        if ($scope.isFreePlayed) {
+                            $scope.amount++;
+                        } else {
+                            swal({
+                                title: "免费游戏模式的商品每次限购一件喔",
+                                type: "error",
+                                confirmButtonText: "确定"});
+                        }
                     }
                 }
             }
         };
         /*选择属性*/
         $scope.selectAttr = function (attr, val, attr_index, val_index, disabled) {
-            if (!disabled || $scope.isNoSelection()) {
-                if ($scope.choice.length <= 0) {
-                    swal({
-                        title: "抱歉，该商品暂时缺货!",
-                        text: '库存正在补充，敬请期待',
-                        type: "error",
-                        confirmButtonText: "确定"});
-                    return;
+            if($scope.data_goods.status==1) {//商品正在销售时
+                if (!disabled || $scope.isNoSelection()) {
+                    if ($scope.choice.length <= 0) {
+                        swal({
+                            title: "抱歉，该商品暂时缺货!",
+                            text: '库存正在补充，敬请期待',
+                            type: "error",
+                            confirmButtonText: "确定"});
+                        return;
+                    } else {
+                        checkedAttr(attr, val, attr_index, val_index);
+                        if (isFinishSelect()) {//选择完毕显示库存
+                            var selected_sku = ItemSer.getSkuByChoice($scope.choice);//已选的sku
+                            $scope.sku_id = selected_sku.Id;//sku_id，用以提交
+                            $scope.inventory = selected_sku.Stock;//库存
+                            $scope.showTips = false;
+                            $scope.finishSelect = true;
+                        }
+                    }
+                } else {
+                    clearChecked();
+                    checkedAttr(attr, val, attr_index, val_index);
                 }
-                checkedAttr(attr, val, attr_index, val_index);
-                if (isFinishSelect()) {//选择完毕显示库存
-                    var selected_sku = ItemSer.getSkuByChoice($scope.choice);//已选的sku
-                    $scope.sku_id = selected_sku.Id;//sku_id，用以提交
-                    $scope.inventory = selected_sku.Stock;//库存
-                    $scope.showTips = false;
-                    $scope.finishSelect = true;
-                }
-            } else {
-                clearChecked();
-                checkedAttr(attr, val, attr_index, val_index);
             }
         };
         /*tab切换*/
@@ -296,7 +303,9 @@ angular.module('LuckyMall.controllers')
                 } else {
 
                 }
-                autoSelected();
+                if($scope.data_goods.status==1) {
+                    autoSelected();
+                }
             });
         }
         /*加载本页数据*/

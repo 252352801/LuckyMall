@@ -136,7 +136,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                     event.preventDefault();
                     $rootScope.login_target = {state: toState,params: toParams};
                     $state.go('login');
-                }else if(toState.name == 'UCIndex.myOrders'){
+                }else if((toState.name).indexOf("UCIndex") >= 0){
                     event.preventDefault();
                     $rootScope.login_target = {state: toState,params: toParams};
                     console.log($rootScope.login_target);
@@ -149,7 +149,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 }else{
                     var t_name=$rootScope.login_target.state.name;
                     if(t_name!='confirmOrder'&&t_name!='shoppingCart'&&t_name!='UCIndex.myOrders'&&t_name!='register'&&t_name!= 'lostPassword') {
-                        if(fromState.name=='register') {
+                        if(fromState.name=='register'||fromState.name=='lostPassword') {
                             $rootScope.login_target = { state:'home',params:{}};
                         }else{
                             $rootScope.login_target = {state: fromState, params: fromParams};

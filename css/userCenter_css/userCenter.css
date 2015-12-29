@@ -115,11 +115,13 @@
 }
 .bar-userInfo-right .exp{
     display:inline-block;
-    margin-top:10px;
+    margin-top:2px;
     width:250px;
     height:16px;
     border-radius:8px;
     background:#fff;
+    color: #aaa;
+    text-align: center;
 }
 .bar-userInfo-right small{
     display:inline-block;
@@ -134,6 +136,7 @@
     background:#f7c000;
     position:relative;
     top:-5px;
+    cursor:pointer;
 }
 .bar-userInfo-right .exp .exp-value{
     display:block;
@@ -141,6 +144,42 @@
     height:100%;
     background:#f7c000;
     border-radius:16px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.bar-energy{
+    overflow:hidden;
+}
+.bar-energy label{
+    float:left;
+    line-height:24px;
+}
+.bar-energy .icon{
+    float:left;
+    width:28px;
+    height:28px;
+    margin-left:10px;
+}
+.bar-chance{
+    line-height:30px;
+    margin-top:10px;
+}
+.bar-chance .chance{
+    margin-left:10px;
+    font-size:14px;
+    color:#F8A405;
+}
+.bar-chance .btn-sign-in{
+    margin-left:10px;
+    padding:5px 15px;
+    border-radius:3px;
+    background:#C1992C;
+    color:#fff;
+    cursor:pointer;
+}
+.bar-chance .btn-sign-in:hover{
+    background-color:#C1aa2C;
 }
 /*.icon-user-level1,.icon-user-level2,.icon-user-level3,.icon-user-level4,.icon-user-level5,.icon-user-level6,.icon-user-level7,
 .icon-user-level8,.icon-user-level9,.icon-user-level0{
@@ -305,12 +344,11 @@
     display:inline-block;
 }
 .order-list-top img{
-    display:inline-block;
-    width:26px;
-    height:26px;
-    background:#f1f1f1;
-    position:relative;
-    top:7px;
+    max-width:64px;
+    max-height:32px;
+    position: relative;
+    vertical-align: middle;
+    margin-right:8px;
 }
 .order-list-top .seller-name a:after{
     content:'>';
@@ -504,13 +542,11 @@
     color:#ff6700;
 }
 .UC .address-list{
-    margin-left:25px;
     margin-top:25px;
     margin-bottom:25px;
 }
 .UC .address-list li{
     position:relative;
-    left:-18px;
 }
 .UC .address-list li:nth-child(n+4){
     margin-top:10px;
@@ -595,7 +631,7 @@
 .edit-pw.input-tips{
     width:270px;
     position:absolute;
-    left:360px;
+    left:260px;
     top:190px;
 }
 .update-pw-success{
@@ -698,6 +734,7 @@
     color:#fff;
     text-align:center;
     margin-left:120px;
+    cursor:pointer;
 }
 .form-editPassword p a.btn-outline {
     box-sizing: border-box;
@@ -1360,21 +1397,16 @@
     overflow: hidden;
 }
 .OD .box-commodity .top img{
-    width:30px;
-    height:30px;
-    float:left;
-    background:#fff;
-    margin-left:15px;
-    margin-top:5px;
-    margin-right:8px;
-   /* margin-left:15px;
-    margin-right:8px;*/
+    max-width:64px;
+    max-height:32px;
+    margin-left: 15px;
+    margin-right: 5px;
+    vertical-align: middle;
 }
 .OD .box-commodity .top a{
     display:inline-block;
     font-size:14px;
     color:#333;
-    float:left;
     cursor:pointer;
 }
 .OD .box-commodity .top a:after{
@@ -1496,6 +1528,9 @@
     line-height:24px;
     font-size:12px;
     color:#8d8e92;
+}
+.logistics-list ul{
+    margin-left:15px;
 }
 .OD .logistics-details label,.OD .logistics-details .logistics-info{
     float: left;
@@ -1840,7 +1875,7 @@
 }
 .AS-box-address .address-list li{
     left:0px;
-    margin-left:15px;
+    margin-left:13px;
 }
 .upload-box{
     float:left;
@@ -1938,4 +1973,10 @@
     text-align:center;
     font-size: 24px;
     color:#ddd;
+}
+.uc-spinner .spinner{
+    position:relative;
+    top:120px;
+    left:0px;
+    margin:0 auto;
 }

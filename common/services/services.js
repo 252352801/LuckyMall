@@ -36,19 +36,19 @@ angular.module('LuckyMall.services',[])
     /*登陆服务*/
     .factory('LoginSer',function(API,$http,$timeout,TokenSer){
         var data=null;
-        var isLogin=false;
+        /*var isLogin=false;*/
         return {
             getData:function(){
                 return data;
+            },
+            setData:function(new_data){
+                data=new_data;
             },
             getToken:function(){
                 return data.token;
             },
             isLogin:function(){
-                return isLogin;
-            },
-            setLogin:function(new_status){
-                isLogin=new_status;
+                return TokenSer.getToken();
             },
             login:function(username,password,callback){
                 $http({
@@ -58,7 +58,7 @@ angular.module('LuckyMall.services',[])
                 }).success(function(response){
                     if(response) {
                         data = response;
-                        isLogin=true;
+                        /*isLogin=true;*/
                         if (typeof callback == 'function') {
                             callback(data.Token,1);
                         }
@@ -72,7 +72,7 @@ angular.module('LuckyMall.services',[])
             exit:function(){
                 $timeout(function(){
                     data=null;
-                    isLogin=false;
+                    /*isLogin=false;*/
                     TokenSer.remove();
                 });
             },
@@ -88,7 +88,7 @@ angular.module('LuckyMall.services',[])
                                 return;
                             }
                             data = response;
-                            isLogin=true;
+                            /*isLogin=true;*/
                             if (typeof callback == 'function') {
                                 callback(data.Token,1);
                             }
@@ -1021,7 +1021,7 @@ angular.module('LuckyMall.services',[])
                 }
             },
             requestData:function(order_type,callback){ //order_type:1-待付款 2-已付款 3-已发货 4-已完成 5-已取消
-                if(order_type==3){
+                if(order_type==2){
                     order_type=23;
                 }
                 $http({
@@ -1038,6 +1038,7 @@ angular.module('LuckyMall.services',[])
                             case 2:orders_paid=initData(response,0);break;
                             case 3:orders_unRecieve=initData(response,0);break;
                             case 4:orders_finish=initData(response,0);break;
+                            case 23:orders_paid=initData(response,0);break;//已付款+待收货
                         }
                         callback(response,1);
                     }else{
@@ -1046,6 +1047,7 @@ angular.module('LuckyMall.services',[])
                             case 2:orders_paid=new Array();break;
                             case 3:orders_unRecieve=new Array();break;
                             case 4:orders_finish=new Array();break;
+                            case 23:orders_paid=new Array();break;//已付款+待收货
                         }
                         callback(response,0);
                     }
@@ -1141,6 +1143,10 @@ angular.module('LuckyMall.services',[])
             data.finalDiscount=data.DiscountValue;//最终折扣
             if(data.ConsigneeInfo){
                 data.ConsigneeInfo=angular.fromJson(data.ConsigneeInfo);//收货地址
+            }
+            if(data.LogisticsInfo){
+                data.LogisticsInfo=angular.fromJson(data.LogisticsInfo);
+                data.LogisticsInfo.TrackingData=angular.fromJson(data.LogisticsInfo.TrackingData);
             }
             return data;
         };
@@ -1534,6 +1540,10 @@ angular.module('LuckyMall.services',[])
 
     .factory('LogisticsSer',function(API,$http,TokenSer){
         var data=null;
+        function initData(o_d){
+            o_d.TrackingData=angular.fromJson(o_d.TrackingData);
+            return o_d;
+        }
         return {
             getData:function(){
                 return data;
@@ -1548,8 +1558,10 @@ angular.module('LuckyMall.services',[])
                     }
                 }).success(function(response,status,headers,config){
                     if(response){
-                        data=response.lastResult;
-                        callback(response,1);
+                        console.log(response);
+                        data=initData(response[0][0]);
+                      //  console.log(data);
+                        callback(data,1);
                     }else{
                         callback('',0);
                     }

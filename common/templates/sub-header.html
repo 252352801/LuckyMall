@@ -92,14 +92,8 @@
         </div>
     </div>
 </div>
-<div class="nav">
-    <!--<a  ng-class="{'cur nav1':cur_nav==1,'nav1':cur_nav!=1}" href="/home"  title="首页">首页</a>-->
+<div class="nav sub-h-nav">
     <a ng-class="{'cur nav2':cur_nav==2,'nav2':cur_nav!=2}" href="/home" title="正在热卖">正在热卖</a>
-<!--    <a ng-class="{'cur nav3':cur_nav==3,'nav3':cur_nav!=3}" href="/brand/2" title="新品上市">新品上市</a>
-    <a ng-class="{'cur nav4':cur_nav==4,'nav4':cur_nav!=4}" href="/market" title="疯狂秒杀">疯狂秒杀</a>
-    <a ng-class="{'cur nav5':cur_nav==5,'nav5':cur_nav!=5}"href="/market" title="最后疯抢">最后疯抢<span class="icon-new"></span></a>-->
- <!--   <a ng-class="{'cur nav6':cur_nav==5,'nav6':cur_nav!=5}" href="/market" title="圣诞嘉年华">圣诞嘉年华</a>
-    <a ng-class="{'cur nav6':cur_nav==6,'nav6':cur_nav!=6}" href="/support/qa" title="新手指南">新手指南</a>-->
     <a  ng-class="{'cur':curMarket==market.Id}" ng-repeat="market in data_market"   ng-bind="market.MarketName" ng-click="goMarket(market.DesktopPage,market.Id)"></a>
     <a class="border-bottom4 icon-mb-link" href="#" title="">
         <div class="sub-h-QR">

@@ -231,7 +231,7 @@ angular.module('LuckyMall')
                         run();
                     }, change_time)
                     function run() {
-                        try {
+
                             $timeout(function () {
                                 scope.new_disc = rand + 0.1;//构建新的折扣卡
                                 scope.new_disc = scope.new_disc.toFixed(1);
@@ -265,69 +265,70 @@ angular.module('LuckyMall')
                                         val[o] = parseInt(old_index[o]) - parseInt(new_index[o]);
                                     }
                                 }
-                                tweenMultiFixAnimate({
-                                    obj: [
-                                        {
-                                            element: slider[0],
-                                            object: [
-                                                {
-                                                    attr: 'top',//需要改变的属性
-                                                    value: parseInt(val[0]) * scope.h,//改变的值 可以为正负
-                                                    moveName: 'Linear',//动画名，默认为Linear
-                                                    moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            element: slider[1],
-                                            object: [
-                                                {
-                                                    attr: 'top',//需要改变的属性
-                                                    value: parseInt(val[1]) * scope.h,//改变的值 可以为正负
-                                                    moveName: 'Linear',//动画名，默认为Linear
-                                                    moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            element: slider[2],
-                                            object: [
-                                                {
-                                                    attr: 'top',//需要改变的属性
-                                                    value: parseInt(val[2]) * scope.h,//改变的值 可以为正负
-                                                    moveName: 'Linear',//动画名，默认为Linear
-                                                    moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            element: slider[3],
-                                            object: [
-                                                {
-                                                    attr: 'top',//需要改变的属性
-                                                    value: parseInt(val[3]) * scope.h,//改变的值 可以为正负
-                                                    moveName: 'Linear',//动画名，默认为Linear
-                                                    moveType: 'easeIn'//动画的缓动方式，默认为easeIn
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    time: 300,//执行动画的时间
-                                    callback: function () {
-                                        initOverlayStatus();
-                                        for (var o in new_index) {
-                                            if (parseInt(new_index[o]) > parseInt(old_index[o])) {
-                                                slider[o].style.top = slider[o].offsetTop - scope.h * num_len + 'px';
+                                try {
+                                    tweenMultiFixAnimate({
+                                        obj: [
+                                            {
+                                                element: slider[0],
+                                                object: [
+                                                    {
+                                                        attr: 'top',//需要改变的属性
+                                                        value: parseInt(val[0]) * scope.h,//改变的值 可以为正负
+                                                        moveName: 'Linear',//动画名，默认为Linear
+                                                        moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                element: slider[1],
+                                                object: [
+                                                    {
+                                                        attr: 'top',//需要改变的属性
+                                                        value: parseInt(val[1]) * scope.h,//改变的值 可以为正负
+                                                        moveName: 'Linear',//动画名，默认为Linear
+                                                        moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                element: slider[2],
+                                                object: [
+                                                    {
+                                                        attr: 'top',//需要改变的属性
+                                                        value: parseInt(val[2]) * scope.h,//改变的值 可以为正负
+                                                        moveName: 'Linear',//动画名，默认为Linear
+                                                        moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                element: slider[3],
+                                                object: [
+                                                    {
+                                                        attr: 'top',//需要改变的属性
+                                                        value: parseInt(val[3]) * scope.h,//改变的值 可以为正负
+                                                        moveName: 'Linear',//动画名，默认为Linear
+                                                        moveType: 'easeIn'//动画的缓动方式，默认为easeIn
+                                                    }
+                                                ]
                                             }
+                                        ],
+                                        time: 300,//执行动画的时间
+                                        callback: function () {
+                                            initOverlayStatus();
+                                            for (var o in new_index) {
+                                                if (parseInt(new_index[o]) > parseInt(old_index[o])) {
+                                                    slider[o].style.top = slider[o].offsetTop - scope.h * num_len + 'px';
+                                                }
+                                            }
+                                            rand = Math.random();//生成新的随机数
+                                            run();
                                         }
-                                        rand = Math.random();//生成新的随机数
-                                        run();
-                                    }
-                                });
-                            }, change_time);
-                        }catch (srror){
+                                    });
+                                }catch (error){
 
-                        }
+                                }
+                            }, change_time);
                     }
                 }
 

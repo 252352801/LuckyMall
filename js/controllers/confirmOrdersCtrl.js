@@ -231,6 +231,9 @@ angular.module('LuckyMall.controllers')
         };
         /*支付时间到期*/
       $scope.payTimeOver=function(){
+          if($scope.polling!=true){
+              return;
+          }
           alert("支付超时！");
           $state.go('UCIndex.myOrders',{status:'unPay'});
       };
@@ -257,10 +260,6 @@ angular.module('LuckyMall.controllers')
         };
       /*初始化显示数据*/
      function loadConfirmOrderData(){
-         if(!MyOrdersSer.getTempOrder()){
-             $state.go('shoppingCart');
-             return;
-         }
          if($scope.source=='game'){
              var order_id = MyOrdersSer.getTempOrder();
              OrderDetailsSer.requestData(order_id, function (resp, status) {
@@ -284,7 +283,6 @@ angular.module('LuckyMall.controllers')
                  var order_id = MyOrdersSer.getTempOrder().Id;
                  $scope.data_orders = [CartSer.getOrderById(order_id)];
                  console.log(angular.toJson($scope.data_orders));
-             } else if ($scope.source == 'game') {
              }
              AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
                  if(status==1){

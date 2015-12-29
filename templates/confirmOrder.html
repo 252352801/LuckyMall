@@ -12,8 +12,9 @@
         </div>
         <div class="shopping-steps pull-right">
             <span>我的购物车</span>
-            <span class="has-arrow-white cur">核对订单信息</span>
+            <span class="has-arrow-white  cur">核对订单信息</span>
             <span class="has-arrow-org">提交订单</span>
+            <span class="has-arrow-white">完成</span>
         </div>
     </div>
 </div>
@@ -45,7 +46,7 @@
         </div>
         <div class="goods-list" ng-repeat="order in data_orders">
             <div class="bar-sellerInfo">
-                <img real-src={{imgHost+order.Brand.BrandImage+'@32w_32h_100Q.png'}} temp-src="./res/images/default.png" alt=""/>
+                <img real-src={{imgHost+order.Brand.BrandImage+'@64w_32h_100Q.png'}} temp-src="./res/images/default.png" alt="" ng-if="order.Brand.BrandImage"/>
                 <p ng-bind="order.Brand.BrandName"></p>
             </div>
             <div class="goods-list-cont">

@@ -10,9 +10,15 @@ angular.module('LuckyMall.services')
           for(var o in obj){
               if(isOnline(obj[o].CurrentTime,obj[o].StartTime)) {
                   if (obj[o].PromotionType == 1) {
-                      obj[o].href = '/item/' + obj[o].TypeId;
+                      if(obj[o].TypeId!=0){
+                          obj[o].href = '/item/' + obj[o].TypeId;
+                      }else{
+                          obj[o].href = '/market/' + 18;
+                      }
                   } else if (obj[o].PromotionType == 0) {
                       obj[o].href = '/brand/'+obj[o].TypeId;
+                  }else if(obj[o].PromotionType == 2){
+                      obj[o].href = '/market/'+obj[o].TypeId;
                   }
                   obj[o].remainTime = setRemainTime(obj[o].CurrentTime,obj[o].EndTime);
                   result.push(obj[o]);
@@ -25,7 +31,11 @@ angular.module('LuckyMall.services')
             var result=new Array();
             for(var o in obj){
                     if (obj[o].PromotionType == 1) {
-                        obj[o].href = '/item/' + obj[o].TypeId;
+                        if(obj[o].TypeId!=0){
+                            obj[o].href = '/item/' + obj[o].TypeId;
+                        }else{
+                            obj[o].href = '/market/' + 18;
+                        }
                     } else if (obj[o].PromotionType == 0) {
                         obj[o].href = '/brand/'+obj[o].TypeId;
                     }else if(obj[o].PromotionType == 2){

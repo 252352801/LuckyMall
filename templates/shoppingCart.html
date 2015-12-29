@@ -10,12 +10,13 @@
         <div class="cart-top">
             <div class="pull-left">
                 <h1>购物车</h1>
-                <p class="cart-tips" ng-if="data_cart.length>0" ng-show="cartTimeRemain>0">请在<span class="color-org" ng-bind="cartTimeRemainFormat" ></span>内结算订单，时间结束后商品会清空</p>
+                <p class="cart-tips" ng-if="data_cart.length>0" ng-show="cartTimeRemain>0">请在<span class="color-org" ng-bind="cartTimeRemainFormat" ></span>内结算订单，超时后购物车将清空</p>
             </div>
             <div class="shopping-steps pull-right" >
                 <span class="cur ">我的购物车</span>
                 <span class="has-arrow-org">核对订单信息</span>
                 <span class="has-arrow-white">提交订单</span>
+                <span class="has-arrow-white">完成</span>
             </div>
         </div>
         <div class="cart-th" ng-if="data_cart.length>0">
@@ -32,7 +33,7 @@
         <div class="cart-list" ng-repeat="list in data_cart" ng-if="data_cart.length>0">
             <div class="cart-list-top">
                 <input class="cart-ck-order" type="checkbox" ng-model="list.isSelected" ng-click="testChecked()" />
-                <img class="brand-img" ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@32w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
+                <img class="brand-img" ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@64w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
                 <a class="brand-name" href="#" ng-bind="list.Brand.BrandName"></a>
                 <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
                 <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="!list.OrderType">赢折扣</a>
