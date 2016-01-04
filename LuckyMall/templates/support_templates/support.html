@@ -1,0 +1,53 @@
+
+<!--顶部  begin-->
+<long-header nav="nav3"></long-header>
+<!--顶部  end-->
+
+<!--中部 begin-->
+<div class="about help  container ng-scope">
+    <div class="content">
+        <div class="page-location">
+            <a href="/home">幸运猫</a>
+            <a ng-bind="cur_state_name"></a>
+        </div>
+        <div class="UC-menu support">
+            <h2>新手指南</h2>
+            <ul>
+                <li ng-class="{'cur':cur_url=='/sp_flow'}"><a href="/sp_flow">购物流程 </a></li>
+                <li ng-class="{'cur':cur_url=='/qa'}"><a href="/support/qa">常见问题</a></li>
+                <li ng-class="{'cur':cur_url=='/protocol'}"><a href="/support/protocol">用户协议</a></li>
+                <li ng-class="{'cur':cur_url=='/payWay'}"><a href="/support/payWay">支付方式</a></li>
+            </ul>
+            <h2>服务保障</h2>
+            <ul>
+                <li ng-class="{'cur':cur_url=='/assure_pro'}"><a href="/support/assure_pro">正品保障</a></li>
+                <li ng-class="{'cur':cur_url=='/assure_inv'}"><a href="/support/assure_inv">发票保障</a></li>
+                <!--<li ng-class="{'cur':cur_url=='/ol_svc'}"><a href="/support/ol_svc">在线客服</a></li>-->
+            </ul>
+            <h2>配送方式</h2>
+            <ul>
+                <li ng-class="{'cur':cur_url=='/logistics_cost'}"><a href="/support/logistics_cost">配送费用</a></li>
+                <li ng-class="{'cur':cur_url=='/logistics_exp'}"><a href="/support/logistics_exp">配送说明</a></li>
+                <li ng-class="{'cur':cur_url=='/receive_exp'}"><a href="/support/receive_exp">验货说明</a></li>
+            </ul>
+            <h2>售后服务</h2>
+            <ul>
+                <li ng-class="{'cur':cur_url=='/refund_flow'}"><a href="/support/refund_flow">退货流程</a></li>
+                <li ng-class="{'cur':cur_url=='/refund_rule'}"><a href="/support/refund_rule">退换政策</a></li>
+                <li ng-class="{'cur':cur_url=='/QT'}"><a href="/support/QT">7天无理由退换</a></li>
+            </ul>
+
+        </div>
+        <div class="UC-menu-cont support relative_z" ui-view="support_content" >
+
+        </div>
+    </div>
+</div>
+
+<!--中部 end-->
+
+<introduction></introduction>
+
+<sub-footer></sub-footer>
+
+<footer></footer>

@@ -1,0 +1,169 @@
+<header ng-title="data_goods.CommodityName+' '+data_goods.Description+'_幸运猫'"></header>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+<aside-right></aside-right>
+<!--中部 start-->
+<spinner ng-show="!loaded"></spinner>
+<div class="G-details container">
+    <div class="content" ng-show="loaded">
+        <div class="page-location" ng-show="data_categoryName">
+            <a href="/home">幸运猫</a>
+            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}/0/"></a>
+            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/0/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
+        </div>
+        <div class="box-goodsDetails">
+            <div class="tag-free-played" ng-if="data_goods.IsCanFree&&isFreePlayed">
+                <span>已试玩</span>
+            </div>
+            <div class="box-goods-img" slide-box-img >
+                <div class="big-goods-img tx-center" >
+                   <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
+                    <img src="./res/images/item_before_sell.png" class="img-so" ng-if="data_goods.status==0||data_goods.status==-2"/>
+                    <img src="./res/images/item_out6.png" class="img-so" ng-if="data_goods.status==-1||data_goods.status==4||data_goods.status==5||data_goods.status==6"/>
+                   <!-- <img src="./res/images/item_out4.png" class="img-so" ng-if="data_goods.status==4"/>-->
+                    <ul ng-style="{left:-index*410+'px',width:data_goods.SmallImages.length*410+'px'}">
+                        <li ng-repeat="Img in data_goods.SmallImages">
+                            <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@520w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img}} />
+                        </li>
+                    </ul>
+                </div>
+                <div class="small-goods-img">
+                    <ul class="goods-index" id="details_goods_index">
+                        <li ng-class="{'cur': index==$index}" ng-repeat="sImg in data_goods.SmallImages"  ng-mouseenter="showBigImg($index)">
+                            <img  real-src={{imgHost+sImg+'@70w_70h_100Q.png'}} alt="" temp-src="./res/images/default.png" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="s-index">
+                    <a class="prev txtUnSelect" ng-click="prevImg(data_goods.SmallImages.length-1)"></a>
+                    <a class="next txtUnSelect" ng-click="nextImg(data_goods.SmallImages.length-1)"></a>
+                </div>
+            </div>
+            <form class="pro-info" ng-show="loaded">
+                <h1 ng-bind="data_goods.CommodityName"></h1>
+                <small ng-bind="data_goods.Description"></small>
+                <div class="bar-time">
+                    <p ng-if="data_goods.status==-2">未到开售时间</p>
+                    <p class="remain-time" ng-if="data_goods.status==1">距下架时间：<span time-down="data_goods.remainTime"></span></p>
+                    <p ng-if="data_goods.status==6">该商品已售罄</p>
+                    <p ng-if="data_goods.status==0" class="color-red">未到开售时间</p>
+                    <p ng-if="data_goods.status==5||data_goods.status==-1">该商品已售罄</p>
+                    <p ng-if="data_goods.status==4">该商品已售罄</p>
+                </div>
+                <div class="pro-price">
+
+                    <div class="box-prices">
+                        <div class="item-price item-price1 number-slider" number-slider="data_goods">
+                            <label>￥</label>
+                            <ul class="prices-slider">
+                                <li>
+                                    <div class="item-slider">
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                    <div class="item-overlay" ng-show="overlay[0]"></div>
+                                </li>
+                                <li >
+                                    <div  class="item-slider">
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                    <div class="item-overlay" ng-show="overlay[1]"></div>
+                                </li>
+                                <li >
+                                    <div  class="item-slider" >
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                    <div class="item-overlay" ng-show="overlay[2]"></div>
+                                </li>
+                                <li >
+                                    <div class="item-slider">
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                        <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
+                                    </div>
+                                    <div class="item-overlay" ng-show="overlay[3]"></div>
+                                </li>
+                            </ul>
+                            <div class="discount-slider">
+                                <ul>
+                                    <li ng-bind="(cur_disc*10).toFixed(1)+'折'"></li>
+                                </ul>
+                            </div>
+<!--                            <div class="discount"  ng-show="new_disc>0"ng-style="{'animation-play-state':dc_animate?'running':'paused'}">
+                                <div class="discount-bg">
+                                    <span ng-bind="(new_disc*10)">1</span>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="item-price item-price2 price-interval">
+                            <p><span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span></p>
+                            <p class="new_prices">
+                                <span ng-bind="'￥'+data_goods.maxPrice"></span><small ng-bind="(data_goods.MinDiscount*10).toFixed(1)+'折'"></small>
+                                <label>~</label>
+                                <span ng-bind="'￥'+data_goods.minPrice"></span><small ng-bind="(data_goods.MaxDiscount*10).toFixed(1)+'折'"></small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">
+                    <p class="tips">请勾选您需要的商品选项：</p>
+                        <li ng-repeat="property in data_goods.Property">
+                            <label ng-bind="property.name"></label>
+
+                            <p>
+                                <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled&&!isNoSelection()}"
+                                   ng-repeat="attributes in property.attributes" ng-bind="attributes.value"
+                                   ng-click="selectAttr(property.name,attributes.value,$parent.$index,$index,attributes.disabled)"></a>
+                            </p>
+                        </li>
+
+                </ul>
+                <div class="bar-amount">
+                    <label>数量</label>
+                    <div class="div-btn">
+                        <span class="btn-reduce txtUnSelect" ng-click="reduce()" ng-disabled="data_goods.status!=1">-</span>
+                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||(data_goods.IsCanFree==true&&!isFreePlayed)||data_goods.status!=1" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
+                        <span class="btn-add txtUnSelect" ng-click="add()" ng-disabled="data_goods.status!=1">+</span>
+                       <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
+                        <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>
+                    </div>
+                </div>
+                <div class="bar-btn">
+                    <input ng-class="{'btn-buy':data_goods.status==1,'btn-buy disabled':data_goods.status!=1}" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" ng-disabled="data_goods.status!=1"/>
+                    <input ng-class="{'btn-playGame':data_goods.status==1,'btn-playGame disabled':data_goods.status!=1}" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)" ng-value="btn_value.freePlay" ng-disabled="data_goods.status!=1"/>
+                    <input ng-class="{'btn-add':data_goods.status==1,'btn-add disabled':data_goods.status!=1}" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart ng-disabled="data_goods.status!=1"/>
+                </div>
+            </form>
+        </div>
+        <div class="box-proIntro tabs">
+            <div class="tab-item">
+                <span ng-class="{'item cur':showingTab=='tab1','item':showingTab!='tab1'}" ng-click="showTab('tab1')">详细信息</span>
+               <!-- <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">商品咨询</span>-->
+            </div>
+            <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
+                <ul class="pro-showing-images">
+                    <li ng-repeat="img in data_goods.BigImages">
+                        <img lazy-src="{{imgHost+img}}" alt="" />
+                    </li>
+                </ul>
+                <div class="box-pro-show">
+                </div>
+            </div>
+            <div class="tab-content tab-cont2" ng-show="showingTab=='tab2'">
+                <p class="tx-center" style="color:#ccc;">敬请期待</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--中部 end-->
+
+<modal-before-free-play></modal-before-free-play>
+<modal-before-game></modal-before-game>
+<introduction></introduction>
+
+<sub-footer></sub-footer>
+<footer></footer>

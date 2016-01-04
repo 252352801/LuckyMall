@@ -1,0 +1,144 @@
+<p class="menu-cont-title">
+    <label>订单详情</label>
+</p>
+<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+<div class="OD UC-menu-cont-wrap">
+    <div class="box-od">
+        <p class="bar-order-sp">
+            <label>售后类型:</label>
+            <span  class="color-balanced" ng-bind="(data_details.RepairType==0)?'退款':(data_details.RepairType==1)?'退货':'换货'"></span>
+            <label>状态:</label>
+            <span  class="color-org"
+                    ng-bind="(data_details.RepairStatus==0)?'审核中':
+                    (data_details.RepairStatus==1)?'审核通过':
+                    (data_details.RepairStatus==2)?'审核不通过':
+                    (data_details.RepairStatus==3)?'处理中':
+                    (data_details.RepairStatus==4)?'发货中':
+                    (data_details.RepairStatus==5)?'已完成':''"
+                >
+            </span>
+            <label>订单号：</label>
+            <span ng-bind="data_details.OrderId"></span>
+            <label>申请时间：</label>
+            <span ng-bind="data_details.DataTime"></span>
+        </p>
+            <h2 class="title">售后商品</h2>
+        <div class="box-commodity">
+            <div class="top">
+                <img ng-if="data_details.Order.Brand.BrandImage" real-src={{imgHost+data_details.Order.Brand.BrandImage+'@32w_32h_100Q.png'}}  temp-src="./res/images/default.png"/>
+                <a ng-if="data_details.Order.Brand.BrandName" ng-bind="data_details.Order.Brand.BrandName"></a>
+            </div>
+            <div class="cont">
+                <div class="cont1">
+                    <a class="img-container" href="/item/{{data_details.Order.CommodityId}}">
+                        <img ng-src="{{imgHost+data_details.Order.imageUrl+'@100w_100h_100Q.jpg'}}" error-src="./res/images/default.png"/>
+                    </a>
+                    <a href="/item/{{data_details.Order.CommodityId}}">
+                        <h2 ng-bind="data_details.Order.CommodityName" title="{{data_details.Order.CommodityName}}"></h2>
+                    </a>
+                    <small ng-bind="'×'+data_details.Order.Count"></small>
+                    <p class="property" ng-repeat="property in data_details.Order.Specifications" ng-bind="property.name+'：'+property.value"></p>
+                </div>
+                <div class="cont2">
+                    <p ng-bind="'￥'+data_details.Order.orgCost"></p>
+                </div>
+                <div class="cont3">
+                    <div class="inner-cont">
+                        <p class="disc-cost" ng-bind="'￥'+data_details.Order.needToPay"></p>
+
+                        <p ng-bind="'（含定金：￥'+data_details.Order.EarnestMoney+'）'" ng-if="data_details.Order.EarnestMoney>0"></p>
+
+                        <p>已享用折扣卡<span class="icon-discount" ng-bind="data_details.Order.finalDiscount+'折'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="cont4">
+                    <!--<a>取消售后</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ASOD box-describetion">
+        <h3 class="title">描述信息</h3>
+        <p ng-bind="data_details.ProblemDescription"></p>
+        <div class="img-list">
+            <div class="img-container" ng-repeat="img in imgs" >
+                <img ng-src="{{imgHost+img}}"  alt=""/>
+            </div>
+        </div>
+    </div>
+
+
+    <form class="bar-kd-list" ng-show="data_details.RepairStatus==1">
+        <p>
+            <label class="color-balanced">您的申请已审核通过，请选择快递：</label>
+            <select ng-model="kd" ng-options="kd.Code as kd.Name group by kd.index for kd in data_kd_list" ng-change="test()" >
+                <!--<option>请选择快递</option>-->
+            </select>
+        </p>
+        <p>
+            <button ng-click="submit_kd()">提交</button>
+        </p>
+    </form>
+
+
+    <div class="box-logistics" ng-if="data_details.RepairStatus==4">
+        <h3 class="title">物流信息</h3>
+        <p class="color-gray" ng-show="!data_logistics.CourierName">暂无物流信息</p>
+        <p class="item" ng-show="data_logistics.CourierName">
+            <label>物流公司：</label>
+            <span ng-bind="data_logistics.CourierName"></span>
+        </p>
+
+        <p class="item" ng-show="data_logistics.TrackingNumber">
+            <label>物流单号：</label>
+            <span ng-bind="data_logistics.TrackingNumber"></span>
+        </p>
+
+        <div class="logistics-details" ng-show="data_logistics.TrackingData">
+            <label>物流跟踪：</label>
+
+            <div class="logistics-info">
+                <div class="logistics-list">
+                    <ul>
+                        <li ng-repeat="trace in data_logistics.TrackingData.lastResult.data">
+                            <span class="time" ng-bind="trace.ftime"></span>
+                            <span class="info" ng-bind="trace.context"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <div class="box-consignee">
+        <h3>收货信息</h3>
+
+        <p>
+            <label>收货人： </label>
+            <span ng-bind="data_consignee.ConsigneeName+'    '+data_consignee.ConsigneeMobile"></span>
+        </p>
+
+        <p>
+            <label>收货地址： </label>
+            <span ng-bind="data_consignee.Area+' '+data_consignee.ConsigneeAddress"></span>
+        </p>
+    </div>-->
+
+    <div class="box-cost" ng-if="data_order.OrderStatus!=0&&data_order.OrderStatus!=1">
+        <p>
+            <label>商品金额：</label>
+            <span ng-bind="data_details.Order.cost.toFixed(2)"></span>
+        </p>
+
+        <p>
+            <label>运费：</label>
+            <span>￥0.00</span>
+        </p>
+        <p ng-if="data_details.RepairType==0">
+            <label>应退金额：</label>
+            <span ng-bind="MathCeilPrice(data_details.Order.UnitPrice*data_details.Count*data_details.Order.DiscountVal)"></span>
+        </p>
+    </div>
+
