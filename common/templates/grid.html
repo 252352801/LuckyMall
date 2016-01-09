@@ -1,0 +1,14 @@
+<div ng-style="{'width':'100%'}" ng-repeat="floor in data_grid">
+    <div ng-repeat="box in floor.items" div ng-style="{'width':w+'px','position':'relative','overflow':'hidden'}">
+            <div ng-repeat="g in box.baseGrid track by $index" ng-style="{'border':'1px solid #aaa','width':(1/box.col)*100+'%','height':w/box.col+'px','float':'left','background':g.isSelected==true?'red':'blue'}"
+                 ng-click="choosegrid(g,box.baseGrid)" > <!--空的单元格-->
+
+            </div>
+            <div ng-repeat="grid in box.grids"
+                 ng-style="{'border':'1px solid #000','background':'#ccc','width':(1/box.col)*grid.colSpace*100+'%',
+                 'height':(w/box.col)*grid.rowSpace+'px','position':'absolute','left':(1/box.col)*100*grid.startX+'%',
+                 'top':(w/box.col)*grid.startY+'px'}">
+                <img ng-src="{{imgHost+grid.img}}" />
+            </div>
+    </div>
+</div>

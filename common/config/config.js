@@ -1,10 +1,7 @@
 var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies','angularFileUpload']);
 app.constant('Host',{
     develop: "http://120.24.225.116:9000/", //开发服务器
-    test: "http://webapi.xingyunmao.cn/",//测试服务器
-    prev:"http://120.24.225.116:9000/", //运营服务器
-    game:'http://120.24.175.151:9004', //游戏服务器
-    gameOverPage:'http://www.xingyunmao.cn/shoppingCart'//游戏结束后返回地址
+    public: "http://webapi.xingyunmao.cn/"//测试服务器
 });
 app.constant('API',{
     login: {//登陆
@@ -247,6 +244,10 @@ app.constant('API',{
         method:'get',
         url:'api/repairorder/query'
     },
+    getRepairorderById:{//获取售后单
+        method:'get',
+        url:'api/repairorder/'
+    },
     confirmReceive:{//确认收货
         method:'get',
         url:'api/order/complete/'
@@ -263,9 +264,25 @@ app.constant('API',{
         method:'get',
         url:'api/order/payfromuserearnest/'
     },
-    getBrandById:{
+    getBrandById:{ //根据ID获取品牌
         method:'get',
         url:'api/brand/'
+    },
+    isCanSignUp:{ //是否可以签到
+        method:'get',
+        url:'api/user/iscansignup'
+    },
+    signUp:{//签到
+        method:'get',
+        url:'api/user/signup'
+    },
+    getFreeChance:{//获取免费机会次数
+        method:'get',
+        url:'api/user/freeplaycount'
+    },
+    getSignUpInfo:{//获取免费机会次数
+        method:'get',
+        url:'api/user/signupinfo'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -749,6 +766,22 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             },
             title:'七天无理由退换-幸运猫'
         })
+        /*新手指南*/
+        .state('guide', {
+            url: '/guide',
+            views: {
+                '': {
+                    templateUrl: "templates/guide/guide.html",
+                    controller:'GuideCtrl'
+                }
+            },
+            title:'新手指南-幸运猫-享玩享购享折扣',
+            resolve: {
+                loadFiles: load([
+                    './js/controllers/guideCtrl.js'
+                ])
+            }
+        })
  /*--------------------------------------game--------------------------------------------------*/
 
         /*游戏返回*/
@@ -965,16 +998,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/adviceAndFeedback',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/adviceAndFeedback.html",
-                    controller: 'AdviceAndFeedbackCtrl'
+                    templateUrl: "templates/userCenter_templates/adviceAndFeedback.html"
                 }
             },
-            title:'建议和反馈-幸运猫',
-            resolve: {
-                loadFiles: load([
-                    './js/userCenter_js/controllers/adviceAndFeedbackCtrl.js'
-                ])
-            }
+            title:'建议和反馈-幸运猫'
+
         })
         /*安全中心*/
         .state('UCIndex.safeAccount', {
@@ -1080,29 +1108,28 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             }
         })
 
+        .state('payWin', {
+            url: '/payWin',
+            title:'正在处理...-幸运猫-享玩享购享折扣'
+        })
 
     /*===================接口配置 ==================*/
     initAPI();
     function initAPI(){
-        var cur_host=Host.test;//##############当前环境
+        var cur_host=Host.develop//##############当前环境
         switch(cur_host){
             case Host.develop:
-                Host.game='http://120.24.175.151:9004';//开发
-                Host.gameOverPage='127.0.0.1/afterGame/';
+                Host.game='http://120.24.225.116:9004';//开发
                 break;
-            case Host.test:
+            case Host.public:
                 Host.game='http://www.xingyunmao.cn:9004';//测试
-                Host.gameOverPage='www.xingyunmao.cn/';
-               //Host.gameOverPage='127.0.0.1/';
-                break;
-            case Host.prev:
-                Host.game='http://120.24.225.116:9004';//运营（前）
-                Host.gameOverPage='pwww.xingyunmao.cn/afterGame/';
                 break;
         }
+        Host.hostname=location.hostname;
         for(var o in API){
             API[o].url=cur_host+API[o].url;
         }
+        Host.localMsgOrigin='http://127.0.0.1';
     }
 
    /*=============================================*/
@@ -1111,7 +1138,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
     }]);
 
-app.run(['$rootScope', '$location', '$window',function($rootScope, $location, $window) {
+app.run(['$rootScope', '$location', '$window','$cookies',function($rootScope, $location, $window,$cookies) {
+
+   // $cookies.put('isGameOpen',false);
+
     // initialise google analytics
     $window.ga('create', 'UA-71031576-1', 'auto');  //UA-71031576-1为key
 
@@ -1123,14 +1153,17 @@ app.run(['$rootScope', '$location', '$window',function($rootScope, $location, $w
     };
     $rootScope.openGame=function(url,order_id,com_id){//打开游戏
         $rootScope.game.url=url;
-        $rootScope.game.orderId=order_id,
-        $rootScope.game.commodityId=com_id,
+        $rootScope.game.orderId=order_id;
+        $rootScope.game.commodityId=com_id;
         $rootScope.game.isOpen=true;
     };
     $rootScope.closeGame=function(){//关闭游戏
         $rootScope.game.url=null;
+        $rootScope.game.orderId=null;
+        $rootScope.game.commodityId=null;
         $rootScope.game.isOpen=false;
     };
+
     $rootScope.$on('$stateChangeStart', function() {
         $rootScope.page_loading=true;//loading图片显示
     });

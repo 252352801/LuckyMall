@@ -1,6 +1,15 @@
 angular.module('LuckyMall.controllers')
- .controller('UserCenterCtrl',function($scope,LoginSer,$state,$timeout,UserSer,TokenSer){
+ .controller('UserCenterCtrl',function($scope,LoginSer,$state,$timeout,UserSer,TokenSer,$rootScope,FreePlaySvc){
+            if(!TokenSer.getToken()){
+                $state.go('home');
+                return;
+            }
             $scope.isMTXXShow = false;
+
+           if(LoginSer.getData()==null){
+               $state.go('home');
+               return;
+           }
             $scope.e_val = LoginSer.getData().UserModel.LuckyEnergy.PaidValue;//幸运能量
             if (TokenSer.getToken()) {//判断是否登陆
                 $scope.data_user = UserSer.getData();
@@ -13,6 +22,29 @@ angular.module('LuckyMall.controllers')
                 $scope.curMenu = menu_index;
             });
 
+        /*签到*/
+        $rootScope.signUp=function(){
+            if($rootScope.freePlay.isCanSignUp) {
+                FreePlaySvc.signUp(function (response) {
+                    $rootScope.freePlay = FreePlaySvc.getData();
+                    console.log(response);
+                    if(response.code=='0X00'){
+                            swal({
+                                title: "签到成功！",
+                                text: "恭喜，您的免费游戏次数+1",
+                                type:"success",
+                                confirmButtonText: "确定"
+                            });
+                    }else{
+                        swal({
+                            title: response.msg,
+                            type:'error',
+                            confirmButtonText: "确定"
+                        });
+                    }
+                });
+            }
+        };
             /*关闭美图秀秀*/
             $scope.closeMTXX = function () {
                 $timeout(function () {
@@ -37,4 +69,5 @@ angular.module('LuckyMall.controllers')
                 }
                 return str.replace(sub_str, finally_str);
             }
+
 });

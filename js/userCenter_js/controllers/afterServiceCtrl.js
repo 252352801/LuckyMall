@@ -2,7 +2,7 @@ angular.module('LuckyMall.controllers')
  .controller('AfterServiceCtrl',function($scope,$state,$stateParams,MyOrdersSer,$timeout,AddressSer,LoginSer,FileUploader,UploadSer,OrderDetailsSer,LogisticsSer){
         $scope.order_id=$stateParams.order_id;
         $scope.order_status=$stateParams.order_status;
-        $scope.service_type=2;
+        $scope.service_type;//申请类型
         $scope.apply_amount=1;
         $scope.input_txt='';
         $scope.showLoading=false;
@@ -102,6 +102,7 @@ angular.module('LuckyMall.controllers')
     
     
          $scope.submit=function(){
+             console.log($scope.input_txt);
              var img_info=new Array();
              var len=$scope.uploader.queue.length;
              for(var o in $scope.uploader.queue){
@@ -121,7 +122,13 @@ angular.module('LuckyMall.controllers')
                  Images:img_info.join('')
              };
              console.log(params);
-             if(params.ProblemDescription==''){
+             if(!$scope.service_type){
+                 swal({
+                     title: "请选择您要申请售后类型!",
+                     type: "error",
+                     confirmButtonText: "确定"
+                 });
+             }else if(!params.ProblemDescription){
                  swal({
                      title: "请输入您申请售后的原因!",
                      text:'如商品非人为损坏、商品过期等',
@@ -141,7 +148,10 @@ angular.module('LuckyMall.controllers')
                              type: "success",
                              confirmButtonText: "确定"
                          });
-                     }else{
+                         $state.go('UCIndex.myOrders',{status:'after'});
+                     }else if(status==2) {
+                         $state.go('login');
+                     }else {
                          swal({
                              title: "申请失败!",
                              text:'请您联系客服',
@@ -153,44 +163,18 @@ angular.module('LuckyMall.controllers')
              }
              
          };
-  /*      function loadData(){
-            var flag=-1;//订单是否为空的标志
-            switch(parseInt($scope.order_status)) {
-                case 1:
-                    $scope.$emit('changeMenu',1);
-                    flag=(MyOrdersSer.getUnPayOrders()==null)?true:false;
-                    break;
-                case 2:
-                    $scope.$emit('changeMenu',2);
-                    flag=(MyOrdersSer.getPaidOrders()==null)?true:false;
-                    break;
-                case 4:
-                    flag=(MyOrdersSer.getFinishOrders()==null)?true:false;
-                    break;
-            }
-            if(flag){
-                $scope.showLoading=true;
-                MyOrdersSer.requestData($scope.order_status,function(resp,status){
-                    if(status==1){
-                        $scope.data_order=MyOrdersSer.getOrder($scope.order_status,$scope.order_status);
-                        $scope.showLoading=false;
-                    }
-                });
-            }else{
-                $scope.data_order=MyOrdersSer.getOrder($scope.order_status,$scope.order_id);
-            }
-
-            loadAddressList();         *//*加载收货地址*//*
-
-        }*/
 
         function loadData(){
             OrderDetailsSer.requestData($scope.order_id,function(response,status){
                 if(status==1){
                     $scope.data_order=OrderDetailsSer.getData();
+                //   $scope.data_order.OrderStatus=2;
+                    if($scope.data_order.OrderStatus!=4){//如果不是已完成的订单
+                        $scope.service_type=0;
+                        $scope.apply_amount=$scope.data_order.Count;
+                    }
                     $scope.data_consignee=$scope.data_order.ConsigneeInfo;
                     $scope.data_logistics=$scope.data_order.LogisticsInfo;
-                    console.log($scope.data_logistics);
                     $scope.$emit('changeMenu',$scope.data_order.OrderStatus);
                 }
             });

@@ -21,8 +21,8 @@
                 <h2>喵喵</h2>
                 <img src="./res/logo/logo_cat.png" alt=""/>
             </div>
-            <h3>喵喵幸运物</h3>
-           <!-- <p class="bar-chance">试玩机会：<span class="chance">5</span>次<span class="btn-sign-in">签到送机会</span></p>-->
+            <!--<h3>喵喵幸运物</h3>-->
+            <p class="bar-chance">试玩机会：<span class="chance" ng-bind="freePlay.chance"></span>次<span ng-click="signUp()" ng-class="{'btn-sign-in':freePlay.isCanSignUp,'btn-sign-in disabled':!freePlay.isCanSignUp}" ng-bind="freePlay.isCanSignUp?'签到送机会':'已签到'"></span></p>
             <p class="bar-energy">
                 <label>体力级：</label>
                 <!--<span class="icon_level_uc" ng-bind="luckyEnergy.level"></span>-->
@@ -44,7 +44,7 @@
             <li ng-class="{'cur':curMenu==2}"><a href="/UCIndex/myOrders/paid">待收货</a></a></li>
            <!-- <li ng-class="{'cur':curMenu==3}"><a href="/UCIndex/myOrders/unReceive">待收货</a></li>-->
             <li ng-class="{'cur':curMenu==4}"><a href="/UCIndex/myOrders/finish">已完成</a></li>
-            <li ng-class="{'cur':curMenu==5}"><a href="/UCIndex/myOrders/after">售后退款</a></li>
+            <li ng-class="{'cur':curMenu==5}"><a href="/UCIndex/myOrders/after">退款售后</a></li>
         </ul>
         <h2>我的账户</h2>
         <ul>

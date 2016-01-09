@@ -6,33 +6,33 @@
     <div class="box-od">
         <p class="bar-order-sp">
             <label>订单状态:</label>
-            <span ng-bind="(data_order.OrderStatus==1)?'待付款':(data_order.OrderStatus==2)?'已付款':(data_order.OrderStatus==3)?'正在配送中':(data_order.OrderStatus==4)?'已完成':'未知'" class="color-org"></span>
+            <span ng-bind="(data_order.OrderStatus==1)?'待付款':(data_order.OrderStatus==2)?'待收货':(data_order.OrderStatus==3)?'待收货':(data_order.OrderStatus==4)?'已完成':'未知'" class="color-org"></span>
             <label>订单号：</label>
             <span ng-bind="data_order.Id"></span>
             <label>下单时间：</label>
             <span  ng-bind="data_order.CreateTime"></span>
         </p>
         <div class="AS-checkboxes">
-            <div ng-class="service_type==2?'checkbox checkbox2 checked':'checkbox checkbox2'" ng-click="changeType(0)">
+            <div ng-class="service_type==0?'checkbox checkbox2 checked':'checkbox checkbox2'" ng-click="changeType(0)" ng-if="data_order.OrderStatus==2||data_order.OrderStatus==3">
                 退款
             </div>
             <div ng-class="service_type==1?'checkbox checkbox1 checked':'checkbox checkbox1'" ng-click="changeType(1)" ng-if="data_order.OrderStatus==4">
                 退货
             </div>
-            <div ng-class="service_type==0?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(2)" ng-if="data_order.OrderStatus==4">
+            <div ng-class="service_type==2?'checkbox checkbox0 checked':'checkbox checkbox0'" ng-click="changeType(2)" ng-if="data_order.OrderStatus==4">
                 换货
             </div>
         </div>
-        <h3 class="box-label">售后商品</h3>
+        <h3 class="box-label" ng-bind="data_order.OrderStatus==4?'售后商品':'退款商品'"></h3>
         <div class="box-commodity">
             <div class="top">
-                <img ng-src="{{imgHost+data_order.Brand.BrandImage+'@64w_32h_100Q.png'}}"/>
+                <img ng-src="{{imgHost+data_order.Brand.BrandImage+'@64w_32h_100Q.png'}}" ng-show="data_order.Brand.BrandImage"/>
                 <a ng-bind="data_order.Brand.BrandName"></a>
             </div>
             <div class="cont">
                 <div class="cont1">
                     <a class="img-container" href="/item/{{data_order.Commodity.Id}}">
-                        <img ng-src="{{imgHost+data_order.imageUrl+'@100w_100h_100Q.jpg'}}"/>
+                        <img ng-src="{{imgHost+data_order.imageUrl+'@100w_100h_100Q.jpg'}}" temp-src="./res/images/default.png"/>
                     </a>
                     <a href="/item/{{data_order.Commodity.Id}}">
                         <h2 ng-bind="data_order.Commodity.CommodityName" title="{{data_order.Commodity.CommodityName}}" ></h2>
@@ -58,8 +58,8 @@
                 </div>
             </div>
         </div>
-        <p class="AS-label-amount">退货数量</p>
-        <div class="AS-bar-amount">
+        <p class="AS-label-amount" ng-if="data_order.OrderStatus==4">退货数量</p>
+        <div class="AS-bar-amount" ng-if="data_order.OrderStatus==4">
             <button ng-click="reduce()">-</button>
             <input ng-model="apply_amount"  onpaste="return false" require-number  style="ime-mode:disabled"  />
             <button ng-click="add()">+</button>
@@ -68,7 +68,8 @@
 
     <div class="AS-box-describe">
         <h3 class="box-label">描述</h3>
-        <textarea placeholder="请输入您的售后原因" ng-model="input_txt"></textarea>
+        <textarea placeholder="请输入您的售后原因" ng-show="data_order.OrderStatus==4" ng-model="input_txt"></textarea>
+        <textarea placeholder="请输入您的退款原因" ng-show="data_order.OrderStatus!=4"  ng-model="input_txt"></textarea>
         <div class="bar-msg-file">
 <!--            <input type="file" nv-file-select="" uploader="uploader" />-->
 
@@ -99,7 +100,7 @@
                         </button>
                     </div>
                 </div>
-                <div  max-file-count="1" class="btn-file-upload" max-count="5">
+                <div  max-file-count="1" class="btn-file-upload" max-count="5" ng-if="data_order.OrderStatus==4">
                     <span class="btn-add">+</span>
                     <p>上传图片</p>
                     <input  type="file" nv-file-select="" uploader="uploader" title="上传图片" />
@@ -108,7 +109,7 @@
 
         </div>
     </div>
-    <div class="AS-box-address">
+    <div class="AS-box-address" ng-if="data_order.OrderStatus==4">
         <h3 class="box-label">售后地址</h3>
         <ul class="address-list">
             <li ng-class="{'cur':selected_address.Id==address.Id}" ng-repeat="address in data_addresses|orderBy:'Selected':true" ng-click="changeConsignee(address)">

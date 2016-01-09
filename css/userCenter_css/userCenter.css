@@ -178,6 +178,9 @@
     color:#fff;
     cursor:pointer;
 }
+.bar-chance .btn-sign-in.disabled{
+    background:#ccc!important;
+}
 .bar-chance .btn-sign-in:hover{
     background-color:#C1aa2C;
 }
@@ -1395,11 +1398,11 @@
     background:#f1f1f1;
     line-height:40px;
     overflow: hidden;
+    padding-left: 20px;
 }
 .OD .box-commodity .top img{
     max-width:64px;
     max-height:32px;
-    margin-left: 15px;
     margin-right: 5px;
     vertical-align: middle;
 }
@@ -1552,6 +1555,9 @@
     font-size:18px;
     font-weight:500;
     margin-bottom: 3px;
+}
+.logistics-details .logistics-info .logistics-list ul li:first-child{
+    color:#6dd17b;
 }
 .OD .box-cost{
     margin-top:35px;

@@ -95,6 +95,7 @@
 <div class="nav sub-h-nav">
     <a ng-class="{'cur nav2':cur_nav==2,'nav2':cur_nav!=2}" href="/home" title="正在热卖">正在热卖</a>
     <a  ng-class="{'cur':curMarket==market.Id}" ng-repeat="market in data_market"   ng-bind="market.MarketName" ng-click="goMarket(market.DesktopPage,market.Id)"></a>
+    <a ng-class="{'cur':cur_nav=='guide'}" href="/guide" title="新手指南">新手指南</a>
     <a class="border-bottom4 icon-mb-link" href="#" title="">
         <div class="sub-h-QR">
             <img  src="http://webapi.xingyunmao.cn/api/system/appqrcode" alt=""/>

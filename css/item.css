@@ -411,7 +411,7 @@ float:left;
 .pro-info .bar-btn input.btn-add{
     background:none;
     border:1px solid #858585;
-    margin-left:20px;
+    margin-left:0px;
 	color: #464646;
 }
 

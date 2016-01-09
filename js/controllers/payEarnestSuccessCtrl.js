@@ -6,7 +6,7 @@ angular.module('LuckyMall.controllers')
         loadUserData();
              $rootScope.$broadcast('cart-update');
                $scope.playGame=function(){
-                   var g_url=Host.game + '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
+                   var g_url=Host.game + '?orderid=' + order_id + '&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
                    $rootScope.openGame(g_url,order_id,goods_id);
                }
 

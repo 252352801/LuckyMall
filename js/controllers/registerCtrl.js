@@ -86,7 +86,13 @@ angular.module('LuckyMall.controllers')
                }else if($scope.isValid($scope.mobile)) {
                     VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.img_code, function (response,status) {
                         if(status==1) {
-                            $scope.verify_code = response;
+                            //$scope.verify_code = response;
+                            var resp=angular.fromJson(response);
+                            if(resp.code=='104'){
+                                setCurrentError('imgCode');
+                                $scope.showTips('图形验证码错误！');
+                                $scope.getCaptchaCode();
+                            }
                         }
                     });
                 }else{

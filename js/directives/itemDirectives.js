@@ -220,7 +220,7 @@ angular.module('LuckyMall')
                     var max_disc = data_goods.MaxDiscount;
                     var min_disc = data_goods.MinDiscount;
                     scope.cur_disc = min_disc;
-                    var cur_price = (price * min_disc).toFixed(0);
+                    var cur_price = Math.ceil(price * min_disc);
                     initPrice(cur_price);
                     initOverlayStatus();
                     for(var o=0;o<scope.indexes.length;o++){
@@ -252,7 +252,7 @@ angular.module('LuckyMall')
                                 if (scope.cur_disc < max_disc) {
                                     scope.cur_disc = max_disc;
                                 }
-                                cur_price = Math.ceil(price * scope.cur_disc);
+                                cur_price = Math.ceil(price *(scope.cur_disc.toFixed(2)));
                                 var old_index = scope.indexes;
                                 initPrice(cur_price);
                                 /*#################end####################*/

@@ -19,13 +19,13 @@
     <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==0">
         <div class="order-list-top">
            <!-- <img src="./res/test/test_brand6.jpg" alt=""/>-->
-            <img real-src={{imgHost+list.Brand.BrandImage+'@64w_64h_100Q.png'}}  temp-src="./res/images/default.png" />
+            <img real-src={{imgHost+list.Brand.Brand-Image+'@64w_64h_100Q.png'}}  ng-if="list.Brand.BrandImage" temp-src="./res/images/default.png" />
             <p class="seller-name"><a title="" ng-bind="list.Brand.BrandName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.CreateTime"></p>
 
             <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
-            <span class="icon-delete" ng-if="list.OrderStatus==4" ng-click="removeOrder(list.Id)"></span>
+            <span class="icon-delete" ng-if="list.OrderStatus==1" ng-click="removeOrder(list.Id)"></span>
         </div>
         <div class="order-list-cont">
             <div class="cont1 pull-left">
@@ -75,11 +75,11 @@
 
                     <p><a href="/UCIndex/logisticsInfo/0/{{list.Id}}" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
 
-                    <p><a ng-click="confirmReceive(list.Id)" class="btn btn-org" ng-if="list.OrderStatus==(2||3)">确认收货</a></p>
+                    <p><a ng-click="confirmReceive(list.Id)" class="btn btn-org" ng-if="list.OrderStatus==3">确认收货</a></p>
 
-                    <p><a href="/goodsDetails/{{list.CommodityId}}" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
+                    <p><a href="/item/{{list.CommodityId}}" class="btn btn-outline" ng-if="list.OrderStatus==4">再次购买</a></p>
 
-                    <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}" class="btn" ng-if="list.OrderStatus==(2||3)">申请退款</a></p>
+                    <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}" class="btn" ng-if="list.OrderStatus==2||list.OrderStatus==3">申请退款</a></p>
 
                     <p><a href="/UCIndex/afterService/{{list.OrderStatus}}/{{list.Id}}"  class="btn" ng-if="list.OrderStatus==4">申请售后</a></p>
 
@@ -91,13 +91,13 @@
     
     <div class="order-list" ng-repeat="list in data_orders.curPage" ng-if="order_type==1">
         <div class="order-list-top">
-            <img real-src={{imgHost+list.Order.Brand.BrandImage+'@64w_64h_100Q.png'}}  temp-src="./res/images/default.png" />
-            <p class="seller-name"><a title="" ng-bind="list.Order.Brand.BrandName"></a></p>
+            <img ng-if="list.Order.Brand.BrandImage" real-src={{imgHost+list.Order.Brand.BrandImage+'@64w_64h_100Q.png'}}  temp-src="./res/images/default.png" />
+            <p ng-if="list.Order.Brand.BrandName" class="seller-name"><a title="" ng-bind="list.Order.Brand.BrandName"></a></p>
 
             <p class="create-time" ng-bind="'下单时间：'+list.Order.CreateTime"></p>
 
-            <p class="order-sn"><span>订单号：</span>{{list.Order.Id}}</p>
-            <span class="icon-delete" ng-if="list.Order.OrderStatus==4" ng-click="removeOrder(list.Order.Id)"></span>
+            <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
+            <span class="icon-delete" ng-if="list.Order.OrderStatus==1" ng-click="removeOrder(list.Order.Id)"></span>
         </div>
         <div class="order-list-cont">
             <div class="cont1 pull-left">
@@ -121,7 +121,7 @@
                 <p ng-bind="'（含定金：￥'+list.Order.EarnestMoney+'）'" ng-if="list.Order.EarnestMoney>0"></p>
 
                 <p class="discount">已享用折扣卡<span class="icon-discount"
-                                                ng-bind="list.finalDiscount+'折'"></span></p>
+                                                ng-bind="list.Order.finalDiscount+'折'"></span></p>
             </div>
             <div class="cont4 pull-left">
                 <div>
@@ -139,7 +139,7 @@
                                 >
                             </span>
                     </p>
-                     <p><a href="/UCIndex/AS_orderDetails/{{list.Order.Id}}">查看详情</a></p>
+                     <p><a href="/UCIndex/AS_orderDetails/{{list.Id}}">查看详情</a></p>
                 </div>
             </div>
             <div class="cont5 pull-left">
@@ -156,12 +156,12 @@
     
 
     <div class="UC page-index" ng-show="data_orders.curPage.length>0&&!showLoading">
-        <div class="prev" ng-click="prevPage()"><</div>
+        <div class="prev" ng-click="prevPage()" btn-scroll-to="355"><</div>
         <div class="indexes">
             <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1"
-                  ng-click=changePage($index+1)></span>
+                  ng-click=changePage($index+1) btn-scroll-to="355"></span>
         </div>
-        <div class="next" ng-click="nextPage()">></div>
+        <div class="next" ng-click="nextPage()" btn-scroll-to="355">></div>
     </div>
 </div>
 

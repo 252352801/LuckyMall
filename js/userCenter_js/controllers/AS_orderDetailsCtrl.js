@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('AS_OrderDetailsCtrl',function($scope,$state,$stateParams,AS_OrderDetailsSer,LogisticsSer,MyOrdersSer){
+ .controller('AS_OrderDetailsCtrl',function($scope,$state,$stateParams,AS_OrderDetailsSer,LogisticsSer,MyOrdersSer,ASOrderDetailsSer){
         $scope.order_id=$stateParams.order_id;
         $scope.showLoading=false;
         $scope.kd='auto';//快递选择
@@ -18,33 +18,20 @@ angular.module('LuckyMall.controllers')
             }
         };
         function loadData(){
-            if(MyOrdersSer.getAfterOrders()==null){
-                $scope.showLoading=false;
-                MyOrdersSer.requestAfterOrders(function(response,status){
-                    if(status==1){
-                        $scope.$emit('changeMenu',5);
-                       initData();
-                    }
-                });
-            }else{
-                initData();
-            }
+            ASOrderDetailsSer.requestData($scope.order_id,function(response,status){
+                if(status==1){
+                    $scope.data_details=ASOrderDetailsSer.getData();
+                    console.log( $scope.data_details);
+                    $scope.data_consignee=$scope.data_details.Order.ConsigneeInfo;
+                    $scope.data_logistics=angular.fromJson($scope.data_details.LogisticsInfo);
+                    $scope.$emit('changeMenu',$scope.data_details.Order.OrderStatus);
+                }
+            });
         }
-    
-       function initData(){
-                    $scope.data_details= MyOrdersSer.getOrder(5,$scope.order_id);
-                     $scope.data_consignee=angular.fromJson($scope.data_details.Order.ConsigneeInfo);
-                    $scope.data_logistics=angular.fromJson($scope.data_details.Order.LogisticsInfo);
-                    if($scope.data_details.Images!=''){
-                            $scope.imgs=$scope.data_details.Images.split('|');
-                    }else{
-                            $scope.imgs=[];
-                    }
-       }
 
         /*加载快递数据*/
         function getKuaiDi100List(){
-            LogisticsSer.getKuidiList(function(response,status){
+            LogisticsSer.getKDiList(function(response,status){
                 if(status==1){
                     $scope.data_kd_list=response;
                 }
@@ -52,9 +39,5 @@ angular.module('LuckyMall.controllers')
         }
         $scope.MathCeilPrice=function(val){
            return  Math.ceil(val);
-        };
-    
-        $scope.MathCeilPrice=function(val){
-            return Math.ceil(val);
         };
 });

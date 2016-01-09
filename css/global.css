@@ -62,8 +62,8 @@ input:focus{
     outline:none;
 }
 .content{
-    min-width:1000px;
-    width:1000px;
+    min-width:1100px;
+    width:1100px;
     margin:0 auto;
 }
 .header{
@@ -94,7 +94,7 @@ input:focus{
     color:#ff0000!important;
 }
 .container{
-    min-width:1000px;
+    min-width:1100px;
     min-height:650px;
     margin-bottom:30px;
     overflow:hidden;
@@ -117,7 +117,7 @@ input:focus{
    网站简介begin
 ===============*/
 .introduction{
-    min-width:1000px;
+    min-width:1100px;
     background:#fff;
     overflow:hidden;
 }
@@ -1175,7 +1175,7 @@ a{
    次级头部begin
 ===============*/
 .sub-header{
-    min-width:1000px;
+    min-width:1100px;
     background:#fff;
     height:140px;
     border-bottom:1px solid #ff6700;
@@ -1510,7 +1510,7 @@ a.icon-mb-link{
     padding-left:80px;
     padding-right:0;
     position:absolute;
-    left:553px;
+    left:648px;
     top:0px;
 }
  .sub-h-QR{
@@ -2248,6 +2248,17 @@ ul.dynamic li p a:hover{
     padding-left:500px;
     position:relative;
 }
+.lost-pw .box-lost-pw .btn-getCode{
+    display:inline-block;
+    width:40%;
+    height:38px;
+    border:1px solid #ccc;
+    text-align:center;
+    background:#f0f0f0;
+    color:#666!important;
+    position:relative;
+    top:1px;
+}
 .lost-pw form{
     display: block;
     width: 280px;
@@ -2772,6 +2783,8 @@ modal-beforeGame
 }
 @keyframes modalShow{
     0% {transform:scale(0);}
+    60% {transform:scale(1.02)}
+    80% {transform:scale(0.98)}
     100% {transform:scale(1)}
 }
 @keyframes modalHide{
@@ -2817,6 +2830,19 @@ modal-beforeGame
     margin-top:18px;
     margin-bottom:10px;
 }
+.modal-before-game  .luckyEnergy-info h2.chance{
+    font-size:16px;
+    line-height:40px;
+    color:#666;
+}
+.modal-before-game.before-freePlay{
+    animation:modalShow .3s;
+}
+.modal-before-game.before-freePlay .luckyEnergy-info{
+    margin-top:20px;
+    margin-left:20px;
+}
+
 .modal-before-game .box-energy{
     margin-top:7px;
     width:90%;
@@ -2867,8 +2893,9 @@ modal-beforeGame
     border: 0px;
 }
 .btn.btn-outline{
-    border:1px solid #ddd;
+    border:1px solid #ddd!important;
     color:#666;
+    background:none!important;
 }
 .btn.btn-org{
     background:#ff6700;
@@ -2946,6 +2973,54 @@ modal-beforeGame
     margin-top: -50px;
     color: #999;
 }
+
+.modal-beforeFreePlay{
+    box-sizing:border-box;
+    width:500px;
+    height:250px;
+    padding:25px;
+    position:fixed;
+    border:10px solid rgba(0,0,0,0.1);
+    border-radius:5px;
+    background:#fff;
+    background-clip:padding-box;
+    left:50%;
+    top:50%;
+    margin-left:-250px;
+    margin-top:-125px;
+    text-align:center;
+    z-index:998;
+    line-height:40px;
+    animation:modalShow .3s;
+}
+.modal-beforeFreePlay .btn{
+    display:inline-block;
+}
+.modal-beforeFreePlay h2{
+    font-size:18px;
+    line-height:60px;
+    color:#555;
+}
+.modal-beforeFreePlay .bar-btn{
+    margin-top:15px;
+}
+.modal-beforeFreePlay .btn-close{
+    font-size:36px;
+    position:absolute;
+    left:100%;
+    top:0px;
+    margin-left:-40px;
+    color:#aaa;
+    cursor:pointer;
+}
+.modal-beforeFreePlay .bar-btn .btn{
+    border:none;
+    width:120px;
+    height:40px;
+    border-radius:4px;
+    margin-right:15px;
+    cursor:pointer;
+}
 /*modal-beforeGame end*/
 
 .my-checkbox{
@@ -3009,3 +3084,36 @@ modal-beforeGame
 /*
  活动页覆盖 end
 */
+
+
+.modal-firstAccess-popup{
+    position:fixed;
+    width:100%;
+    height:100%;
+    left:0px;
+    top:0px;
+    background: rgba(0,0,0,0.3);
+    z-index:9999;
+    animation:slideDown 1s;
+}
+.modal-firstAccess-popup .modal-content{
+    z-index:99999999;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-250px;
+    margin-top:-250px;
+}
+.modal-firstAccess-popup .btn-close{
+    position:absolute;
+    left:100%;
+    top:0px;
+    margin-left:-60px;
+    width:60px;
+    height:60px;
+    cursor:pointer;
+}
+@keyframes slideDown{
+    0%{opacity:0}
+    100%{opacity: 1}
+}

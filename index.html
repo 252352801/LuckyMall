@@ -21,6 +21,9 @@
         if(isMobile) {
             location.href = 'http://m.xingyunmao.cn';
         }else{
+            if(location.hostname=='xingyunmao.cn') {
+                location.href = 'http://www.xingyunmao.cn/';
+            }
         }
     </script>
 

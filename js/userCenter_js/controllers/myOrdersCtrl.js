@@ -3,7 +3,7 @@ angular.module('LuckyMall.controllers')
         if(!LoginSer.isLogin()){
             return;
         }
-        var pageSize = 3;//每页条数
+        var pageSize = 10;//每页条数
         var cur_orders_tab = 1;
         $scope.pageIndex = 1;//当前页
         $scope.showLoading =false;

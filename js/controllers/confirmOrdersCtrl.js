@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
- .controller('ConfirmOrdersCtrl',function($rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer,TokenSer){
+ .controller('ConfirmOrdersCtrl',function(Host,$rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer,TokenSer){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
@@ -135,6 +135,7 @@ angular.module('LuckyMall.controllers')
             $scope.btn_val_purchase='正在处理...';
             if($scope.pay_type!= 'weixin'){
                 var newWin=window.open('_blank');//新窗口
+                newWin.location.href='http://'+Host.hostname+'/payWin';
             }
             PaymentSer.purchaseOrders($scope.purchaseType,param,function(response,status){
                 $scope.btn_val_purchase='确认支付';
@@ -159,11 +160,13 @@ angular.module('LuckyMall.controllers')
                             $scope.trade_id=response.Data.OutTradeNo;
                         }
                     }else if(response.Code=='0X10'){
+                        newWin.close();
                         $rootScope.$broadcast('orders-update');
                         ga('send', 'pageview', {
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
+                        $rootScope.initFreeChance();//支付成功刷新机会
                         $state.go('paySuccess');
 
                     }else if(response.Code=='0X01'){
@@ -172,10 +175,11 @@ angular.module('LuckyMall.controllers')
                             type: "error",
                             confirmButtonText: "确定"
                         });
-
+                        newWin.close();
                     }else if(response.Code=='0X02'){
+                        newWin.close();
                         submit_time++;
-                        if(submit_time>=1&&submit_time<2){
+                        if(submit_time>=1&&submit_time<10){
                             $scope.purchaseType=1;//第二次提交时改为重新支付方式
                             $scope.submitOrder();
                         }else{
@@ -188,12 +192,14 @@ angular.module('LuckyMall.controllers')
                         }
 
                     }else if(response.Code=='0X03'){
+                        newWin.close();
                         swal({
                             title: "创建交易失败！",
                             type: "error",
                             confirmButtonText: "确定"
                         });
                     }else{
+                        newWin.close();
                         swal({
                             title: "未知错误！",
                             type: "error",
@@ -202,6 +208,7 @@ angular.module('LuckyMall.controllers')
                         });
                     }
                 }else{
+                    newWin.close();
                     if(status==401){
                         swal( "账号过期，请重新登陆！");
                         $state.go('login');
@@ -218,6 +225,7 @@ angular.module('LuckyMall.controllers')
                         'page': '/complete_checkout',
                         'title': '完成购买'
                     });
+                    $rootScope.initFreeChance();
                     $state.go('paySuccess');
                 }else{
                     $scope.isTipsUnFinishShow=true;
@@ -234,7 +242,6 @@ angular.module('LuckyMall.controllers')
           if($scope.polling!=true){
               return;
           }
-          alert("支付超时！");
           $state.go('UCIndex.myOrders',{status:'unPay'});
       };
         /*关闭等待对话框*/
@@ -265,6 +272,14 @@ angular.module('LuckyMall.controllers')
              OrderDetailsSer.requestData(order_id, function (resp, status) {
                  if (status == 1) {
                      $scope.data_orders = [OrderDetailsSer.getData()];
+                     if($scope.data_orders[0].OrderStatus==6){//如果订单失效
+                         swal({
+                             title: "此订单已失效！",
+                             type: "error",
+                             confirmButtonText: "确定"
+                         });
+                         $state.go('home');
+                     }
                      AddressSer.requestAddressData(LoginSer.getData().UserModel.Id,function(response,status){
                          if(status==1){
                              $scope.data_addresses=AddressSer.getData();
@@ -273,7 +288,6 @@ angular.module('LuckyMall.controllers')
                      });
                  }
              });
-             console.log($scope.data_orders);
          }else {
              if ($scope.source == 'shoppingCart') {
                  $scope.data_orders = CartSer.getConfirmData();//取已选择订单
@@ -344,6 +358,7 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
+                        $rootScope.initFreeChance();
                         $state.go('paySuccess');
                     }else{
                         pollingTradeStatus(trade_id);

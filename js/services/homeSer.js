@@ -12,8 +12,6 @@ angular.module('LuckyMall.services')
                   if (obj[o].PromotionType == 1) {
                       if(obj[o].TypeId!=0){
                           obj[o].href = '/item/' + obj[o].TypeId;
-                      }else{
-                          obj[o].href = '/market/' + 18;
                       }
                   } else if (obj[o].PromotionType == 0) {
                       obj[o].href = '/brand/'+obj[o].TypeId;
@@ -33,8 +31,6 @@ angular.module('LuckyMall.services')
                     if (obj[o].PromotionType == 1) {
                         if(obj[o].TypeId!=0){
                             obj[o].href = '/item/' + obj[o].TypeId;
-                        }else{
-                            obj[o].href = '/market/' + 18;
                         }
                     } else if (obj[o].PromotionType == 0) {
                         obj[o].href = '/brand/'+obj[o].TypeId;

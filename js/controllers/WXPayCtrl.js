@@ -44,6 +44,7 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
+                        $rootScope.initFreeChance();//支付成功刷新机会
                         if($scope.type==1) {
                             $state.go('paySuccess');
                         }else{

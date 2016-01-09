@@ -38,9 +38,6 @@
             <div class="logistics-info">
                 <div class="logistics-list">
                     <ul>
-                        <li>
-                            <p ng-bind="data_logistics.TrackingData.message" class="color-balanced"></p>
-                        </li>
                         <li ng-repeat="trace in data_logistics.TrackingData.lastResult.data">
                             <span class="time" ng-bind="trace.ftime"></span>
                             <span class="info" ng-bind="trace.context"></span>

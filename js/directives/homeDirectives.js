@@ -5,12 +5,12 @@ angular.module('LuckyMall')
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var change_time=3000;//切换时间
+                var change_time=4000;//切换时间
                 scope.banner_index = 0;
-                if(attrs.bannerLength) {
-                    scope.$watch(attrs.bannerLength, function (new_val,old_val) {
-                        if(new_val!=old_val) {
-                            start(new_val);
+                if(attrs.bannerCss3) {
+                    scope.$watch(attrs.bannerCss3, function (new_val,old_val) {
+                        if(new_val) {
+                            start(new_val.length);
                         }
                     });
                 }
@@ -214,5 +214,48 @@ angular.module('LuckyMall')
             link:function(scope,element,attrs){
             }
         };
+    })
+
+    .directive('grid',function() {
+        return {
+            templateUrl: 'common/templates/grid.html',
+            restrict: 'E',
+            replace: true,
+            //scope:{
+            //    data_grid:'='
+            //},
+            link: function(scope, element, attrs) {
+                // scope.data_grid=init(angular.fromJson(attrs['griddata']));
+                scope.w=500;//$(element).context.parentElement.clientWidth;
+                function init(obj){
+                    if(obj) {
+                        for (var o in obj) {
+                            for (var i in obj[o].items) {
+                                var r = [];
+                                for(var n=0;n<obj[o].items[i].row;n++){
+                                    for(var m=0;m<obj[o].items[i].col;m++){
+                                        r.push({
+                                            location:{x:m,y:n},
+                                            isSelected: false
+                                        });
+                                    }
+                                }
+                                obj[o].items[i].baseGrid = r;
+
+                            }
+                        }
+                    }
+                    return obj;
+                };
+
+                scope.$watch(attrs['griddata'],function(n_val,o_val){
+                    if(n_val!=o_val){
+                        //console.log(n_val);
+                        scope.data_grid=init(n_val);
+                    }
+                });
+
+            }
+        }
     })
 

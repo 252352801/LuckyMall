@@ -37,7 +37,7 @@
 
 
     <!--css3-banner图  begin-->
-    <div class="banner banner-css3" banner-css3 banner-length="data_banner.length">
+    <div class="banner banner-css3" banner-css3="data_banner">
         <ul>
             <li ng-repeat="img in data_banner" ng-style="{'opacity':(banner_index==$index)?1:0,transition:'opacity 1s','z-index':(banner_index==$index)?1:0}">
             <!--<li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">-->
@@ -228,6 +228,15 @@
     <introduction></introduction>
     <sub-footer></sub-footer>
     <footer></footer>
+
+    <div class="modal-firstAccess-popup" ng-show="isFirstAcc">
+        <div class="modal-content">
+            <a href="/guide">
+                <img src="./res/images/guide/first_popup.jpg"/>
+            </a>
+            <span class="btn-close" ng-click="cancelGuide()"></span>
+        </div>
+    </div>
     <!--
     <scroll-load-img ng-if="ready"></scroll-load-img>-->
 </div>

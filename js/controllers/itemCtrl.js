@@ -190,9 +190,8 @@ angular.module('LuckyMall.controllers')
                             'title': '进入免费游戏'
                         });
 
-                        //location.href = Host.game + '?orderid=' + response.Data.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
-                        var g_url=Host.game + '?orderid=' + response.Data.Id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
-                        $rootScope.openGame(g_url,response.Data.Id,response.Data.CommodityId);
+                        var g_url=Host.game + '?orderid=' + response.Data.Id + '&mode=2&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
+                        $scope.openModalBFFP(g_url,response.Data.Id,response.Data.CommodityId);
                     } else if(status == 0) {
                         handleErrs(response.Code);
                     } else if (status == 2) {

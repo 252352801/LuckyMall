@@ -1,12 +1,12 @@
 angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
-.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer,MarketSer){
+.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,WalletSer,AddressSer,MessageSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer,MarketSer,FreePlaySvc){
 
-    $rootScope.login_target={
+    $rootScope.login_target={//登陆后跳转的目标
         state:'home',
         params:{}
     };
-    $rootScope.GameIFrame="http://www.baidu.com/";
+    $rootScope.freePlay= FreePlaySvc.getData();//免费试玩数据   chance：次数   isCanSignUp:是否可签到
      $scope.cartAmount=0;//购物车商品数量
      $scope.isLoginModalShow=false;//登陆框是否显示
      $scope.isFeedbackModalShow=false;//反馈框是否显示
@@ -29,13 +29,19 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
       });
        /* 监听退出登录*/
       $scope.$on('exit',function(){
-          CartSer.clearData();
+          CartSer.clearData();//清空数据
+          MyOrdersSer.clearData();
+          WalletSer.clearData();
+          AddressSer.clearData();
+          MessageSer.clearData();
           $timeout(function(){
               $state.go("home");
               $scope.cartAmount=0;
+              TokenSer.remove();
               $rootScope.isLogin=false;
           },5);
       });
+        /*登陆超时*/
       $scope.$on('login-time-out',function(){
           CartSer.clearData();
           $timeout(function(){
@@ -53,6 +59,8 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
           UserSer.setData(LoginSer.getData());//设置用户数据
           loadSomeUserData();//用户登录之后初始化和加载一些必要数据
           loadOrdersData();//加载部分订单数目
+          initIsCanSignUp();//是否可签到
+          $rootScope.initFreeChance();//免费次数
       });
 
         /* 监听游戏结束*/
@@ -100,8 +108,22 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
             loadCartData();
             initCartTime();//构建购物车时间
         });
+        /*是否可以签到（初始化）*/
+        function initIsCanSignUp(){
+            FreePlaySvc.isCanSignUp(function(){
+                $rootScope.freePlay=FreePlaySvc.getData();
+            });
+        }
+
+        FreePlaySvc.getSignUpInfo();
 
 
+        /*获取免费次数*/
+        $rootScope.initFreeChance=function(){
+            FreePlaySvc.getFreeChance(function(){
+                $rootScope.freePlay=FreePlaySvc.getData();
+            });
+        };
         /*加载购物车数据*/
         function loadCartData(){
             CartSer.requestCartData(function(respnose,status){ //加载购物车数据
@@ -179,12 +201,13 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
         }
         LoginSer.authorization(function(response,status){
             if(status==1){
-                $timeout(function(){
+               /* $timeout(function(){
                     $rootScope.isLogin=true;
                     UserSer.setData(LoginSer.getData());//设置用户数据
                     loadSomeUserData();//加载一些必要数据
                     loadOrdersData();//加载部分订单数目
-                });
+                });*/
+                $rootScope.$broadcast('user-login');
             }else{
                 console.log('未设置自动登录/到达自动登录期限/授权失效==>>无法自动登录');
             }
@@ -329,7 +352,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
              data.percent=e / 10000 * 100;
          }
          else {
-             data.evel = 9;
+             data.level = 9;
              data.percent=100;
          }
          return data;
@@ -448,13 +471,13 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
 })
 
 
-
+/*
 .controller('FeedbackCtrl',function($scope) {
-        /*隐藏反馈窗口*/
+        *//*隐藏反馈窗口*//*
       $scope.hideFeedbackModal=function(){
         $scope.$emit('close-feedback-modal');
       };
-    })
+    })*/
 
 
 

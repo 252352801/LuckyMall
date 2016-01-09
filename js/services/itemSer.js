@@ -22,9 +22,9 @@ angular.module('LuckyMall.services')
            var t_cur=new Date(cur_time.replace(/-/g,"/"));
            var t_sale=new Date(sale_time.replace(/-/g,"/"));
            var t_end=new Date(end_time.replace(/-/g,"/"));
-           if(item_status==0||item_status==1||item_status==2){
+           if(item_status==0||item_status==1||item_status==2||item_status==3){
                return -2;//未上架
-           }else if(item_status==3) {
+           }else if(item_status==4) {
                if(is_sold_out){
                    return 6;//卖完了
                }
@@ -37,9 +37,9 @@ angular.module('LuckyMall.services')
                        return 0; //未开售
                    }
                }
-           }else if(item_status==4){
-               return 4;//下架
            }else if(item_status==5){
+               return 4;//下架
+           }else if(item_status==6){
                return 5;//已过出售时间
            }
        };

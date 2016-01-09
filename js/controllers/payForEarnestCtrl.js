@@ -40,6 +40,7 @@ angular.module('LuckyMall.controllers')
             $scope.type=($scope.needToPay>0)?1:0;//支付类型  0完全用余额支付  1用余额+选择的支付方式支付
             if($scope.pay_type!='weixin'&&$scope.type==1){
                 var newWin=window.open('_blank');
+                newWin.location.href='http://'+Host.hostname+'/payWin';
             }
             PaymentSer.payForEarnest($scope.type,$scope.data_order.Id,param,function(response,status){
                 if(status==1) {
@@ -50,7 +51,7 @@ angular.module('LuckyMall.controllers')
                             if ($scope.pay_type == 'weixin') { //如果是微信支付
                                 WXPaySer.setTotalCost($scope.earnest_cost);
                                 var order_id = $stateParams.params.split('=')[1];
-                                var g_url = Host.game + '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
+                                var g_url = Host.game + '?orderid=' + order_id + '&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
                                 $rootScope.game.url = g_url;
                                 $rootScope.game.orderId = order_id;
                                 $rootScope.game.commodityId = $scope.commodityId;
@@ -93,6 +94,7 @@ angular.module('LuckyMall.controllers')
                         'page': '/complete_checkout',
                         'title': '完成支付定金'
                     });
+                    $rootScope.initFreeChance();//支付成功刷新机会
                     $state.go('payEarnestSuccess',{order_id:$stateParams.params.split('=')[1],commodity_id:$scope.commodityId});
                 }else{
                     $scope.isTipsUnFinishShow=true;
@@ -163,6 +165,7 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成支付定金'
                         });
+                        $rootScope.initFreeChance();//支付成功刷新机会
                         $state.go('payEarnestSuccess',{order_id:$stateParams.params.split('=')[1],commodity_id:$scope.commodityId});
 
                     }else{

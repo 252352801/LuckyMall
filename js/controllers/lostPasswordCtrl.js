@@ -18,7 +18,6 @@ angular.module('LuckyMall.controllers')
 
         RegisterSer.getSessionKey(function(response,status){
             if(status==1){
-                console.log('会话密钥：'+response);
                 $scope.s_key=response;
                 $scope.getCaptchaCode();
             }
@@ -30,7 +29,6 @@ angular.module('LuckyMall.controllers')
                 RegisterSer.getCaptchaCode(function (response, status) {
                     if (status == 1) {
                         $scope.captchaCode = response;
-                        console.log($scope.captchaCode);
                     }
                     lock_cc=true;
                 });
@@ -64,9 +62,13 @@ angular.module('LuckyMall.controllers')
                     VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.img_code, function (response,status) {
                         if(status==1) {
                             $scope.verify_code = response;
-                        }else{
-                            setCurrentError('imgCode');
-                            $scope.showTips('验证码错误！');
+                            console.log(response);
+                            var resp=angular.fromJson(response);
+                            if(resp.code=='104'){
+                                setCurrentError('imgCode');
+                                $scope.showTips(resp.msg);
+                                $scope.getCaptchaCode();
+                            }
                         }
                     });
                 }
@@ -120,7 +122,7 @@ angular.module('LuckyMall.controllers')
                     }else if($scope.form_resetPW.code.$invalid){
                         setCurrentError('code');
                         if($scope.form_resetPW.code.$error.required) {
-                            $scope.showTips('请输入验证码！');
+                            $scope.showTips('请输入短信验证码！');
                         }else{
                             $scope.showTips('您输入的验证码有误！');
                         }

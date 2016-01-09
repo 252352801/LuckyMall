@@ -11,7 +11,7 @@
         <div class="nav pull-right">
             <a href="/home" title="">首页</a>
             <a  href="/about" title="">关于幸运猫</a>
-            <a  href="/support/qa" title="">新手指南</a>
+            <a  href="/guide" title="">新手指南</a>
       <!--      <a class="border-bottom4 icon-mb-link" href="#" title="手机幸运猫"></a>-->
         </div>
     </div>
@@ -42,7 +42,7 @@
                     </p>
                     <p class="p-verifyCode">
                         <input  placeholder="手机验证码" ng-model="code"  autocomplete="false" maxlength="6" name="code" required ng-disabled="form_register.mobile.$invalid" ng-change="clearError('code')"/>
-                        <input  class="btn-getCode" type="button" value="获取验证码"  btn-count-down="60" require={{isValid(mobile)&&form_register.mobile.$valid&&form_register.img_code.$valid}} ng-click="getVerifyCode(mobile)" />
+                        <input  class="btn-getCode" type="button" value="获取验证码"  btn-count-down="60" require={{isValid(mobile)&&form_register.mobile.$valid&&form_register.img_code.$valid&&!error.imgCode}} ng-click="getVerifyCode(mobile)" />
                     </p>
                     <p ng-class="{'checked':form_register.password.$valid}">
                         <input  type="password" placeholder="密码(6-24位字符，区分大小写)" ng-model="password" autocomplete="false" name="password" ng-pattern="/^[\s|\S]{6,24}$/"

@@ -44,6 +44,13 @@ angular.module('LuckyMall.controllers')
                                 type: "error",
                                 confirmButtonText: "确定"
                             });
+                        }else if(status==401){
+                            swal({
+                                title: "您的登陆状态已过期，请重新登陆!",
+                                type: "error",
+                                confirmButtonText: "确定"
+                            });
+                            $scope.$emit('exit');
                         }
                     });
                 });
@@ -61,13 +68,14 @@ angular.module('LuckyMall.controllers')
                 });
             }
         };
-        $scope.freePlay=function(order_id,comm_id){
+        $scope.freePlayGame=function(order_id,comm_id){
             ga('send', 'pageview', {
                 'page': '/enter_freegame',
                 'title': '进入免费游戏'
             });
-            var g_url=Host.game+ '?orderid=' + order_id + '&from=' + Host.gameOverPage + '&authorization=' + TokenSer.getToken();
-            $rootScope.openGame(g_url,order_id,comm_id);
+            var g_url=Host.game+ '?orderid=' + order_id + '&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
+/*            $rootScope.openGame(g_url,order_id,comm_id);*/
+            $scope.openModalBFFP(g_url,order_id,comm_id);
         };
         /*是否全部勾选*/
         $scope.isCheckedAll=function(){
@@ -85,6 +93,7 @@ angular.module('LuckyMall.controllers')
             CartSer.testChecked();
         };
         function loadCartData() {
+            $scope.loaded=false;
             CartSer.requestCartData(function (response, status) {
                 if (status == 1) {
                     $timeout(function () {
@@ -95,6 +104,7 @@ angular.module('LuckyMall.controllers')
                         $scope.data_cart = new Array();
                     }, 5);
                 }
+                $scope.loaded=true;
             });
 
           /*  RefreshUserDataSer.requestUserData(function (response, status) {
