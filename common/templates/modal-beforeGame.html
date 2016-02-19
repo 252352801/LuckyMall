@@ -17,17 +17,17 @@
                 <p ng-bind="energy.tips"></p>
             </div>
             <div class="bar-btn">
-                <button ng-class="{'btn btn-org':data_eo.EarnestMoney<data_eo.EarnestPercent*data_orgCost,'btn btn-gray':data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost}"
-                        ng-click="showModal2()"  ng-disabled="data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost">支付定金
+                <button ng-class="{'btn btn-org':data_eo.EarnestMoney<data_eo.EarnestPercent*data_orgCost,'btn btn-gray':data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost||data_eo.DiscountValue=='0'}"
+                        ng-click="showModal2()"  ng-disabled="data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost||data_eo.DiscountValue=='0'">支付定金
                 </button>
                 <button ng-class="{'btn btn-balanced':energy.isEnough,'btn btn-gray':!energy.isEnough}"
                         ng-click="play()" ng-disabled="!energy.isEnough">进入游戏
                 </button>
             </div>
             <span class="btn-close" title="取消" ng-click="closeModal1()">×</span>
-            <a class="md-btn-buyNow" href="{{btn_buyNow_href}}">立即购买</a>
+            <a class="md-btn-buyNow"  ng-click="purchase()">立即购买</a>
         </div>
-
+d
     </div>
 
     <div class="modal-protocol-payForEnergy" ng-show="isModal2show">

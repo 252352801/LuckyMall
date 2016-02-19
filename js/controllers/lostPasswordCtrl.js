@@ -62,7 +62,7 @@ angular.module('LuckyMall.controllers')
                     VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.img_code, function (response,status) {
                         if(status==1) {
                             $scope.verify_code = response;
-                            console.log(response);
+                            //console.log(response);
                             var resp=angular.fromJson(response);
                             if(resp.code=='104'){
                                 setCurrentError('imgCode');
@@ -84,14 +84,16 @@ angular.module('LuckyMall.controllers')
                            //[0]:手机号码;[1]:短信验证码;[2]:新密码
                            $scope.mobile,$scope.code,$scope.password
                         ], function (response, status) {  //回调函数
-                           var resp_code=angular.fromJson(response).code;
                             if (status == 1) {
-                                if(resp_code=='0X00') {
+                                var resp=angular.fromJson(response);
+                                if(resp.code=='0X00') {
                                     swal("恭喜！找回密码成功！");
                                     $state.go('login');
-                                }else if(resp_code=='104'){
+                                }else if(resp.code=='104'){
                                     setCurrentError('code');
                                     $scope.showTips('验证码有误！');
+                                }else{
+                                    $scope.showTips(resp.msg);
                                 }
                             } else if(status == 0){
                                 swal({
@@ -104,6 +106,12 @@ angular.module('LuckyMall.controllers')
                                 swal({
                                     title: "网络错误!",
                                     text: '网络不给力啊',
+                                    type: "error",
+                                    confirmButtonText: "确定"
+                                });
+                            }else if(status==-2){
+                                swal({
+                                    title: "您的账号未注册!",
                                     type: "error",
                                     confirmButtonText: "确定"
                                 });

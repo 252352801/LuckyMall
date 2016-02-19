@@ -1,0 +1,171 @@
+﻿<div class="activity-dt">
+    <div class="act-dt-bg">
+        <div class="bg1"></div>
+        <div class="bg2"></div>
+        <div class="bg3"></div>
+        <div class="bg4"></div>
+    </div>
+    <div class="act-dt-container">
+        <div class="box-winner">
+              <div class="winner-avatar">
+                    <img ng-src="{{data_dt.UserAvatar.image?imgHost+data_dt.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg"/>
+                    <div class="winner-name">
+                        <span class="name-left"></span>
+                        <a  title={{data_dt.UserName}} ng-bind="data_dt.UserName!=''?data_dt.UserName:'虚位以待'"></a>
+                        <span class="name-right"></span>
+                    </div>
+                    <p class="winner-area txt-center" ng-bind="cur_winner_area"></p>
+              </div>
+               <div class="info" ng-show="data_dt.status!=0&&data_dt.UserName!=''">
+                    <div >
+                        赢得折扣：<a class="icon-disc"> <span class="first-word" ng-bind="data_dt.CurrDiscount"></span>折卡</a>
+                        游戏得分：<span class="time" ng-bind="data_dt.GameScore"></span>
+                    </div>
+               </div>
+                <div class="info" style="font-size:24px;" ng-show="data_dt.status==2">
+                        <h3>已结束</h3>
+                </div>
+                <div class="info" ng-show="data_dt.status==0">
+                    <div >
+                        <p>开始倒计时:</p>
+                        <p class="time-prev" time-down="data_dt.prevTime" timevershow="已开始！"></p>
+                    </div>
+                </div>
+               <div class="bar-btn" ng-show="data_dt.status==1">
+                    <a class="btn-challenge" ng-show="data_dt" ng-click="challenge(data_dt)"></a>
+               </div>
+        </div>
+        <div class="box-content1">
+            <div class="cont-title cont-title1"></div>
+            <div class="act-info spec-bg">
+                <a class="img-container" href="/item/{{data_dt.CommodityId}}" target="_blank">
+                    <img ng-src="{{data_dt.CommodityImage?imgHost+data_dt.CommodityImage:''}}"/>
+                    <p class="time" time-down="data_dt.remainTime" timevershow="已结束" ng-if="data_dt.status!=0"></p>
+                    <p class="time" ng-if="data_dt.status==0">未开始</p>
+                </a>
+                <a href="/item/{{data_dt.CommodityId}}" target="_blank">
+                    <h2 class="item-name" ng-bind="data_dt.CommodityName">
+                    </h2>
+                </a>
+                <p class="bar-prices">
+                    <span class="price" ng-bind="'￥'+data_dt.maxPrice"></span>
+                    <small ng-bind="data_dt.minDiscount+'折'"></small>
+                    <span>~</span>
+                    <span class="price" ng-bind="'￥'+data_dt.minPrice"></span>
+                    <small ng-bind="data_dt.maxDiscount+'折'"></small>
+                </p>
+                <div class="cur-winner">
+                    <p>
+                        当前擂主：<span class="cur-winner-name" ng-bind="data_dt.UserName!=''?data_dt.UserName:'暂无'"></span>
+                     </p>
+                    <p ng-show="data_dt.UserName!=''">
+                        赢得折扣：<a class="icon-disc" ><span class="first-word" ng-bind="data_dt.CurrDiscount"></span>折卡</a>
+                    </p>
+                    <p>
+                        折后价：<span class="win-disc-price" ng-bind="'￥'+data_dt.finalPrice"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-content2">
+            <div class="cont-title cont-title2"></div>
+            <table class="tb-challenge-record">
+                <tr ng-repeat="rec in data_dt_record">
+                    <td>
+                        <div class="info-challenger">
+                            <img  ng-src="{{rec.UserAvatar.image?imgHost+rec.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg"/>
+                            <div class="over-hidden">
+                                <h3 class="pull-left user-name" ng-bind="rec.UserName"></h3>
+                                <span  class="pull-left user-area" ng-bind="rec.UserArea!=''?'（'+rec.UserAreaStr+'）':''"></span>
+                            </div>
+                            <small ng-bind="rec.CreateTimeStr"></small>
+                        </div>
+                    </td>
+                    <td class="txt-center">
+                        <div class="get-disc">
+                            打到
+                            <a><span ng-bind="rec.UserDiscount"></span>折卡</a>
+                        </div>
+                    </td>
+                    <td class="txt-center">
+                        <p class="info-time">得分：<span ng-bind="rec.UserGameScore"></span></p>
+                    </td>
+                    <td class="txt-center">
+                        <span ng-class="{'icon-result success':rec.IsPass,'icon-result':!rec.IsPass}"></span>
+                    </td>
+                </tr>
+
+            </table>
+            <div class="act-dt-nothing" ng-show="data_dt_record.length==0">
+                暂无
+            </div>
+        </div>
+        <div class="box-content3" ng-show="data_winner_record.length>0">
+            <div class="cont-title cont-title3">
+                <p class="winner-rec-pg-ctrl txt-no-select" ng-show="data_winner_record.length>=params_winner_rec.PageSize">
+                    <a  ng-class="{'disabled':params_winner_rec.PageIndex==0}" ng-click="prevPageOfWinnerRecords()">上一页</a>
+                    <a  ng-class="{'disabled':data_winner_record.length<params_winner_rec.PageSize||isLastPageOfWinner}" ng-click="nextPageOfWinnerRecords()">下一页</a>
+                </p>
+            </div>
+            <table class="tb-challenge-record">
+                <tr ng-repeat="rec in data_winner_record">
+                    <td>
+                        <div class="info-challenger">
+                            <img  ng-src="{{rec.UserAvatar.image?imgHost+rec.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg"/>
+                            <div class="over-hidden">
+                                <h3 class="pull-left user-name" ng-bind="rec.UserName"></h3>
+                                <span  class="pull-left user-area" ng-bind="rec.UserArea!=''?'（'+rec.UserAreaStr+'）':''"></span>
+                            </div>
+                            <small ng-bind="rec.CreateTimeStr"></small>
+                        </div>
+                    </td>
+                    <td class="txt-center">
+                        <div class="get-disc">
+                            打到
+                            <a><span ng-bind="rec.UserDiscount"></span>折卡</a>
+                        </div>
+                    </td>
+                    <td class="txt-center">
+                        <p class="info-time">得分：<span ng-bind="rec.UserGameScore"></span></p>
+                    </td>
+                    <td class="txt-center">
+                        <span ng-class="{'icon-result success':rec.IsPass,'icon-result':!rec.IsPass}"></span>
+                    </td>
+                </tr>
+                <div class="act-dt-nothing" ng-show="data_winner_record.length==0">
+                    暂无
+                </div>
+            </table>
+        </div>
+        <div class="box-content4">
+            <div class="cont-title cont-title4"></div>
+            <ul class="act-rules spec-bg">
+                <li> 所有注册用户都可以参与擂台挑战赛，同一个商品擂台，用户都有一次挑战机会； </li>
+                <li>活动开始时，用户参与游戏获得的分数高于当前最佳纪录视为挑战成功;</li>
+                <li>每次挑战限时10分钟;</li>
+                <li>活动结束时，获得当前最佳纪录的用户将赢得以该纪录折扣购买商品的唯一特权；</li>
+                <li>用户可通过幸运猫APP（目前只有安卓版）分享活动链接获得更多挑战机会，每有1名通过分享链接进入商城并注册成功，分享者将获得一张挑战卡，每张挑战卡可在任意擂台挑战
+                    一次；</li>
+                <li>活动奖励在该场擂台结束后以商城内订单方式发放，七天内未对奖励订单付款视为放弃奖励；（过年期间商品不发货，发货时间从2月15日开始）</li>
+                <li>本活动最终解释权归幸运猫所有。</li>
+            </ul>
+        </div>
+    </div>
+    <div class="act-footer dt">
+        <p class="links">
+            <a>首页</a>
+            <a>关于幸运猫</a>
+            <a>新手指南</a>
+            <a>常见问题</a>
+            <a>联系我们</a>
+            <a>用户协议</a>
+            <a>售后无忧</a>
+        </p>
+        <p>
+            许可证：<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备15084454号-2</a>
+            <span class="footer-item"> 食品流通许可证   SP4401051511045361</span>
+        </p>
+        <p>Copyright © 2015 幸运猫 xingyunmao.cn，版权所有</p>
+    </div>
+</div>

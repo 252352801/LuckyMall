@@ -21,10 +21,7 @@
       requestData:function(order_id,callback){
             $http({
                 method:API.orderDetails.method,
-                url:API.orderDetails.url+order_id,
-                headers: {
-                    'Authorization': TokenSer.getAuth()
-                }
+                url:API.orderDetails.url+order_id
             }).success(function(response,status,headers,config){
                 if(response){
                     var new_data=initData(response);

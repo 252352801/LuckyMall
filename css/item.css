@@ -28,19 +28,19 @@
     margin-top:15px;
 
     background:#fff;
-    padding-left:450px;
+    padding-left:500px;
     position:relative;
 }
 .box-goods-img{
-    width:410px;
+    width:460px;
     padding:20px;
     position:absolute;
     left:0px;
     top:0px;
 }
 .box-goods-img .big-goods-img{
-    width:410px;
-    height:410px;
+    width:460px;
+    height:460px;
     overflow:hidden;
     position:relative;
 }
@@ -62,11 +62,11 @@
 }
 .box-goods-img .big-goods-img li{
     display:table-caption;
-    width: 410px;
-    height: 410px;
+    width: 460px;
+    height: 460px;
     text-align:center;
     overflow:hidden;
-    line-height:410px;
+    line-height:460px;
     float:left;
 }
 .big-goods-img .big-img{
@@ -98,7 +98,7 @@
     cursor:pointer;
     background-size:80%;
     position:absolute;
-    left:430px;
+    left:480px;
     top:228px;
 }
 .G-details .prev:hover,.G-details .next:hover{
@@ -149,7 +149,7 @@
     border-color:#ff6700;
 }
 .G-details .pro-info{
-    min-height:520px;
+    min-height:560px;
     border-left:1px solid #e5e5e5;
     padding:20px 30px;
     overflow:hidden;
@@ -399,14 +399,25 @@ float:left;
     border:none;
     color:#fff;
 }
+.pro-info .bar-btn input,.pro-info .bar-btn a.btn-enterAct{
+ background:#d0170e;
+    color:#fff;
+}
+.pro-info .bar-btn input,.pro-info .bar-btn a.btn-enterAct:hover{
+    background:#a70901;
+}
 .pro-info .bar-btn .btn-playGame{
     display:inline-block;
     color:#fff;
-    background:#ff6700;
+    background:#F79D00;
     border:none;
+    margin-right:15px;
+}
+.pro-info .bar-btn .btn-playGame:hover{
+    background:#F78D00;
 }
 .pro-info .bar-btn input.btn-buy:hover{
-    background:#ff9000;
+    background:#ff4700;
 }
 .pro-info .bar-btn input.btn-add{
     background:none;
@@ -656,11 +667,70 @@ float:left;
     z-index:10;
     background:#ff6700;
 }
+.item-ranking-table{
+    width:100%;
+    margin:0 auto;
+    text-align:center;
+    border-collapse:collapse;
+    font-weight:14px;
+}
+.item-ranking-table .tr-th{
+    background:#f1f1f1;
+}
+.item-ranking-table .tr-th th{
+    font-size:12px;
+    font-weight:normal;
+}
+.item-ranking-table tr{
+    border-bottom:1px solid #eee;
+    line-height:70px;
+}
+.item-ranking-table tr:first-child{
+    line-height:40px;
+}
+.item-ranking-table tr:last-child,.item-ranking-table tr:first-child{
+    border-bottom:none;
+}
+.item-ranking-table .top{
+    display:inline-block;
+    width:48px;
+    height:48px;
+    text-align:center;
+    line-height:35px;
+    border-radius:50%;
+    color:#999;
+    font-size:18px;
+}
+.item-ranking-table .top.top1,.item-ranking-table .top.top2,.item-ranking-table .top.top3{
+    color:#fff;
+    line-height:44px;
+    font-size:16px;
+}
+.item-ranking-table .top.top1{
+    background:url(../res/icon/icon_ranking.png) 1px 0px no-repeat;
+    background-size:300%;
 
+}
+.item-ranking-table .top.top2{
+    background:url(../res/icon/icon_ranking.png) -46px 0px no-repeat;
+    background-size:300%;
 
-
-
-
+}
+.item-ranking-table .top.top3{
+    background:url(../res/icon/icon_ranking.png) -98px 0px no-repeat;
+    background-size:300%;
+}
+.item-ranking-table .icon-discount{
+    background:#ecab3b;
+    border-top-right-radius:3px;
+    border-bottom-right-radius:3px;
+}
+.item-ranking-table .icon-discount:before{
+    border-right-color:#ecab3b!important;
+}
+.item-ranking-table .final-price{
+    font-size:16px;
+}
 
 
 

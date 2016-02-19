@@ -1,9 +1,9 @@
 angular.module('LuckyMall.controllers')
-    .controller('MyOrdersCtrl', function ($scope, $state, $stateParams, $timeout, MyOrdersSer,PaymentSer,LoginSer) {
+    .controller('MyOrdersCtrl', function ($scope, $state, $stateParams, $timeout, MyOrdersSer,PaymentSer,LoginSer,SOTDSvc) {
         if(!LoginSer.isLogin()){
             return;
         }
-        var pageSize = 10;//每页条数
+        var pageSize =4;//每页条数
         var cur_orders_tab = 1;
         $scope.pageIndex = 1;//当前页
         $scope.showLoading =false;
@@ -16,7 +16,18 @@ angular.module('LuckyMall.controllers')
             refreshAllData();
         });
         /*取消订单*/
-        $scope.removeOrder = function (order_id) {
+        $scope.removeOrder = function (order) {
+            if(order.OrderType==2){
+                swal({
+                    title: "该订单通过擂台获取，不能删除！",
+                    type: "error",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: '取消',
+                    confirmButtonText: "确定"
+                });
+                return;
+            }
             swal({
                 title: "确定要删除吗?",
                 type: "warning",
@@ -27,11 +38,13 @@ angular.module('LuckyMall.controllers')
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true
             }, function () {
-                MyOrdersSer.cancelOrder(order_id, cur_orders_tab, function (response, status) {
+                MyOrdersSer.cancelOrder(order.Id, cur_orders_tab, function (response, status) {
                     if (status == 1) {
-                        swal('删除成功！');
+                        swal('删除成功！','','success');
                         $scope.$emit('orders-update');
                         refreshData(cur_orders_tab);
+                    }else{
+                        swal('删除失败！','','error');
                     }
                 });
             });
@@ -58,10 +71,12 @@ angular.module('LuckyMall.controllers')
         };
 
         $scope.repay=function(order){
-            var repay_order=new Array();
-            repay_order.push(order);
-            PaymentSer.setOrdersData(repay_order);
-            $state.go('confirmOrder',{source:'source=repay'});
+            var tmp_data={
+                "from":'repay',
+                "orders":[order.Id]
+            };
+            SOTDSvc.set(tmp_data);
+            $state.go('confirmOrder');
         };
 
        /* 确认收货*/
@@ -231,11 +246,9 @@ angular.module('LuckyMall.controllers')
                 return;
             }
             var len = Math.ceil(_data.length / pageSize);
-            console.log(_data.length);
             for (var i = 0; i < len; i++) {
                 $scope.page.push(i);
             }
-            console.log($scope.page);
         }
 
         /*计算总页数*/

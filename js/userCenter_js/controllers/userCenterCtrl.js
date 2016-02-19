@@ -23,7 +23,7 @@ angular.module('LuckyMall.controllers')
             });
 
         /*签到*/
-        $rootScope.signUp=function(){
+      /*  $rootScope.signUp=function(){
             if($rootScope.freePlay.isCanSignUp) {
                 FreePlaySvc.signUp(function (response) {
                     $rootScope.freePlay = FreePlaySvc.getData();
@@ -44,7 +44,7 @@ angular.module('LuckyMall.controllers')
                     }
                 });
             }
-        };
+        };*/
             /*关闭美图秀秀*/
             $scope.closeMTXX = function () {
                 $timeout(function () {
@@ -55,6 +55,12 @@ angular.module('LuckyMall.controllers')
             $scope.$on("showMTXX", function () {
                 $scope.openMTXX();
             });
+        /*监听关闭头像编辑*/
+        $scope.$on("closeMTXX", function () {
+            $timeout(function () {
+                $scope.isMTXXShow = false;
+            });
+        });
             /* 打开头像编辑*/
             $scope.openMTXX = function () {
                 $timeout(function () {

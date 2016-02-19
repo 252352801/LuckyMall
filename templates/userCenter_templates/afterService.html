@@ -109,22 +109,22 @@
 
         </div>
     </div>
-    <div class="AS-box-address" ng-if="data_order.OrderStatus==4">
+  <!--  <div class="AS-box-address" ng-if="data_order.OrderStatus==4">
         <h3 class="box-label">售后地址</h3>
         <ul class="address-list">
             <li ng-class="{'cur':selected_address.Id==address.Id}" ng-repeat="address in data_addresses|orderBy:'Selected':true" ng-click="changeConsignee(address)">
                 <h3><span ng-bind="address.ConsigneeName"></span>{{address.ConsigneeMobile}}</h3>
 
                 <p class="address-info" ng-bind="address.Area+' '+address.ConsigneeAddress"></p>
-<!--
-                <p class="take-delivery-time">收货时间：不限</p>-->
+&lt;!&ndash;
+                <p class="take-delivery-time">收货时间：不限</p>&ndash;&gt;
             </li>
             <li class="btn-addAddress" ng-click="showAddressModal()">
                 <h5>+</h5>
                 <small>添加地址</small>
             </li>
         </ul>
-    </div>
+    </div>-->
 
 
     <div class="AS-bar-submit">

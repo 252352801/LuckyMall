@@ -6,10 +6,7 @@
             $http({
                 method:API.updatePassword.method,
                 url:API.updatePassword.url,
-                data:params.passwords,
-                headers: {
-                    'Authorization': TokenSer.getAuth()
-                }
+                data:params.passwords
             }).success(function(response,status,headers,config){
                 if(response){
                     callback(response,1);

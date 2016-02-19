@@ -21,7 +21,7 @@ angular.module('LuckyMall.controllers')
             ASOrderDetailsSer.requestData($scope.order_id,function(response,status){
                 if(status==1){
                     $scope.data_details=ASOrderDetailsSer.getData();
-                    console.log( $scope.data_details);
+                    //console.log( $scope.data_details);
                     $scope.data_consignee=$scope.data_details.Order.ConsigneeInfo;
                     $scope.data_logistics=angular.fromJson($scope.data_details.LogisticsInfo);
                     $scope.$emit('changeMenu',$scope.data_details.Order.OrderStatus);

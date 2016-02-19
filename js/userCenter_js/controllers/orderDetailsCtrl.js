@@ -12,7 +12,7 @@ angular.module('LuckyMall.controllers')
                     $scope.data_order=OrderDetailsSer.getData();
                     $scope.data_consignee=$scope.data_order.ConsigneeInfo;
                     $scope.data_logistics=$scope.data_order.LogisticsInfo;
-                    console.log($scope.data_logistics);
+                    //console.log($scope.data_logistics);
                     $scope.$emit('changeMenu',$scope.data_order.OrderStatus);
                 }
             });

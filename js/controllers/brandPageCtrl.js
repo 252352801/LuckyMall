@@ -61,7 +61,7 @@ angular.module('LuckyMall.controllers')
         function loadBrandData(){
             BrandSer.getBrandById(brand_id,function(response){
                 $scope.data_brand=response;
-                console.log($scope.data_brand);
+                //console.log($scope.data_brand);
             });
         }
         function search() {

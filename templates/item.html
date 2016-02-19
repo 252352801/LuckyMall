@@ -13,18 +13,18 @@
             <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/0/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
-            <div class="tag-free-played" ng-if="data_goods.IsCanFree&&isFreePlayed">
+            <!--<div class="tag-free-played" ng-if="data_goods.IsCanFree&&isFreePlayed">
                 <span>已试玩</span>
-            </div>
+            </div>-->
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img tx-center" >
                    <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
                     <img src="./res/images/item_before_sell.png" class="img-so" ng-if="data_goods.status==0||data_goods.status==-2"/>
                     <img src="./res/images/item_out6.png" class="img-so" ng-if="data_goods.status==-1||data_goods.status==4||data_goods.status==5||data_goods.status==6"/>
                    <!-- <img src="./res/images/item_out4.png" class="img-so" ng-if="data_goods.status==4"/>-->
-                    <ul ng-style="{left:-index*410+'px',width:data_goods.SmallImages.length*410+'px'}">
+                    <ul ng-style="{left:-index*460+'px',width:data_goods.SmallImages.length*460+'px'}">
                         <li ng-repeat="Img in data_goods.SmallImages">
-                            <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@520w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img}} />
+                            <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@500w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img}} />
                         </li>
                     </ul>
                 </div>
@@ -115,9 +115,9 @@
                             <label ng-bind="property.name"></label>
 
                             <p>
-                                <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled&&!isNoSelection()}"
+                                <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled&&!isNoSelection()||!attributes.valid}" ng-style="{'cursor':!attributes.valid?'no-drop':'pointer'}"
                                    ng-repeat="attributes in property.attributes" ng-bind="attributes.value"
-                                   ng-click="selectAttr(property.name,attributes.value,$parent.$index,$index,attributes.disabled)"></a>
+                                   ng-click="selectAttr(property.name,attributes.value,$parent.$index,$index,attributes.disabled,attributes.valid)" title="{{!attributes.valid?'库存不足':''}}"></a>
                             </p>
                         </li>
 
@@ -133,17 +133,16 @@
                     </div>
                 </div>
                 <div class="bar-btn">
-                    <input  ng-class="{'btn-playGame':data_goods.status==1,'btn-playGame disabled':data_goods.status!=1}" value="试玩练手" type="button"/>
-                    <input ng-class="{'btn-buy':data_goods.status==1,'btn-buy disabled':data_goods.status!=1}" type="button" ng-value="btn_value.buyNow" ng-if="data_goods.IsCanFree==false||isFreePlayed" ng-click="createOrder(1)" ng-disabled="data_goods.status!=1"/>
-                    <input ng-class="{'btn-playGame':data_goods.status==1,'btn-playGame disabled':data_goods.status!=1}" type="button" ng-if="data_goods.IsCanFree==true&&!isFreePlayed" ng-click="playForDiscount(data_goods.Id)" ng-value="btn_value.freePlay" ng-disabled="data_goods.status!=1"/>
-                    <input ng-class="{'btn-add':data_goods.status==1,'btn-add disabled':data_goods.status!=1}" ng-if="data_goods.IsCanFree==false||isFreePlayed" type="button" ng-value="btn_value.addToCart"  data-goodsid="goods_id" img={{imgHost+data_goods.SmallImages[index]}} id="btn-add_to_cart_Gdetails"  btn-add-into-cart ng-disabled="data_goods.status!=1"/>
+                    <input  class="btn-playGame" value="试玩练手" type="button" ng-click="playFreeGame(data_goods.Id)"/>
+                    <input ng-if="data_goods.CommodityType==0" ng-class="{'btn-buy':data_goods.status==1,'btn-buy disabled':data_goods.status!=1}" type="button" ng-value="btn_value.buyNow"  ng-click="createOrder(1)" ng-disabled="data_goods.status!=1"/>
+                    <a class="btn-enterAct" href="/activity/index" ng-if="data_goods.CommodityType==1">进入擂台</a>
                 </div>
             </form>
         </div>
         <div class="box-proIntro tabs">
             <div class="tab-item">
                 <span ng-class="{'item cur':showingTab=='tab1','item':showingTab!='tab1'}" ng-click="showTab('tab1')">详细信息</span>
-               <!-- <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">商品咨询</span>-->
+                <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">折扣排行榜</span>
             </div>
             <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
                 <ul class="pro-showing-images">
@@ -155,14 +154,47 @@
                 </div>
             </div>
             <div class="tab-content tab-cont2" ng-show="showingTab=='tab2'">
-                <p class="tx-center" style="color:#ccc;">敬请期待</p>
+                <p class="color-gray tx-center" ng-if="data_ranking.length==0">暂无</p>
+               <table class="item-ranking-table" ng-if="data_ranking.length>0">
+                   <tr class="tr-th">
+                       <th>排名</th>
+                       <th>用户名</th>
+                       <th>已抢折扣</th>
+                       <th>折后价</th>
+                       <th>已省</th>
+                       <th>游戏分数</th>
+                       <!--<th>日期</th>-->
+                   </tr>
+                   <tr ng-repeat="rank in data_ranking">
+                       <td>
+                            <span class="{{$index<3?'top top'+($index+1):'top'}}" ng-bind="$index+1"></span>
+                       </td>
+                       <td>
+                            <span ng-bind="rank.NickName"></span>
+                       </td>
+                       <td>
+                           <span class="icon-discount" ng-bind="rank.DiscountValue+'折'"></span>
+                       </td>
+                       <td>
+                           <span class="final-price color-org" ng-bind="'￥'+MathCeilPrice(data_goods.RetailPrice*rank.DiscountValue/10)"></span>
+                       </td>
+                       <td>
+                           <span ng-bind="'￥'+rank.SaveMoney"></span>
+                       </td>
+                       <td>
+                           <span ng-bind="rank.GameScore"></span>
+                       </td>
+                     <!--  <td>
+                           <span class="color-gray" ng-bind="rank.WinningTime"></span>
+                       </td>-->
+                   </tr>
+               </table>
+               <p class="color-gray" ng-if="data_ranking.length>0">注：目前仅显示前10名</p>
             </div>
         </div>
     </div>
 </div>
 <!--中部 end-->
-
-<modal-before-free-play></modal-before-free-play>
 <modal-before-game></modal-before-game>
 <introduction></introduction>
 

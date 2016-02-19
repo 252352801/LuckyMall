@@ -22,7 +22,7 @@ angular.module('LuckyMall.controllers')
 
         RegisterSer.getSessionKey(function(response,status){
             if(status==1){
-                console.log('会话密钥：'+response);
+                //console.log('会话密钥：'+response);
                 $scope.s_key=response;
                 $scope.getCaptchaCode();
             }
@@ -92,6 +92,8 @@ angular.module('LuckyMall.controllers')
                                 setCurrentError('imgCode');
                                 $scope.showTips('图形验证码错误！');
                                 $scope.getCaptchaCode();
+                            }else if(resp.code==22){
+                                $scope.showTips('每个手机每小时最多能获取3次短信验证码！');
                             }
                         }
                     });
@@ -141,7 +143,8 @@ angular.module('LuckyMall.controllers')
                         "Name": $scope.mobile,
                         "PhoneNumber": $scope.mobile,
                         "Password":  $scope.password,
-                        "Code":  $scope.code
+                        "Code":  $scope.code,
+                        "ShareCode":""
                     }, function (response, status) {  //回调函数
                         if (status == 1) {
                             swal("恭喜！注册成功！");

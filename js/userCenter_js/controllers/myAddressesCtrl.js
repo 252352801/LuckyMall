@@ -99,7 +99,7 @@ angular.module('LuckyMall.controllers')
                 "UserId":LoginSer.getData().UserModel.Id,
                 "Selected": $scope.new_setDefault
             };
-            console.log(angular.toJson(param));
+            //console.log(angular.toJson(param));
             $scope.value_btn_add='正在提交...';
             AddressSer.addAddress(param,function(response,status){
                 if(status==1){
@@ -128,7 +128,7 @@ angular.module('LuckyMall.controllers')
                 "Selected": $scope.edit_setDefault2
             };
             $scope.value_btn_edit='正在提交...';
-            console.log('id:'+param.Id+'\n'+'收货人：'+param.ConsigneeName+'\n'+'地区:'+param.Area+'\n'+'地址：'+param.ConsigneeAddress+'\n'+'手机：'+param.ConsigneeMobile+'\n'+'用户Id:'+param.UserId+'\n'+'是否默认:'+param.Selected);
+            //console.log('id:'+param.Id+'\n'+'收货人：'+param.ConsigneeName+'\n'+'地区:'+param.Area+'\n'+'地址：'+param.ConsigneeAddress+'\n'+'手机：'+param.ConsigneeMobile+'\n'+'用户Id:'+param.UserId+'\n'+'是否默认:'+param.Selected);
             AddressSer.updateAddress(param,function(response,status){
                 if(status==1){
                     swal({

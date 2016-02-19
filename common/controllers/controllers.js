@@ -1,7 +1,6 @@
 angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
-.controller('AppCtrl',function(API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,WalletSer,AddressSer,MessageSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer,MarketSer,FreePlaySvc){
-
+.controller('AppCtrl',function(SOTDSvc,$http,API,$scope,$timeout,CartSer,LoginSer,$cookies,$rootScope,$state,MyOrdersSer,WalletSer,AddressSer,MessageSer,ImgSer,RefreshUserDataSer,UserSer,TokenSer,MarketSer,FreePlaySvc){
     $rootScope.login_target={//登陆后跳转的目标
         state:'home',
         params:{}
@@ -11,9 +10,19 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
      $scope.isLoginModalShow=false;//登陆框是否显示
      $scope.isFeedbackModalShow=false;//反馈框是否显示
      $rootScope.isLogin=false;//是否已经登陆
+     $scope.refresher=undefined;//刷新用户数据
+    $rootScope.session_key=null;
      getImgHost();//获取图片服务器地址
      authorization();//授权登录
        loadMarketData();//市场活动专题
+        getSessionKey();
+        function getSessionKey(){
+            UserSer.getSessionKey(function(response,status){
+                if(status==1){
+                    $rootScope.session_key=response;
+                }
+            });
+        }
      $scope.welcome_word=setWelcomeWord();//设置欢迎词
         /* 监听显示登陆模态框*/
      $scope.$on('show-login-modal',function(){
@@ -35,11 +44,12 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
           AddressSer.clearData();
           MessageSer.clearData();
           $timeout(function(){
+              $rootScope.isLogin=false;
               $state.go("home");
               $scope.cartAmount=0;
               TokenSer.remove();
-              $rootScope.isLogin=false;
-          },5);
+          });
+          clearInterval($scope.refresher);
       });
         /*登陆超时*/
       $scope.$on('login-time-out',function(){
@@ -53,15 +63,35 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
         /* 监听用户登录*/
       $scope.$on('user-login',function(){
+          $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
           $timeout(function(){
               $rootScope.isLogin=true;
           });
           UserSer.setData(LoginSer.getData());//设置用户数据
           loadSomeUserData();//用户登录之后初始化和加载一些必要数据
           loadOrdersData();//加载部分订单数目
-          initIsCanSignUp();//是否可签到
-          $rootScope.initFreeChance();//免费次数
+
+          refresh();
+          var data_avatar=angular.fromJson(UserSer.getData().UserModel.Avatar);
+          if(data_avatar.type==1) {
+              $rootScope.avatar = data_avatar.image;
+          }else{
+              $rootScope.avatar=null;
+          }
       });
+
+
+
+     function refresh(){
+         clearInterval($scope.refresher);
+         $scope.refresher=setInterval(function(){
+             RefreshUserDataSer.requestUserData(function(response,status){
+                 if(status==1){
+                     UserSer.setUserData(RefreshUserDataSer.getData());
+                 }
+             });
+         },300000);
+     }
 
         /* 监听游戏结束*/
         $scope.$on('game-over',function(){
@@ -105,25 +135,12 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
         });
       /*监听购物车数据改变*/
         $scope.$on('cart-update',function(){
-            loadCartData();
-            initCartTime();//构建购物车时间
+            if(LoginSer.getData()) {
+                loadCartData();
+                initCartTime();//构建购物车时间
+            }
         });
-        /*是否可以签到（初始化）*/
-        function initIsCanSignUp(){
-            FreePlaySvc.isCanSignUp(function(){
-                $rootScope.freePlay=FreePlaySvc.getData();
-            });
-        }
 
-        FreePlaySvc.getSignUpInfo();
-
-
-        /*获取免费次数*/
-        $rootScope.initFreeChance=function(){
-            FreePlaySvc.getFreeChance(function(){
-                $rootScope.freePlay=FreePlaySvc.getData();
-            });
-        };
         /*加载购物车数据*/
         function loadCartData(){
             CartSer.requestCartData(function(respnose,status){ //加载购物车数据
@@ -161,7 +178,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 }else if((toState.name).indexOf("UCIndex") >= 0){
                     event.preventDefault();
                     $rootScope.login_target = {state: toState,params: toParams};
-                    console.log($rootScope.login_target);
+                    //console.log($rootScope.login_target);
                     $state.go('login');
                 }else if(toState.name == 'register'||toState.name == 'lostPassword'){
                     $rootScope.login_target={
@@ -189,14 +206,14 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
      function getImgHost(){
          ImgSer.requestData(function(response,status){
              if(status==1){
-                 $scope.imgHost=ImgSer.getData();
+                $rootScope.imgHost=ImgSer.getData();
              }
          });
      }
    /* 授权*/
     function authorization(){
         if($cookies.get('Token')==null){
-            console.log('tk null');
+            //console.log('tk null');
             return;
         }
         LoginSer.authorization(function(response,status){
@@ -209,7 +226,8 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 });*/
                 $rootScope.$broadcast('user-login');
             }else{
-                console.log('未设置自动登录/到达自动登录期限/授权失效==>>无法自动登录');
+                $rootScope.isLogin=false;
+                //console.log('未设置自动登录/到达自动登录期限/授权失效==>>无法自动登录');
             }
         },$cookies.get('Token'));
     }
@@ -258,7 +276,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                 if(status==1){
                     var time_str=CartSer.getDeadline();
                     $scope.cart_end_time=new Date(time_str[1].replace(/-/g,"/"));
-                    console.log("购物车时间："+ time_str);
+                    //console.log("购物车时间："+ time_str);
                     var now_time=new Date(time_str[0].replace(/-/g,"/"));
                     $scope.cartTimeRemain= $scope.initCartTimeRemain(now_time,$scope.cart_end_time);
                     $scope.cartTimer=setInterval(function(){
@@ -274,7 +292,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                                 loadCartData();
                             },1000);
                             $scope.cartTimeRemainFormat='';
-                            console.log("购物车已超时");
+                            //console.log("购物车已超时");
                         }
                     },1000);
                 }
@@ -387,6 +405,7 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
 
    /*登录controller*/
 .controller('LoginCtrl',function($scope,LoginSer,$state,$rootScope,$stateParams,$timeout,$cookies,TokenSer){
+
        $scope.username='';
        $scope.password='';
      $scope.keepLogin=false;//是否自动登录
@@ -433,12 +452,16 @@ angular.module('LuckyMall.controllers',['LuckyMall.services'])
                         }
                         $rootScope.$broadcast("user-login");
                         if($state.current.name=='login'){
-                            console.log($rootScope.login_target.state);
+                            //console.log($rootScope.login_target.state);
                             if($rootScope.login_target.state=='game') {
                                 location.href=$rootScope.login_target.params+TokenSer.getToken();
                             }else{
                                 if($rootScope.login_target.state) {
-                                    $state.go($rootScope.login_target.state, $rootScope.login_target.params);
+                                    try {
+                                        $state.go($rootScope.login_target.state, $rootScope.login_target.params);
+                                    }catch(error){
+                                        $state.go('home');
+                                    }
                                 }else{
                                     $state.go('home');
                                 }

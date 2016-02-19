@@ -17,6 +17,12 @@ angular.module('LuckyMall.services')
                       obj[o].href = '/brand/'+obj[o].TypeId;
                   }else if(obj[o].PromotionType == 2){
                       obj[o].href = '/market/'+obj[o].TypeId;
+                  }else if(obj[o].PromotionType == 3){
+                      if(obj[o].TypeId==0){
+                          obj[o].href = '/activity/index';
+                      }else{
+                          obj[o].href = '/activity/details/'+obj[o].TypeId;
+                      }
                   }
                   obj[o].remainTime = setRemainTime(obj[o].CurrentTime,obj[o].EndTime);
                   result.push(obj[o]);
@@ -36,6 +42,12 @@ angular.module('LuckyMall.services')
                         obj[o].href = '/brand/'+obj[o].TypeId;
                     }else if(obj[o].PromotionType == 2){
                         obj[o].href = '/market/'+obj[o].TypeId;
+                    }else if(obj[o].PromotionType == 3){
+                        if(obj[o].TypeId==0){
+                            obj[o].href = '/activity/index';
+                        }else{
+                            obj[o].href = '/activity/details/'+obj[o].TypeId;
+                        }
                     }
                     result.push(obj[o]);
             }
@@ -93,6 +105,17 @@ angular.module('LuckyMall.services')
                 }
             }).error(function(data,status,headers,config){
 
+            });
+        },
+        requestFloorData:function(callback){//请求楼层数据
+            $http.post(API.getFloorData.url,{
+                "type": 1,
+                "pageSize": 100,
+                "pageIndex": 0
+            }).success(function(response,status,headers,config){
+                callback(response,status);
+            }).error(function(data,status,headers,config){
+                callback(data,status);
             });
         }
 	};

@@ -1,5 +1,5 @@
 angular.module('LuckyMall.controllers')
-    .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host,$rootScope) {
+    .controller('CartCtrl', function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer,Host,SOTDSvc,$rootScope) {
         $scope.data_eo={};//要付定金的订单数据
         $scope.isModal1show = false;
         $scope.isModal2show = false;
@@ -58,7 +58,16 @@ angular.module('LuckyMall.controllers')
         /*跳转订单确认页*/
         $scope.goConfirm = function () {
             if(CartSer.getConfirmData().length>0) {
-                $state.go('confirmOrder', {source: 'source=shoppingCart'});
+                var arr=CartSer.getConfirmData();
+                var tmp_data={
+                    "from":'shoppingCart',
+                    "orders":[]
+                };
+                for(var o in arr){
+                    tmp_data.orders.push(arr[o].Id);
+                }
+                SOTDSvc.set(tmp_data);
+                $state.go('confirmOrder');
             }else{
                 swal({
                     title: "您未选择订单!",

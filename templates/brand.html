@@ -62,7 +62,7 @@
                 <!--<img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>-->
                 <img lazy-src="{{imgHost+list.RollingImages[0]}}" />
                 <img src="./res/images/out.png" class="img-so" ng-if="list.Status==4"/>
-                <span class="mark-canFree" ng-if="list.IsCanFree" title="玩游戏赢惊喜折扣">可试玩</span>
+           <!--     <span class="mark-canFree" ng-if="list.IsCanFree" title="玩游戏赢惊喜折扣">可试玩</span>-->
             </a>
             <div class="goods-info">
                 <a href="/item/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
@@ -88,7 +88,12 @@
     <div class="page-index" ng-show="loaded">
         <div class="prev" ng-click="prevPage()"  btn-scroll-filter><</div>
         <div class="indexes">
-            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-scroll-filter></span>
+            <!--<span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page" ng-bind="$index+1" ng-click=changePage($index+1) btn-scroll-filter></span>-->
+
+            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page"  ng-click=changePage($index+1) btn-scroll-filter
+
+                  ng-bind="($index+1==pageIndex-5||$index+1==pageIndex+5)?'...':$index+1"
+                  ng-if="($index+1>=pageIndex-5&&$index+1<=pageIndex+5)"></span>
         </div>
         <div class="next" ng-click="nextPage()" btn-scroll-filter>></div>
     </div>

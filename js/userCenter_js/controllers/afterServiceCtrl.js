@@ -68,7 +68,7 @@ angular.module('LuckyMall.controllers')
                     "UserId":LoginSer.getData().UserModel.Id,
                     "Selected": true
                 };
-                console.log(angular.toJson(param));
+                //console.log(angular.toJson(param));
                 $scope.value_btn_save='正在提交...';
                 AddressSer.addAddress(param,function(response,status){
                     if(status==1){
@@ -102,7 +102,7 @@ angular.module('LuckyMall.controllers')
     
     
          $scope.submit=function(){
-             console.log($scope.input_txt);
+             //console.log($scope.input_txt);
              var img_info=new Array();
              var len=$scope.uploader.queue.length;
              for(var o in $scope.uploader.queue){
@@ -121,8 +121,8 @@ angular.module('LuckyMall.controllers')
                  ProblemDescription:$scope.input_txt,//问题描述
                  Images:img_info.join('')
              };
-             console.log(params);
-             if(!$scope.service_type){
+             //console.log($scope.service_type);
+             if(!($scope.service_type==0||$scope.service_type==1||$scope.service_type==2)){
                  swal({
                      title: "请选择您要申请售后类型!",
                      type: "error",
@@ -130,12 +130,13 @@ angular.module('LuckyMall.controllers')
                  });
              }else if(!params.ProblemDescription){
                  swal({
-                     title: "请输入您申请售后的原因!",
+                     title: $scope.service_type==0?"请输入您申请退款的原因!":"请输入您申请售后的原因!",
                      text:'如商品非人为损坏、商品过期等',
                      type: "error",
                      confirmButtonText: "确定"
                  });
              }else{
+                 //console.log(params);
                  $scope.value_btn_submit='正在提交...';
                  MyOrdersSer.submitAfterServiceApplication(params,function(resp,status){
                      $timeout(function(){
@@ -172,6 +173,8 @@ angular.module('LuckyMall.controllers')
                     if($scope.data_order.OrderStatus!=4){//如果不是已完成的订单
                         $scope.service_type=0;
                         $scope.apply_amount=$scope.data_order.Count;
+                    }else{
+                        $scope.service_type=1;
                     }
                     $scope.data_consignee=$scope.data_order.ConsigneeInfo;
                     $scope.data_logistics=$scope.data_order.LogisticsInfo;

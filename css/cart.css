@@ -18,6 +18,7 @@
 .cart-top{
     margin-top:50px;
     overflow:hidden;
+    position:relative;
 }
 .cart-top h1{
     font-size:24px;
@@ -32,6 +33,13 @@
     white-space:nowrap;
     line-height:42px;
     float:left;
+    position: relative;
+}
+.cart  .temp{
+    position: relative;
+    margin-bottom:-15px;
+    margin-left: 10px;
+    color:#ff6700
 }
 .cart-th{
     margin-top:25px;
@@ -43,19 +51,19 @@
     position:relative;
 }
 .cart-th .th1{
-    margin-left:188px;
+    margin-left:248px;
 }
 .cart-th .th2{
-    margin-left:264px;
+    margin-left:200px;
 }
 .cart-th .th3{
-    margin-left:140px;
+    margin-left:160px;
 }
 .cart-th .th4{
-     margin-left:100px;
+     margin-left:145px;
  }
 .cart-th .th5{
-    margin-left: 85px;
+    margin-left: 105px;
 }
 .cart-list{
     margin-top:15px;
@@ -85,7 +93,7 @@
     margin-left:25px;
 }
 .cart-list-top .a-forDiscount{
-    margin-right: 20px;
+    margin-right: 30px;
     margin-top: 7px;
     width: 80px;
     height: 36px;
@@ -117,32 +125,33 @@
 .cart-list-cont .cont1,.cart-list-cont .cont2,.cart-list-cont .cont3,.cart-list-cont .cont4,.cart-list-cont .cont5{
     color:#666;
     float:left;
+    box-sizing:border-box;
 }
 .cart-list-cont .cont1{
-    width:295px;
+    width:39.5%;
     text-align:left;
     padding-left:140px;
     position:relative;
 }
 .cart-list-cont .cont2{
-     width:125px;
+     width:12.5%;
     font-size:17px;
     text-decoration:line-through;
     line-height:120px;
  }
 .cart-list-cont .cont3{
-    width:200px;
+    width:24.5%;
     line-height:26px;
 }
 .cart-list-cont .cont3 p:first-child,.cart-list-cont .cont4 p:first-child{
     margin-top:30px;
 }
 .cart-list-cont .cont4{
-     width:100px;
+     width:10%;
     line-height:26px;
  }
 .cart-list-cont .cont5{
-    width:100px;
+    width:13.5%;
     position:relative;
 }
 .a-cart-goodsImg{

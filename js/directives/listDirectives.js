@@ -38,7 +38,7 @@ angular.module('LuckyMall')
                         obj = document.body;
                     }
                     var cur_scroll_top=obj.scrollTop;
-                    var o_val=200;//参照
+                    var o_val=190;//参照
                     var scroll_val=o_val-cur_scroll_top;
                     tweenMove({
                         element: obj,

@@ -63,14 +63,14 @@
         <h3 class="title">描述信息</h3>
         <p ng-bind="data_details.ProblemDescription"></p>
         <div class="img-list">
-            <div class="img-container" ng-repeat="img in imgs" >
+            <div class="img-container" ng-repeat="img in data_details.Images" ng-if="img" >
                 <img ng-src="{{imgHost+img}}"  alt=""/>
             </div>
         </div>
     </div>
 
 
-    <form class="bar-kd-list" ng-show="data_details.RepairStatus==1">
+    <form class="bar-kd-list" ng-show="data_details.RepairStatus==1&&data_details.RepairType!=0">
         <p>
             <label class="color-balanced">您的申请已审核通过，请选择快递：</label>
             <select ng-model="kd" ng-options="kd.Code as kd.Name group by kd.index for kd in data_kd_list" ng-change="test()" >
@@ -129,7 +129,7 @@
     <div class="box-cost" ng-if="data_order.OrderStatus!=0&&data_order.OrderStatus!=1">
         <p>
             <label>商品金额：</label>
-            <span ng-bind="data_details.Order.cost.toFixed(2)"></span>
+            <span ng-bind="data_details.Order.cost"></span>
         </p>
 
         <p>
@@ -138,7 +138,7 @@
         </p>
         <p ng-if="data_details.RepairType==0">
             <label>应退金额：</label>
-            <span ng-bind="MathCeilPrice(data_details.Order.UnitPrice*data_details.Count*data_details.Order.DiscountVal)"></span>
+            <span ng-bind="data_details.Order.cost"></span>
         </p>
     </div>
 

@@ -1,0 +1,93 @@
+<header ng-title="data_brand.BrandName+'品牌专场_幸运猫'"></header>
+<aside-right></aside-right>
+<sub-header nav="3">
+    <category has-sub-category="false"></category>
+</sub-header>
+<!--中部 start-->
+<div class="list content">
+<!--
+    <div class="page-location brand">
+        <a href="/home">幸运猫</a>
+
+    </div>-->
+    <div class="search pro-list-top" ng-show="data_items.length>0">
+        <!--<h3 ng-class="{'color-org':search_condition==0}" ng-click="searchNew()">新品</h3>-->
+        <span ng-class="{'color-org label-condition':params_sort.price!=-1,'label-condition':params_sort.price==-1}" ng-click="sortWidthPrice()">价格</span>
+        <span  ng-class="{'icon-db-arrow up cur':params_sort.price==0,'icon-db-arrow up':params_sort.price!=0}" ng-click="sortWidthPrice(0)"></span>
+        <span  ng-class="{'icon-db-arrow down':params_sort.price!=1,'icon-db-arrow down cur':params_sort.price==1}" ng-click="sortWidthPrice(1)"></span>
+        <div class="pull-right" ng-show="page.total>0">
+            <p>共<span class="color-org" ng-bind="page.total"></span>件商品</p>
+            <span class="arrow txtUnselect" title="上一页" ng-click="prevPage()"><</span>
+            <span class="color-org" ng-bind="page.index+1"></span>/
+            <span ng-bind="page.totalPage"></span>
+            <span class="arrow txtUnselect" title="下一页" ng-click="nextPage()">></span>
+        </div>
+    </div>
+
+    <ul class="pro-list-cont">
+        <li ng-repeat="list in data_items" >
+            <div class="list-disc">
+                <p>低至</p>
+                <p ng-bind="(list.MaxDiscount*10).toFixed(1)+'折'"></p>
+            </div>
+            <a class="a-goodsImg" href="/item/{{list.Id}}" target="_blank" title="">
+                <img lazy-src="{{imgHost+list.RollingImages[0]}}" />
+                <img src="./res/images/out.png" class="img-so" ng-if="list.Status==4"/>
+            </a>
+            <div class="goods-info">
+                <a href="/item/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
+                    <h2 ng-bind="list.CommodityName" ng-class="{'canFree':list.IsCanFree==true}"></h2>
+                </a>
+                <p class="price">
+                    <span class="prices" ng-bind="'￥'+list.maxPrice+'~￥'+list.minPrice"></span>
+                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
+
+                </p>
+            </div>
+        </li>
+    </ul>
+    <div class="list-spinner">
+        <spinner ng-show="!loaded" text="搜索中"></spinner>
+    </div>
+    <div class="search tips-no-pro" ng-if="data_items.length<=0">
+        居然没有搜到商品？<a class="link color-org" ng-click="showModalWishing()">点我试试</a>
+    </div>
+    <div class="page-index" ng-show="loaded&&data_items.length>0">
+        <div class="prev" ng-click="prevPage()"  btn-scroll-to="190"><</div>
+        <div class="indexes">
+            <span ng-class="{'cur':page.index==$index}" ng-repeat="p in page.pageItems"
+                  ng-bind="(p+1==page.index-5||p+1==page.index+5)?'...':p+1"
+                  ng-if="(p+1>=page.index-5&&p+1<=page.index+5)"  ng-click=changePage(p) btn-scroll-to="190"></span>
+        </div>
+        <div class="next" ng-click="nextPage()" btn-scroll-to="190">></div>
+    </div>
+</div>
+ <div class="modal-overlay" style="opacity: 0" ng-style="{'opacity':isShowModalWishing?'1':'0','transition':'all .6s','z-index':isShowModalWishing?'999':'-1'}">
+     <div class="modal-submit-wishing" ng-style="{'top':isShowModalWishing?'50%':'-50%','transition':'top .6s'}">
+         <div class="modal-title">
+             <span>提交愿望</span>
+         </div>
+         <div class="modal-content">
+             <form ng-submit="submitWishing()">
+                 <p class="tips">提交商品链接，我们将会收录您希望找的商品！</p>
+                 <p class="bar-input-link">
+                     <label>商品链接：</label>
+                     <input placeholder="输入您希望找的商品的链接" ng-model="wishingUrl"/>
+                 </p>
+
+                 <p class="bar-buttons">
+                     <input class="btn" type="submit" ng-value="btn_val.submitWishing" />
+                     <input class="btn" type="button" value="取消" ng-click="hideModalWishing()"/>
+                 </p>
+             </form>
+             <span class="btn-close" ng-click="hideModalWishing()">×</span>
+         </div>
+     </div>
+ </div>
+<!--中部 end-->
+
+
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>

@@ -1,40 +1,11 @@
 <hidden-category></hidden-category>
 <div class="right" ng-class="{'right move-right':showHiddenCategory,'right':!showHiddenCategory}">
     <header></header>
-    <div class="ad_top">
-        <div class="content">
-            <a href="/register">
-                <img src="./res/images/banner_top.gif" />
-            </a>
-        </div>
-
-    </div>
 
     <aside-right></aside-right>
     <sub-header nav="2">
         <category></category>
     </sub-header>
-    <!--banner图  begin-->
- <!--   <div class="banner" id="banner" banner>
-        <ul  id="banner_ul">
-            <li ng-repeat="img in data_banner">
-                <a href="#" title="">
-                    <img ng-src={{imgHost+img.ImageData}} alt="" error-src="./res/images/default.png"/>
-                    &lt;!&ndash;img ng-src={{img.ImageData}} alt="" />&ndash;&gt;
-                </a>
-            </li>
-
-        </ul>
-        <a class="prev" id="prev_banner"></a>
-        <a class="next" id="next_banner"></a>
-
-        <div class="banner-index">
-            <a ng-class="{'cur-banner-index':banner_index==$index}" ng-repeat="index in data_banner"
-               data-index={{$index}}></a>
-        </div>
-    </div>-->
-    <!--banner图  end-->
-
 
     <!--css3-banner图  begin-->
     <div class="banner banner-css3" banner-css3="data_banner">
@@ -42,7 +13,7 @@
             <li ng-repeat="img in data_banner" ng-style="{'opacity':(banner_index==$index)?1:0,transition:'opacity 1s','z-index':(banner_index==$index)?1:0}">
             <!--<li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">-->
                 <a ng-href="{{img.href}}" title="">
-                    <img ng-src={{imgHost+img.ImageData}} alt="" error-src="./res/images/default.png"/>
+                    <img ng-src={{imgHost+img.ImageData+'@1920w_450h_100Q.jpg'}} alt="" error-src="./res/images/default.png"/>
                 </a>
             </li>
 
@@ -57,7 +28,100 @@
     </div>
     <!--css3-banner图  end-->
 
+    <div class="content home bar-clg-rec" ng-show="data_record.length>0">
+        <h3 class="bar-title txt-center">擂台记录</h3>
 
+        <div ng-style="{'position':'relative','top':-record_index*60+'px','transition':!isScrollRecEnd?'top .8s':'none'}">
+            <ul class="ul-clg-rec" >
+                <li ng-repeat="rec in data_record">
+                    <div class="cont cont1">
+                        <img ng-src="{{rec.UserAvatar.image?imgHost+rec.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg" />
+
+                        <p class="color-org user-name" ng-bind="rec.UserName"></p>
+
+                        <p class="color-gray" ng-bind="rec.CreateTimeStr"></p>
+                    </div>
+                    <div class="cont cont2">
+                        <h2 ng-bind="rec.CommodityName"></h2>
+                    </div>
+                    <div class="cont cont3">
+                        <a class="icon-disc">
+                            <span ng-bind="rec.UserDiscount"></span>折卡
+                        </a>
+
+                    </div>
+                    <div class="cont cont4 color-gray">
+                        得分：<span class="score" ng-bind="rec.UserGameScore"></span>
+                    </div>
+                    <div class="cont cont5">
+                        <span class="icon-clg-result success" ng-if="rec.IsPass"></span>
+                        <span class="icon-clg-result fail" ng-if="!rec.IsPass"></span>
+                    </div>
+                </li>
+            </ul>
+            <ul class="ul-clg-rec">
+                <li ng-repeat="rec in data_record">
+                    <div class="cont cont1">
+                        <img ng-src="{{rec.UserAvatar.image?imgHost+rec.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg"/>
+
+                        <p class="color-org user-name" ng-bind="rec.UserName"></p>
+
+                        <p class="color-gray" ng-bind="rec.CreateTimeStr"></p>
+                    </div>
+                    <div class="cont cont2">
+                        <h2 ng-bind="rec.CommodityName"></h2>
+                    </div>
+                    <div class="cont cont3">
+                        <a class="icon-disc">
+                            <span ng-bind="rec.UserDiscount"></span>折卡
+                        </a>
+
+                    </div>
+                    <div class="cont cont4 color-gray">
+                        得分：<span class="score" ng-bind="rec.UserGameScore"></span>
+                    </div>
+                    <div class="cont cont5">
+                        <span class="icon-clg-result success" ng-if="rec.IsPass"></span>
+                        <span class="icon-clg-result fail" ng-if="!rec.IsPass"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="home content box-act" ng-show="data_act_group.length>0">
+        <div class="box-act-title">
+            <label>擂台商品</label>
+            <a class="btn" href="/activity/index">进入擂台赛</a>
+        </div>
+        <div class="act-slider">
+   <!--         <ul class="ul-act" ng-repeat="group in data_act_group" ng-style="{'left':(100*($index-act_group_index))+'%','transition':'left .8s'}">-->
+              <ul class="ul-act" ng-repeat="group in data_act_group track by $index" ng-style="{'z-index':$index==act_group_index?'2':'-1','opacity':$index==act_group_index?'1':'0','transition':'opacity 1.5s'}">
+                <li ng-repeat="act in group track by $index">
+                    <a class="img-container" href="/activity/details/{{act.Id}}">
+                        <img ng-src="{{imgHost+act.CommodityImage+'@220w_220h_100Q.jpg'}}" error-src="./res/images/default.png" />
+                    </a>
+
+                    <div class="act-info">
+                        <h2 >
+                            <a  href="/activity/details/{{act.Id}}" ng-bind="act.CommodityName"></a>
+                        </h2>
+
+                        <p class="price">
+                            低至<span class="color-org">￥</span><span class="min-price" ng-bind="act.minPrice"></span>
+
+                        </p>
+                        <p class="bar-time">结束倒计时：<span time-down="act.remainTime" timeovershow="已结束"></span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <ul class="floor-nav" floor-nav len="data_floor.length" ng-style="{'opacity':showFloorNav==true?'1':'0','transition':'opacity 1s'}">
+        <li ng-repeat="f in data_floor" ng-click="scrollTo('floor'+$index)" ng-class="{'cur':cur_floor==$index}" ng-style="{'border-color':(cur_floor-1==$index||cur_floor==$index)?'transparent':'#eee'}">
+            <p ng-bind="f.name"></p>
+        </li>
+    </ul>
 
 
 
@@ -65,163 +129,7 @@
     <!--中部 start-->
     <div class="container">
         <div class="content">
-            <div class="today-update">
-                <div class="today-top">
-                    <h3>每日上新</h3>
-
-                    <p>每天上午<span class="color-org">10:00</span>准时上新</p>
-                </div>
-                <p class="loading-tips" ng-show="loadingToday==true">正在加载...</p>
-
-                <div class="today-content" ng-repeat="li_today in data_todayList">
-                    <div class="today-list-l">
-                        <div class="info1">
-                            <a class="today-pro-logo" ng-href={{li_today.href}} title="">
-                                <img real-src="{{li_today.BrandLogo?imgHost+li_today.BrandLogo+'@120h_30h_100Q.png':''}}" temp-src="./res/images/img_td_lo_df.png" error-src="./res/images/img_td_lo_df.png" alt=""/>
-                            </a>
-                            <a ng-href={{li_today.href}} title={{li_today.Description}}>
-                                <p class="today-pro-font" ng-bind="li_today.Description"></p>
-                            </a>
-                        </div>
-                        <div class="info2">
-                            <p class="today-pro-discount"><span ng-bind="li_today.PromoInfo!=''?li_today.PromoInfo:1"></span>折起</p>
-                            <p ng-if="li_today.remainTime>0">剩余时间：<span class="color-org" time-down="li_today.remainTime" ></span></p>
-                        </div>
-                    </div>
-                    <div class="today-list-r">
-                        <a ng-href={{li_today.href}} target="_blank" title={{li_today.Description}}>
-                            <img   alt="{{li_today.Description}}" lazy-src="{{imgHost+li_today.ImageData}}" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="tomorrow-advance-notice">
-                <div class="tomorrow-top">
-                    <h3>明天上线</h3>
-                </div>
-                <ul class="tomorrow-content">
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_1.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_2.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_3.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_4.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_5.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_6.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_7.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_8.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_9.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_10.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_11.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_12.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_13.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_14.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_15.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_16.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_17.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_18.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_19.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_20.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_21.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_22.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_23.jpg" alt=""/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="">
-                            <img src="./res/test/tmw_24.jpg" alt=""/>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <grid griddata="data_floor"></grid>
         </div>
     </div>
     <!--中部 end-->
@@ -237,6 +145,5 @@
             <span class="btn-close" ng-click="cancelGuide()"></span>
         </div>
     </div>
-    <!--
-    <scroll-load-img ng-if="ready"></scroll-load-img>-->
+
 </div>

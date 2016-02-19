@@ -1,19 +1,19 @@
 <div class="header">
     <div class="content">
-        <div class="pull-left" ng-show="!isLogin">
+        <div class="pull-left" ng-show="!isLogin||!showName">
      <!--       <a class="no-padding-l"  title="QQ登录">QQ登录</a>-->
             <a class="header-has-border" ng-click="goLogin()" title="请登录">请登录</a>
             <a href="/register" title="免费注册">免费注册</a>
         </div>
-        <div class="pull-left ng-hide" ng-show="isLogin">
-            <div class="user-simpleInfo">
+        <div class="pull-left ng-hide" ng-show="isLogin==true&&showName">
+            <div class="user-simpleInfo pull-left">
                 <a href="/UCIndex/myOrders/unPay">
-                    <img class="user-head-img" src="./res/images/touxiang.jpg" alt=""/>
+                    <img class="user-head-img" ng-src={{imgHost+avatar}} error-src="./res/images/touxiang.jpg" alt=""/>
                 </a>
-                <p class="name"><a href="/UCIndex/myOrders/unPay" ng-bind="showName"></a></p>
+                <p class="name"><a href="/UCIndex/myOrders/unPay" ng-bind="showName" title="{{showName}}"></a></p>
                 <span ng-class="'icon icon-lucky-energy-level'+luckyEnergy.level"></span>
             </div>
-            <button class="btn-exit" ng-click="exit()">退出</button>
+            <button class="btn-exit pull-left" ng-click="exit()">退出</button>
         </div>
         <div class="pull-right">
             <!--<a href="#" title="客户服务">客户服务</a>-->

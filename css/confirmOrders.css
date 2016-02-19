@@ -19,9 +19,9 @@
     background:#fff;
 }
 .content.box-confirmOrder,.content.confirmOrder-bottom{
-    padding:20px;
-    width:960px;
-    min-width:960px;
+    padding: 20px;
+    width: 1060px;
+    min-width: 960px;
     margin-bottom: 30px;
 }
 .box-confirmOrder .label-cont-name:nth-child(n+2){
@@ -51,15 +51,15 @@
     overflow:hidden;
 }
 .btn-pay-models li{
-    float:left;
-    width:205px;
-    height:56px;
-    line-height:55px;
-    border:1px solid #e0e0e0;
-    margin-right:20px;
-    margin-top:8px;
-    cursor:pointer;
-    position:relative;
+    float: left;
+    width: 200px;
+    height: 56px;
+    line-height: 55px;
+    border: 1px solid #e0e0e0;
+    margin-right: 10px;
+    margin-top: 8px;
+    cursor: pointer;
+    position: relative;
     text-align: center;
 }
 .btn-pay-models li span{
@@ -204,7 +204,7 @@
     text-align:center;
 }
 .confirmOrder-th span:nth-child(1){
-    width:453px;
+    width:553px;
 }
 .confirmOrder-th span:nth-child(2){
     width:150px;
@@ -283,7 +283,7 @@
 .goods-list-cont .cont1{
     padding-left:160px;
     padding-bottom:10px;
-    width:290px;
+    width:390px;
     float:left;
     position:relative;
 
@@ -333,7 +333,7 @@
 .goods-list-cont .cont1 h2{
     float:left;
     margin-right:10px;
-    max-width:200px;
+    max-width:300px;
     font-size:16px;
     font-weight:normal;
     margin-bottom:10px;
@@ -534,5 +534,6 @@
 .box-wallet .val{
     font-size:14px;
     font-weight:bold;
+    margin-right:20px;
 }
 /* 核对订单end*/

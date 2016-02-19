@@ -8,10 +8,14 @@ angular.module('LuckyMall.services')
                 for(var j=0;j<data.Property[i].attributes.length;j++){
                     data.Property[i].attributes[j].disabled=true;//disabled=true表示不可选
                 }
-/*                if(data.Property[i].attributes.length==1){
-                    data.Property[i].attributes[0].isSelected=true;
-                }*/
             }
+            for(var o in data.StockKeepingUnitModels){
+                var sku=angular.fromJson(data.StockKeepingUnitModels[o].Specifications);
+                for(var i in sku){
+                    data.Property[i].attributes[sku[i]].valid=true;//该属性是否有库存
+                }
+            }
+            //console.log(data);
         };
         var setRemainTime=function(cur_time,end_time){
             var t_cur=new Date(cur_time.replace(/-/g,"/"));
@@ -60,7 +64,7 @@ angular.module('LuckyMall.services')
                         data.maxPrice=Math.ceil(data.RetailPrice*data.MinDiscount);
                         data.SmallImages = data.RollingImages.split('|');
                         data.BigImages = data.DetailImages.split('|');
-                        data.Property = JSON.parse(data.Property);
+                        data.Property = angular.fromJson(data.Property);
                         data.remainTime=setRemainTime(data.CurrentTime,data.ExpiryDate);
                         data.status=testStatus(data.SoldOut,data.CurrentTime,data.OnSaleTime,data.ExpiryDate,data.CommodityStatus);
                         initData();
@@ -77,10 +81,7 @@ angular.module('LuckyMall.services')
             isCanFreePlay:function(goods_id,callback){
                 $http({
                     method: API.isCanFreePlay.method,
-                    url: API.isCanFreePlay.url+goods_id,
-                    headers: {
-                        'Authorization':TokenSer.getAuth()
-                    }
+                    url: API.isCanFreePlay.url+goods_id
                 }).success(function (response, status, headers, config) {
                     if(status==200){
                         callback(response,1);
@@ -88,6 +89,18 @@ angular.module('LuckyMall.services')
                         callback(response,0);
                     }
                 })
+            },
+            getRanking:function(id,callback){//获取排行榜
+                $http.get(API.getRanking.url+id)
+                    .success(function(response,status){
+                        if(response&&status==200) {
+                            callback(response, 1);
+                        }else{
+                            callback(response,0);
+                        }
+                    }).error(function(response,status){
+                        callback(response,-1);
+                    });
             },
             /*根据商品id获取品类数据*/
             requestCategoryByGoodsId:function(goods_id,callback){
@@ -208,10 +221,7 @@ angular.module('LuckyMall.services')
                 $http({
                     method: API.addToCart.method,
                     url: API.addToCart.url,
-                    data:params,
-                    headers: {
-                        'Authorization':TokenSer.getAuth()
-                    }
+                    data:params
                 }).success(function (response, status, headers, config) {
                     if(status==200){
                         if(response.Code=="0X00"){

@@ -283,6 +283,70 @@ app.constant('API',{
     getSignUpInfo:{//获取免费机会次数
         method:'get',
         url:'api/user/signupinfo'
+    },
+    getFloorData:{//获取楼层数据
+        method:'post',
+        url:'api/floor/queryonshelf'
+    },
+    getRanking:{//获取排行榜
+        method:'get',
+        url:'api/commodity/topwindiscount/'
+    },
+    agreeEarnestProtocol:{//同意定金协议
+        method:'get',
+        url:'api/user/agreeearnest'
+    },
+    saveAvatar:{//保存头像   （base64）
+        method:'post',
+        url:'api/user/saveavatar'
+    },
+    getAvatarBase64Img:{//获取用户头像base64数据
+        method:'get',
+        url:'api/user/avatar'
+    },
+    getSessionKey:{//获取临时会话
+        method:'get',
+        url:'api/user/sessionkey'
+    },
+    arenaInfo:{//擂台信息
+        method:'post',
+        url:'api/arenainfo/query'
+    },
+    arenaDetails:{//擂台详情
+        method:'get',
+        url:'api/arenainfo/'
+    },
+    arenaRecord:{//挑战记录
+        method:'post',
+        url:'api/arenarecord/query'
+    },
+    arenaRecordOfItem:{//单个擂台的挑战记录
+        method:'post',
+        url:'api/arenarecord/querybyarenainfo/'
+    },
+    userRecord:{//用户的挑战记录
+        method:'post',
+        url:'api/arenarecord/querybyuser'
+    },
+    quickSearch:{//快速搜索
+        method:'post',
+        url:'api/commodity/quicksearch'
+    },
+    searchWithKeyword:{//关键字搜索
+        method:'post',
+        url:'api/commodity/searchkeyword'
+    },
+    isCanPlayActivity:{//是否可以参加擂台赛
+       method:'get',
+       url:'api/arenarecord/in/'
+    },
+    arenaTickets:{//获取擂台挑战票数量
+        method:'get',
+        url:'api/user/arenatickets'
+    },
+    submitWishing:{//提交愿望（商品链接）
+        method:'post',
+        url:'api/commoditycomment/add'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -296,11 +360,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     $locationProvider.html5Mode(true);
     /*==================================================路由配置    begin=============================================*/
     /*默认路由*/
-    $urlRouterProvider.otherwise('home');
+    $urlRouterProvider.otherwise('/');
     $stateProvider
         /*主页*/
         .state('home', {
-            url: '/home',
+            url: '/',
             views: {
                 '': {
                     templateUrl: "templates/home.html",
@@ -313,7 +377,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './css/index.css',
                     './js/controllers/homeCtrl.js',
                     './js/services/homeSer.js',
-                    './js/directives/homeDirectives.js'
+                    './js/directives/homeDirectives.js',
+                    './js/services/activitySer.js'
                 ])
             }
         })
@@ -336,6 +401,24 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
 
+        })
+
+        /*搜索页*/
+        .state('search', {
+            url: '/search/:keyword',
+            views: {
+                '': {
+                    templateUrl: "templates/search.html",
+                    controller: 'SearchCtrl'
+                }
+            },
+            title:'搜索-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './css/list.css',
+                    './js/controllers/searchCtrl.js'
+                ])
+            }
         })
         /*登录*/
         .state('login', {
@@ -449,7 +532,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         /*确认订单*/
         .state('confirmOrder', {
-            url: '/confirmOrder/:source',
+            url: '/confirmOrder',
             views: {
                 '': {
                     templateUrl: "templates/confirmOrder.html",
@@ -816,7 +899,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 loadFiles: load([
                     './css/userCenter_css/userCenter.css',
                     './js/userCenter_js/controllers/userCenterCtrl.js',
-                    './js/userCenter_js/directives/headerImgEditDirectives.js',
+                    './js/userCenter_js/directives/avatarEditDirectives.js',
                     './js/userCenter_js/services/userSer.js',
                     'http://open.web.meitu.com/sources/xiuxiu.js'
 
@@ -1036,6 +1119,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
         })
+        /*我的挑战卡*/
+        .state('UCIndex.myChallengeCards', {
+            url: '/myChallengeCards',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/myChallengeCards.html",
+                    controller: 'MyChallengeCardsCtrl'
+                }
+            },
+            title:'我的挑战卡-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/myChallengeCardsCtrl.js',
+                    './js/services/activitySer.js'
+                ])
+            }
+        })
 
         /*消息详情*/
         .state('UCIndex.messageDetails', {
@@ -1113,16 +1213,59 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'正在处理...-幸运猫-享玩享购享折扣'
         })
 
-    /*===================接口配置 ==================*/
+
+
+
+        /*擂台赛*/
+        .state('activity', {
+            url: '/activity',
+            views: {
+                '': {
+                    templateUrl: "templates/activity/main.html",
+                    controller: 'ActivityCtrl'
+                }
+            },
+            title:'擂台赛',
+            resolve: {
+                loadFiles: load([
+                    './css/activity/activity.css',
+                    './js/controllers/activityCtrl.js',
+                    './js/services/activitySer.js'
+                ])
+            }
+        })
+        /*擂台赛首页*/
+        .state('activity.index', {
+            url: '/index',
+            views: {
+                'view_activity': {
+                    templateUrl: "templates/activity/activity-index.html",
+                    controller: 'ActivityIndexCtrl'
+                }
+            },
+            title:'擂台赛'
+        })
+        /*擂台赛详情*/
+        .state('activity.details', {
+            url: '/details/:id',
+            views: {
+                'view_activity': {
+                    templateUrl: "templates/activity/activity-details.html",
+                    controller: 'ActivityDetailsCtrl'
+                }
+            },
+            title:'擂台赛详情'
+        })
+    /*===================接口配置  begin==================*/
     initAPI();
     function initAPI(){
-        var cur_host=Host.develop//##############当前环境
+        var cur_host=Host.develop;//##############当前环境
         switch(cur_host){
             case Host.develop:
                 Host.game='http://120.24.225.116:9004';//开发
                 break;
             case Host.public:
-                Host.game='http://www.xingyunmao.cn:9004';//测试
+                Host.game='http://game.xingyunmao.cn';//测试
                 break;
         }
         Host.hostname=location.hostname;
@@ -1132,13 +1275,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         Host.localMsgOrigin='http://127.0.0.1';
     }
 
-   /*=============================================*/
-
+   /*===================接口配置  end====================*/
 
 
     }]);
 
-app.run(['$rootScope', '$location', '$window','$cookies',function($rootScope, $location, $window,$cookies) {
+app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout',function($rootScope, $location, $window,$cookies,$http,$timeout) {
 
    // $cookies.put('isGameOpen',false);
 
@@ -1158,21 +1300,28 @@ app.run(['$rootScope', '$location', '$window','$cookies',function($rootScope, $l
         $rootScope.game.isOpen=true;
     };
     $rootScope.closeGame=function(){//关闭游戏
-        $rootScope.game.url=null;
-        $rootScope.game.orderId=null;
-        $rootScope.game.commodityId=null;
-        $rootScope.game.isOpen=false;
+        $timeout(function(){
+            $rootScope.game.url=null;
+            $rootScope.game.orderId=null;
+            $rootScope.game.commodityId=null;
+            $rootScope.game.isOpen=false;
+        });
     };
 
     $rootScope.$on('$stateChangeStart', function() {
         $rootScope.page_loading=true;//loading图片显示
     });
 
+    $rootScope.MathCeilPrice=function(val){
+        return  Math.ceil(val);
+    };
+
     // track pageview on state change
     $rootScope.$on('$stateChangeSuccess', function (event,toState) {
+        $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
+
         $window.ga('send', 'pageview', $location.path()); //google监测
         $rootScope.page_loading=false;//loading图片隐藏
-
         /*设置标题*/
         if(toState.title){
             document.title=toState.title;

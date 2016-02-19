@@ -18,7 +18,6 @@ angular.module('LuckyMall.controllers')
                 MessageSer.requestMsg($scope.msg_type,$scope.page,function(response,status){
                     if(status==1){
                         $scope.data_msg=MessageSer.getMsgById($scope.msg_type,$scope.msg_id);
-                        //alert(MessageSer.getMsgById($scope.msg_type,$scope.msg_id));
                     }
                 });
             }else{

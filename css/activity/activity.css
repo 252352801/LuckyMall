@@ -1,0 +1,1016 @@
+﻿/*==============
+   活动页begin
+===============*/
+.activity{
+    width:100%;
+    min-height:700px;
+    overflow-x:hidden;
+}
+.act-index-bg{
+    position:absolute;
+    width:100%;
+    left:0px;
+    top:181px;
+    overflow-x:hidden;
+    z-index:0;
+}
+.activity .act-bg{
+    width:1920px;
+    height:400px;
+    position:relative;
+    left:50%;
+    top:0px;
+    margin-left:-960px;
+}
+.activity .act-bg1{
+    background:url(../../res/images/background/act_bg_1.jpg)
+}
+.activity .act-bg2{
+    background:url(../../res/images/background/act_bg_2.jpg)
+}
+.activity .act-bg3{
+    background:url(../../res/images/background/act_bg_3.jpg)
+}
+.activity .act-bg4{
+    background:url(../../res/images/background/act_bg_4.jpg)
+}
+.act-container{
+    width:1048px;
+    margin-top:5px;
+    margin-left:auto;
+    margin-right:auto;
+    /*background:url(../../res/images/background/bg_act_index_cont_inier.png);*/
+    z-index:11;
+    position: relative;
+    border-bottom:567px solid transparent;
+    box-sizing:border-box;
+    padding-top:200px;
+}
+.activity-index{
+    background-image:url(../../res/images/background/bg_act_index.png);
+}
+.activity-index .act-container .bg-top{
+    position:absolute;
+    left:-80px;
+    top:0px;
+    width:1210px;
+    height:200px;
+    background:url(../../res/images/background/bg_act_index_cont_top.png);
+}
+.activity-index .act-container .bg-bot{
+    position:absolute;
+    left:-1px;
+    top:100%;
+    width:1049px;
+    height:567px;
+    background:url(../../res/images/background/bg_act_index_cont_bot.png) no-repeat;
+    margin-top: -85px;
+}
+.activity-index .act-content{
+    min-height:200px;
+    background:url(../../res/images/background/bg_act_index_cont_inner.png);
+    position:relative;
+    z-index:20;
+}
+.activity-index .act-content .pg-ctrl{
+    width:91%;
+    margin:0 auto;
+    padding:10px 20px;
+    text-align:right;
+    overflow: hidden;
+}
+.activity-index .act-content .pg-ctrl button{
+    width:100px;
+    height:36px;
+    border:none;
+    outline:none;
+    background:url(../../res/images/background/bg_act_index.png);
+    background: #6d1111;
+    cursor:pointer;
+    color:#b46344;
+    margin-left:15px;
+}
+.activity-index .act-content .pg-ctrl button:hover{
+    background:#5b0909;
+    color:#ffaa6b;
+}
+.activity-index .bar-myRecord{
+    width:1048px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:right;
+    margin-top:900px;
+    position:relative;
+    z-index: 11;
+    line-height:40px;
+}
+.activity-index .bar-myRecord button{
+    width:100px;
+    height:32px;
+    background:url(../../res/images/background/bg_act_index_btn_myrec.png) no-repeat;
+    border:none;
+    cursor:pointer;
+    color:#703904;
+    line-height:28px;
+}
+
+.activity .act-content .act-tabs{
+    width:94%;
+    margin-left: auto;
+    margin-right: auto;
+    height:64px;
+}
+.activity .act-content .act-tabs button{
+    display:block;
+    width:315px;
+    height:64px;
+    background:url(../../res/images/background/act_bg_tab.png);
+    line-height:64px;
+    margin-left:10px;
+    color:#f66322;
+    font-size:20px;
+    float:left;
+    border:none;
+    cursor:pointer
+}
+.activity .act-content .act-tabs button.cur{
+    background:url(../../res/images/background/act_bg_tab_cur.png);
+    color:#ffd667;
+}
+.activity .act-content .content1{
+    position:relative;
+    top:-150px;
+    margin-bottom: -130px;
+}
+.activity .act-content .content1 .cont-title{
+    width:94%;
+    margin-left: auto;
+    margin-right: auto;
+    height:60px;
+    background:url(../../res/images/background/act_index_label1.png) no-repeat;
+}
+.activity .act-content .content2 .cont-title{
+    width:94%;
+    margin-left: auto;
+    margin-right: auto;
+    height:60px;
+    background:url(../../res/images/background/act_index_label2.png) no-repeat;
+}
+.activity .act-content .content3 .cont-title{
+    width:94%;
+    margin-left: auto;
+    margin-right: auto;
+    height:60px;
+    background:url(../../res/images/background/act_index_label3.png) no-repeat;
+}
+.activity .act-content .content4 .cont-title{
+    width:94%;
+    margin-left: auto;
+    margin-right: auto;
+    height:60px;
+    background:url(../../res/images/background/act_index_label4.png) no-repeat;
+}
+.activity .act-content .act-tabs button:hover{
+    color:#ffd667;
+}
+.activity .ul-act-list{
+    width:94%;
+    margin:0 auto;
+    overflow:hidden;
+}
+.activity .ul-act-list li{
+    box-sizing:border-box;
+    width: 47.5%;
+    min-height:200px;
+    background: #691111;
+    float: left;
+    margin-top: 20px;
+    margin-right: 20px;
+    position: relative;
+    left: 16px;
+    padding-left:200px;
+}
+.activity .ul-act-list .act-info{
+    padding:10px;
+    color:#b46344;
+}
+.activity .ul-act-list .img-container{
+    display:block;
+    width:200px;
+    height:200px;
+    position:absolute;
+    left:0px;
+    top:0px;
+    background: #fff;
+    text-align: center;
+}
+.activity .ul-act-list .img-container img{
+    max-width:100%;
+    max-height:100%;
+}
+.activity .ul-act-list .img-container p{
+    width:100%;
+    line-height:30px;
+    background:rgba(121,21,21,0.5);
+    position:absolute;
+    left:0px;
+    top:100%;
+    margin-top:-30px;
+    color:#fff;
+    text-align:center;
+}
+.activity .ul-act-list .act-info h2{
+    color: #f4c982;
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    display: block;
+    height: 25px;
+    overflow: hidden;
+    line-height: 25px;
+}
+.activity .ul-act-list .act-info p{
+    margin-bottom:15px;
+}
+.activity .ul-act-list .act-info p:last-child{
+    margin-bottom:0px;
+}
+.activity .ul-act-list .act-info .min-price{
+    font-size:20px;
+    color:#f4c982;
+    padding:0px 5px;
+}
+.activity .ul-act-list .act-info .unit{
+    color: #f4c982;
+    margin-right: -5px;
+    font-size: 16px;
+}
+.activity .ul-act-list .act-info .retail-price{
+    text-decoration:line-through;
+}
+.activity .ul-act-list .act-info .cur-winner{
+    font-size: 18px;
+    color: #ef8f21;
+    max-width: 175px;
+    overflow: hidden;
+    text-overflow: clip;
+    height: 30px;
+    line-height:29px;
+}
+.activity .ul-act-list .act-info label{
+    line-height:30px;
+}
+.activity .ul-act-list .bar-btn{
+    text-align:center;
+}
+.activity .ul-act-list .bar-btn a{
+    display:inline-block;
+    width:148px;
+    height:32px;
+    background:#a61515;
+    border-radius:16px;
+    line-height:32px;
+    font-size:14px;
+    color:#ffaa6b;
+}
+.activity .ul-act-list .bar-btn a:hover{
+    background:#960a0a;
+    color:#f6954d;
+}
+.activity .tb-challenge-record{
+    width:92%;
+    margin:0 auto;
+    color:#fcd288;
+    background:#6d1111;
+    border-collapse:collapse;
+}
+.activity .tb-challenge-record tr{
+    background:#6d1111;
+}
+.activity .tb-challenge-record tbody tr td{
+    padding:0px 10px;
+    max-width:300px;
+}
+.activity .tb-challenge-record tbody tr td{
+    max-width:300px;
+}
+.activity .tb-challenge-record tbody tr td:first-child{
+    padding-left:20px;
+    max-width:200px;
+}
+.activity .tb-challenge-record .user-name{
+    height: 30px;
+    overflow: hidden;
+    max-width: 100px;
+}
+.activity .tb-challenge-record .user-area{
+    color:#b07938;
+    line-height:30px;
+}
+.activity .tb-challenge-record tbody tr td:last-child{
+    padding-right:20px;
+}
+.activity .tb-challenge-record tr:nth-child(2n){
+    background:#701513;
+}
+.activity .tb-challenge-record .info-challenger{
+    display:inline-block;
+    padding-left:50px;
+    min-height:50px;
+    position:relative;
+    text-align:left;
+    vertical-align:middle;
+    padding-top:10px;
+    padding-bottom: 10px;
+}
+.activity .tb-challenge-record .info-challenger img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    position:absolute;
+    left:0px;
+    top:10px;
+
+}
+.activity .tb-challenge-record .info-challenger h3,.activity .tb-challenge-record .info-challenger small{
+    margin-left:10px;
+}
+.activity .tb-challenge-record .info-challenger h3{
+    line-height:30px;
+    font-size:14px;
+    font-weight:500;
+    margin-bottom:-5px;
+}
+.activity .tb-challenge-record .info-challenger small{
+    color:#b07938;
+}
+.activity .tb-challenge-record .get-disc{
+    display:inline-block;
+    color:#b07938;
+    line-height:38px;
+}
+.activity .tb-challenge-record .get-disc a{
+    display: inline-block;
+    width:71px;
+    height:31px;
+    background:url(../../res/images/background/bg_act_discount_card.png);
+    margin-left:5px;
+    vertical-align:middle;
+    text-align:center;
+    color:#8e3d01;
+    line-height:30px;
+}
+.activity .tb-challenge-record .get-disc a span{
+    font-size:16px;
+}
+.activity .tb-challenge-record .info-time{
+    color:#b07938;
+}
+.activity .tb-challenge-record .info-time span{
+    color:#ed9d13;
+}
+.activity .icon-result{
+    display:inline-block;
+   width:95px;
+    height:44px;
+    background:url(../../res/images/background/lt_tzsb.png);
+}
+.activity .icon-result.success{
+    background:url(../../res/images/background/lt_tzcg.png);
+}
+.activity .act-content .content2{
+    margin-bottom:20px;
+}
+.activity .act-content .content3 img{
+    display:block;
+    width:92%;
+    margin:0 auto;
+}
+.activity .act-content .content3{
+    margin-bottom:20px;
+}
+.activity .act-rules{
+    width:90%;
+    margin:0 auto;
+    line-height:30px;
+    color:#d2954d;
+}
+.activity .act-rules li{
+    margin-top:5px;
+}
+.activity .act-rules li:first-child{
+    text-indent:-5px;
+}
+.activity .act-rules li:first-child:before{
+    position:relative;
+    left:4px;
+}
+.activity .act-rules li:before{
+    content:'';
+    display:inline-block;
+    width:10px;
+    height:10px;
+    background:#864e23;
+    -ms-transform: rotate(45deg);		/* IE 9 */
+    -webkit-transform: rotate(45deg);	/* Safari and Chrome */
+    -o-transform: rotate(45deg);		/* Opera */
+    -moz-transform: rotate(45deg);
+    margin-right:10px;
+}
+.act-footer{
+    width:1048px;
+    margin:0 auto;
+    color:#a15809;
+    text-align:center;
+    line-height:20px;
+    padding-bottom: 100px;
+    margin-top:-80px;
+    z-index:200;
+    position: relative;
+}
+.act-footer a{
+    color:#a15809;
+
+}
+.act-footer .links{
+    line-height:40px;
+}
+.act-footer .links a{
+    border-right:1px solid #a15809;
+    padding:0px 20px;
+}
+.act-footer .links a:last-child{
+    border-right:none;
+}
+
+
+.activity-dt .act-footer{
+    margin-top:0px;
+}
+.act-dt-bg{
+    width:100%;
+    overflow:hidden;
+    position:absolute;
+    left:0px;
+    top:181px;
+    z-index:20;
+}
+.act-dt-bg .bg1,.act-dt-bg .bg2,.act-dt-bg .bg3{
+    width:1920px;
+    height:394px;
+    position:relative;
+    left:50%;
+    top:0px;
+    margin-left:-960px;
+}
+.act-dt-bg .bg1{
+    background: url(../../res/images/background/ltxq_banner_01.jpg);
+}
+.act-dt-bg .bg2{
+    background: url(../../res/images/background/ltxq_banner_02.jpg);
+}
+.act-dt-bg .bg3{
+    background: url(../../res/images/background/ltxq_banner_03.jpg);
+}
+.act-dt-container{
+    width:1048px;
+    margin:0 auto;
+    min-height:500px;
+    z-index:21;
+    position:relative;
+    margin-top:320px;
+}
+.activity-dt .box-winner{
+    min-height:351px;
+}
+.activity-dt .box-winner .winner-avatar{
+    width:200px;
+    height:200px;
+    margin:0 auto;
+    background:url(../../res/images/background/lt_txbg.png) 6px 12px no-repeat;
+    text-align:center;
+    position:relative;
+}
+.activity-dt{
+    background:url(../../res/images/background/bg_act_dt.png);
+}
+.activity-dt .box-winner .winner-avatar img{
+    width:140px;
+    height:140px;
+    border-radius: 70px;
+    position:absolute;
+    left:30px;
+    top:30px;
+}
+.activity-dt .winner-name{
+    position:relative;
+    top:152px;
+    left:0px;
+}
+.activity-dt .winner-name a{
+    display:inline-block;
+    min-width:60px;
+    max-width:80px;
+    height:26px;
+    border-radius:15px;
+    background:#f6d85b;
+    margin:0 auto;
+    text-align:center;
+    color:#b13a00;
+    line-height:26px;
+    font-size:16px;
+    padding:0px 5px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    z-index:100;
+    white-space:nowrap;
+    position:relative;
+}
+.activity-dt .winner-name .name-left{
+    content:'';
+    width:42px;
+    height:24px;
+    display:inline-block;
+    position:relative;
+    background: url(../../res/images/background/lt_txbgleft.png);
+    left:10px;
+    top:2px;
+    z-index:2;
+}
+.activity-dt .winner-name .name-right{
+    content:'';
+    width:42px;
+    height:24px;
+    display:inline-block;
+    position:relative;
+    background: url(../../res/images/background/lt_txbgright.png);
+    left:-10px;
+    top:2px;
+    z-index:2;
+}
+.activity-dt .box-winner .info{
+    width:500px;
+    margin:0 auto;
+    font-size:14px;
+    color:#e68d57;
+    text-align:center;
+    line-height:50px;
+    margin-top:10px;
+}
+.activity-dt .box-winner .info .icon-disc{
+    width:71px;
+    height:31px;
+    display:inline-block;
+    background:url(../../res/images/background/bg_act_discount_card.png);
+    line-height:36px;
+    color:#8e3d01;
+    margin-right:24px;
+    font-size:12px;
+}
+.activity-dt .box-winner .info .icon-disc .first-word{
+    font-size:18px;
+}
+.activity-dt .box-winner .info .time{
+    font-size:36px;
+    margin-right:4px;
+    color:#ffd648;
+}
+.activity-dt .box-winner .bar-btn{
+    margin:0 auto;
+    line-height: 40px;
+    margin-top:36px;
+}
+.activity-dt .box-winner .bar-btn .btn-challenge{
+    display:block;
+    width:197px;
+    height:46px;
+    margin:0 auto;
+    background: url(../../res/images/background/lt_ljtz.png);
+    cursor:pointer;
+}
+.activity-dt .box-content1{
+    min-height:300px;
+    margin-top:102px;
+}
+.activity-dt .cont-title{
+    line-height:45px;
+    height:45px;
+}
+.activity-dt .cont-title.cont-title3{
+    line-height:55px;
+    height:55px;
+    margin-bottom: 10px;
+}
+.activity-dt .cont-title1{
+    background:url(../../res/images/background/lt_spjl.png) no-repeat;
+}
+.activity-dt .cont-title2{
+    background:url(../../res/images/background/lt_bzjl.png) no-repeat;
+}
+.activity-dt .cont-title3{
+    background:url(../../res/images/background/lzjl.png) no-repeat;
+}
+.activity-dt .cont-title4{
+    background:url(../../res/images/background/act_index_label4.png) no-repeat;
+    height:55px;
+}
+.activity-dt .box-content1,.activity-dt .box-content2,.activity-dt .box-content3{
+    margin-bottom:60px;
+}
+.activity-dt .tb-challenge-record{
+     width:100%;
+     margin-top:10px;
+ }
+.activity-dt .tb-challenge-record tr {
+    background: #692e22;
+}
+.activity-dt .tb-challenge-record tr:nth-child(2n){
+    background:#6c3124;
+}
+.activity-dt .act-rules{
+    width:100%;
+    background-color:#692e22;
+    padding:25px;
+    box-sizing:border-box;
+    position:relative;
+    margin-top:10px;
+}
+.activity-dt .spec-bg {
+    background-image:url(../../res/images/background/bg_act_rules_bot.png);
+    background-repeat: no-repeat;
+    background-position:0 100%;
+}
+.activity-dt .spec-bg:before {
+    content: '';
+    display:block;
+    width:60px;
+    height:60px;
+    background:url(../../res/images/background/bg_act_rules_l_t.png);
+    position:absolute;
+    left:2px;
+    top:1px;
+}
+.activity-dt .spec-bg:after {
+    content: '';
+    display:block;
+    width:60px;
+    height:60px;
+    background:url(../../res/images/background/bg_act_rules_r_t.png);
+    position:absolute;
+    left:100%;
+    top:0px;
+    margin-left:-63px;
+}
+.activity-dt .act-info{
+    background-color:#692e22;
+    padding-left: 330px;
+    padding-top:20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    position:relative;
+    min-height:300px;
+    box-sizing:border-box;
+}
+.activity-dt .act-info .img-container{
+    display:block;
+    width:260px;
+    height:260px;
+    text-align:center;
+    display:table-caption;
+    line-height: 260px;
+    background:#fff;
+    position:absolute;
+    left:35px;
+    top:20px;
+}
+.activity-dt .act-info .img-container img{
+    max-width:100%;
+    max-height:100%;
+}
+.activity-dt .act-info .img-container .time{
+    width:100%;
+    line-height:30px;
+    background:rgba(121,21,21,0.5);
+    color:#fff;
+    position:absolute;
+    left:0px;
+    top:100%;
+    margin-top:-30px;
+}
+.activity-dt .act-info .item-name{
+    font-size:18px;
+    color:#fcd288;
+    margin-bottom:15px;
+}
+.activity-dt .act-info .bar-prices{
+    color:#ed9d13;
+    font-size: 24px;
+    margin-bottom:25px;
+}
+.activity-dt .act-info .bar-prices small{
+    font-size: 12px;
+}
+.activity-dt .act-info .cur-winner{
+    line-height:40px;
+    border-top:1px solid #753b2a;
+    padding-top: 15px;
+    color:#a7684d;
+}
+.activity-dt .act-info .cur-winner .cur-winner-name{
+    font-size:16px;
+    color:#ed9d13;
+    margin-left:15px;
+}
+.activity-dt .act-info .cur-winner .icon-disc{
+    display:inline-block;
+    width:71px;
+    height:31px;
+    background: url(../../res/images/background/bg_act_discount_card.png);
+    font-size: 12px;
+    text-align:center;
+    line-height:30px;
+    color:#8e3d01;
+    margin-left:15px;
+}
+.activity-dt .act-info .cur-winner .icon-disc .first-word{
+    font-size:16px;
+}
+.activity-dt .act-info .win-disc-price{
+    font-size:30px;
+    color:#ed9d13;
+    margin-left:10px;
+}
+.activity-dt .act-info .cur-winner p:last-child{
+    margin-left:10px;
+}
+
+ .activity .modal-my-record{
+     width:1048px;
+     min-height:500px;
+     background:#fff;
+     position:relative;
+     top:-100%;
+     margin:10px auto;
+     overflow-y:hidden;
+     overflow-x:hidden;
+     box-sizing:border-box;
+ }
+.act.act-index.modal-overlay{
+    opacity:0;
+}
+ .activity .modal-my-record .modal-title{
+     line-height: 50px;
+     width:96%;
+     margin:0 auto;
+     border-bottom:1px solid #ddd;
+     font-size:18px;
+     color:#333;
+     font-weight:500;
+     position:relative;
+     left:0px;
+     top:0px;
+     overflow: hidden;
+ }
+.activity .modal-my-record .modal-title span{
+    display:block;
+    width:80px;
+    text-align:center;
+    border-bottom:2px solid #ff6700;
+    position: relative;
+    top:1px;
+}
+.activity  .btn-close-myrec{
+    display:block;
+    width:40px;
+    height:40px;
+    background:#eee;
+    text-align:center;
+    line-height:40px;
+    position:absolute;
+    left:50%;
+    top:0%;
+    margin-left:524px;
+    font-size:24px;
+    color:#999;
+    cursor: pointer;
+    margin-top:10px;
+}
+.activity  .btn-close-myrec:hover{
+    background:#ddd;
+    color:#777;
+}
+.activity .tb-my-record{
+    width:96%;
+    margin:0 auto;
+    border-collapse:collapse;
+}
+.activity .tb-my-record tr:nth-child(2n){
+    background:#f9f9f9;
+}
+.activity .tb-my-record td{
+    line-height:80px;
+    text-align:center;
+    color:#999;
+}
+.activity .tb-my-record .icon_disc{
+   display: inline-block;
+width: 71px;
+height: 31px;
+background: url(../../res/images/background/bg_act_discount_card.png);
+vertical-align: middle;
+line-height: 31px;
+color: #fe6;
+/* font-size: 14px; */
+margin-left: 5px;
+}
+.activity .tb-my-record .icon_disc .first-word{
+    font-size: 16px;
+}
+.activity .tb-my-record .clg-result{
+    padding:0px 10px;
+    line-height: 24px;
+    border:2px solid #ddd;
+    color:#ddd;
+    -webkit-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    -moz-transform: rotate(10deg);
+        transform: rotate(10deg);
+    display: inline-block;
+}
+.activity .tb-my-record .clg-result.success{
+    border-color:#ff6700;
+    color:#ff6700;
+}
+.activity  .loading-act-list,.activity  .nothing{
+    text-align: center;
+    color:#b46344;
+    line-height: 200px;
+    background: #691111;
+    width:92%;
+    margin:0 auto;
+    margin-top:10px;
+}
+.act-dt-nothing{
+    line-height:200px;
+    text-align:center;
+    color:#a7684d;
+    background:#692e22;
+}
+.activity .time-prev{
+    font-size:36px;
+}
+.activity .container-myRecord{
+    position:relative;
+    max-height:560px;
+    overflow-y:auto;
+    width:100%;
+}
+.act.modal-overlay{
+    overflow-y:auto;
+}
+.activity .modal-my-record .pg-ctrl{
+    float:right;
+    font-size:14px;
+}
+.activity .modal-my-record .pg-ctrl a{
+    margin-right:15px;
+}
+.activity .loading-my-rec{
+    display:block;
+    width:100px;
+    height:100px;
+    margin:50px auto;
+    background:url(../../res/images/loading/cat.gif);
+}
+
+.modal-share{
+    width:500px;
+    height:400px;
+    background:#fff;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-250px;
+    margin-top:-200px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding-top:200px;
+    text-align: center;
+
+    animation: modalShow 0.3s;
+    -moz-animation: modalShow 0.3s;
+}
+.modal-share .title{
+    font-size:20px;
+    line-height:60px;
+}
+.modal-share .text{
+    font-size:14px;
+    max-width: 75%;
+    margin:0 auto;
+}
+.modal-share button{
+    width:100px;
+    height:40px;
+    background: #ff6700;
+    color:#fff;
+    border:none;
+    font-size:15px;
+    cursor: pointer;
+}
+.modal-share button:hover{
+    background:#ff4400;
+}
+.modal-share .bar-buttons{
+    margin-top:15px;
+}
+.modal-share .btn-close{
+    width:40px;
+    height:40px;
+    display:block;
+    position:absolute;
+    left:100%;
+    top:0px;
+    margin-left:-40px;
+    background:#f1f1f1;
+    font-size:28px;
+    line-height:40px;
+    text-align:center;
+    color:#aaa;
+    cursor: pointer;
+    font-weight:100;
+}
+.modal-share .btn-close:hover{
+    background:#eee;
+    color:#999;
+}
+.modal-share img{
+    width:133px;
+    height:133px;
+    position:absolute;
+    left:184px;
+    top:53px;
+
+}
+.modal-share .bar-no-show{
+    color:#ddd;
+    text-align: right;
+    margin-right:20px;
+    cursor:pointer;
+}
+.modal-share .bar-no-show input{
+    position:relative;
+    top:2px;
+}
+.winner-rec-pg-ctrl{
+    text-align:right;
+}
+.winner-rec-pg-ctrl a{
+    display:inline-block;
+    width:80px;
+    height:30px;
+
+    background: #6c3124;
+    color:#b07938;
+    margin-left:15px;
+    line-height: 30px;
+    text-align:center;
+}
+.winner-rec-pg-ctrl a:hover{
+    background:#692e22 ;
+    color:#ed9d13;
+}
+.winner-rec-pg-ctrl a.disabled{
+    background: url(../../res/images/background/bg_act_dt.png);
+    color:#b07938;
+}
+.winner-area{
+    position:relative;
+    top:170px;
+    color:#e68d57;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*活动页end*/

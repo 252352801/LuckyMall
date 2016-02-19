@@ -1,14 +1,26 @@
-<div ng-style="{'width':'100%'}" ng-repeat="floor in data_grid">
-    <div ng-repeat="box in floor.items" div ng-style="{'width':w+'px','position':'relative','overflow':'hidden'}">
-            <div ng-repeat="g in box.baseGrid track by $index" ng-style="{'border':'1px solid #aaa','width':(1/box.col)*100+'%','height':w/box.col+'px','float':'left','background':g.isSelected==true?'red':'blue'}"
-                 ng-click="choosegrid(g,box.baseGrid)" > <!--空的单元格-->
+<div class="floor" ng-style="{'width':'100%'}" ng-repeat="floor in data_grid" id="{{'floor'+$index}}">
+    <div class="floor-title">
+            <h2 >
+                <a ng-href="{{floor.href}}"  ng-bind="floor.name"></a>
+            </h2>
+    </div>
+    <div ng-repeat="box in floor.items" div ng-style="{'width':w+'px','height':box.isAllBrands?box.height/2+'px':box.height+'px','position':'relative','overflow':'hidden','margin-top':'2px','margin-bottom':'0px'}">
+           <!-- <div ng-repeat="g in box.baseGrid track by $index" ng-style="{'border':'0px solid #f1f1f1','width':(1/box.col)*100+'%','height':w/box.col+'px','float':'left','background':'#f1f1f1'}"
+                 ng-click="choosegrid(g,box.baseGrid)" > &lt;!&ndash;空的单元格&ndash;&gt;
 
-            </div>
+            </div>-->
             <div ng-repeat="grid in box.grids"
-                 ng-style="{'border':'1px solid #000','background':'#ccc','width':(1/box.col)*grid.colSpace*100+'%',
-                 'height':(w/box.col)*grid.rowSpace+'px','position':'absolute','left':(1/box.col)*100*grid.startX+'%',
-                 'top':(w/box.col)*grid.startY+'px'}">
-                <img ng-src="{{imgHost+grid.img}}" />
+                 ng-style="{'border':'0px solid #f1f1f1','background':'#fff','width':(1/box.col)*grid.colSpace*100+'%',
+                 'height':(grid.mode==1&&box.isAllBrands)?(w/box.col)*grid.rowSpace/2+'px':(w/box.col)*grid.rowSpace+'px','position':'absolute','left':(1/box.col)*100*grid.startX+'%',
+                 'top':(w/box.col)*grid.startY+'px','text-align':'center'}">
+                <a ng-class="{'item-link link':grid.mode==2,'link':grid.mode!=2}" target="_blank" ng-href="{{grid.href}}" ng-style="{'border-left':grid.mode!=1?'1px solid #f1f1f1':'none',
+                'border-right':grid.mode!=1?'1px solid #f1f1f1':'none','border-top':'2px solid #f1f1f1','display':'block','padding':'0px','width':'100%','height':'100%'}">
+                    <div class="bar-item-info">
+                        <h2  ng-if="grid.mode==2" ng-bind="grid.data.name"></h2>
+                        <p   class="bar-price" ng-if="grid.mode==2" >低至<span class="color-org">￥</span><span class="min-price" ng-bind="grid.data.lowestPrice"></span></p>
+                    </div>
+                    <img lazy-src="{{imgHost+grid.img}}" />
+                </a>
             </div>
     </div>
 </div>

@@ -1,20 +1,18 @@
 angular.module('LuckyMall.controllers')
     .controller('ItemCtrl',
-    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host, MyOrdersSer, CartSer) {
+    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, MyOrdersSer, CartSer) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
         $scope.isLogin = LoginSer.isLogin();//是否应经登录
         $scope.showingTab = 'tab1';//当前显示的tab
         $scope.showTips = false;//开始默认不显示提示
         $scope.finishSelect = false;
-        loadGoodsDetailsData();//加载本页数据
+        loadItemData();//加载本页数据
         $scope.amount = 1;//当前数量
-        $scope.isFreePlayed = false;
         $scope.data_eo={};
         $scope.btn_value = {//按钮文字
             addToCart: '加入购物车',
-            buyNow: '立即抢折扣',
-            freePlay:'试玩抢折扣'
+            buyNow: '抢折购买'
         };
         $scope.discount = function (cur_price, old_price) {
             return ((cur_price / old_price) * 10).toFixed(1);
@@ -41,23 +39,15 @@ angular.module('LuckyMall.controllers')
                     });
                     return;
                 } else if ($scope.amount < $scope.inventory) {
-                    if (!$scope.data_goods.IsCanFree) {
-                        $scope.amount++;
-                    } else {
-                        if ($scope.isFreePlayed) {
-                            $scope.amount++;
-                        } else {
-                            swal({
-                                title: "免费游戏模式的商品每次限购一件喔",
-                                type: "error",
-                                confirmButtonText: "确定"});
-                        }
-                    }
+                    $scope.amount++;
                 }
             }
         };
         /*选择属性*/
-        $scope.selectAttr = function (attr, val, attr_index, val_index, disabled) {
+        $scope.selectAttr = function (attr, val, attr_index, val_index, disabled,is_valid) {
+            if(!is_valid){
+                return;
+            }
             if($scope.data_goods.status==1) {//商品正在销售时
                 if (!disabled || $scope.isNoSelection()) {
                     if ($scope.choice.length <= 0) {
@@ -108,11 +98,6 @@ angular.module('LuckyMall.controllers')
             $timeout(function () {
                 $scope.isLogin = LoginSer.isLogin();
             }, 5);
-            isCanFreePlay();
-        });
-        /*玩游戏之后刷新状态*/
-        $rootScope.$on('refresh-item-isCanFree',function(){
-            isCanFreePlay();
         });
 
         /*只有一个选项时默认勾选*/
@@ -120,25 +105,8 @@ angular.module('LuckyMall.controllers')
             var obj=$scope.data_goods.Property;
             for(var o in obj){
                 if(obj[o].attributes.length==1){
-                    $scope.selectAttr(obj[o].name,obj[o].attributes[0].value,o,0,obj[o].attributes[0].disabled);
+                    $scope.selectAttr(obj[o].name,obj[o].attributes[0].value,o,0,obj[o].attributes[0].disabled,obj[o].attributes[0].valid);
                 }
-            }
-        }
-        function isCanFreePlay(){
-            if ($scope.isCanFree) {//测试是否玩使用过免费机会
-                ItemSer.isCanFreePlay(goods_id, function (response, status) {
-                    if (status == 1) {
-                        if (response) {
-                            $timeout(function(){
-                                $scope.isFreePlayed = false;
-                            });
-                        } else {
-                            $timeout(function(){
-                                $scope.isFreePlayed = true;
-                            });
-                        }
-                    }
-                });
             }
         }
         $scope.overMax = function (reset_value) {
@@ -152,55 +120,31 @@ angular.module('LuckyMall.controllers')
             });
         };
 
-        /*赢折扣*/
-        $scope.playForDiscount = function (goods_id) {
-            if (LoginSer.isLogin()) {
-                if (!isFinishSelect()) {//如果没有完成选择
-                    $timeout(function () {
-                        $scope.showTips = true;
+        /*试玩练手*/
+        $scope.playFreeGame = function (goods_id) {
+            var auth='';
+            if(!$scope.isLogin){
+                if($rootScope.session_key!=null) {
+                    auth = $rootScope.session_key;
+                    var g_url = Host.game + '?id=' + goods_id + '&mode=2&from=' + Host.hostname + '&authorization=' + auth;
+                    //console.log(g_url);
+                    $rootScope.openGame(g_url, '', goods_id);
+                }else{
+                    UserSer.getSessionKey(function(response,status){
+                        if(status==1){
+                            $rootScope.session_key=response;
+                            auth = $rootScope.session_key;
+                            var g_url = Host.game + '?id=' + goods_id + '&mode=2&from=' + Host.hostname + '&authorization=' + auth;
+                          //  console.log(g_url);
+                            $rootScope.openGame(g_url, '', goods_id);
+                        }
                     });
-                    return;
                 }
-                if ($scope.amount <= 0) {
-                    swal({
-                        title: "数量有误!",
-                        text: '请输入正确的商品数量',
-                        type: "error",
-                        confirmButtonText: "确定"
-                    });
-                    $scope.amount = 1;
-                    return;
-                }
-                var _type = ($scope.data_goods.IsCanFree == true) ? 1 : 0;
-                var params = {
-                    "Type": _type,
-                    "CommodityId": $scope.data_goods.Id,
-                    "UserId": LoginSer.getData().UserModel.Id,
-                    "SkuId": $scope.sku_id,
-                    "Count": $scope.amount,
-                    "Specifications": angular.toJson(ItemSer.getSelectedAttributes())
-                };
-                $scope.btn_value.freePlay='正在处理...';
-                ItemSer.addToCart(params, function (response,status) {
-                    $scope.btn_value.freePlay='试玩抢折扣';
-                    if (status == 1) {
-                        $scope.$emit('cart-update');
-                        ga('send', 'pageview', {
-                            'page': '/enter_freegame',
-                            'title': '进入免费游戏'
-                        });
-
-                        var g_url=Host.game + '?orderid=' + response.Data.Id + '&mode=2&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
-                        $scope.openModalBFFP(g_url,response.Data.Id,response.Data.CommodityId);
-                    } else if(status == 0) {
-                        handleErrs(response.Code);
-                    } else if (status == 2) {
-                        $scope.$emit("exit");
-                        $scope.$emit("show-login-modal");
-                    }
-                });
-            } else {
-                handleLoginTimeOut();
+            }else{
+                auth=TokenSer.getToken();
+                var g_url = Host.game + '?id=' + goods_id + '&mode=2&from=' + Host.hostname + '&authorization=' + auth;
+            //    console.log(g_url);
+                $rootScope.openGame(g_url, '', goods_id);
             }
         };
 
@@ -235,10 +179,7 @@ angular.module('LuckyMall.controllers')
                 $scope.amount = 1;
                 return;
             }
-            var _type = ($scope.data_goods.IsCanFree == true) ? 1 : 0;
-            if($scope.isFreePlayed){ //如果已经玩过
-                _type=0;
-            }
+            var _type = 0;
             var params = {
                 "Type": _type,
                 "CommodityId": $scope.data_goods.Id,
@@ -260,18 +201,14 @@ angular.module('LuckyMall.controllers')
                         callback();
                     } else if (act == 1) {
                         $scope.purchase_order=response.Data;//立即购买的订单
+                        //console.log($scope.purchase_order);
                         $scope.showModal1($scope.purchase_order);
-                        $scope.btn_value.buyNow = '立即抢折扣';
-                       /* CartSer.requestCartData(function (response, status) {
-                            $scope.btn_value.buyNow = '立即抢折扣';
-                            if (status == 1) {
-                                $state.go('confirmOrder', {source: 'source=purchase'});
-                            }
-                        });*/
+                        $scope.btn_value.buyNow = '抢折购买';
+
                     }
                 } else if (status == 0) {
                     $scope.btn_value.addToCart = '加入购物车';
-                    $scope.btn_value.buyNow = '立即抢折扣';
+                    $scope.btn_value.buyNow = '抢折购买';
                     handleErrs(response.Code);
 
                 }else if (status == 2) {
@@ -279,17 +216,14 @@ angular.module('LuckyMall.controllers')
                 }
             });
         };
-        function loadItemData(){
+        /*加载本页数据*/
+        function loadItemData() {
             $scope.loaded = false;
             ItemSer.requestData(goods_id, function () { //加载商品详细信息数据
                 $scope.data_goods = ItemSer.getData();//产品数据
                 if($scope.data_goods==null){
                     $state.go("home");
                     return;
-                }
-                $scope.isCanFree = $scope.data_goods.IsCanFree;
-                if($scope.isLogin) {
-                    isCanFreePlay();
                 }
                 $scope.choice = new Array();//产品规格选择器，存放被选的属性的下标（索引）
                 $scope.loaded=true;
@@ -306,22 +240,20 @@ angular.module('LuckyMall.controllers')
                     autoSelected();
                 }
             });
-        }
-        /*加载本页数据*/
-        function loadGoodsDetailsData() {
-            loadItemData();
-            ItemSer.requestCategoryByGoodsId(goods_id, function (response, status) {
+            ItemSer.requestCategoryByGoodsId(goods_id, function (response, status) {//加载分类数据
                 if (status == 1) {
                     $scope.data_category = response;//品类数据  包含所属项和品类ID
-                    if (CategorySer.getData() == null) {
-                        CategorySer.requestData(function () {
-                            $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;//通过品类ID获取品类名
-                        });
-                    } else {
-                        $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.Id).CategoryName;
-                    }
+                    CategorySer.requestData(function () {
+                        $scope.data_categoryName = CategorySer.getCategoryById($scope.data_category.categoryId).CategoryName;//通过品类ID获取品类名
+                    });
                 }else if(status==0){
 
+                }
+            });
+            ItemSer.getRanking(goods_id,function(response,status){//加载排行榜
+                if(status==1){
+                    $scope.data_ranking=response;
+              //      console.log($scope.data_ranking);
                 }
             });
         }
@@ -401,7 +333,7 @@ angular.module('LuckyMall.controllers')
             if (err_code == '0X50') {
                 swal({
                     title: "请不要重复下单!",
-                    text: '您可以在购物车或“我的订单”里看到它',
+                    text: '您可以在购物车或订单列表里看到它',
                     type: "error",
                     confirmButtonText: "确定"
                 });

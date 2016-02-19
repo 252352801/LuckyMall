@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--文档声明，遵循html5规范-->
+<!DOCTYPE html>
 <html>
 <head>
     <title>幸运猫</title>
@@ -44,6 +44,13 @@
     <script type="text/javascript" src="./lib/sweetAlert/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./lib/sweetAlert/sweetalert.css"><!--css样式文件-->
 
+
+
+    <script>
+        function gameStarted() {
+            angular.element(document.getElementById('ng-app')).scope().gameStarted();
+        }
+    </script>
 </head>
 <body ng-controller="AppCtrl" ng-app="LuckyMall"  id="ng-app">
     <div ui-view ng-show="!page_loading">

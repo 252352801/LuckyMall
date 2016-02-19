@@ -1,7 +1,7 @@
 angular.module('LuckyMall.controllers')
- .controller('WXPayCtrl',function($rootScope,$scope,$state,WXPaySer,$stateParams,$timeout,PaymentSer,API,$cookies){
+ .controller('WXPayCtrl',function($rootScope,$scope,$state,WXPaySer,$stateParams,$timeout,PaymentSer,API,$cookies,SOTDSvc){
         $scope.trade_id=$stateParams.trade_id;
-        $scope.type=$stateParams.type;
+        $scope.type=$stateParams.type;//支付类型   0支付定金  1支付尾款
         $scope.time_over=false;
         $scope.totalCost=Math.ceil(WXPaySer.getData().totalCost);
         $scope.polling=false;
@@ -10,21 +10,22 @@ angular.module('LuckyMall.controllers')
             $scope.polling=false;
         });
     
-        $scope.goBack=function(){
-            PaymentSer.setIsBacktoPay(true);
-            window.history.back(-1);
-        };
-        $scope.repay=function(order){
-            var repay_order=new Array();
-            repay_order.push(order);
-            PaymentSer.setOrdersData(repay_order);
-            $state.go('confirmOrder',{source:'source=repay'});
+        $scope.goBackRePay=function(){
+            if($scope.type==1) {
+                var tmp = SOTDSvc.get();
+                tmp.from = 'repay';//设为重新支付
+                SOTDSvc.set(tmp);
+                //console.log(SOTDSvc.get());
+                $state.go('confirmOrder', {source: 'source=repay'});
+            }else{
+                window.history.back(-1);
+            }
         };
        /* 获取二维码数据*/
         function getQRCodeData(){
             WXPaySer.getQRCodeData($scope.trade_id,function(response,status){
                 if(status==1){
-                    console.log(response);
+                    //console.log(response);
                     $scope.QRCodeUrl=API.QRCodeUrl.url+response;
                     $scope.polling=true;
                     pollingTradeStatus();//轮询  看交易单是否已经支付

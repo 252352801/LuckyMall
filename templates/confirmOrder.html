@@ -87,6 +87,22 @@
             <label>支付方式</label>
         </p>
 
+        <div class="box-wallet" ng-if="data_balance>0&&total_earnest>0">
+            <div class="bar-balance" ng-style="{'border-color':isUseBalance?'#ff6700':'transparent'}">
+                <a class="my-checkbox checked">
+                    <i class="checkbox"></i>
+                    <label class="label-checkbox">喵喵钱包</label>
+                </a>
+                <span>可用余额：</span>
+                <span class="color-red val" ng-bind="'￥'+data_balance"></span>
+                <span class="color-gray">支付后</span>
+                <span class="color-org" ng-bind="'扣除￥'+(data_balance>=total_earnest?total_earnest:data_balance)"></span>
+                <span class="color-gray">
+                    (定金总额{{'￥'+total_earnest}}，喵喵钱包余额可用于支付定金部分)
+                </span>
+            </div>
+        </div>
+
         <p class="s-label">
             <small>在线支付</small>
         </p>
@@ -97,12 +113,12 @@
                     <img src="./res/images/zhifubao.png" alt=""/>
                 </div>
             </li>
-            <li ng-class="{'cur':pay_type=='weixin'}" ng-click="changePayType('weixin')">
+            <!--<li ng-class="{'cur':pay_type=='weixin'}" ng-click="changePayType('weixin')">
                 <span></span>
                 <div class="img-container">
                     <img src="./res/images/weixinpay.png" alt=""/>
                 </div>
-            </li>
+            </li>-->
 <!--            <li ng-class="{'cur':pay_type=='caifutong'}" ng-click="changePayType('caifutong')">
                 <span></span>
                 <div class="img-container">
@@ -219,7 +235,7 @@
             </div>
             <div>
                 <label>合计金额：</label>
-                <p><span class="cost" ng-bind="'￥'+total_cost"></span>元</p>
+                <p><span class="cost" ng-bind="total_cost"></span>元</p>
             </div>
             <div>
                 <a href="javascript:void(0)" class="btn-submitOrder" ng-click="submitOrder()" ng-bind="btn_val_purchase"></a>

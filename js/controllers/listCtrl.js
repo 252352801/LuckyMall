@@ -105,7 +105,7 @@ angular.module('LuckyMall.controllers')
                 var cate=CategorySer.getCategoryById($scope.cate_id);
                 $scope.category=cate;
                 $scope.cateName=cate.CategoryName;
-                console.log(cate);
+                //console.log(cate);
                 if(cate.FilterModels.length>0) {
                     $scope.hasSubCate=false;
                     FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
@@ -407,7 +407,6 @@ angular.module('LuckyMall.controllers')
             var obj=FilterSer.getSelectData();
             var params_filter='';
             for(var o in obj.filters){
-            /*    alert(obj.filters[o].items.toString());*/
                 params_filter+='filter='+obj.filters[o].filterId+'_'+obj.filters[o].type+'_items='+obj.filters[o].items.toString();
                 if(o<obj.filters.length-1){
                     params_filter+=';';

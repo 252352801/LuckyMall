@@ -52,7 +52,7 @@
                 </div>
                 <div class="cont4">
                     <div class="cont-container">
-                        <p class="unPay" ng-bind="'￥'+(mathCeilPrice(earnest_cost)-data_order.EarnestMoney)"></p>
+                        <p class="unPay" ng-bind="'￥'+earnest_cost"></p>
                         <p ng-if="data_order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+data_order.EarnestMoney"></span></p>
                     </div>
                 </div>
@@ -64,24 +64,25 @@
             <label>支付方式</label>
         </p>
         <div class="box-wallet" ng-if="data_balance>0">
-            <div class="bar-balance">
-                <a class="my-checkbox checked">
-                    <i class="checkbox"></i>
-                    <label class="label-checkbox">喵喵钱包</label>
-                </a>
-                <span>可用余额：</span>
-                <span class="color-red val" ng-bind="'￥'+data_balance">￥100</span>
-                <span>元</span>
-            </div>
-            <p ng-if="needToPay>0">
-                还需支付：
-                <span class="color-red val" ng-bind="'￥'+needToPay"></span>
-            </p>
+        <div class="bar-balance" ng-style="{'border-color':isUseBalance?'#ff6700':'transparent'}">
+            <a ng-class="{'my-checkbox checked':isUseBalance,'my-checkbox':!isUseBalance}" ng-click="toggleCheckWallet()">
+                <i class="checkbox"></i>
+                <label class="label-checkbox">喵喵钱包</label>
+            </a>
+            <span>可用余额：</span>
+            <span class="color-red val" ng-bind="'￥'+data_balance"></span>
+            <span ng-show="isUseBalance" class="color-gray">支付后</span>
+            <span ng-show="isUseBalance" class="color-org" ng-bind="'扣除￥'+(data_balance>=earnest_cost?earnest_cost:data_balance)"></span>
         </div>
-        <p class="s-label" ng-if="needToPay>0">
+        <p ng-if="needToPay()>0&&isUseBalance">
+            还需支付：
+            <span class="color-red val" ng-bind="'￥'+needToPay()"></span>
+        </p>
+    </div>
+        <p class="s-label" ng-if="needToPay()>0">
             <small>在线支付</small>
         </p>
-        <ul class="btn-pay-models" ng-if="needToPay>0">
+        <ul class="btn-pay-models" ng-if="needToPay()>0">
             <li ng-class="{'cur':pay_type=='zhifubao'}" ng-click="changePayType('zhifubao')">
                 <span>√</span>
                 <div class="img-container">
@@ -95,10 +96,10 @@
                 </div>
             </li>
         </ul>
-        <p class="s-label" ng-if="needToPay>0">
+        <p class="s-label" ng-if="needToPay()>0">
             <small>网银支付</small>
         </p>
-        <ul class="btn-pay-models" ng-if="needToPay>0">
+        <ul class="btn-pay-models" ng-if="needToPay()>0">
             <li ng-class="{'cur':pay_type=='bank_icbc'}" ng-click="changePayType('bank_icbc')">
                 <span></span>
                 <div class="img-container">
@@ -162,7 +163,7 @@
         </ul>
     </div>
     <div class="content confirmOrder-bottom">
-        <div ng-if="needToPay>0">
+        <div >
             <label>支付方式：</label>
             <p ng-bind="showPayType()"></p>
         </div>
@@ -170,9 +171,9 @@
             <label>支付类型：</label>
             <p>定金支付</p>
         </div>
-        <div ng-if="needToPay>0">
+        <div>
             <label>合计金额：</label>
-            <p><span class="cost" ng-bind="'￥'+needToPay"></span>元</p>
+            <p><span class="cost" ng-bind="'￥'+earnest_cost"></span>元</p>
         </div>
         <div>
             <button class="btn-submitOrder" ng-click="submitOrder()">确认支付</button>

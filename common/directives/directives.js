@@ -96,14 +96,61 @@ angular.module('LuckyMall')
     })
 
     /*sub页头*/
-    .directive('subHeader', function (CartSer, $timeout, $state, $rootScope) {
+    .directive('subHeader', function ($timeout) {
         return {
             restrict: 'E',
             templateUrl: 'common/templates/sub-header.html',
             replace: true,
             transclude: true,
-            controller: function ($rootScope, $scope, $timeout, LoginSer) {
-                $scope.isLogin = LoginSer.isLogin();
+            controller: function ($rootScope, $scope,$state, LoginSer,CartSer,SearchSer) {
+               // $scope.kw='';//搜索关键字
+                $scope.kw_list=[];
+                $scope.isKeywordShow=true;
+                $scope.clearKw=function(){
+                    $timeout(function(){
+                        $scope.kw='';
+                    });
+                };
+                $scope.hideKwList=function(){
+                    $timeout(function(){
+                        $scope.isKeywordShow=false;
+                    },300);
+                };
+                $scope.showKwList=function(){
+                    $timeout(function(){
+                        $scope.isKeywordShow=true;
+                    },100);
+                };
+                $scope.getKeyWordList=function(kw){
+                    //console.log(kw);
+                    if(kw!=''&&kw!=null&&kw!=undefined) {
+                        var params = {
+                            "key": kw,
+                            "psize": 10,
+                            "pindex": 0
+                        };
+                        SearchSer.getKeyWords(params, function (response, status) {
+                            if (status == 1) {
+                                $scope.kw_list = response;
+                                //console.log($scope.kw_list);
+                            }
+                        });
+                    }
+                };
+                $scope.search=function(){
+                    if($scope.kw){
+                        $state.go('search',{keyword:$scope.kw});
+                        $scope.kw_list=[];
+                    }
+                };
+                $scope.goItemPage=function(kw){
+                    $state.go('item',{goods_id:kw.key});
+                };
+                $scope.searchWithKeyWord=function(kw){
+                    if(kw){
+                        $state.go('search',{keyword:kw});
+                    }
+                };
                 $scope.removeGoodsInCart = function (order_id) {
                     swal({
                             title: "确定要删除吗?",
@@ -445,7 +492,7 @@ angular.module('LuckyMall')
                     function countDown() {
                         $timeout(function () {
                             remain_time--;
-                            console.log(attrs.require)
+                            //console.log(attrs.require)
                             if (attrs.value) {
                                 element.attr('value', remain_time + '秒');
                                 if (remain_time > 0&&attrs.require=='true') {
@@ -587,7 +634,7 @@ angular.module('LuckyMall')
                         element.css('transition','opacity 1s');
                         element.css('opacity','1');
                         attrs.$set('src', src);
-                    },300);
+                    },100);
                 };
                 img.onerror = function () {
                     element.removeClass('img-loading');
@@ -728,13 +775,28 @@ angular.module('LuckyMall')
 
 
     /*绑定内容*/
-    .directive('innerHtml', function () {
+    .directive('innerHtml', function ($compile) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 if(attrs.innerHtml) {
-                    scope.$watch(attrs.innerHtml, function (html) {
-                        element.html(html || '');//更新html内容
+                    scope.$watch(attrs.innerHtml, function (html,o) {
+                        if(html!=o) {
+                            var content =$compile('<div>'+ html+'</div>')(scope);
+                            element.append(content);
+                            runJs(content[0].children);
+                            function runJs(obj){//执行内部的js
+                                for(var o in obj){
+                                    if(obj[o].nodeName=='SCRIPT'){
+                                        eval(obj[o].innerHTML);
+                                    }else{
+                                       if(obj[o].children){
+                                            runJs(obj[o].children);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     });
                 }
             }
@@ -866,7 +928,7 @@ angular.module('LuckyMall')
                     countDown();
                     function countDown() {
                         element.timer = setInterval(function () {
-                            if (element.time > 0) {
+                            if (element.time >= 0) {
                                 element.time--;
                                 var new_inner = initTime(element.time);
                                 element.html(new_inner);
@@ -874,6 +936,9 @@ angular.module('LuckyMall')
                                 clearInterval(element.timer);
                                 if (typeof scope[attrs.timeOver] == "function") {
                                     scope[attrs.timeOver]();
+                                }
+                                if(attrs.timevershow){
+                                    element.html(attrs.timevershow);
                                 }
                             }
                         }, 1000);
@@ -883,6 +948,12 @@ angular.module('LuckyMall')
 
                 function initTime(time){
                     var t=time;
+                    if(t<0){
+                        if(attrs.timevershow){
+                            element.html(attrs.timevershow);
+                        }
+                        return;
+                    }
                     var str='';
                     if(t>3600*24){
                         str+=parseInt(t/(3600*24))+'天';
@@ -917,7 +988,7 @@ angular.module('LuckyMall')
 
 
 /*游戏窗口*/
-.directive('gameWindow', function ($rootScope,$state,MyOrdersSer,Host) {
+.directive('gameWindow', function ($rootScope,$state,MyOrdersSer,Host,SOTDSvc,$timeout) {
     return {
         restrict: 'E',
         templateUrl: 'common/templates/iFrame-game.html',
@@ -925,10 +996,10 @@ angular.module('LuckyMall')
         link: function (scope, element, attrs) {
 
               scope.isLoadingGame=true;
-                var iframe_game=element.find('iframe');
+                var IFrame_game=element.find('iframe');
                 scope.$watch("game.url", function (new_val, old_val) {
                      if (new_val!=old_val) {
-                        iframe_game.attr('src', new_val);
+                         IFrame_game.attr('src', new_val);
                      }
                 });
                 window.addEventListener('message',gameHandler,false);
@@ -941,8 +1012,11 @@ angular.module('LuckyMall')
                                 break;
                         }
                     }else {
-                        if (e.data == true) {
-                            scope.isLoadingGame = false;
+                        if (e.data === true) {
+                            console.log('####################loadedGame##################');
+                            $timeout(function(){
+                                scope.isLoadingGame = false;
+                            });
                         } else {
                             switch (e.data.mode) {
                                 case 0://返回购物车
@@ -955,20 +1029,24 @@ angular.module('LuckyMall')
                                     break;
                                 case 2://支付
                                     $rootScope.$broadcast('cart-update');
-                                    MyOrdersSer.setTempOrder($rootScope.game.orderId);
-                                    $state.go('confirmOrder', {source: 'source=game'});
+                                    SOTDSvc.set({
+                                        "from":'game',
+                                        "orders":[$rootScope.game.orderId]
+                                    });
+                                    $state.go('confirmOrder');
                                     break;
                                 case 3://登陆
                                     $state.go('login');
                                     break;
                                 case 4://详情页
                                     $rootScope.$broadcast('cart-update');
-                                    $rootScope.$broadcast('refresh-item-isCanFree');
+                                   // $rootScope.$broadcast('refresh-item-isCanFree');
                                     $state.go('item', {goods_id: $rootScope.game.commodityId});
+                                    break;
+                                case 5://无任何处理
                                     break;
                             }
                             $rootScope.closeGame();
-                            $rootScope.initFreeChance();
                         }
                     }
                     //}
@@ -1049,7 +1127,7 @@ angular.module('LuckyMall')
             },*/
             link:function(scope, element, attrs){
             },
-            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout,MyOrdersSer){
+            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout,MyOrdersSer,UserSer,SOTDSvc){
                 if(TokenSer.getToken()){//存有token时请求用户数据
                     loadUserData();
                 }
@@ -1064,8 +1142,13 @@ angular.module('LuckyMall')
                         'title': '进入付定金游戏'
                     });
                     $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
+                    $scope.isModal1show=false;
                 }
                 $scope.showModal1 = function (order) {
+                    SOTDSvc.set({
+                        "from":'purchase',
+                        "orders":[order.Id]
+                    });
                     if($scope.data_user!=undefined) {
                         show(order);
                     }else{
@@ -1075,14 +1158,21 @@ angular.module('LuckyMall')
                     }
 
                 };
+                $scope.purchase=function(){
+                    $state.go('confirmOrder');
+                };
                 $scope.closeModal1 = function () {
                     $scope.isModal1show = false;
                     $scope.agree = false;
                     $scope.energy.tips = '';
                 };
                 $scope.showModal2 = function () {
+                    if(UserSer.getData().UserModel.IsAgreeEarnest==true){
+                        $state.go('payForEarnest',{params:'order_id='+$scope.data_eo.Id});
+                    }else{
+                        $scope.isModal2show = true;
+                    }
                     $scope.isModal1show = false;
-                    $scope.isModal2show = true;
                 };
                 $scope.closeModal2 = function () {
                     $scope.agree = false;
@@ -1094,6 +1184,11 @@ angular.module('LuckyMall')
                 };
 
                 $scope.payForEarnest = function () {
+                        UserSer.agreeEarnestProtocol(function(response,status){
+                            if(status==1){
+                                $scope.$emit('user-update');//更新用户数据
+                            }
+                        });
                         $state.go('payForEarnest',{params:'order_id='+$scope.data_eo.Id});
                 };
                 function show(order){
@@ -1104,11 +1199,14 @@ angular.module('LuckyMall')
                     } else {
                         $scope.energy.isEnough = false;
                     }
-                    $scope.gameUrl = Host.game + '?orderid=' + order.Id + '&from=' + Host.hostname + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.hostname + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.game_orderId = order.Id;
                     $scope.game_commodityId = order.CommodityId;
-                    MyOrdersSer.setTempOrder(order);
-                    $scope.btn_buyNow_href = '/confirmOrder/source=purchase';
+                    SOTDSvc.set({
+                        "from":'purchase',
+                        "orders":[order.Id]
+                    });
+                    $scope.btn_buyNow_href = '/confirmOrder';
                     $timeout(function () {
                         $scope.isModal1show = true;
                     });

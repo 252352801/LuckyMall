@@ -226,10 +226,17 @@ angular.module('LuckyMall')
             //},
             link: function(scope, element, attrs) {
                 // scope.data_grid=init(angular.fromJson(attrs['griddata']));
-                scope.w=500;//$(element).context.parentElement.clientWidth;
+                scope.w=1100;//$(element).context.parentElement.clientWidth;
                 function init(obj){
                     if(obj) {
                         for (var o in obj) {
+                            if(obj[o].mode!=undefined&&obj[o].link!=undefined){
+                                switch (obj[o].mode){
+                                    case 0:
+                                        obj[o].href='/list/category='+obj[o].link+'/0/';//设置楼成链接
+                                        break;
+                                }
+                            }
                             for (var i in obj[o].items) {
                                 var r = [];
                                 for(var n=0;n<obj[o].items[i].row;n++){
@@ -242,12 +249,34 @@ angular.module('LuckyMall')
                                 }
                                 obj[o].items[i].baseGrid = r;
 
+                                for(var j in obj[o].items[i].grids){
+                                    switch(obj[o].items[i].grids[j].mode){
+                                        case 0:
+                                            obj[o].items[i].grids[j].href='/list/category='+obj[o].items[i].grids[j].link+'/0/';
+                                            break;
+                                        case 1:
+                                            obj[o].items[i].grids[j].href='/brand/'+obj[o].items[i].grids[j].link;
+                                            break;
+                                        case 2:
+                                            obj[o].items[i].grids[j].href='/item/'+obj[o].items[i].grids[j].link;
+                                            break;
+                                    }
+                                }
+                                obj[o].items[i].height=(scope.w/obj[o].items[i].col)*obj[o].items[i].row;//设置高度
+
+
+
+                                obj[o].items[i].isAllBrands=true;//假设全是品牌
+                                for(var _index in obj[o].items[i].grids){
+                                    if(obj[o].items[i].grids[_index].mode!=1){
+                                        obj[o].items[i].isAllBrands=false;
+                                    }
+                                }
                             }
                         }
                     }
                     return obj;
                 };
-
                 scope.$watch(attrs['griddata'],function(n_val,o_val){
                     if(n_val!=o_val){
                         //console.log(n_val);
@@ -258,4 +287,82 @@ angular.module('LuckyMall')
             }
         }
     })
+
+
+    .directive('floorNav',function($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope,element,attrs) {
+                var floor_top=[];//楼层top
+                var win_h=window.screen.availHeight;
+               scope.$watch(attrs.len,function(new_val,old_val){
+                    if(new_val!=old_val){
+                        init(new_val);
+                    }
+                });
+                function init(length){
+                    element.css('margin-top',-length*40/2+'px');
+                    window.addEventListener('scroll',function(){
+                        var scroll_top;
+                        if (document.documentElement.scrollTop) {
+                            scroll_top = document.documentElement.scrollTop;
+                        } else {
+                            scroll_top = document.body.scrollTop;
+                        }
+                        if(scroll_top>=650){
+                            $timeout(function(){
+                                scope.showFloorNav=true;
+                            });
+                        }else{
+                            $timeout(function(){
+                                scope.showFloorNav=false;
+                            });
+                        }
+                        if(floor_top.length==0&&document.getElementById("floor"+(length-1))!=null) {
+                            for (var i = 0; i < length; i++) {
+                                var f_top = getPosition(document.getElementById("floor" + i));
+                                floor_top.push(f_top.top);
+                            }
+                            setCurrentFloor(scroll_top);
+                        }else{
+                           setCurrentFloor(scroll_top);
+                        }
+
+                    });
+                    function setCurrentFloor(scroll_top){//设置当前楼层 scroll_top:浏览器滚动高度
+                        for(var o in floor_top){
+                            if(scroll_top>=floor_top[o]-win_h/2){
+                                scope.cur_floor=o;
+                            }
+                        }
+                    }
+                    scope.scrollTo=function(target_id){
+                        var t=document.getElementById(target_id);//目标元素
+                        var t_top=getPosition(t).top;
+                        var obj;
+                        if (document.documentElement.scrollTop) {
+                            obj= document.documentElement;
+                        } else {
+                            obj = document.body;
+                        }
+                        var scroll_top=obj.scrollTop;
+                        var change_val=t_top-scroll_top;
+                        tweenMove({
+                            element: obj,
+                            attr: 'scrollTop',//需要改变的属性
+                            value: change_val,//改变的值 可以为正负
+                            time: 200,//执行动画的时间
+                            moveName: 'Quadratic',//动画名，默认为Linear
+                            moveType: 'easeOut',//动画的缓动方式，默认为easeIn
+                            callback:function(){
+                                //console.log('current_scroll_top:'+obj.scrollTop);
+                            }
+                        });
+                    };
+
+                }
+            }
+        };
+    })
+
 

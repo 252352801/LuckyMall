@@ -13,7 +13,11 @@
                         callback(response, 0);
                     }
                 }).error(function(resp,status){
-                    callback(status, -1);
+                    if(status==401){
+                        callback(status, -2);
+                    }else{
+                        callback(status, -1);
+                    }
                 });
             }
 

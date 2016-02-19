@@ -38,7 +38,7 @@
                     </p>
                     <p class="p-img-verify">
                         <input type="text" placeholder="输入右边验证码" name="img_code" required ng-model="img_code" ng-change="clearError('imgCode')" />
-                        <img data-ng-src="data:image/png;base64,{{captchaCode}}"  alt="" title="点击刷新" ng-click="getCaptchaCode()" error-src="./res/images/default.png"/>
+                        <img ng-show="captchaCode" data-ng-src="data:image/png;base64,{{captchaCode}}"  alt="" title="点击刷新" ng-click="getCaptchaCode()" error-src="./res/images/default.png"/>
                     </p>
                     <p class="p-verifyCode">
                         <input  placeholder="手机验证码" ng-model="code"  autocomplete="false" maxlength="6" name="code" required ng-disabled="form_register.mobile.$invalid" ng-change="clearError('code')"/>
@@ -51,6 +51,9 @@
                     <p ng-class="{'checked':form_register.re_password.$valid&&form_register.re_password.$modelValue==form_register.password.$modelValue}">
                         <input  type="password" placeholder="再次输入密码" ng-model="re_password" autocomplete="false" name="re_password" required  onpaste="return false" ng-change="clearError('repPassword')" />
                     </p>
+                 <!--   <p>
+                        <input  type="text" placeholder="输入分享码" ng-model="shareCode" autocomplete="false" name="shareCode"  />
+                    </p>-->
                     <p>
                         <input class="ck_protocol" type="checkbox" name="ck_protocol" required ng-model="ck_protocol"/>
                         <a href="/support/protocol" target="_blank" class="color-org">

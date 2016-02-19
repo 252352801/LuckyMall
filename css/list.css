@@ -280,7 +280,7 @@
     font-size:12px;
     vertical-align:top;
     position: absolute;
-    left: 93.3%;
+    left: 93%;
     top: 12px;
 }
 .filters ul .btn-more{
@@ -288,7 +288,7 @@
     width: 42px;
     left: 96.5%;
     top: 12px;
-    margin-left:10px;
+    margin-left:2px;
 }
 .filters ul .btn-multi:hover{
     color:#666;
@@ -485,4 +485,21 @@
     display:block;
    padding-top:10px;
     overflow: hidden;
+}
+
+
+.search.pro-list-top{
+    margin-top:15px;
+}
+.search .icon-db-arrow{
+    left:70px;
+}
+.search.tips-no-pro{
+    margin-top:15px;
+    line-height:300px ;
+    height:100%;
+    background:#f1f1f1;
+}
+.search.tips-no-pro .link{
+    font-size:14px;
 }
