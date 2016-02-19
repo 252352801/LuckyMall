@@ -1,0 +1,107 @@
+<div class="sub-header">
+<div class="content">
+<div class="logo pull-left">
+    <a href="/home" >
+        <img src="./res/logo/logo.png" alt="幸运猫"/>
+       
+    </a>
+</div>
+<div class="user-box pull-right">
+    <div class="btn-user btn-handle">
+        <div>
+            <a href="/UCIndex/myOrders/unPay">
+                <span class="icon-user"></span>
+                <span>我的商城</span>
+                <span class="icon-arrow-down"></span>
+            </a>
+        </div>
+        <div class="hide-user" ng-if="!isLogin">
+            <div class="tips-unLogin">
+                <p>您未登录</p>
+                <p><a class="btn-login" href="/login">点击这里登录</a></p>
+            </div>
+        </div>
+        <div class="hide-user" ng-if="isLogin">
+            <h3>{{welcome_word}}<a href="/UCIndex/myOrders/unPay" ng-bind="simpleData_user.UserModel.NickName"></a>！</h3>
+            <ul class="simple-menu">
+                <li><a href="/UCIndex/myOrders/unPay">待付款({{simpleData_unPay_count}})</a></li>
+                <li><a href="/UCIndex/myOrders/paid">待收货({{simpleData_paid_count}})</a></li>
+            </ul>
+            <ul class="simple-menu">
+                <li><a href="/UCIndex/myMessage/0">我的消息</a></li>
+                <li><a href="/UCIndex/myWallet">喵喵钱包</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="btn-cart btn-handle no-border-l">
+        <div class="icon-amount-cart" ng-bind="cartAmount"></div>
+        <a href="/shoppingCart">
+            <span class="icon-shoppingCart"></span>
+            <span class="label">购物车</span>
+            <span class="icon-arrow-down"></span>
+        </a>
+        <div class="hide-cart" ng-show="isLogin&&cartAmount>0">
+            <p class="hide-cart-tips" ng-show="cartTimeRemain>0">
+                <span class="icon-time"></span>
+                <!--<span ng-bind="cart(cart_time_remain/60)+'分'+cart_time_remain%60+'秒'"></span>-->
+                <span ng-bind="cartTimeRemainFormat"></span>
+                后购物车被清空！
+            </p>
+            <ul class="cart-simple-list">
+                <li ng-repeat="list in sp_data_cart">
+                    <div class="bar-img-goods">
+                        <a href="/item/{{list.CommodityId}}">
+                            <img ng-src={{imgHost+list.imageUrl+'@70w_70h_100Q.jpg'}} alt="" title=""/>
+                        </a>
+                    </div>
+                    <a href="/item/{{list.CommodityId}}">
+                        <h2 ng-bind="list.CommodityName" title={{list.CommodityName}}></h2>
+                    </a>
+
+                    <p>
+                        <span class="property" ng-repeat="property in list.Specifications" ng-bind="property.value"></span>
+                    </p>
+
+                    <p>
+                        <span class="price" ng-bind="'￥'+list.cost"></span>
+                        <span ng-bind="'×'+list.Count"></span>
+                    </p>
+                    <span class="icon-remove" ng-click="removeGoodsInCart(list.Id)" ng-if="list.EarnestMoney==0">×</span>
+                </li>
+            </ul>
+            <div class="hide-cart-bottom">
+                <div class="hide-cart-bottom-l pull-left">
+                    <p>
+                        共<span class="sum-amount" ng-bind="sp_data_cart.totalAmount"></span>件商品
+                    </p>
+
+                    <p class="color-red">
+                        <span>￥</span>
+                        <span class="sum-cost" ng-bind="sp_data_cart.totalCost.toFixed(2)"></span>
+                    </p>
+                </div>
+                <a class="btn-to-pay" href="/confirmOrder/source=shoppingCart">去结算</a>
+            </div>
+        </div>
+        <div class="hide-cart" ng-show="!isLogin||cartAmount<=0">
+            <div class="tips-cart-null">
+                <span class="icon-cart-null"></span>
+                <p>您的购物车空空如也</p>
+               <p> 赶紧去选购吧</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nav sub-h-nav">
+    <a ng-class="{'cur nav2':cur_nav==2,'nav2':cur_nav!=2}" href="/home" title="正在热卖">正在热卖</a>
+    <a  ng-class="{'cur':curMarket==market.Id}" ng-repeat="market in data_market"   ng-bind="market.MarketName" ng-click="goMarket(market.DesktopPage,market.Id)"></a>
+    <a ng-class="{'cur':cur_nav=='guide'}" href="/guide" title="新手指南">新手指南</a>
+    <a class="border-bottom4 icon-mb-link" href="#" title="">
+        <div class="sub-h-QR">
+            <img  src="http://webapi.xingyunmao.cn/api/system/appqrcode" alt=""/>
+        </div>
+    </a>
+</div>
+<div ng-transclude></div>
+</div>
+</div>

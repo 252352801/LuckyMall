@@ -1,0 +1,24 @@
+<div class="header">
+    <div class="content">
+        <div class="pull-left" ng-show="!isLogin">
+     <!--       <a class="no-padding-l"  title="QQ登录">QQ登录</a>-->
+            <a class="header-has-border" ng-click="goLogin()" title="请登录">请登录</a>
+            <a href="/register" title="免费注册">免费注册</a>
+        </div>
+        <div class="pull-left ng-hide" ng-show="isLogin">
+            <div class="user-simpleInfo">
+                <a href="/UCIndex/myOrders/unPay">
+                    <img class="user-head-img" src="./res/images/touxiang.jpg" alt=""/>
+                </a>
+                <p class="name"><a href="/UCIndex/myOrders/unPay" ng-bind="showName"></a></p>
+                <span ng-class="'icon icon-lucky-energy-level'+luckyEnergy.level"></span>
+            </div>
+            <button class="btn-exit" ng-click="exit()">退出</button>
+        </div>
+        <div class="pull-right">
+            <!--<a href="#" title="客户服务">客户服务</a>-->
+            <a class="header-has-border"  href="/support/qa" title="帮助中心">帮助中心</a>
+            <span class="no-padding-r"  title="客服热线">客服热线:400-808-9136</span>
+        </div>
+    </div>
+</div>

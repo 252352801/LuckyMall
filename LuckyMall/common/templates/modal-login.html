@@ -1,0 +1,36 @@
+<div class="modal-container ng-hide">
+<div ng-class="{'modal-login login show':isLoginModalShow,'modal-login login':!isLoginModalShow}" id="modal_login">
+    <div class="login-tabs">
+        <div class="tab-items">
+            <a class="tab-item cur">账号登录</a>
+            <a class="tab-item" ng-click="goRegister()">账号注册</a>
+        </div>
+        <form class="form-login tab-content" name="form_login" ng-submit="login()" novalidate="novalidate">
+            <p class="input-tips" ng-bind="tips" ng-show="hasInputError"></p>
+            <p>
+                <input class="input-username" type="text" placeholder="用户名(手机号)" ng-model="username" name="username" required ng-pattern="/^[1][3458]\d{9}$/"  ng-change="showTips('')" autocomplete="false"/>
+            </p>
+            <p>
+                <input  class="input-password"type="password" placeholder="密码" ng-model="password" name="password" required autocomplete="false" />
+            </p>
+            <p class="bar-lost-pw">
+                <input type="checkbox" id="login_auto" ng-checked="keepLogin" />
+                <label class="label-ck" for="login_auto">自动登录</label>
+                <a class="a-lost-pw" ng-click="goLostPWPage()" title="">忘记密码？</a>
+            </p>
+            <p>
+                <input class="btn-sigIn" type="submit" ng-value="value_btn" />
+            </p>
+        </form>
+        <div class="box-quick-login">
+<!--        <h3>快捷登录</h3>
+        <div>
+            <a href="" title="" class="ql-QQ">腾讯QQ</a>
+            <a href="" title="" class="ql-WX">微信</a>
+            <a href="" title="" class="ql-XL">新浪微博</a>
+        </div>-->
+    </div>
+    </div>
+    <span class="btn-close" title="关闭" ng-click="closeLoginModal()">×</span>
+</div>
+</div>

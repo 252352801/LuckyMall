@@ -1,0 +1,107 @@
+<p class="menu-cont-title">
+    <label>收货地址</label>
+</p>
+
+
+<form class="box-add-address" ng-show="isAddFormShow==true">
+    <p class="sub-title">新增收货地址<small>标记<b>*</b>为必填项</small></p>
+    <p>
+        <label class="label">所在地区</label>
+        <input class="input-area" id="uc_area" ng-model="new_area" readonly area-picker area-picker-finish="areaInputFinish"  placeholder="请选择区域"/>
+        <small class="tips" ng-bind="tips.inputAreaTip"></small>
+    </p>
+    <p>
+        <label class="label">详细地址</label>
+        <input class="input-address" type="text" placeholder="请输入详细、准确的收货地址" ng-model="new_address" require-address="inputAddressTip" autocomplete="false"/>
+        <small class="tips" ng-bind="tips.inputAddressTip"></small>
+    </p>
+<!--    <p>
+        <label class="label">邮政编码</label>
+        <input type="text" placeholder="如不清楚邮政编码，请填写000000"  />
+    </p>-->
+    <p>
+        <label class="label">收货人姓名</label>
+        <input type="text" placeholder="长度不能超过25个字符"  ng-model="new_consignee" require-name="inputNameTip" autocomplete="false"/>
+        <small class="tips" ng-bind="tips.inputConsigneeTip"></small>
+    </p>
+    <p>
+        <label class="label">手机号码</label>
+        <input type="text" placeholder="快递小哥将拨打这个电话与您联系"  ng-model="new_mobile" require-mobile="inputMobileTip" autocomplete="false" />
+        <small class="tips" ng-bind="tips.inputMobileTip"></small>
+    </p>
+    <p>
+        <input class="ckb-setDefault" type="checkbox" id="ckb_default_address" ng-model="new_setDefault" />
+        <label class="lb-setDefault" for="ckb_default_address">设为默认收货地址</label>
+    </p>
+    <p>
+        <input class="btn-save" type="submit" ng-value="value_btn_add" ng-click="addAddress()" />
+        <input class="btn-cancel" type="button" value="取消" ng-click="hideAddForm()" />
+    </p>
+</form>
+
+<form class="box-add-address" ng-show="isEditFormShow==true">
+    <p class="sub-title">修改收货地址<small>标记<b>*</b>为必填项</small></p>
+    <p>
+        <label class="label">所在地区</label>
+        <input class="input-area" id="uc_area_edit" readonly area-picker area-picker-finish="areaEditFinish" ng-model="edit_area" placeholder="请选择区域"/>
+        <small class="tips" ng-bind="tips.inputAreaTip"></small>
+    </p>
+    <p>
+        <label class="label">详细地址</label>
+        <input class="input-address" type="text" placeholder="请输入详细、准确的收货地址" ng-model="edit_address" require-address="inputAddressTip" autocomplete="false"/>
+        <small class="tips" ng-bind="tips.inputAddressTip"></small>
+    </p>
+    <!--    <p>
+            <label class="label">邮政编码</label>
+            <input type="text" placeholder="如不清楚邮政编码，请填写000000"  />
+        </p>-->
+    <p>
+        <label class="label">收货人姓名</label>
+        <input type="text" placeholder="长度不能超过25个字符"  ng-model="edit_consignee" require-name="inputNameTip" autocomplete="false"/>
+        <small class="tips" ng-bind="tips.inputConsigneeTip"></small>
+    </p>
+    <p>
+        <label class="label">手机号码</label>
+        <input type="text" placeholder="快递小哥将拨打这个电话与您联系"  ng-model="edit_mobile" require-mobile="inputMobileTip" autocomplete="false" />
+        <small class="tips" ng-bind="tips.inputMobileTip"></small>
+    </p>
+    <p>
+        <input class="ckb-setDefault" type="checkbox" id="ckb_default_address2" ng-model="edit_setDefault2" />
+        <label class="lb-setDefault" for="ckb_default_address2">设为默认收货地址</label>
+    </p>
+    <p>
+        <input class="btn-save" type="submit" ng-value="value_btn_edit" ng-click="updateAddress()"  />
+        <input class="btn-cancel" type="button" value="取消" ng-click="hideEditForm()" />
+    </p>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+<div class="loading-tips" ng-show="showLoading==true">正在加载...</div>
+<ul class="address-list" ng-show="showLoading==false">
+    <li ng-class="{'cur':list.Selected}" ng-repeat="list in data_address|orderBy:'Selected':true">
+        <h3><span ng-bind="list.ConsigneeName"></span>{{list.ConsigneeMobile}}</h3>
+
+        <p class="address-info" ng-bind="list.Area+list.ConsigneeAddress"></p>
+<!--
+        <p class="take-delivery-time">收货时间：不限</p>-->
+        <small class="mark" ng-if="list.Selected">默认地址</small>
+        <p class="address-handle">
+            <a ng-if="!list.Selected" ng-click="setDefault(list.Id)">设为默认地址</a>
+            <a ng-click="showEditForm(list)">修改</a>
+            <a ng-click="removeAddress(list.Id)">删除</a>
+        </p>
+    </li>
+    <li class="btn-addAddress" ng-show="isAddFormShow==false" ng-click="showAddForm()">
+        <h5>+</h5>
+        <small>添加地址</small>
+    </li>
+</ul>
