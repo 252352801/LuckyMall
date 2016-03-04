@@ -11,10 +11,10 @@
 <ul>
     <li class="dc-cart-li" ng-repeat="list in data_card">
         <div class="details">
-            <a class="img-container" href="list.Order.CommodityId">
+            <a class="img-container" href="/item/{{list.Order.CommodityId}}">
                 <img real-src={{imgHost+list.imgUrl+'@80w_80h_100Q.png'}} alt="" temp-src="./res/images/default.png"/>
             </a>
-            <a href="list.Order.CommodityId">
+            <a href="/item/{{list.Order.CommodityId}}">
                 <h2 ng-bind="list.Order.CommodityName"></h2>
             </a>
 
@@ -32,7 +32,7 @@
         <div class="card">
             <div class="card-top">
                 <label></label>
-                <span><font ng-bind="list.BaseDiscount.toFixed(1)"></font>折</span>
+                <span><font ng-bind="list.DiscountValue"></font>折</span>
             </div>
             <p>使用说明：限本商品使用</p>
            <!-- <p>使用期限：2015.08.15-2015.12.03</p>-->

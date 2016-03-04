@@ -94,6 +94,15 @@ input:focus{
 .color-red{
     color:#ff0000!important;
 }
+.color-666{
+    color:#666!important;
+}
+.color-999{
+    color:#999!important;
+}
+.small-font{
+    font-size:12px;
+}
 .container{
     min-width:1100px;
     min-height:650px;
@@ -516,7 +525,7 @@ a{
     top:50%;
     margin-left:-16px;
     margin-top:-32px;
-    background-color:rgba(0,0,0,0.8);
+    background-color:rgba(0,0,0,0.9);
     border-radius:5px;
     color:#ccc;
     line-height:100px;
@@ -706,7 +715,7 @@ a{
 }
 .user-simpleInfo{
     padding-left:33px;
-    padding-right:30px;
+    /*padding-right:30px;*/
     position:relative;
 }
 .header .content .user-simpleInfo a{
@@ -792,9 +801,17 @@ a{
     cursor:pointer;
     background:none;
     line-height:40px;
+    width:40px;
+    height:40px;
+    background: url(../res/icon/icon_exit.png) 5px 12px no-repeat;
+    opacity:0.3;
+    position:relative;
+    left:0px;
+    top:0px;
 }
 .btn-exit:hover{
     color:#ff6700;
+    opacity:0.7;
 }
 .input-tips{
     display:block;
@@ -2296,6 +2313,9 @@ ul.dynamic li p a:hover{
  -khtml-user-select:none;
  user-select:none;
 }
+.txt-left{
+    text-align:left!important;
+}
 .txt-center{
     text-align:center!important;
 }
@@ -2948,9 +2968,7 @@ modal-beforeGame
     animation: modalHide 0.3s;
 
 }
-.modal-protocol-payForEnergy .modal-content.modal2-hide{
-    animation: modalHide 0.3s;
-}
+
 .modal-protocol-payForEnergy .modal-content{
     height: 420px;
     margin-top:-210px;
@@ -3373,3 +3391,402 @@ modal-beforeGame
     color:#ff6700;
 }
 /*搜索页 end*/
+
+
+/*============
+获取折扣modal
+=============*/
+.modal-getDisc{
+    width:680px;
+    height:420px;
+    position:relative;
+    left:50%;
+    top:50%;
+    margin-left:-340px;
+    margin-top:-210px;
+    border-radius:4px;
+    background:#fff;
+    overflow:hidden;
+}
+.modal-getDisc .modal-title{
+    line-height:40px;
+    border-bottom:1px solid #f0f0f0;
+    font-size:14px;
+    text-indent:20px;
+    color:#666;
+    font-weight:500;
+    background:#f1f1f1;
+}
+.modal-getDisc .btn-close{
+    display: block;
+    width:40px;
+    height:40px;
+    font-size:24px;
+    position:absolute;
+    left:100%;
+    top:0px;
+    margin-left:-40px;
+    text-align:center;
+    line-height:40px;
+    color:#aaa;
+    cursor:pointer;
+}
+.modal-getDisc .btn-close:hover{
+    color:#666;
+}
+.modal-getDisc .menu{
+    overflow:hidden;
+}
+.modal-getDisc .menu.disabled li{
+    opacity:0.3;
+}
+.modal-getDisc .menu .disabled{
+    opacity:0.3;
+}
+.modal-getDisc .menu.disabled li:last-child{
+    opacity: 1;
+}
+.modal-getDisc .menu li{
+    box-sizing:border-box;
+   width:140px;
+    height:140px;
+    float:left;
+    margin-left:24px;
+    margin-top:20px;
+    border:1px solid #f1f1f1;
+    cursor: pointer;
+    text-align:center;
+    padding-top:100px;
+    position:relative;
+}
+.modal-getDisc .menu li:hover{
+    background:#f1f1f1;
+}
+.modal-getDisc .slider-right{
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:100%;
+    top:0px;
+    background:#fff;
+    z-index:999;
+}
+.modal-getDisc .btn-return{
+    font-size:12px;
+    margin-right:20px;
+    cursor:pointer;
+}
+.modal-getDisc .btn-return:hover{
+    color:#333;
+}
+.modal-getDisc .btn-exc-e:before{
+    display:block;
+    content:'';
+    width:50px;
+    height:50px;
+    background: url(../res/icon/icon_coupon.png);
+    position:absolute;
+    left:45px;
+    top:25px;
+}
+.modal-getDisc .btn-exc-m:before{
+    display:block;
+    content:'';
+    width:50px;
+    height:50px;
+    background: url(../res/icon/icon_wallet.png);
+    position:absolute;
+    left:45px;
+    top:25px;
+}
+.modal-getDisc .btn-play:before{
+    display:block;
+    content:'';
+    width:50px;
+    height:50px;
+    background: url(../res/icon/icon_game.png);
+    position:absolute;
+    left:45px;
+    top:25px;
+}
+.modal-getDisc .menu  li.btn-play{
+    opacity: 1;
+}
+.modal-getDisc .menu  li.btn-play.disabled{
+    opacity:0.3;
+}
+.modal-getDisc .btn-purchase:before{
+    display:block;
+    content:'';
+    width:50px;
+    height:50px;
+    background: url(../res/icon/icon_purchase.png);
+    position:absolute;
+    left:45px;
+    top:25px;
+}
+.modal-getDisc .btn-payForEarnest:before{
+    display:block;
+    content:'';
+    width:50px;
+    height:50px;
+    background: url(../res/icon/icon_payEarnest.png);
+    background-size:100%;
+    position:absolute;
+    left:45px;
+    top:25px;
+}
+.modal-getDisc .box-energy {
+    min-height:100px;
+    padding-left:150px;
+    padding-right:250px;
+    padding-top:20px;
+    padding-bottom:20px;
+    position:relative;
+    line-height:30px;
+}
+.modal-getDisc .box-energy img{
+    position:absolute;
+    left:40px;
+    top:20px;
+}
+.modal-getDisc .box-energy .bar-energy{
+    width:200px;
+    height:16px;
+    border:1px solid #ff6700;
+    border-radius:30px;
+    overflow: hidden;
+}
+.modal-getDisc .label-other{
+    border-top:1px solid #f1f1f1;
+    text-align: center;
+    width:94%;
+    margin:0 auto;
+}
+.modal-getDisc .label-other span{
+    position:relative;
+    top:-10px;
+    background:#fff;
+    padding:5px 10px;
+    color:#aaa;
+}
+.modal-getDisc .box-play{
+    position:absolute;
+    left:450px;
+    top:20px;
+    color:#666;
+}
+.modal-getDisc .box-play button{
+    width:100px;
+    height:40px;
+    border:none;
+    background: #6dd17b;
+    border-radius:4px;
+    color:#fff;
+    cursor:pointer;
+    font-size:14px;
+    margin-top:15px;
+
+}
+.modal-getDisc .box-play button:active{
+    background: #349b43;
+}
+.modal-getDisc .box-play button.disabled{
+    background:#ddd;
+}
+.modal-getDisc  table{
+    width:94%;
+    margin:20px auto;
+    border:1px solid #ddd;
+    border-collapse:collapse;
+}
+.modal-getDisc  table th{
+   background:#eee;
+    font-weight:500;
+    color:#666;
+    line-height:30px;
+}
+.modal-getDisc  table th:first-child{
+    text-indent:90px;
+    text-align:left;
+}
+.modal-getDisc  table td:first-child{
+    max-width:0px;
+}
+.modal-getDisc .box-commodity{
+    padding-left:90px;
+    position: relative;
+    display:inline-block;
+    height:80px;
+    overflow: hidden;
+}
+.modal-getDisc .box-commodity img{
+    width:70px;
+    height:70px;
+    position:absolute;
+    left:5px;
+    top:5px;
+}
+.modal-getDisc .box-commodity h2{
+    margin-top: 12px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+.modal-getDisc .box-coupon-info,.modal-getDisc .box-wallet-info{
+    box-sizing:border-box;
+    width:94%;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin:0 auto;
+    margin-bottom:20px;
+    padding-left:60px;
+    position:relative;
+}
+.modal-getDisc .box-coupon-info:hover,.modal-getDisc .box-wallet-info:hover{
+    background:#f5f5f5;
+    cursor:pointer;
+}
+.modal-getDisc .box-coupon-info:before,.modal-getDisc .box-wallet-info:before{
+    display: block;
+    content: '';
+    width:50px;
+    height:50px;
+    background: url(../res/icon/icon_coupon.png);
+    position:absolute;
+    left:0px;
+    top:3px;
+}
+.modal-getDisc .box-wallet-info:before{
+    background: url(../res/icon/icon_wallet.png);
+}
+.modal-getDisc .box-coupon-info label,.modal-getDisc .box-wallet-info label{
+    font-size:16px;
+    line-height:30px;
+}
+.modal-getDisc .btn-exc{
+    min-width:100px;
+    height:40px;
+    background:#6dd17b;
+    color:#fff;
+    border:none;
+    padding:5px 15px;
+    border-radius:4px;
+    cursor: pointer;
+}
+.modal-getDisc .btn-exc.disabled{
+    background:#ddd!important;
+}
+.modal-getDisc .btn-exc:active{
+    background:#349b43 ;
+}
+/*.modal-getDisc .btn-cancel{
+    min-width:100px;
+    height:40px;
+    border-radius:4px;
+    padding: 5px 15px;
+    border:1px solid #ddd;
+    background:#fff;
+    cursor:pointer;
+}*/
+.modal-getDisc .box-wallet-info .ck-box,.modal-getDisc .box-coupon-info .ck-box{
+    width:30px;
+    height:30px;
+    border:2px solid #999;
+    position:absolute;
+    left:100%;
+    top:10px;
+    margin-left:-60px;
+}
+.modal-getDisc .box-wallet-info .ck-box.checked:after,.modal-getDisc .box-coupon-info .ck-box.checked:after{
+    display: block;
+    content: '';
+    width: 20px;
+    height: 10px;
+    border-left: 2px solid #888;
+    border-bottom: 2px solid #888;
+    position: absolute;
+    left: 4px;
+    top: 5px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+}
+.modal-getDisc .tips-coupon-exc{
+    width:94%;
+    margin:0 auto;
+    margin-bottom:30px;
+    text-indent:5px;
+}
+.modal-getDisc .level{
+    display:block;
+    position:relative;
+}
+.modal-getDisc .icon-energy-level{
+    width: 28px;
+    height: 28px;
+    background-size: 100% auto;
+    position: absolute;
+    left: 40px;
+    top: 0px;
+}
+.modal-getDisc .energy-value{
+    display:block;
+    height:100%;
+    border-radius:30px;
+    background:#ff6700;
+}
+.modal-getDisc .no-blc{
+    position: absolute;
+    left:100%;
+    top:20px;
+    color:#999;
+    margin-left:-80px;
+}
+.modal-getDisc .use-blc{
+    position:absolute;
+    left:500px;
+    top:20px;
+}
+.modal-getDisc  .tips-getDisc-invalid{
+    font-size: 14px;
+    margin-top: 150px;
+    margin-bottom: 40px;
+
+}
+.modal-getDisc .box-tips{
+    border:1px solid #ddd;
+    padding:5px 15px;
+    border-radius:10px;
+    position: relative;
+    color:#666;
+}
+.modal-getDisc .box-tips h2{
+    font-weight:500;
+}
+.modal-getDisc .box-tips:before{
+    content: '';
+    display: block;
+    border:10px solid transparent;
+    border-right-color: #ddd;
+    border-bottom-width: 4px;
+    position: absolute;
+    left:-20px;
+    top:12px;
+}
+.modal-getDisc .box-tips:after{
+    content: '';
+    display: block;
+    border:10px solid transparent;
+    border-right-color: #fff;
+    border-bottom-width: 4px;
+    position: absolute;
+    left:-17px;
+    top:12px;
+}
+/*获取折扣modal end*/

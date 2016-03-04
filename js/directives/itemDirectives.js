@@ -198,7 +198,7 @@ angular.module('LuckyMall')
     .directive('numberSlider', function ($timeout, $compile) {
         return {
             link: function (scope, element, attrs) {
-                scope.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10];
+                scope.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
                 scope.overlay=[0,0,0,0];
                 var change_time = 2000;//切换的间隔时间
                 var num_len=scope.numbers.length;
@@ -318,7 +318,11 @@ angular.module('LuckyMall')
                                             initOverlayStatus();
                                             for (var o in new_index) {
                                                 if (parseInt(new_index[o]) > parseInt(old_index[o])) {
-                                                    slider[o].style.top = slider[o].offsetTop - scope.h * num_len + 'px';
+                                                    try {
+                                                        slider[o].style.top = slider[o].offsetTop - scope.h * num_len + 'px';
+                                                    }catch (err){
+
+                                                    }
                                                 }
                                             }
                                             rand = Math.random();//生成新的随机数

@@ -28,7 +28,7 @@
     </div>
     <!--css3-banner图  end-->
 
-    <div class="content home bar-clg-rec" ng-show="data_record.length>0">
+    <!--<div class="content home bar-clg-rec" ng-show="data_record.length>0">
         <h3 class="bar-title txt-center">擂台记录</h3>
 
         <div ng-style="{'position':'relative','top':-record_index*60+'px','transition':!isScrollRecEnd?'top .8s':'none'}">
@@ -95,7 +95,7 @@
             <a class="btn" href="/activity/index">进入擂台赛</a>
         </div>
         <div class="act-slider">
-   <!--         <ul class="ul-act" ng-repeat="group in data_act_group" ng-style="{'left':(100*($index-act_group_index))+'%','transition':'left .8s'}">-->
+   &lt;!&ndash;         <ul class="ul-act" ng-repeat="group in data_act_group" ng-style="{'left':(100*($index-act_group_index))+'%','transition':'left .8s'}">&ndash;&gt;
               <ul class="ul-act" ng-repeat="group in data_act_group track by $index" ng-style="{'z-index':$index==act_group_index?'2':'-1','opacity':$index==act_group_index?'1':'0','transition':'opacity 1.5s'}">
                 <li ng-repeat="act in group track by $index">
                     <a class="img-container" href="/activity/details/{{act.Id}}">
@@ -116,7 +116,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div>-->
     <ul class="floor-nav" floor-nav len="data_floor.length" ng-style="{'opacity':showFloorNav==true?'1':'0','transition':'opacity 1s'}">
         <li ng-repeat="f in data_floor" ng-click="scrollTo('floor'+$index)" ng-class="{'cur':cur_floor==$index}" ng-style="{'border-color':(cur_floor-1==$index||cur_floor==$index)?'transparent':'#eee'}">
             <p ng-bind="f.name"></p>

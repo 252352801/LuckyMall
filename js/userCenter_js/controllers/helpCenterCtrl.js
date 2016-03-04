@@ -1,4 +1,6 @@
 angular.module('LuckyMall.controllers')
- .controller('HelpCenterCtrl',function($scope,$state,$stateParams){
-        $scope.$emit('changeMenu',10);
-});
+    .controller('HelpCenterCtrl',
+    ['$scope', '$state', '$stateParams',
+        function ($scope, $state, $stateParams) {
+            $scope.$emit('changeMenu', 10);
+        }]);

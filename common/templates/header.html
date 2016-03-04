@@ -8,12 +8,12 @@
         <div class="pull-left ng-hide" ng-show="isLogin==true&&showName">
             <div class="user-simpleInfo pull-left">
                 <a href="/UCIndex/myOrders/unPay">
-                    <img class="user-head-img" ng-src={{imgHost+avatar}} error-src="./res/images/touxiang.jpg" alt=""/>
+                    <img class="user-head-img" ng-src={{avatar!=null?(imgHost+avatar):'./res/images/touxiang.jpg'}} error-src="./res/images/touxiang.jpg" alt=""/>
                 </a>
                 <p class="name"><a href="/UCIndex/myOrders/unPay" ng-bind="showName" title="{{showName}}"></a></p>
-                <span ng-class="'icon icon-lucky-energy-level'+luckyEnergy.level"></span>
+                <!--<span ng-class="'icon icon-lucky-energy-level'+luckyEnergy.level"></span>-->
             </div>
-            <button class="btn-exit pull-left" ng-click="exit()">退出</button>
+            <button class="btn-exit pull-left" ng-click="exit()" title="退出登录"></button>
         </div>
         <div class="pull-right">
             <!--<a href="#" title="客户服务">客户服务</a>-->

@@ -9,46 +9,64 @@
     <base href="/" />
    <!-- <meta name="renderer" content="webkit"> --><!--设置双(内)核浏览器（如360等）的渲染模式-->
 
-    <link rel="stylesheet" type="text/css" href="css/global.css"><!--css样式文件-->
-
-
-    <script>  /*手机访问时重定向*/
-        var ua = navigator.userAgent;
-        var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-                isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-                isAndroid = ua.match(/(Android)\s+([\d.]+)/),
-                isMobile = isIphone || isAndroid;
-        if(isMobile) {
-            location.href = 'http://m.xingyunmao.cn';
-        }else{
-            if(location.hostname=='xingyunmao.cn') {
-                location.href = 'http://www.xingyunmao.cn/';
+    <script>
+        {
+            var ua = navigator.userAgent;
+            var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+                    isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+                    isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+                    isMobile = isIphone || isAndroid;
+            if (isMobile) {
+                location.href = 'http://m.xingyunmao.cn';
+            } else {
+                if (location.hostname == 'xingyunmao.cn') {
+                    location.href = 'http://www.xingyunmao.cn/';
+                }
             }
         }
+        {
+            var v='20160304';
+        }
+
     </script>
 
 
-
-    <script type="text/javascript" src="./lib/myfuntion/base.js"></script>
     <script type="text/javascript" src="./lib/angular/angular_v1.4.7.min.js"></script>
     <script type="text/javascript" src="./lib/angular/angular-cookies_v1.4.7.min.js"></script>
     <script type="text/javascript" src="./lib/angular/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="./lib/oclazyload/ocLazyLoad.min.js"></script>
     <script type="text/javascript" src="./lib/angular/angular-file-upload.min.js"></script>
-
-    <script type="text/javascript" src="common/config/config.js"></script>
-    <script type="text/javascript" src="./common/controllers/controllers.js"></script>
-    <script type="text/javascript" src="./common/services/services.js"></script>
-    <script type="text/javascript" src="./common/directives/directives.js"></script>
-
     <script type="text/javascript" src="./lib/sweetAlert/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="./lib/sweetAlert/sweetalert.css"><!--css样式文件-->
+    <link rel="stylesheet" type="text/css" href="./lib/sweetAlert/sweetalert.css">
 
 
+    <link class="dynamic-file" rel="stylesheet" type="text/css" href="./css/global.css">
+    <script class="dynamic-file" class="test" type="text/javascript" src="./lib/myfuntion/base.js"></script>
+    <script class="dynamic-file" class="test" type="text/javascript" src="./common/config/config.js"></script>
+    <script class="dynamic-file" type="text/javascript" src="./common/controllers/controllers.js"></script>
+    <script class="dynamic-file" type="text/javascript" src="./common/services/services.js"></script>
+    <script class="dynamic-file" type="text/javascript" src="./common/directives/directives.js"></script>
 
-    <script>
-        function gameStarted() {
-            angular.element(document.getElementById('ng-app')).scope().gameStarted();
+
+    <script id="script_log_df">
+        if(location.hostname.indexOf('127.0.0.1')>=0) {
+            (function () {
+                var elem = document.getElementsByClassName('dynamic-file');
+                var str = '';
+                for (var i = 0; i < elem.length; i++) {
+                    var outer_html = '';
+                    if (elem[i].nodeName == 'SCRIPT') {
+                        outer_html = elem[i].outerHTML.replace('.js', '.js?v=' + v);
+                    } else if (elem[i].nodeName == "LINK") {
+                        outer_html = elem[i].outerHTML.replace('.css', '.css?v=' + v);
+                    }
+                    str += outer_html + '\n';
+                }
+                console.log(str);
+            })();
+        }else{
+            var elem=document.getElementById('script_log_df');
+            document.getElementsByTagName('head')[0].removeChild(elem);
         }
     </script>
 </head>

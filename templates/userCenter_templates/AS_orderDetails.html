@@ -45,11 +45,12 @@
                 <div class="cont3">
                     <div class="inner-cont">
                         <p class="disc-cost" ng-bind="'￥'+data_details.Order.needToPay"></p>
-
-                        <p ng-bind="'（含定金：￥'+data_details.Order.EarnestMoney+'）'" ng-if="data_details.Order.EarnestMoney>0"></p>
-
                         <p>已享用折扣卡<span class="icon-discount" ng-bind="data_details.Order.finalDiscount+'折'"></span>
                         </p>
+                        <p class="color-666 small-font" ng-bind="'（已付定金：￥'+data_details.Order.EarnestMoney+'）'" ng-if="data_details.Order.EarnestBusinessType!=4&&data_details.Order.EarnestMoney>0"></p>
+                        <p class="color-666 small-font" ng-bind="'（已用红包抵用：￥'+(data_details.Order.CouponMoney)+'）'" ng-if="data_details.Order.EarnestBusinessType==4&&data_details.Order.CouponMoney>0"></p>
+                        <p class="color-666 small-font" ng-bind="'（已用钱包抵用：￥'+(data_details.Order.EarnestMoney)+'）'" ng-if="data_details.Order.EarnestBusinessType==4&&data_details.Order.EarnestMoney>0"></p>
+
                     </div>
                 </div>
                 <div class="cont4">
@@ -74,7 +75,7 @@
         <p>
             <label class="color-balanced">您的申请已审核通过，请选择快递：</label>
             <select ng-model="kd" ng-options="kd.Code as kd.Name group by kd.index for kd in data_kd_list" ng-change="test()" >
-                <!--<option>请选择快递</option>-->
+                <option>请选择快递</option>
             </select>
         </p>
         <p>

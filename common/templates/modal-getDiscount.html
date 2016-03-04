@@ -1,0 +1,174 @@
+<div class="modal-overlay" ng-show="visible">
+   <div class="modal-getDisc">
+       <div class="slider-left">
+           <h2 class="modal-title">获取优惠</h2>
+         <!--  <div class="box-energy">
+               <img src="./res/logo/logo_cat.png" alt=""/>
+
+             &lt;!&ndash;  <h2>喵喵幸运物</h2>
+
+               <p class="level">体力级:<span
+                       ng-class="'icon icon-energy-level icon-lucky-energy-level'+luckyEnergy.level"></span></p>
+
+               <p class="bar-energy">
+                   <span class="energy-value" ng-style="{'width':luckyEnergy.percent+'%'}"></span>
+               </p>&ndash;&gt;
+               &lt;!&ndash;<p>您的体力充足，赶紧进入游戏赢取折扣吧</p>&ndash;&gt;
+               <div class="box-tips" ng-show="order.EarnestBusinessType==0">
+                   <h2>您可以通过付定金/付红包获取游戏机会，或者直接使用红包/钱包抵现金获取优惠!</h2>
+               </div>
+               <div class="box-tips" ng-show="order.EarnestBusinessType==4">
+                   <h2>该订单已获取优惠，赶紧购买吧!</h2>
+               </div>
+               <div class="box-tips" ng-show="order.EarnestBusinessType==3">
+                   <h2>已使用红包兑换游戏机会，赶紧进入游戏抢折扣吧!</h2>
+               </div>
+               <div  class="box-tips" ng-show="order.EarnestBusinessType==1">
+                   <h2>您已支付定金，赶紧进入游戏抢折扣吧!</h2>
+               </div>
+               <div class="box-play ng-hide" ng-show="order.EarnestBusinessType==1||order.EarnestBusinessType==3">
+               &lt;!&ndash;<div class="box-play" >&ndash;&gt;
+                   <p >
+                       <button ng-class="{'disabled':!energy.isEnough}" ng-click="play()">进入游戏</button>
+                   </p>
+                  &lt;!&ndash; <p ng-bind="energy.tips"></p>&ndash;&gt;
+               </div>
+           </div>-->
+           <!--<div class="label-other">
+               <span ng-show="order.EarnestBusinessType!=0">您还可以</span>
+               <span ng-show="order.EarnestBusinessType==0">您可以</span>
+           </div>-->
+           <ul ng-class="{'menu':order.EarnestBusinessType==0,'menu disabled':order.EarnestBusinessType!=0}">
+               <li ng-class="{'btn-play':isCanPlay,'btn-play disabled':!isCanPlay}" ng-click="play()">
+                   进入游戏
+               </li>
+               <li class="btn-payForEarnest" ng-click="payEarnest()">
+                   付定金进游戏
+               </li>
+               <li class="btn-exc-e" ng-click="showContentExchangeEnergy()">
+                   付红包进游戏
+               </li>
+               <li class="btn-exc-m" ng-click="showContentExchangeEarnest()">
+                   红包/钱包抵现金
+               </li>
+               <li class="btn-purchase" ng-click="purchase()">
+                   立即购买
+               </li>
+              <!-- <li class="btn-play">
+                   进入游戏
+               </li>-->
+           </ul>
+       </div>
+
+       <div class="slider-right content-exchangeEnergy" ng-style="{'left':content_exchange_energy?'0%':'100%','transition':'left .5s'}">
+           <h2 class="modal-title">付红包进游戏
+               <span class="btn-return pull-right" ng-click="hideContentExchangeEnergy()">返回</span>
+           </h2>
+           <table >
+               <tr>
+                   <th >商品信息</th>
+                   <th>数量</th>
+                   <th>需付红包</th>
+               </tr>
+               <tr>
+                   <td>
+                       <div class="box-commodity">
+                           <img ng-src={{imgHost+order.imageUrl}} />
+                           <h2 ng-bind="order.CommodityName"></h2>
+                           <p class="color-gray" ng-repeat="p in order.Specifications"ng-bind="p.name+'：'+p.value"></p>
+                       </div>
+                   </td>
+                   <td class="txt-center" ng-bind="order.Count">20</td>
+                   <td class="txt-center color-org" ng-bind="'￥'+order.earnest_cost">
+
+                   </td>
+               </tr>
+           </table>
+           <div class="box-coupon-info">
+               <p>
+                   <label>我的红包</label>
+               </p>
+                <p>
+                    可用余额
+                    <span class="color-org" ng-bind="'￥'+data_balance.Coupon.Balance"></span>
+                </p>
+           </div>
+           <p class="tips-coupon-exc">温馨提示：红包有使用期限，请妥善使用！</p>
+           <div class="txt-center" ng-if="order.EarnestBusinessType==0">
+               <button ng-class="{'btn-exc disabled':data_balance.Coupon.Balance<order.earnest_cost,'btn-exc':data_balance.Coupon.Balance>=order.earnest_cost}" ng-click="playWidthCoupon()" ng-bind="btn_val.exc_coupon"></button>
+               <!--<button class="btn-cancel" ng-click="hideContentExchangeEnergy()">取消</button>-->
+           </div>
+           <div class="txt-center color-org" ng-if="order.EarnestBusinessType!=0">
+                该订单已获取过优惠，不能重复获取！
+           </div>
+       </div>
+       <div class="slider-right content-exchangeEarnest" ng-style="{'left':content_exchange_earnest?'0%':'100%','transition':'left .5s'}">
+           <h2 class="modal-title">
+               红包/钱包抵现金
+               <span class="btn-return pull-right" ng-click="hideContentExchangeEarnest()">返回</span>
+           </h2>
+           <table >
+               <tr>
+                   <th >商品信息</th>
+                   <th>数量</th>
+                   <th>可抵用额度</th>
+               </tr>
+               <tr>
+                   <td>
+                       <div class="box-commodity">
+                           <img ng-src={{imgHost+order.imageUrl}} />
+                           <h2 ng-bind="order.CommodityName"></h2>
+                           <p class="color-gray" ng-repeat="p in order.Specifications"ng-bind="p.name+'：'+p.value"></p>
+                       </div>
+                   </td>
+                   <td class="txt-center" ng-bind="order.Count"></td>
+                   <td class="txt-center color-org" ng-bind="'￥'+order.earnest_cost">
+
+                   </td>
+               </tr>
+           </table>
+           <div class="box-coupon-info" ng-click="toggleCheckCoupon()">
+               <p>
+                   <label>我的红包</label>
+               </p>
+               <p>
+                   可用余额
+                   <span class="color-org" ng-bind="'￥'+data_balance.Coupon.Balance"></span>
+               </p>
+               <p class="use-blc" ng-show="use_coupon>0">
+                   将扣除<span class="color-org" ng-bind="'￥'+use_coupon"></span>
+               </p>
+               <a ng-if="data_balance.Coupon.Balance>0" ng-class="{'ck-box checked':isCheckedCoupon,'ck-box':!isCheckedCoupon}">
+               </a>
+               <a class="no-blc" ng-if="data_balance.Coupon.Balance==0">无可用余额</a>
+           </div>
+           <div class="box-wallet-info" ng-click="toggleCheckWallet()">
+               <p>
+                   <label>喵喵钱包</label>
+               </p>
+               <p>
+                   可用余额
+                   <span class="color-org" ng-bind="'￥'+data_balance.Wallet.Balance"></span>
+               </p>
+               <p class="use-blc" ng-if="use_wallet>0">
+                   将扣除<span class="color-org"  ng-bind="'￥'+use_wallet"></span>
+               </p>
+               <p class="use-blc color-org" ng-if="order.earnest_cost>0&&use_wallet==0&&isCheckedWallet&&data_balance.Wallet.Balance>0" style="margin-left:-18px;">
+                   优先使用红包
+               </p>
+               <a  ng-if="data_balance.Wallet.Balance>0" ng-class="{'ck-box checked':isCheckedWallet,'ck-box':!isCheckedWallet}">
+               </a>
+               <a class="no-blc" ng-if="data_balance.Wallet.Balance==0">无可用余额</a>
+           </div>
+
+           <div class="txt-center" ng-if="order.EarnestBusinessType==0">
+               <button ng-class="{'btn-exc disabled':exchange_val()<=0,'btn-exc':exchange_val()>0}"  ng-bind="btn_val.exc_db" ng-click="exchange()"></button>
+          <!--     <button class="btn-cancel" ng-click="hideContentExchangeEarnest()">取消</button>-->
+           </div>
+           <div class="txt-center color-org" ng-if="order.EarnestBusinessType!=0">
+               该订单已获取过优惠，不能重复获取！
+           </div>
+       </div>
+       <span class="btn-close" ng-click="closeModal()">×</span>
+   </div>
+</div>

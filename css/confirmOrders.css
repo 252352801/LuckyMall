@@ -537,3 +537,16 @@
     margin-right:20px;
 }
 /* 核对订单end*/
+.earnest.content.box-confirmOrder{
+    margin-top:15px;
+    margin-bottom:0px;
+    min-height: 0px;
+}
+.confirmOrder-bottom.earnest{
+    margin-top:0px;
+    border-top:none;
+}
+
+.shopping-status-top.earnest{
+    margin-top: 20px;
+}

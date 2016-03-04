@@ -1,0 +1,37 @@
+<p class="menu-cont-title">
+    <label>我的红包</label>
+    <a class="coupon-balance">
+        余额
+        <span class="color-org" ng-bind="'￥'+balance"></span>
+    </a>
+</p>
+<ul class="ul-coupon">
+    <li ng-repeat="list in currentPage()">
+        <div class="cont1">
+            <h2 ng-bind="list.Remark"></h2>
+            <p>有效期至{{list.ExpireTime}}</p>
+        </div>
+        <div class="cont2">
+            <p>
+                余额：<span class="color-org large-font">￥{{list.Balance}}</span>
+            </p>
+            <p>
+                总额：<span >￥{{list.TotalAmount}}</span>
+            </p>
+        </div>
+    </li>
+</ul>
+<div class="UC loading-tips" ng-show="loading">正在加载...</div>
+<p class="tips-nothing" ng-show="currentPage().length<=0&&!loading">暂无</p>
+
+<div class="UC page-index" ng-show="currentPage().length>0">
+    <div class="prev" ng-click="prevPage()" btn-scroll-to="355"><</div>
+    <div class="indexes">
+
+            <span ng-repeat="p in page.items" ng-class="{'cur':page.index==p}"   ng-click=changePage(p)
+
+                  ng-bind="(p==(page.index-5)||p==(page.index+5))?'...':p+1"
+                  ng-if="p>=(page.index-5)&&p<=(page.index+5)" btn-scroll-to="355"></span>
+    </div>
+    <div class="next" ng-click="nextPage()" btn-scroll-to="355">></div>
+</div>

@@ -76,7 +76,8 @@
                 <div class="cont4">
                     <div class="cont-container">
                         <p class="unPay" ng-bind="'￥'+order.needToPay"></p>
-                        <p ng-if="order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+order.EarnestMoney"></span></p>
+                        <p ng-if="order.EarnestBusinessType!=4&&order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+order.EarnestMoney"></span></p>
+                        <p ng-if="order.EarnestBusinessType==4&&(order.CouponMoney+order.EarnestMoney)>0">已抵用<span class="color-org" ng-bind="'￥'+(order.CouponMoney+order.EarnestMoney)"></span></p>
                     </div>
                 </div>
             </div>
@@ -87,7 +88,7 @@
             <label>支付方式</label>
         </p>
 
-        <div class="box-wallet" ng-if="data_balance>0&&total_earnest>0">
+     <!--   <div class="box-wallet" ng-if="data_balance>0&&total_earnest>0">
             <div class="bar-balance" ng-style="{'border-color':isUseBalance?'#ff6700':'transparent'}">
                 <a class="my-checkbox checked">
                     <i class="checkbox"></i>
@@ -101,7 +102,7 @@
                     (定金总额{{'￥'+total_earnest}}，喵喵钱包余额可用于支付定金部分)
                 </span>
             </div>
-        </div>
+        </div>-->
 
         <p class="s-label">
             <small>在线支付</small>
@@ -113,12 +114,12 @@
                     <img src="./res/images/zhifubao.png" alt=""/>
                 </div>
             </li>
-            <!--<li ng-class="{'cur':pay_type=='weixin'}" ng-click="changePayType('weixin')">
+            <li ng-class="{'cur':pay_type=='weixin'}" ng-click="changePayType('weixin')">
                 <span></span>
                 <div class="img-container">
                     <img src="./res/images/weixinpay.png" alt=""/>
                 </div>
-            </li>-->
+            </li>
 <!--            <li ng-class="{'cur':pay_type=='caifutong'}" ng-click="changePayType('caifutong')">
                 <span></span>
                 <div class="img-container">

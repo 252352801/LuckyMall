@@ -232,8 +232,8 @@ angular.module('LuckyMall.services', [])
             for(var o in arr){
                 arr[o].RollingImages=arr[o].RollingImages.split('|');
                 arr[o].DetailImages=arr[o].DetailImages.split('|');
-                arr[o].minPrice=Math.ceil(arr[o].RetailPrice*arr[o].MaxDiscount);
-                arr[o].maxPrice=Math.ceil(arr[o].RetailPrice*arr[o].MinDiscount);
+                arr[o].minPrice=arr[o].FloorPrice;;//Math.ceil(arr[o].RetailPrice*arr[o].MaxDiscount);
+                arr[o].maxPrice=arr[o].CeilingPrice;//Math.ceil(arr[o].RetailPrice*arr[o].MinDiscount);
             }
             return arr;
         };
@@ -811,11 +811,12 @@ angular.module('LuckyMall.services', [])
             for (var o in data) {
                 data[o].Specifications = angular.fromJson(data[o].Specifications);//产品规格字符串转换json
                 data[o].imageUrl = data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-                data[o].orgCost = Math.ceil(data[o].UnitPrice) * data[o].Count;//原价
-                data[o].cost = Math.ceil((data[o].UnitPrice * data[o].Count * data[o].BaseDiscount - data[o].DiscountMoney).toFixed(2));//折后价
-                data[o].needToPay = Math.ceil(data[o].cost - data[o].EarnestMoney);//待支付
+                data[o].orgCost =parseInt(data[o].OriginalPrice);//原价
+                data[o].cost = parseInt(data[o].DiscountPrice);//折后价
+                data[o].needToPay =parseInt(data[o].Unpaid);//待支付
                 data[o].finalDiscount = data[o].DiscountValue;
                 data[o].isSelected = true;//勾选状态，默认勾选
+
             }
             setTotalData();
             data.isCheckedAll = true;
@@ -1067,10 +1068,14 @@ angular.module('LuckyMall.services', [])
             for (var o in data) {
                 var obj = (type == 0) ? data[o] : data[o].Order;
                 obj.Specifications = angular.fromJson(obj.Specifications);//产品规格字符串转换json
-                obj.imageUrl = obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-                obj.orgCost = Math.ceil(obj.UnitPrice) * obj.Count;//原价
-                obj.cost = Math.ceil((obj.UnitPrice * obj.Count * obj.BaseDiscount - obj.DiscountMoney).toFixed(2));//折后价
-                obj.needToPay = Math.ceil(obj.cost - obj.EarnestMoney);//待支付
+                try{
+                    obj.imageUrl = obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
+                }catch(err){
+
+                }
+                obj.orgCost = parseInt(obj.OriginalPrice);//原价
+                obj.cost = parseInt(obj.DiscountPrice);//折后价
+                obj.needToPay = parseInt(obj.Unpaid);//待支付
                 obj.finalDiscount = obj.DiscountValue;
             }
             return data;
@@ -1274,9 +1279,9 @@ angular.module('LuckyMall.services', [])
             data.brandImg = data.Brand ? data.Brand.BrandImage : '';
             data.Specifications = angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl = data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-            data.orgCost = Math.ceil(data.UnitPrice) * data.Count;//原价
-            data.cost = Math.ceil((data.UnitPrice * data.Count * data.BaseDiscount - data.DiscountMoney).toFixed(2));//折后价
-            data.needToPay = data.cost - data.EarnestMoney;//待支付
+            data.orgCost =parseInt(data.OriginalPrice);//原价
+            data.cost =parseInt(data.DiscountPrice);//折后价
+            data.needToPay = parseInt(data.Unpaid);//待支付
             data.finalDiscount = data.DiscountValue;//最终折扣
             if (data.ConsigneeInfo) {
                 try {
@@ -1326,9 +1331,9 @@ angular.module('LuckyMall.services', [])
             data.brandImg = data.Brand ? data.Brand.BrandImage : '';
             data.Specifications = angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl = data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-            data.orgCost = Math.ceil(data.UnitPrice) * data.Count;//原价
-            data.cost = Math.ceil((data.UnitPrice * data.Count * data.BaseDiscount - data.DiscountMoney).toFixed(2));//折后价
-            data.needToPay = data.cost - data.EarnestMoney;//待支付
+            data.orgCost = parseInt(data.OriginalPrice);//原价
+            data.cost =parseInt(data.DiscountPrice);//折后价
+            data.needToPay = parseInt(data.Unpaid);//待支付
             data.finalDiscount = data.DiscountValue;//最终折扣
             if (data.ConsigneeInfo) {
                 data.ConsigneeInfo = angular.fromJson(data.ConsigneeInfo);//收货地址
@@ -1663,7 +1668,7 @@ angular.module('LuckyMall.services', [])
                 var spe = data[o].Order.Specifications;
                 data[o].Order.goodsProperty = angular.fromJson(spe);
                 data[o].imgUrl = data[o].Order.Commodity.RollingImages.split('|')[0];
-                data[o].discountPrice = Math.ceil(data[o].BaseDiscount * data[o].Order.UnitPrice);
+                data[o].discountPrice = Math.ceil(data[o].Order.UnitPrice-data[o].BaseDiscountMoney);
                 data[o].BaseDiscount = Math.ceil(Math.round(data[o].BaseDiscount * 10000) / 100) / 10;
             }
             return data;
@@ -1772,11 +1777,52 @@ angular.module('LuckyMall.services', [])
         }
     })
 
+
+    .factory('CouponSer', function (API, $http, TokenSer) {
+        var data = null;
+
+        return {
+            getData: function () {
+                return data;
+            },
+            clearData: function () {
+                data = null;
+            },
+            getTotalBalance:function(){
+                var total=0;
+                var obj=data;
+                for(var o in obj){
+                    total+=obj[o].Balance;
+                }
+                return total;
+            },
+            requestData: function (params,callback) {
+                $http({
+                    method: API.coupon.method,
+                    url: API.coupon.url,
+                    data:params
+                }).success(function (response, status, headers, config) {
+                    if (response) {
+                        data = response;
+                        callback(response, 1);
+                    } else {
+                        callback('', 0);
+                    }
+                }).error(function (data, status, headers, config) {
+                    callback("网络错误", -1);
+                });
+            }
+        }
+    })
+
     .factory('UploadSer', function (API, $http, TokenSer, FileUploader) {
         return {
             initUploader: function (max_count, max_size) {
                 var uploader = new FileUploader({
-                    url: API.upload.url
+                    url: API.upload.url,
+                    headers:{
+                        Authorization : 'Basic ' + TokenSer.getToken()
+                    }
                 });
 
                 uploader.filters.push({
@@ -1786,41 +1832,42 @@ angular.module('LuckyMall.services', [])
                     }
                 });
                 // CALLBACKS
-
                 uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                     console.info('onWhenAddingFileFailed', item, filter, options);
                 };
                 uploader.onAfterAddingFile = function (fileItem) {
+                    fileItem.progress=0;
                     fileItem.upload();
-                    console.info('onAfterAddingFile', fileItem);
+                   // console.info('onAfterAddingFile', fileItem);
                 };
                 uploader.onAfterAddingAll = function (addedFileItems) {
-                    console.info('onAfterAddingAll', addedFileItems);
+                    //console.info('onAfterAddingAll', addedFileItems);
                 };
                 uploader.onBeforeUploadItem = function (item) {
-                    console.info('onBeforeUploadItem', item);
+                    //console.info('onBeforeUploadItem', item);
                 };
                 uploader.onProgressItem = function (fileItem, progress) {
                     console.info('onProgressItem', fileItem, progress);
+                    fileItem.progress=progress;
                 };
                 uploader.onProgressAll = function (progress) {
-                    console.info('onProgressAll', progress);
+
                 };
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                    console.info('onSuccessItem', fileItem, response, status, headers);
+                    //console.info('onSuccessItem', fileItem, response, status, headers);
                 };
                 uploader.onErrorItem = function (fileItem, response, status, headers) {
-                    console.info('onErrorItem', fileItem, response, status, headers);
+                   // console.info('onErrorItem', fileItem, response, status, headers);
                 };
                 uploader.onCancelItem = function (fileItem, response, status, headers) {
-                    console.info('onCancelItem', fileItem, response, status, headers);
+                    //console.info('onCancelItem', fileItem, response, status, headers);
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                    console.info('onCompleteItem', fileItem, response, status, headers);
-                    fileItem.url = response;
+                    //console.info('onCompleteItem', fileItem, response, status, headers);
+                    fileItem.imgUrl = response;
                 };
                 uploader.onCompleteAll = function () {
-                    console.info('onCompleteAll');
+                    //console.info('onCompleteAll');
                 };
                 return uploader;
             }
@@ -1944,6 +1991,60 @@ angular.module('LuckyMall.services', [])
             },
             reset: function () {
                 $cookies.remove('s_d');
+            }
+        };
+    })
+
+
+    /*余额（喵喵钱包&红包）*/
+    .factory('BalanceSvc', function (API, $http) {
+        var balanceInfo=null;
+        return {
+            getBalanceInfo: function () {
+                return balanceInfo;
+            },
+            requestBalanceInfo:function(callback){
+                $http({
+                    method: API.getBalanceInfo.method,
+                    url: API.getBalanceInfo.url
+                }).success(function (response, status) {
+                    if(status==200&&response){
+                        balanceInfo=response;
+                        callback(balanceInfo,1);
+                    }else{
+                        callback(response,0);
+                    }
+                })
+            },
+            exchangeWithCoupon:function(order_id,callback){
+                $http({
+                    method: API.exchangeWithCoupon.method,
+                    url: API.exchangeWithCoupon.url+order_id
+                }).success(function (response, status) {
+                    if(status==200&&response){
+
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(response, status){
+                    callback(response,-1);
+                });
+            },
+            exchangeWithCouponAndWallet:function(params,callback){
+                $http({
+                    method: API.exchangeWithCouponAndWallet.method,
+                    url: API.exchangeWithCouponAndWallet.url,
+                    data:params
+                }).success(function (response, status) {
+                    if(status==200&&response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(response, status){
+                    callback(response,-1);
+                });
             }
         };
     })

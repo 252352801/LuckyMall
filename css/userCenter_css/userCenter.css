@@ -16,7 +16,7 @@
     width:359px;
 
     padding-left:140px;
-    border-right:1px solid #2e3540;
+/*    border-right:1px solid #2e3540;*/
     position:relative;
 }
 .bar-userInfo-left .user-head-img{
@@ -1849,6 +1849,24 @@
     box-sizing:border-box;
     padding:10px;
 }
+.upload-box .box-progress {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+}
+.upload-box .box-progress .progress-val{
+    width:0%;
+    height:15px;
+    background: rgba(0,0,0,0.3);
+    position: absolute;
+    left:0px;
+    top:65px;
+}
 .AS-box-describe .bar-msg-file{
     top:0px;
 }
@@ -1910,6 +1928,7 @@
     text-align-last:center;
     position:relative;
     margin-bottom: 10px;
+    text-align: center;
 }
 .upload-box .img-preview img{
     max-width:100%;
@@ -2012,3 +2031,54 @@
     font-size:24px;
     margin:0 10px;
 }
+/*=====================
+    红包begin
+======================*/
+.UC .ul-coupon{
+    width:94%;
+    margin:0 auto;
+}
+.UC .ul-coupon li{
+    height:90px;
+    background:#f1f1f1;
+    margin-top:20px;
+    padding-left: 120px;
+    background:url(../../res/images/bg_coupon_list.png) no-repeat;
+    overflow:hidden;
+
+}
+.UC .ul-coupon .cont1,.UC .ul-coupon .cont2{
+    float:left;
+}
+.UC .ul-coupon .cont1{
+    width:75%;
+    padding: 10px;
+    color:#888;
+}
+.UC .ul-coupon .cont1 h2{
+    line-height:30px;
+    margin-top:8px;
+    color:#333;
+}
+.UC .ul-coupon .cont2{
+    padding:20px;
+    color:#888;
+}
+.UC .ul-coupon .cont2 p:first-child{
+    margin-top:10px;
+}
+.UC .ul-coupon .large-font{
+    font-size:14px;
+}
+.UC .coupon-balance{
+    color: #888;
+    margin-left: 30px;
+    position: relative;
+    top: 5px;
+
+}
+.UC .coupon-balance span{
+    font-size:14px;
+}
+
+/*红包 end*/

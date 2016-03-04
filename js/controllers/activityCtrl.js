@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('ActivityCtrl', function ($scope, ActivitySer, $rootScope, $state, Host, TokenSer,$timeout,$cookies) {
-
+    .controller('ActivityCtrl',['$scope', 'ActivitySer', '$rootScope', '$state', 'Host', 'TokenSer','$timeout','$cookies',
+        function ($scope, ActivitySer, $rootScope, $state, Host, TokenSer,$timeout,$cookies) {
         $scope.modal={
             share:{
                 isShow:false,
@@ -101,8 +101,9 @@ angular.module('LuckyMall.controllers')
                 $cookies.put('unShowShareModal',true);
             }
         };
-    })
-    .controller('ActivityIndexCtrl', function ($scope, ActivitySer, $rootScope, $state, Host, TokenSer) {
+    }])
+    .controller('ActivityIndexCtrl', ['$scope', 'ActivitySer', '$rootScope', '$state', 'Host', 'TokenSer',
+        function ($scope, ActivitySer, $rootScope, $state, Host, TokenSer) {
 
         {// init
             $scope.cur_tab = 1;//首页当前显示的tab 0往期  1选择  2下期
@@ -144,31 +145,24 @@ angular.module('LuckyMall.controllers')
         };
         function loadData() {
             $scope.data_activity = [];
-            if (ActivitySer.getData($scope.cur_tab) == null) {
-                var params = {
-                    type: $scope.cur_tab,
-                    psize: 10000,
-                    pindex: 0
-                };
-                $scope.loading_list = true;
-                ActivitySer.requestData(params, function (response, status) {
-                    if (response && status == 200) {
-                        data_list=response;
-                        $scope.page.list.total=data_list.length;
-                        $scope.page.list.totalPage=Math.ceil($scope.page.list.total/$scope.page.list.pageSize);
-                        $scope.data_activity = getCurrentPage(data_list);//获取当前页数据
-                    }else{
+            var params = {
+                type: $scope.cur_tab,
+                psize: 10000,
+                pindex: 0
+            };
+            $scope.loading_list = true;
+            ActivitySer.requestData(params, function (response, status) {
+                if (response && status == 200) {
+                    data_list=response;
+                    $scope.page.list.total=data_list.length;
+                    $scope.page.list.totalPage=Math.ceil($scope.page.list.total/$scope.page.list.pageSize);
+                    $scope.data_activity = getCurrentPage(data_list);//获取当前页数据
+                }else{
 
-                    }
-                    $scope.loading_list = false;
+                }
+                $scope.loading_list = false;
 
-                });
-            } else {
-                data_list=ActivitySer.getData($scope.cur_tab);
-                $scope.page.list.total=data_list.length;
-                $scope.page.list.totalPage=Math.ceil($scope.page.list.total/$scope.page.list.pageSize);
-                $scope.data_activity = getCurrentPage(data_list);
-            }
+            });
         }
 
 
@@ -251,8 +245,9 @@ angular.module('LuckyMall.controllers')
             });
         }
 
-    })
-    .controller('ActivityDetailsCtrl', function ($scope, ActivitySer, $rootScope, $state, $stateParams) {
+    }])
+    .controller('ActivityDetailsCtrl', ['$scope', 'ActivitySer', '$rootScope', '$state', '$stateParams',
+        function ($scope, ActivitySer, $rootScope, $state, $stateParams) {
 
 
         {//init
@@ -321,4 +316,4 @@ angular.module('LuckyMall.controllers')
 
 
 
-    });
+    }]);

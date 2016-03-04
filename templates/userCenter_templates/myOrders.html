@@ -12,7 +12,8 @@
     <div class="th" ng-show="data_orders.curPage.length>0">
         <span>商品信息</span>
         <span>原价</span>
-        <span>付款总额</span>
+        <span ng-if="curMenu!=1">付款总额</span>
+        <span ng-if="curMenu==1">待支付</span>
         <span>状态</span>
         <span>操作</span>
     </div>
@@ -43,14 +44,15 @@
             </div>
             <div class="cont2 pull-left" ng-bind="'￥'+list.UnitPrice">
             </div>
-            <div class="cont3 pull-left">
-                <p class="cost" ng-bind="'￥'+list.cost"></p>
-
-                <p ng-bind="'（含定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestMoney>0"></p>
-
+            <div class="cont3 pull-left" >
+                <p class="cost" ng-bind="'￥'+list.cost" ng-if="curMenu!=1"></p>
+                <p class="cost" ng-bind="'￥'+list.needToPay" ng-if="curMenu==1"></p>
+                <p ng-bind="'（已付定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestBusinessType!=4&&list.EarnestMoney>0"></p>
+                <p ng-bind="'（已抵用：￥'+(list.EarnestMoney+list.CouponMoney)+'）'" ng-if="list.EarnestBusinessType==4&&(list.EarnestMoney+list.CouponMoney)>0"></p>
                 <p class="discount">已享用折扣卡<span class="icon-discount"
                                                 ng-bind="list.finalDiscount+'折'"></span></p>
             </div>
+
             <div class="cont4 pull-left">
                 <div>
                     <p class="color-org" ng-if="list.OrderStatus==1">等待付款</p>

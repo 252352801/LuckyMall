@@ -102,7 +102,7 @@ angular.module('LuckyMall')
             templateUrl: 'common/templates/sub-header.html',
             replace: true,
             transclude: true,
-            controller: function ($rootScope, $scope,$state, LoginSer,CartSer,SearchSer) {
+            controller: function ($rootScope, $scope,$state, LoginSer,CartSer,SearchSer,SOTDSvc) {
                // $scope.kw='';//搜索关键字
                 $scope.kw_list=[];
                 $scope.isKeywordShow=true;
@@ -149,6 +149,24 @@ angular.module('LuckyMall')
                 $scope.searchWithKeyWord=function(kw){
                     if(kw){
                         $state.go('search',{keyword:kw});
+                    }
+                };
+
+                /*跳转订单确认页*/
+                $scope.goConfirm = function () {
+                    var orders=$rootScope.sp_data_cart;
+                    if(orders.length>0) {
+                        var tmp_data={
+                            "from":'shoppingCart',
+                            "orders":[]
+                        };
+                        for(var o in orders){
+                            if(typeof orders[o]=='object') {
+                                tmp_data.orders.push(orders[o].Id);
+                            }
+                        }
+                        SOTDSvc.set(tmp_data);
+                        $state.go('confirmOrder');
                     }
                 };
                 $scope.removeGoodsInCart = function (order_id) {
@@ -1189,7 +1207,7 @@ angular.module('LuckyMall')
                                 $scope.$emit('user-update');//更新用户数据
                             }
                         });
-                        $state.go('payForEarnest',{params:'order_id='+$scope.data_eo.Id});
+                        $state.go('payForEarnest',{params:$scope.data_eo.Id});
                 };
                 function show(order){
                     $scope.data_eo = order;
@@ -1279,6 +1297,322 @@ angular.module('LuckyMall')
                         moveType: 'easeOut'//动画的缓动方式，默认为easeIn
                     });
                 });
+
+            }
+        };
+    })
+
+
+    /*获取折扣modal*/
+    .directive('modalGetDiscount', function () {
+        return {
+            restrict: 'E',
+            replace:true,
+            scope:{
+                visible:"=visible",
+                order:"=data",
+                imgHost:'=imghost',
+                luckyEnergy:'=luckyenergy'
+            },
+            templateUrl: 'common/templates/modal-getDiscount.html',
+            controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc){
+
+                $scope.data_user={};
+                $scope.isCheckedWallet=false;
+                $scope.isCheckedCoupon=false;
+                $scope.content_exchange_energy=false;
+                $scope.content_exchange_earnest=false;
+                $scope.content_pay_earnest=false;
+                $scope.use_wallet=0;
+                $scope.use_coupon=0;
+
+
+
+
+
+                $scope.btn_val={
+                    exc_coupon:'使用红包进游戏',
+                    exc_db:'确定抵用'
+                };
+                $scope.energy={
+                    isEnough:false,
+                    tips:''
+                };
+                if(TokenSer.getToken()) {
+                    loadUserData();
+                    loadBalanceInfo();
+                }else{
+                    $rootScope.$on("user-login",function(new_val,old_val){
+                        loadUserData();
+                        loadBalanceInfo();
+                    });
+                }
+                $scope.exchange_val=function(){
+                    return $scope.use_wallet+$scope.use_coupon;
+                };
+                $scope.showContentExchangeEnergy=function(){
+                    $scope.content_exchange_energy=true;
+                };
+                $scope.showContentExchangeEarnest=function(){
+                    $scope.content_exchange_earnest=true;
+                };
+
+                $scope.hideContentExchangeEnergy=function(){
+                    $scope.content_exchange_energy=false;
+                };
+                $scope.hideContentExchangeEarnest=function(){
+                    $scope.content_exchange_earnest=false;
+                };
+
+                $scope.closeModal=function(){
+                    $scope.visible=false;
+                };
+                $scope.toggleCheckWallet=function(){
+                    $scope.isCheckedWallet = !$scope.isCheckedWallet;
+                    initUsedBalance($scope.data_balance.Coupon.Balance,$scope.data_balance.Wallet.Balance);
+                    if($scope.use_coupon==0){
+                        $scope.isCheckedCoupon=false;
+                    }
+                };
+                $scope.toggleCheckCoupon=function(){
+                    $scope.isCheckedCoupon=!$scope.isCheckedCoupon;
+                    initUsedBalance($scope.data_balance.Coupon.Balance,$scope.data_balance.Wallet.Balance);
+                    if($scope.use_wallet==0){
+                        $scope.isCheckedWallet=false;
+                    }
+                };
+                $scope.payEarnest=function(){
+                    if($scope.order.EarnestBusinessType==0) {
+                        $state.go('payForEarnest', {params: $scope.order.Id});
+                    }else{
+                        swal({
+                            title: "该订单已经获取过优惠了！",
+                            text:'获取过优惠的订单不能再支付定金',
+                            type: "error",
+                            confirmButtonColor: "#6dd17b",
+                            confirmButtonText: "确定"
+                        });
+                        $scope.visible=false;
+                    }
+                };
+                $scope.purchase=function(){
+                    SOTDSvc.set({
+                        "from":'purchase',
+                        "orders":[$scope.order.Id]
+                    });
+                    $state.go('confirmOrder');
+                };
+                $scope.$watch("order",function(new_val,old_val){
+                    if(new_val!=old_val){
+                        initPage($scope.order,$scope.data_user);
+                        $scope.content_exchange_energy=false;
+                        $scope.content_exchange_earnest=false;
+                        $scope.content_pay_earnest=false;
+                    }
+                });
+                $scope.play=function(){
+                    if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
+                        if ($scope.energy.isEnough) {
+                            ga('send', 'pageview', {
+                                'page': '/enter_paygame',
+                                'title': '进入付定金游戏'
+                            });
+                            $rootScope.openGame($scope.gameUrl, $scope.game_orderId, $scope.game_commodityId);
+                            $scope.visible = false;
+                        }
+                    }
+                }
+                $scope.playWidthCoupon=function(){
+                    if($scope.data_balance.Coupon.Balance>=$scope.order.earnest_cost) {
+                        $scope.btn_val.exc_coupon = '正在处理...';
+                        BalanceSvc.exchangeWithCoupon($scope.order.Id, function (response, status) {
+                            if (status == 1) {
+                                ga('send', 'pageview', {
+                                    'page': '/enter_paygame',
+                                    'title': '进入付定金游戏'
+                                });
+                                loadBalanceInfo();
+                                $rootScope.$broadcast('cart-update');
+                                $rootScope.openGame($scope.gameUrl, $scope.game_orderId, $scope.game_commodityId);
+                                $scope.visible = false;
+                            } else {
+                                swal('兑换失败!', '', 'error');
+                                $scope.visible = false;
+                            }
+
+                            $scope.btn_val.exc_coupon = '使用红包进游戏';
+                        });
+                    }
+                };
+
+
+                $scope.exchange=function(){
+                    if(($scope.use_coupon+$scope.use_wallet)<=0){
+                        return;
+                    }
+                    var params={
+                        "id":$scope.order.Id,
+                        "useCoupon": $scope.use_coupon>0?true:false,
+                        "useWallet": $scope.use_wallet>0?true:false
+                    };
+                    $scope.btn_val.exc_db='正在处理...';
+                    BalanceSvc.exchangeWithCouponAndWallet(params,function(response,status){
+                        if(status==1){
+                            $scope.visible = false;
+                            swal({
+                                    title: "抵用成功，是否立即支付?",
+                                    type: "success",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    cancelButtonText: '取消',
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm: true
+                                },
+                                function () {
+                                    $scope.purchase();
+                                }
+                            );
+                            loadBalanceInfo();
+                            $rootScope.$broadcast('cart-update');
+                        }else{
+                            swal('抵用失败!', '', 'error');
+                            $scope.visible = false;
+                        }
+                        $scope.btn_val.exc_db='确定抵用';
+                    });
+                };
+
+                /**检查能量是否够4发炮弹**/
+                function testEnergy(total_cost,percent,paid_value,remain_energy) {
+                    var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
+                    var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
+                    if(remain_amount>=10){
+                        $scope.energy.tips = '喵喵体力充足，快去赢取更多折扣吧！';
+                        return true;
+                    }else{
+                        if(paid_value>0){
+                            if(remain_amount>=1){
+                                $scope.energy.tips = '进入游戏赢取更多折扣吧！';
+                                return true;
+                            }else{
+                                $scope.energy.tips = '喵喵体力不支，可先去付定金获得赠送体力！';
+                                return false;
+                            }
+                        }else{
+                            if(remain_amount<4){
+                                $scope.energy.tips = '喵喵体力不足，可先去付定金获得赠送体力！';
+                                return false;
+                            }else if(remain_amount>=4){
+                                $scope.energy.tips = '喵喵体力不多，建议先去支付定金获赠体力！';
+                                return true;
+                            }
+                        }
+                    }
+                }
+                function loadUserData(callback) {
+                    RefreshUserDataSer.requestUserData(function (response, status) {
+                        if (status == 1) {
+                            $scope.data_user = RefreshUserDataSer.getData();
+
+                            if(callback){
+                                callback();
+                            }
+                        }
+                    });
+
+                }
+                function initPage(order,user){
+                   var data_orgCost = Math.round(order.UnitPrice * $scope.order.Count);//打折前总花费
+                    $scope.order.earnest_cost=parseInt($scope.order.TotalEarnestPrice)-$scope.order.EarnestMoney;//需支付的定金总额
+                    if (testEnergy(data_orgCost ,order.EarnestPercent, order.EarnestMoney, user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
+                        $scope.energy.isEnough = true;
+                        if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
+                            $scope.isCanPlay = true;
+                        }else{
+                            $scope.isCanPlay=false;
+                        }
+                    } else {
+                        $scope.energy.isEnough = false;
+                        $scope.isCanPlay=false;
+                    }
+                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.hostname + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.game_orderId = order.Id;
+                    $scope.game_commodityId = order.CommodityId;
+
+                    initExchangeData($scope.data_balance.Coupon.Balance,$scope.data_balance.Wallet.Balance);
+
+
+
+                }
+
+               function initExchangeData(coupon_val,wallet_val){
+                   var coupon_balance=coupon_val;//红包可支配余额
+                   var wallet_balance=wallet_val;//钱包可支配余额
+                   if(coupon_balance>0){
+                       $scope.isCheckedCoupon=true;
+                       if(coupon_balance>=$scope.order.earnest_cost){
+                           $scope.isCheckedWallet=false;
+                       }else{
+                           $scope.isCheckedWallet=true;
+                       }
+                   }else{
+                       $scope.isCheckedCoupon=false;
+                       if(wallet_balance>0){
+                           $scope.isCheckedWallet=true;
+                       }else{
+                           $scope.isCheckedWallet=false;
+                       }
+                   }
+                    initUsedBalance(coupon_balance,wallet_balance);
+
+
+               }
+
+
+              function initUsedBalance(coupon_val,wallet_val){
+                  var coupon_balance=coupon_val;//红包可支配余额
+                  var wallet_balance=wallet_val;//钱包可支配余额
+                  if($scope.isCheckedCoupon){
+                      if(coupon_balance>=$scope.order.earnest_cost){
+                          $scope.use_coupon=$scope.order.earnest_cost;
+                          $scope.use_wallet=0;
+                      }else{
+                          $scope.use_coupon=coupon_balance;
+                          if($scope.isCheckedWallet) {
+                              if (wallet_balance >= $scope.order.earnest_cost - $scope.use_coupon) {
+                                  $scope.use_wallet = $scope.order.earnest_cost - $scope.use_coupon;
+                              } else {
+                                  $scope.use_wallet = wallet_balance;
+                              }
+                          }else{
+                              $scope.use_wallet=0;
+                          }
+                      }
+                  }else{
+                      $scope.use_coupon=0;
+                      if($scope.isCheckedWallet) {
+                          if (wallet_balance >= $scope.order.earnest_cost - $scope.use_coupon) {
+                              $scope.use_wallet = $scope.order.earnest_cost - $scope.use_coupon;
+                          } else {
+                              $scope.use_wallet = wallet_balance;
+                          }
+                      }else{
+                          $scope.use_wallet=0;
+                      }
+                  }
+              }
+                function loadBalanceInfo(){
+                    BalanceSvc.requestBalanceInfo(function(response,status){
+                        if(status==1){
+                            $scope.data_balance=response;
+
+                        }
+                    });
+                }
+
+
+            },
+            link: function (scope, element, attrs) {
 
             }
         };

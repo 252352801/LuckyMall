@@ -33,9 +33,6 @@ d
     <div class="modal-protocol-payForEnergy" ng-show="isModal2show">
         <div class="modal-content" ng-class="{'modal2-show':isModal2show,'modal2-hide':!isModal2show}">
             <h1>定金支付说明</h1>
-
-<!--            <p class="warning">进入支付定金页面前请先认真阅读以下条款！</p>-->
-
             <div class="protocol-content">
                 <p>① 支付定金是为了确认您的购买意向，方便我们为您保留库存，同时赠予游戏机会。</p>
 
@@ -46,14 +43,9 @@ d
                 <p>④ 为了不让您忘记定金钱包里的余额，在您下一次购买商品时系统会优先使用您定金钱包中的余额来支付商品定金。</p>
 
             </div>
-<!--            <p class="bar-agree">
-                <input type="checkbox" id="ckb-protocol-payForEnergy" ng-model="agree"/>
-                <label for="ckb-protocol-payForEnergy">我已阅读并同意上述条款</label>
-            </p>-->
+
 
             <div class="bar-btn">
-               <!-- <a class="btn btn-outline" ng-click="returnModal1()">取消</a>-->
-               <!-- <a ng-class="{'btn btn-org':agree,'btn btn-gray':!agree}" ng-click="payForEarnest()">支付定金</a>-->
                 <a class="btn btn-org" ng-click="payForEarnest()">支付定金</a>
             </div>
             <span class="btn-close" title="取消" ng-click="closeModal2()">×</span>

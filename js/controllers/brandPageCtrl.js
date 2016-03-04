@@ -1,5 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('BrandPageCtrl', function ($scope, $stateParams,BrandSer,FilterSer, CategorySer, $timeout, $state) {
+    .controller('BrandPageCtrl', ['$scope', '$stateParams','BrandSer','FilterSer', 'CategorySer', '$timeout', '$state',
+        function ($scope, $stateParams,BrandSer,FilterSer, CategorySer, $timeout, $state) {
        var brand_id=$stateParams.brand_id;
        var page_size=40;
         $scope.search_condition=0;//搜索条件 0-新品 1价格
@@ -107,4 +108,4 @@ angular.module('LuckyMall.controllers')
             }
         }
 
-    });
+    }]);

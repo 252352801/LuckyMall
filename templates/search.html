@@ -40,7 +40,7 @@
                 </a>
                 <p class="price">
                     <span class="prices" ng-bind="'￥'+list.maxPrice+'~￥'+list.minPrice"></span>
-                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
+                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ></span>
 
                 </p>
             </div>
@@ -62,8 +62,8 @@
         <div class="next" ng-click="nextPage()" btn-scroll-to="190">></div>
     </div>
 </div>
- <div class="modal-overlay" style="opacity: 0" ng-style="{'opacity':isShowModalWishing?'1':'0','transition':'all .6s','z-index':isShowModalWishing?'999':'-1'}">
-     <div class="modal-submit-wishing" ng-style="{'top':isShowModalWishing?'50%':'-50%','transition':'top .6s'}">
+ <div class="modal-overlay" style="opacity: 0" ng-style="{'opacity':isShowModalWishing?'1':'0','transition':'all .5s','z-index':isShowModalWishing?'999':'-1'}">
+     <div class="modal-submit-wishing" ng-style="{'top':isShowModalWishing?'50%':'-30%'}">
          <div class="modal-title">
              <span>提交愿望</span>
          </div>

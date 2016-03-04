@@ -1,5 +1,7 @@
 angular.module('LuckyMall.controllers')
- .controller('MyWalletCtrl',function($scope,$state,$stateParams,WalletSer){
+ .controller('MyWalletCtrl',
+    ['$scope','$state','$stateParams','WalletSer',
+        function($scope,$state,$stateParams,WalletSer){
         $scope.$emit('changeMenu',6);
         
         if(WalletSer.getData()==null){
@@ -12,4 +14,4 @@ angular.module('LuckyMall.controllers')
              $scope.data_wallet=WalletSer.getData();
         }
          
-});
+}]);

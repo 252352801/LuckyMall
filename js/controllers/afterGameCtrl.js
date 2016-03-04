@@ -1,7 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('AfterGameCtrl', function ($scope, CartSer, LoginSer, $state,$cookies, $timeout, MyOrdersSer,TokenSer,
-                                           Host,$rootScope) {
-
+    .controller('AfterGameCtrl',['$scope', 'CartSer', 'LoginSer', '$state','$cookies', '$timeout', 'MyOrdersSer','TokenSer','Host','$rootScope',
+        function ($scope, CartSer, LoginSer, $state,$cookies, $timeout, MyOrdersSer,TokenSer,Host,$rootScope) {
         var str=location.href.split('?')[1];
         var params={
             auth:str.split('&')[0].split('=')[1],
@@ -59,4 +58,4 @@ angular.module('LuckyMall.controllers')
             }
         }
 
-    });
+    }]);

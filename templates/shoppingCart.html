@@ -20,7 +20,6 @@
                 <span class="has-arrow-white">完成</span>
             </div>
         </div>
-        <p class="temp" ng-if="data_cart.length>0">注：春节期间暂停发货，发货时间2月15日开始</p>
         <div class="cart-th" ng-if="data_cart.length>0">
             <p class="cart-checkedAll">
                 <input type="checkbox" id="cart_ck_all" ng-model="data_cart.isCheckedAll" ng-click="toggleCheckedAll()"/>
@@ -37,8 +36,8 @@
                 <input class="cart-ck-order" type="checkbox" ng-model="list.isSelected" ng-click="testChecked()" />
                 <img class="brand-img" ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@64w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
                 <a class="brand-name" href="#" ng-bind="list.Brand.BrandName"></a>
-                <!--<a class="a-forDiscount"  title="点击有惊喜喔" ng-href={{gameHost+'?orderid='+list.Id+'&from='+callbackURL+'&authorization='+authorization}}>赢折扣</a>-->
-                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="list.OrderType==0">赢折扣</a>
+               <!-- <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="list.OrderType==0">赢折扣</a>-->
+                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModalGetDisc(list)" ng-if="list.OrderType==0">抢折购买</a>
                 <a class="a-forDiscount"  title="此商品提供免费游戏模式，点击进入游戏赢取折扣吧！" ng-click="freePlayGame(list.Id,list.CommodityId)" ng-if="list.OrderType==1" ng-show="canPlay"  btn-free-play="{{list.CommodityId}}">赢折扣</a>
             </div>
             <div class="cart-list-cont">
@@ -70,10 +69,18 @@
                 </div>
                 <div class="cont4">
                     <p class="wait-to-pay" ng-bind="'￥'+list.needToPay"></p>
-                    <p ng-if="list.EarnestMoney>0">
+                    <p ng-if="list.EarnestMoney>0&&list.EarnestBusinessType!=4">
                         已付定金：
                         <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
                     </p>
+                    <p ng-if="list.EarnestBusinessType==3" class="color-gray">
+                        已兑游戏机会
+                    </p>
+                    <p ng-if="list.EarnestBusinessType==4&&(list.CouponMoney+list.EarnestMoney)>0">
+                        已抵用：
+                        <span class="payed" ng-bind="'￥'+(list.CouponMoney+list.EarnestMoney)"></span>
+                    </p>
+
                 </div>
                 <div class="cont5">
                     <span ng-if="list.EarnestMoney==0" class="icon-remove" title="从购物车移除该商品" ng-click="removeOrder(list.Id)"></span>
@@ -87,7 +94,7 @@
             <p>共有<span class="color-org" ng-bind="data_cart.totalAmount"></span>件商品</p>
             <p class="cart-sum-cost">合计（免运费）：<span ng-bind="'￥'+data_cart.totalCost"></span></p>
             <p>
-                <input id="btn_sure_pay" type="submit" value="确认结算" ng-click="goConfirm()">
+                <input id="btn_sure_pay" type="submit" value="确认结算" ng-click="goConfirmPage()">
             </p>
         </div>
     </div>
@@ -95,61 +102,10 @@
 <spinner ng-show="!loaded"></spinner>
 <!--中部 end-->
 
-<!--<div class="modal-before-game" ng-show="isModal1show">
-    <div class="modal-content" ng-class="{'modal1-show':isModal1show,'modal1-hide':!isModal1show}">
-        <div class="luckyEnergy-info">
-            <img src="./res/logo/logo_cat.png" alt=""/>
-
-            <h2>喵喵幸运物</h2>
-
-            <p class="level">体力级： <span ng-class="'icon icon-energy-level icon-lucky-energy-level'+luckyEnergy.level"></span></p>
-
-            <p class="box-energy">
-                <span class="energy-value" style={{'width:'+luckyEnergy.percent+'%;'}} ></span>
-            </p>
-        </div>
-        <div class="tips">
-            <p ng-bind="energy.tips"></p>
-        </div>
-        <div class="bar-btn">
-            <button ng-class="{'btn btn-org':data_eo.EarnestMoney<data_eo.EarnestPercent*data_eo.orgCost,'btn btn-gray':data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost}" ng-click="showModal2()" ng-disabled="data_eo.EarnestMoney>=data_eo.EarnestPercent*data_eo.orgCost">支付定金</button>
-            <button ng-class="{'btn btn-balanced':energy.isEnough,'btn btn-gray':!energy.isEnough}" ng-click="play()" ng-disabled="!energy.isEnough" >进入游戏</button>
-        </div>
-        <span class="btn-close" title="取消"  ng-click="closeModal1()">×</span>
-    </div>
-
-</div>
-
-<div class="modal-protocol-payForEnergy" ng-show="isModal2show">
-    <div class="modal-content" ng-class="{'modal2-show':isModal2show,'modal2-hide':!isModal2show}">
-            <h1>支付须知条款</h1>
-            <p class="warning">进入支付定金页面前请先认真阅读以下条款！</p>
-            <div class="protocol-content">
-                <p>① 支付定金是为了确认您的购买意向。</p>
-
-                <p>② 支付定金后，若订单未完成尾款支付，系统将会在取消订单之后，把已支付的定金退回到您的定金钱包里；如出现退货情况，此前支付的定金依然是退回到您的定金钱包里，尾款直接退回到您的支付宝或微信账户中，下次购买时，定金余额可以直接用来支付其他商品的定金。</p>
-
-                <p>③ 定金钱包里的余额只可用于支付商品的定金，不可提现，且第二次使用定金钱包里的余额来支付其他商品的定金时，不再赠送游戏机会。</p>
-
-                <p>④ 当定金钱包里有余额时，首先默认使用定金钱包里的余额来支付商品定金，直到定金钱包的余额为零时，才能使用其他方式来支付定金。</p>
-
-            </div>
-        <p class="bar-agree">
-            <input type="checkbox" id="ckb-protocol-payForEnergy" ng-model="agree" />
-            <label for="ckb-protocol-payForEnergy">我已阅读并同意上述条款</label>
-        </p>
-
-        <div class="bar-btn">
-            <a class="btn btn-outline" ng-click="returnModal1()">取消</a>
-            <a ng-class="{'btn btn-org':agree,'btn btn-gray':!agree}" ng-click="payForEarnest()">支付定金</a>
-        </div>
-        <span class="btn-close" title="取消"  ng-click="closeModal2()">×</span>
-    </div>
-</div>-->
 
 
 
-<modal-before-game></modal-before-game>
+<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" luckyenergy="luckyEnergy"></modal-get-discount>
 <introduction></introduction>
 <sub-footer></sub-footer>
 <footer></footer>

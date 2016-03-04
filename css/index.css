@@ -377,6 +377,7 @@ margin-left: 70px;
 .floor-nav li.cur{
     border-bottom-color:transparent;
     color:#fff;
+    background: #ffcc66;
     font-size:14px;
 }
 .floor-nav li:nth-child(1).cur{
@@ -395,7 +396,7 @@ margin-left: 70px;
     background:#D1BD7E;
 }
 .floor-nav li:nth-child(6).cur{
-    background:#B0ADF4;
+    background:#FB7677;
 }
 
 

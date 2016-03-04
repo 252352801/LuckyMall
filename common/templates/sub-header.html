@@ -40,7 +40,7 @@
                         <li><a href="/UCIndex/myOrders/paid">待收货({{simpleData_paid_count}})</a></li>
                     </ul>
                     <ul class="simple-menu">
-                        <li><a href="/UCIndex/myChallengeCards">我的挑战卡</a></li>
+                        <li><a href="/UCIndex/myCoupon">我的红包</a></li>
                         <li><a href="/UCIndex/myWallet">喵喵钱包</a></li>
                     </ul>
                 </div>
@@ -64,7 +64,7 @@
                         <li ng-repeat="list in sp_data_cart">
                             <div class="bar-img-goods">
                                 <a href="/item/{{list.CommodityId}}">
-                                    <img ng-src={{imgHost+list.imageUrl+'@70w_70h_100Q.jpg'}} alt="" title=""/>
+                                    <img ng-src={{list.imageUrl?imgHost+list.imageUrl+'@70w_70h_100Q.jpg':'./res/images/default.png'}} alt="" title=""/>
                                 </a>
                             </div>
                             <a href="/item/{{list.CommodityId}}">
@@ -95,7 +95,7 @@
                                 <span class="sum-cost" ng-bind="sp_data_cart.totalCost.toFixed(2)"></span>
                             </p>
                         </div>
-                        <a class="btn-to-pay" href="/confirmOrder">去结算</a>
+                        <a class="btn-to-pay" ng-click="goConfirm()">去结算</a>
                     </div>
                 </div>
                 <div class="hide-cart" ng-show="!isLogin||cartAmount<=0">
@@ -113,7 +113,7 @@
             <a ng-class="{'cur nav2':cur_nav==2,'nav2':cur_nav!=2}" href="/home" title="正在热卖">正在热卖</a>
             <a ng-class="{'cur':curMarket==market.Id}" ng-repeat="market in data_market" ng-bind="market.MarketName"
                ng-click="goMarket(market.DesktopPage,market.Id)"></a>
-            <a ng-class="{'cur new':cur_nav=='activity','new':cur_nav!='activity'}" href="/activity/index" title="擂台赛">擂台赛</a>
+            <!--<a ng-class="{'cur new':cur_nav=='activity','new':cur_nav!='activity'}" href="/activity/index" title="擂台赛">擂台赛</a>-->
             <a ng-class="{'cur':cur_nav=='guide'}" href="/guide" title="新手指南">新手指南</a>
             <a class="border-bottom4 icon-mb-link" href="#" title="">
                 <div class="sub-h-QR">
@@ -124,3 +124,4 @@
         <div ng-transclude></div>
     </div>
 </div>
+

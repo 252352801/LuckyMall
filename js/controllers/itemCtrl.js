@@ -1,6 +1,7 @@
 angular.module('LuckyMall.controllers')
     .controller('ItemCtrl',
-    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, MyOrdersSer, CartSer) {
+    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer',
+    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer) {
         var goods_id = $stateParams.goods_id;
         $scope.loaded = false;
         $scope.isLogin = LoginSer.isLogin();//是否应经登录
@@ -10,6 +11,8 @@ angular.module('LuckyMall.controllers')
         loadItemData();//加载本页数据
         $scope.amount = 1;//当前数量
         $scope.data_eo={};
+
+       $scope.isModalGetDiscountShow=false;
         $scope.btn_value = {//按钮文字
             addToCart: '加入购物车',
             buyNow: '抢折购买'
@@ -119,7 +122,10 @@ angular.module('LuckyMall.controllers')
                 $scope.amount = reset_value;
             });
         };
-
+        $scope.showModalGetDisc=function(order){
+            $scope.isModalGetDiscountShow=true;
+            $scope.data_modal_getDisc=order;
+        };
         /*试玩练手*/
         $scope.playFreeGame = function (goods_id) {
             var auth='';
@@ -180,6 +186,7 @@ angular.module('LuckyMall.controllers')
                 return;
             }
             var _type = 0;
+
             var params = {
                 "Type": _type,
                 "CommodityId": $scope.data_goods.Id,
@@ -188,6 +195,10 @@ angular.module('LuckyMall.controllers')
                 "Count": $scope.amount,
                 "Specifications": angular.toJson(ItemSer.getSelectedAttributes())
             };
+            if(LoginSer.getData()==null){
+                $scope.$emit("show-login-modal");
+                return;
+            }
             if (act == 0) {
                 $scope.btn_value.addToCart = '正在处理...';
             } else if (act == 1) {
@@ -200,10 +211,13 @@ angular.module('LuckyMall.controllers')
                         $scope.btn_value.addToCart = '加入购物车';
                         callback();
                     } else if (act == 1) {
-                        $scope.purchase_order=response.Data;//立即购买的订单
-                        //console.log($scope.purchase_order);
-                        $scope.showModal1($scope.purchase_order);
-                        $scope.btn_value.buyNow = '抢折购买';
+                        var order_id=response.Data.Id;//立即购买的订单
+                        OrderDetailsSer.requestData(order_id,function(response,status){
+                            if(status==1) {
+                                $scope.showModalGetDisc(response);
+                                $scope.btn_value.buyNow = '抢折购买';
+                            }
+                        });
 
                     }
                 } else if (status == 0) {
@@ -254,6 +268,11 @@ angular.module('LuckyMall.controllers')
                 if(status==1){
                     $scope.data_ranking=response;
               //      console.log($scope.data_ranking);
+                }
+            });
+            ItemSer.getPricesOfOthers(goods_id,function(response,status){
+                if(status==1){
+                    $scope.data_poo=response;//其他平台的价格
                 }
             });
         }
@@ -381,4 +400,4 @@ angular.module('LuckyMall.controllers')
                 });
             }
         }
-    });
+    }]);

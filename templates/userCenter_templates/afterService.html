@@ -80,9 +80,14 @@
                 <div class="items" ng-repeat="item in uploader.queue">
                     <div>
                         <div class="img-preview" >
-                            <img ng-src="{{imgHost+item.url}}" />
-                            <span ng-show="uploader.isHTML5&&!item.isError" >{{ item.file.size/1024/1024|number:2 }} MB</span>
+                            <img ng-src="{{item.imgUrl?imgHost+item.imgUrl:''}}" ng-show="item.progress==100"  temp-src="./res/spinner/spinner_s.gif"/>
                             <span class="items-error" ng-show="item.isError">上传失败</span>
+                            <div class="box-progress" ng-show="item.progress<100">
+                                <div class="progress-val" ng-style="{'width':item.progress+'%'}">
+
+                                </div>
+                                {{item.progress+'%'}}
+                            </div>
                         </div>
 <!--                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
                             上传

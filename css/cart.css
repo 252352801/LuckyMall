@@ -35,12 +35,6 @@
     float:left;
     position: relative;
 }
-.cart  .temp{
-    position: relative;
-    margin-bottom:-15px;
-    margin-left: 10px;
-    color:#ff6700
-}
 .cart-th{
     margin-top:25px;
     width:100%;

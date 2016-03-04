@@ -1,5 +1,7 @@
 angular.module('LuckyMall.controllers')
-    .controller('ListCtrl', function ($rootScope,$scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state) {
+    .controller('ListCtrl',
+        ['$rootScope','$scope', '$stateParams', 'FilterSer', 'CategorySer', '$timeout', 'ListSer', '$state',
+        function ($rootScope,$scope, $stateParams, FilterSer, CategorySer, $timeout, ListSer, $state) {
         /*执行流程：
          *1.从url中取参数，存到$scope.params；------initParams()
          *2.获取品类、品牌数据,重置FilterSer里相关数据的状态
@@ -435,4 +437,4 @@ angular.module('LuckyMall.controllers')
                 filters:params_filter
             });
         }
-    });
+    }]);

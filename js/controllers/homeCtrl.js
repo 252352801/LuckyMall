@@ -1,5 +1,6 @@
 angular.module('LuckyMall.controllers')
- .controller('HomeCtrl',function($scope,HomeSer,ActivitySer,$cookies,$timeout){
+ .controller('HomeCtrl',['$scope','HomeSer','ActivitySer','$cookies','$timeout',
+        function($scope,HomeSer,ActivitySer,$cookies,$timeout){
         if (HomeSer.getData().banner == null) {
             HomeSer.requestBannerData(function (response, status) {
                 if (status == 1) {
@@ -26,8 +27,8 @@ angular.module('LuckyMall.controllers')
         };
 
 
-        loadActivityData();
-        loadChallengeRecord();
+       /* loadActivityData();
+        loadChallengeRecord();*/
         /**
          * 活动数据
          */
@@ -40,27 +41,19 @@ angular.module('LuckyMall.controllers')
             ActivitySer.requestData(params, function (response, status) {
                 if (response && status == 200) {
 
+                    function setGroup(index,size){//分组
+                        if(index<data_act.length){
+                            group.push(data_act.slice(index,size+index));
+                            index+=size;
+                            setGroup(index,size);
+                        }
+                    }
                     var  data_act= response;//获取当前页数据
                     //console.log($scope.data_activity);
                     var group=[];
                     var group_size=5;//每组大小
                     setGroup(0,group_size);
-                    function setGroup(index,size){//分组
-                         if(index<data_act.length){
-                             group.push(data_act.slice(index,size+index));
-                             index+=size;
-                             setGroup(index,size);
-                         }
-                    }
-                    /*if(group[group.length-1].length<group_size){//最后一组不够时把第一组的填充进去
-                        var start=group[group.length-1].length-1;
-                        var cp_index=0;//填充（复制）的组里数据的下标
-                        for(var i=start;i<group_size;i++){
-                            group[group.length-1].push(group[0][cp_index]);
-                            cp_index++;
-                        }
-                    }*/
-                  //  console.log(group);
+
                     $scope.data_act_group=group;
                     $scope.act_group_index=0;
                 } else {
@@ -137,4 +130,4 @@ angular.module('LuckyMall.controllers')
 
 
 
-    });
+    }]);

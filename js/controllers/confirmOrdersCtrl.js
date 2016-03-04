@@ -1,6 +1,9 @@
 angular.module('LuckyMall.controllers')
- .controller('ConfirmOrdersCtrl',function(Host,$rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,
-                                          $timeout,WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer,TokenSer,RefreshUserDataSer,SOTDSvc){
+ .controller('ConfirmOrdersCtrl',['Host','$rootScope','$scope','$state','$stateParams','CartSer',
+        'LoginSer','AddressSer','$timeout','WXPaySer','MyOrdersSer','API','PaymentSer',
+        'OrderDetailsSer','TokenSer','RefreshUserDataSer','SOTDSvc',
+        function(Host,$rootScope,$scope,$state,$stateParams,CartSer,LoginSer,AddressSer,$timeout,
+                 WXPaySer,MyOrdersSer,API,PaymentSer,OrderDetailsSer,TokenSer,RefreshUserDataSer,SOTDSvc){
         if(!LoginSer.isLogin()){
             $state.go('home');
         }
@@ -22,9 +25,9 @@ angular.module('LuckyMall.controllers')
        /* 支付方式显示*/
         $scope.showPayType=function(){
             var result='';
-            if($scope.data_balance>0&&$scope.total_earnest>0){
+           /* if($scope.data_balance>0&&$scope.total_earnest>0){
                     result+='喵喵钱包余额+';
-            };
+            };*/
             switch($scope.pay_type){
                 case 'zhifubao':result+='支付宝';break;
                 case 'weixin':result+='微信支付';break;
@@ -158,8 +161,8 @@ angular.module('LuckyMall.controllers')
                         tmp.from='repay';
                         SOTDSvc.set(tmp);
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
-                            var used_blc=($scope.data_balance>=$scope.total_earnest?$scope.total_earnest:$scope.data_balance);
-                            WXPaySer.setTotalCost($scope.total_cost-used_blc);
+                           // var used_blc=($scope.data_balance>=$scope.total_earnest?$scope.total_earnest:$scope.data_balance);
+                            WXPaySer.setTotalCost($scope.total_cost);
                             $state.go('WXPay',{trade_id:response.Data.OutTradeNo,type:1});
                         }else{
                             $timeout(function(){
@@ -413,4 +416,4 @@ angular.module('LuckyMall.controllers')
                 });
             },2000);
         }
-});
+}]);

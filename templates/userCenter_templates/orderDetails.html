@@ -58,11 +58,13 @@
                 <div class="cont3">
                     <div class="inner-cont">
                         <p class="disc-cost" ng-bind="'￥'+data_order.cost"></p>
-
-                        <p ng-bind="'（含定金：￥'+data_order.EarnestMoney+'）'" ng-if="data_order.EarnestMoney>0"></p>
-
                         <p>已享用折扣卡<span class="icon-discount" ng-bind="data_order.finalDiscount+'折'"></span>
                         </p>
+                        <p class="color-666 small-font" ng-bind="'（已付定金：￥'+data_order.EarnestMoney+'）'" ng-if="data_order.EarnestBusinessType!=4&&data_order.EarnestMoney>0"></p>
+                        <p class="color-666 small-font" ng-bind="'（已用红包抵用：￥'+(data_order.CouponMoney)+'）'" ng-if="data_order.EarnestBusinessType==4&&data_order.CouponMoney>0"></p>
+                        <p class="color-666 small-font" ng-bind="'（已用钱包抵用：￥'+(data_order.EarnestMoney)+'）'" ng-if="data_order.EarnestBusinessType==4&&data_order.EarnestMoney>0"></p>
+
+
                     </div>
                 </div>
                 <div class="cont4">
@@ -148,9 +150,13 @@
             <label>实付金额：</label>
             <span class="real-cost" ng-bind="'￥'+(data_order.PayfinalMoney+data_order.EarnestMoney).toFixed(2)"></span>
         </p>
-        <p ng-if="data_order.EarnestMoney>0">
-            <label>含定金：</label>
+        <p ng-if="data_order.EarnestBusinessType!=4&&data_order.EarnestMoney>0">
+            <label>已付定金：</label>
             <span ng-bind="data_order.EarnestMoney"></span>
+        </p>
+        <p ng-if="data_order.EarnestBusinessType==4&&(data_order.EarnestMoney+data_order.CouponMoney)>0">
+            <label>已抵用：</label>
+            <span ng-bind="(data_order.EarnestMoney+data_order.CouponMoney)"></span>
         </p>
     </div>
 

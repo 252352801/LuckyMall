@@ -5,8 +5,8 @@
             for (var o in data) {
                 data[o].RollingImages = data[o].RollingImages.split('|');
                 data[o].DetailImages = data[o].DetailImages.split('|');
-                data[o].minPrice = Math.ceil(data[o].RetailPrice * data[o].MaxDiscount);
-                data[o].maxPrice = Math.ceil(data[o].RetailPrice * data[o].MinDiscount);
+                data[o].minPrice = data[o].FloorPrice;//Math.ceil(data[o].RetailPrice * data[o].MaxDiscount);
+                data[o].maxPrice = data[o].CeilingPrice;//Math.ceil(data[o].RetailPrice * data[o].MinDiscount);
             }
             return data
         };

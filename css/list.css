@@ -99,7 +99,7 @@
     display:table-caption;
     width:100%;
     height:264px;
-
+    line-height: 264px;
     position:absolute;
     left:0px;
     top:0px;
@@ -414,20 +414,20 @@
     margin-top:200px;
 }
 .category-menu{
-    width:75px;
-    background:#fff;
-    box-sizing:border-box;
+    width: 75px;
+    background: #fff;
+    box-sizing: border-box;
     text-align: center;
-    border:1px solid #ddd;
-    position:fixed;
-    left:50%;
-    top:190px;
-    margin-left:-630px;
-    line-height:40px;
-    border-radius:4px;
-    transition:opacity 1s;
-    -webkit-transition:opacity 0.5s;
-    opacity:0;
+    border: 1px solid #f1f1f1;
+    position: fixed;
+    left: 50%;
+    top: 190px;
+    margin-left: -630px;
+    line-height: 40px;
+    /* border-radius: 4px; */
+    transition: opacity 1s;
+    -webkit-transition: opacity 0.5s;
+    opacity: 0;
 }
 @media screen and (max-width:1200px) {
     .category-menu{
@@ -435,18 +435,72 @@
     }
 }
 .category-menu li:hover{
-    background:#ff6700;
+    background:#F69C00;
 }
 .category-menu li:hover a{
     color:#fff;
     transition:none;
 }
 .category-menu li a{
-    color:#666;
-    display:block;
-    width:100%;
-    height:100%;
-    border-bottom:1px dashed #ddd;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    color:#999;
+}
+.category-menu li.cur{
+    color:#fff;
+    background: #F69C00;
+}
+
+
+.category-menu li.cur{
+    border-bottom-color:transparent;
+    color:#fff;
+    background: #F69C00;
+    font-size:14px;
+}
+.category-menu li:nth-child(1).cur,.category-menu li:nth-child(1):hover{
+    background:#84B6F5;
+}
+.category-menu li:nth-child(2).cur,.category-menu li:nth-child(2):hover{
+    background:#B0C662;
+}
+.category-menu li:nth-child(3).cur,.category-menu li:nth-child(3):hover{
+    background:#C094E3;
+}
+.category-menu li:nth-child(4).cur,.category-menu li:nth-child(4):hover{
+    background:#F29AC0;
+}
+.category-menu li:nth-child(5).cur,.category-menu li:nth-child(5):hover{
+    background:#D1BD7E;
+}
+.category-menu li:nth-child(6).cur,.category-menu li:nth-child(6):hover{
+    background:#FB7677;
+}
+.category-menu li:nth-child(7).cur,.category-menu li:nth-child(7):hover{
+    background:#E5E163;
+}
+.category-menu li:nth-child(8).cur,.category-menu li:nth-child(8):hover{
+    background:#98CA4D;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.category-menu li.cur a{
+    color:#fff;
 }
 .category-menu li:last-child a{
     border-bottom:none;

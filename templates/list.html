@@ -137,7 +137,7 @@
                 </a>
                 <p class="price">
                     <span class="prices" ng-bind="'￥'+list.maxPrice+'~￥'+list.minPrice"></span>
-                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ng-if="!(list.RetailPrice*list.MaxDiscount>999&&list.RetailPrice*list.MinDiscount>999)"></span>
+                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ></span>
                   <!--  <span class="icon-discount" ng-bind="'低至'+(list.MaxDiscount*10).toFixed(1)+'折'"></span>-->
                     <!--<span class="final-price" ng-bind="'￥'+(list.RetailPrice*list.MinDiscount).toFixed(2)" ></span>
                     <span class="old-price" ng-bind="list.RetailPrice"></span>
@@ -168,7 +168,7 @@
 
 
 <ul class="category-menu" toggle-menu ng-style="{opacity:showMenu?1:0}">
-    <li ng-repeat="menu in data_menu">
+    <li ng-class="{'cur':menu.Id==cate_id}" ng-repeat="menu in data_menu">
         <a href="/list/{{'category='+menu.Id}}/0/" ng-bind="menu.CategoryName" btn-scroll-filter></a>
     </li>
 </ul>

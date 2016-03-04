@@ -6,14 +6,14 @@
 
 <!--中部 start-->
 <div class="content">
-    <div class="shopping-status-top">
+    <div class="shopping-status-top earnest">
         <div class="pull-left">
             <h1>支付定金</h1>
         </div>
     </div>
 </div>
 <form class="form-confirm-order">
-    <div class="content box-confirmOrder">
+    <div class="content box-confirmOrder earnest">
         <p class="label-cont-name"><label>商品信息</label></p>
         <div class="confirmOrder-th">
             <span>商品信息</span>
@@ -23,7 +23,7 @@
         </div>
         <div class="goods-list" ng-show="data_order">
             <div class="bar-sellerInfo">
-                <img real-src={{imgHost+data_order.Brand.BrandImage+'@32w_32h_100Q.png'}} temp-src="./res/images/default.png" alt=""/>
+                <img ng-if="data_order.Brand.BrandImage" real-src={{imgHost+data_order.Brand.BrandImage+'@32w_32h_100Q.png'}} temp-src="./res/images/default.png" alt=""/>
                 <p ng-bind="data_order.SupplierName"></p>
             </div>
             <div class="goods-list-cont">
@@ -63,7 +63,7 @@
         <p class="label-cont-name">
             <label>支付方式</label>
         </p>
-        <div class="box-wallet" ng-if="data_balance>0">
+     <!--   <div class="box-wallet" ng-if="data_balance>0">
         <div class="bar-balance" ng-style="{'border-color':isUseBalance?'#ff6700':'transparent'}">
             <a ng-class="{'my-checkbox checked':isUseBalance,'my-checkbox':!isUseBalance}" ng-click="toggleCheckWallet()">
                 <i class="checkbox"></i>
@@ -78,7 +78,7 @@
             还需支付：
             <span class="color-red val" ng-bind="'￥'+needToPay()"></span>
         </p>
-    </div>
+    </div>-->
         <p class="s-label" ng-if="needToPay()>0">
             <small>在线支付</small>
         </p>
@@ -162,7 +162,7 @@
             </li>
         </ul>
     </div>
-    <div class="content confirmOrder-bottom">
+    <div class="content confirmOrder-bottom earnest">
         <div >
             <label>支付方式：</label>
             <p ng-bind="showPayType()"></p>
@@ -199,6 +199,28 @@
                 <a ng-click="returnWaitingModal()">确定</a>
             </p>
         </div>
+    </div>
+</div>
+
+<div class="modal-protocol-payForEnergy" ng-show="isProtocolShow" >
+    <div class="modal-content" ng-class="{'modal2-show':isModal2show,'modal2-hide':!isModal2show}">
+        <h1>定金支付说明</h1>
+        <div class="protocol-content">
+            <p>① 支付定金是为了确认您的购买意向，方便我们为您保留库存，同时赠予游戏机会。</p>
+
+            <p>②支付定金后，若您不想购买该商品了，则系统会在订单取消之后，把已支付的定金退回到您的定金钱包里。下次购买商品时，可以直接用来支付所需商品的定金。</p>
+
+            <p>③ 当您需要退货时，我们会为您全额退款。若因产品质量问题发生的退货，则退款会全部（包含定金）退回至您的支付宝或者微信账户中；若非因产品质量问题发生的退货，则退款当中的定金部分退回到您的定金钱包中，其余款项则直接退回您的支付宝或者微信账户中。</p>
+
+            <p>④ 为了不让您忘记定金钱包里的余额，在您下一次购买商品时系统会优先使用您定金钱包中的余额来支付商品定金。</p>
+
+        </div>
+
+
+        <div class="bar-btn">
+            <a class="btn btn-org" ng-click="agreeProtocol()">我同意此协议</a>
+        </div>
+        <span class="btn-close" title="取消" ng-click="closeModal2()">×</span>
     </div>
 </div>
 <introduction></introduction>

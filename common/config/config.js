@@ -347,6 +347,26 @@ app.constant('API',{
     submitWishing:{//提交愿望（商品链接）
         method:'post',
         url:'api/commoditycomment/add'
+    },
+    getBalanceInfo:{//余额信息
+        method:'get',
+        url:'api/user/account'
+    },
+    exchangeWithCoupon:{//红包兑换
+        method:'get',
+        url:'api/coupon/'
+    },
+    exchangeWithCouponAndWallet:{//抵用
+        method:'post',
+        url:'api/coupon/payment'
+    },
+    coupon:{//红包列表
+        method:'post',
+        url:'api/user/coupons'
+    },
+    getPricesOfOthers:{//其他平台的价格
+        method:'get',
+        url:'api/parity/get/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
@@ -362,23 +382,24 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     /*默认路由*/
     $urlRouterProvider.otherwise('/');
     $stateProvider
+
         /*主页*/
         .state('home', {
             url: '/',
             views: {
                 '': {
-                    templateUrl: "templates/home.html",
+                    templateUrl: "templates/home.html?v="+v,//v：版本号
                     controller: 'HomeCtrl'
                 }
             },
             title:'幸运猫-享玩享购享折扣',
             resolve: {
                 loadFiles: load([
-                    './css/index.css',
-                    './js/controllers/homeCtrl.js',
-                    './js/services/homeSer.js',
-                    './js/directives/homeDirectives.js',
-                    './js/services/activitySer.js'
+                    './css/index.css?v='+v,
+                    './js/controllers/homeCtrl.js?v='+v,
+                    './js/services/homeSer.js?v='+v,
+                    './js/directives/homeDirectives.js?v='+v,
+                    './js/services/activitySer.js?v='+v
                 ])
             }
         })
@@ -387,17 +408,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/list/:category/:brands/:filters',
             views: {
                 '': {
-                    templateUrl: "templates/list.html",
+                    templateUrl: "templates/list.html?v="+v,
                     controller: 'ListCtrl'
                 }
             },
             title:'商品列表-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/list.css',
-                    './js/controllers/listCtrl.js',
-                    './js/services/listSer.js',
-                    './js/directives/listDirectives.js'
+                    './css/list.css?v='+v,
+                    './js/controllers/listCtrl.js?v='+v,
+                    './js/services/listSer.js?v='+v,
+                    './js/directives/listDirectives.js?v='+v
                 ])
             }
 
@@ -408,15 +429,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/search/:keyword',
             views: {
                 '': {
-                    templateUrl: "templates/search.html",
+                    templateUrl: "templates/search.html?v="+v,
                     controller: 'SearchCtrl'
                 }
             },
             title:'搜索-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/list.css',
-                    './js/controllers/searchCtrl.js'
+                    './css/list.css?v='+v,
+                    './js/controllers/searchCtrl.js?v='+v
                 ])
             }
         })
@@ -425,7 +446,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/login',
             views: {
                 '': {
-                    templateUrl: "templates/login.html",
+                    templateUrl: "templates/login.html?v="+v,
                     controller: 'LoginCtrl'
                 }
             },
@@ -436,16 +457,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/lostPassword',
             views: {
                 '': {
-                    templateUrl: "templates/lostPassword.html",
-                    controller: 'LostPasswordCtrl'
+                    templateUrl: "templates/lostPassword.html?v="+v,
+                    controller: 'LostPasswordCtrl?v='+v
                 }
             },
             title:'找回密码-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/controllers/lostPasswordCtrl.js',
-                    './js/services/lostPasswordSer.js',
-                    './js/services/registerSer.js',
+                    './js/controllers/lostPasswordCtrl.js?v='+v,
+                    './js/services/lostPasswordSer.js?v='+v,
+                    './js/services/registerSer.js?v='+v
                 ])
             }
         })
@@ -455,16 +476,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/register',
             views: {
                 '': {
-                    templateUrl: "templates/register.html",
+                    templateUrl: "templates/register.html?v="+v,
                     controller: 'RegisterCtrl'
                 }
             },
             title:'注册-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/controllers/registerCtrl.js',
-                    './js/services/registerSer.js',
-                    './css/modal-protocol.css'
+                    './js/controllers/registerCtrl.js?v='+v,
+                    './js/services/registerSer.js?v='+v,
+                    './css/modal-protocol.css?v='+v
                 ])
             }
         })
@@ -474,15 +495,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/shoppingCart',
             views: {
                 '': {
-                    templateUrl: "templates/shoppingCart.html",
+                    templateUrl: "templates/shoppingCart.html?v="+v,
                     controller: 'CartCtrl'
                 }
             },
             title:'我的购物车-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/cart.css',
-                    './js/controllers/cartCtrl.js'
+                    './css/cart.css?v='+v,
+                    './js/controllers/cartCtrl.js?v='+v
                 ])
             }
         })
@@ -493,17 +514,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/brand/:brand_id',
             views: {
                 '': {
-                    templateUrl: "templates/brand.html",
+                    templateUrl: "templates/brand.html?v="+v,
                     controller: 'BrandPageCtrl'
                 }
             },
             title:'品牌-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/list.css',
-                    './js/controllers/brandPageCtrl.js',
-                    './js/services/brandSer.js',
-                    './js/directives/listDirectives.js'
+                    './css/list.css?v='+v,
+                    './js/controllers/brandPageCtrl.js?v='+v,
+                    './js/services/brandSer.js?v='+v,
+                    './js/directives/listDirectives.js?v='+v
                 ])
             }
         })
@@ -513,17 +534,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/item/:goods_id',
             views: {
                 '': {
-                    templateUrl: "templates/item.html",
+                    templateUrl: "templates/item.html?v="+v,
                     controller: 'ItemCtrl'
                 }
             },
             title:'商品详情-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/item.css',
-                    './js/controllers/itemCtrl.js',
-                    './js/services/itemSer.js',
-                    './js/directives/itemDirectives.js'
+                    './css/item.css?v='+v,
+                    './js/controllers/itemCtrl.js?v='+v,
+                    './js/services/itemSer.js?v='+v,
+                    './js/directives/itemDirectives.js?v='+v
                 ])
             }
 
@@ -535,17 +556,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/confirmOrder',
             views: {
                 '': {
-                    templateUrl: "templates/confirmOrder.html",
+                    templateUrl: "templates/confirmOrder.html?v="+v,
                     controller: 'ConfirmOrdersCtrl'
                 }
             },
             title:'确认订单-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/confirmOrders.css',
-                    './js/controllers/confirmOrdersCtrl.js',
-                    './lib/areaPicker/areaPicker.js',
-                    './lib/areaPicker/areaPicker.css'
+                    './css/confirmOrders.css?v='+v,
+                    './js/controllers/confirmOrdersCtrl.js?v='+v,
+                    './lib/areaPicker/areaPicker.js?v='+v,
+                    './lib/areaPicker/areaPicker.css?v='+v
                 ])
             }
 
@@ -556,15 +577,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/WXPay/:trade_id/:type', //trade_id交易单号  type 0付定金 1支付
             views: {
                 '': {
-                    templateUrl: "templates/WXPay.html",
+                    templateUrl: "templates/WXPay.html?v="+v,
                     controller: 'WXPayCtrl'
                 }
             },
             title:'微信扫码支付-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/WXPay.css',
-                    './js/controllers/WXPayCtrl.js'
+                    './css/WXPay.css?v='+v,
+                    './js/controllers/WXPayCtrl.js?v='+v
                 ])
             }
 
@@ -575,15 +596,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/payForEarnest/:params',
             views: {
                 '': {
-                    templateUrl: "templates/payForEarnest.html",
+                    templateUrl: "templates/payForEarnest.html?v="+v,
                     controller: 'PayForEarnestCtrl'
                 }
             },
             title:'支付定金-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/confirmOrders.css',
-                    './js/controllers/payForEarnestCtrl.js'
+                    './css/confirmOrders.css?v='+v,
+                    './js/controllers/payForEarnestCtrl.js?v='+v
                 ])
             }
 
@@ -594,13 +615,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/paySuccess',
             views: {
                 '': {
-                    templateUrl: "templates/paySuccess.html"
+                    templateUrl: "templates/paySuccess.html?v="+v
                 }
             },
             title:'支付成功-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/paySuccess.css'
+                    './css/paySuccess.css?v='+v
                 ])
             }
 
@@ -610,15 +631,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/payEarnestSuccess/:order_id/:commodity_id',
             views: {
                 '': {
-                    templateUrl: "templates/payEarnestSuccess.html",
+                    templateUrl: "templates/payEarnestSuccess.html?v="+v,
                     controller:'PayEarnestSuccessCtrl'
                 }
             },
             title:'支付定金成功-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/paySuccess.css',
-                    './js/controllers/payEarnestSuccessCtrl.js'
+                    './css/paySuccess.css?v='+v,
+                    './js/controllers/payEarnestSuccessCtrl.js?v='+v
                 ])
             }
 
@@ -628,13 +649,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/about',
             views: {
                 '': {
-                    templateUrl: "templates/about.html"
+                    templateUrl: "templates/about.html?v="+v
                 }
             },
             title:'关于我们-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support.css'
+                    './css/support.css?v='+v
                 ])
             }
 
@@ -644,16 +665,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/contact',
             views: {
                 '': {
-                    templateUrl: "templates/contact.html"
+                    templateUrl: "templates/contact.html?v="+v
                 }
             },
             title:'联系我们-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support.css',
-                    './lib/BDMap/BaiDuMap.js',
-                    './lib/BDMap/BaiDuMap.css',
-                    './js/directives/contactDirectives.js'
+                    './css/support.css?v='+v,
+                    './lib/BDMap/BaiDuMap.js?v='+v,
+                    './lib/BDMap/BaiDuMap.css?v='+v,
+                    './js/directives/contactDirectives.js?v='+v
                 ])
             }
 
@@ -663,13 +684,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/help',
             views: {
                 '': {
-                    templateUrl: "templates/help.html"
+                    templateUrl: "templates/help.html?v="+v
                 }
             },
             title:'帮助中心-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/support.css'
+                    './css/support.css?v='+v
                 ])
             }
 
@@ -679,15 +700,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/market/:id',
             views: {
                 '': {
-                    templateUrl: "templates/market.html",
+                    templateUrl: "templates/market.html?v="+v,
                     controller: 'MarketCtrl'
                 }
             },
             title:'活动-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/controllers/marketCtrl.js',
-                    './js/services/marketSer.js'
+                    './js/controllers/marketCtrl.js?v='+v,
+                    './js/services/marketSer.js?v='+v
                 ])
             }
 
@@ -698,16 +719,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/support',
             views: {
                 '': {
-                    templateUrl: "templates/support_templates/support.html",
+                    templateUrl: "templates/support_templates/support.html?v="+v,
                     controller: 'SupportCtrl'
                 }
             },
             title:'',
             resolve: {
                 loadFiles: load([
-                    './css/userCenter_css/userCenter.css',
-                    './css/support_css/support_css.css',
-                    './js/controllers/supportCtrl.js'
+                    './css/userCenter_css/userCenter.css?v='+v,
+                    './css/support_css/support_css.css?v='+v,
+                    './js/controllers/supportCtrl.js?v='+v
                 ])
             }
         })
@@ -715,14 +736,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/sp_flow',
             views: {
                 '': {
-                    templateUrl: "templates/support_templates/sp_flow.html"
+                    templateUrl: "templates/support_templates/sp_flow.html?v="+v
                 }
             },
             title:'购物流程-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/userCenter_css/userCenter.css',
-                    './css/support_css/support_css.css'
+                    './css/userCenter_css/userCenter.css?v='+v,
+                    './css/support_css/support_css.css?v='+v
                 ])
             }
         })
@@ -730,14 +751,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/business',
             views: {
                 '': {
-                    templateUrl: "templates/support_templates/business.html"
+                    templateUrl: "templates/support_templates/business.html?v="+v
                 }
             },
             title:'招商加盟-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/userCenter_css/userCenter.css',
-                    './css/support_css/support_css.css'
+                    './css/userCenter_css/userCenter.css?v='+v,
+                    './css/support_css/support_css.css?v='+v
                 ])
             }
         })
@@ -745,7 +766,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/qa',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/qa.html"
+                    templateUrl: "templates/support_templates/qa.html?v="+v
                 }
             },
             title:'常见问题-幸运猫'
@@ -754,7 +775,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/protocol',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/protocol.html"
+                    templateUrl: "templates/support_templates/protocol.html?v="+v
                 }
             },
             title:'用户协议-幸运猫'
@@ -763,7 +784,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/payWay',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/payWay.html"
+                    templateUrl: "templates/support_templates/payWay.html?v="+v
                 }
             },
             title:'支付方式-幸运猫'
@@ -772,7 +793,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/assure_pro',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/assure_pro.html"
+                    templateUrl: "templates/support_templates/assure_pro.html?v="+v
                 }
             },
             title:'正品保障-幸运猫'
@@ -781,7 +802,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/assure_inv',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/assure_inv.html"
+                    templateUrl: "templates/support_templates/assure_inv.html?v="+v
                 }
             },
             title:'发票保障-幸运猫'
@@ -790,7 +811,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/ol_svc',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/ol_svc.html"
+                    templateUrl: "templates/support_templates/ol_svc.html?v="+v
                 }
             },
             title:'在线客服-幸运猫'
@@ -799,7 +820,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/logistics_cost',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/logistics_cost.html"
+                    templateUrl: "templates/support_templates/logistics_cost.html?v="+v
                 }
             },
             title:'配送费用-幸运猫'
@@ -808,7 +829,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/logistics_exp',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/logistics_exp.html"
+                    templateUrl: "templates/support_templates/logistics_exp.html?v="+v
                 }
             },
             title:'配送说明-幸运猫'
@@ -817,7 +838,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/receive_exp',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/receive_exp.html"
+                    templateUrl: "templates/support_templates/receive_exp.html?v="+v
                 }
             },
             title:'验货说明-幸运猫'
@@ -826,7 +847,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/refund_flow',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/refund_flow.html"
+                    templateUrl: "templates/support_templates/refund_flow.html?v="+v
                 }
             },
             title:'退货流程-幸运猫'
@@ -835,7 +856,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/refund_rule',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/refund_rule.html"
+                    templateUrl: "templates/support_templates/refund_rule.html?v="+v
                 }
             },
             title:'退货政策-幸运猫'
@@ -844,7 +865,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/QT',
             views: {
                 'support_content': {
-                    templateUrl: "templates/support_templates/QT.html"
+                    templateUrl: "templates/support_templates/QT.html?v="+v
                 }
             },
             title:'七天无理由退换-幸运猫'
@@ -854,14 +875,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/guide',
             views: {
                 '': {
-                    templateUrl: "templates/guide/guide.html",
+                    templateUrl: "templates/guide/guide.html?v="+v,
                     controller:'GuideCtrl'
                 }
             },
             title:'新手指南-幸运猫-享玩享购享折扣',
             resolve: {
                 loadFiles: load([
-                    './js/controllers/guideCtrl.js'
+                    './js/controllers/guideCtrl.js?v='+v
                 ])
             }
         })
@@ -879,7 +900,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'正在处理...',
             resolve: {
                 loadFiles: load([
-                    './js/controllers/afterGameCtrl.js'
+                    './js/controllers/afterGameCtrl.js?v='+v
                 ])
             }
         })
@@ -890,18 +911,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/UCIndex',
             views: {
                 '': {
-                    templateUrl: "templates/userCenter_templates/UCIndex.html",
+                    templateUrl: "templates/userCenter_templates/UCIndex.html?v="+v,
                     controller: 'UserCenterCtrl'
                 }
             },
             title:'我的幸运猫-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './css/userCenter_css/userCenter.css',
-                    './js/userCenter_js/controllers/userCenterCtrl.js',
-                    './js/userCenter_js/directives/avatarEditDirectives.js',
-                    './js/userCenter_js/services/userSer.js',
-                    'http://open.web.meitu.com/sources/xiuxiu.js'
+                    './css/userCenter_css/userCenter.css?v='+v,
+                    './js/userCenter_js/controllers/userCenterCtrl.js?v='+v,
+                    './js/userCenter_js/directives/avatarEditDirectives.js?v='+v,
+                    './js/userCenter_js/services/userSer.js?v='+v,
+                    'http://open.web.meitu.com/sources/xiuxiu.js?v='+v
 
                 ])
             }
@@ -911,15 +932,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/myOrders/:status',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myOrders.html",
+                    templateUrl: "templates/userCenter_templates/myOrders.html?v="+v,
                     controller: 'MyOrdersCtrl'
                 }
             },
             title:'我的订单-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/myOrdersCtrl.js',
-                    './js/userCenter_js/services/myOrdersSer.js'
+                    './js/userCenter_js/controllers/myOrdersCtrl.js?v='+v,
+                    './js/userCenter_js/services/myOrdersSer.js?v='+v
                 ])
             }
         })
@@ -928,15 +949,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/orderDetails/:order_status/:order_id',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/orderDetails.html",
+                    templateUrl: "templates/userCenter_templates/orderDetails.html?v="+v,
                     controller: 'OrderDetailsCtrl'
                 }
             },
             title:'订单详情-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/orderDetailsCtrl.js',
-                    './js/userCenter_js/services/orderDetailsSer.js'
+                    './js/userCenter_js/controllers/orderDetailsCtrl.js?v='+v,
+                    './js/userCenter_js/services/orderDetailsSer.js?v='+v
                 ])
             }
         })
@@ -946,15 +967,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/AS_orderDetails/:order_id',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/AS_orderDetails.html",
+                    templateUrl: "templates/userCenter_templates/AS_orderDetails.html?v="+v,
                     controller: 'AS_OrderDetailsCtrl'
                 }
             },
             title:'订单详情-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/AS_orderDetailsCtrl.js',
-                    './js/userCenter_js/services/AS_orderDetailsSer.js'
+                    './js/userCenter_js/controllers/AS_orderDetailsCtrl.js?v='+v,
+                    './js/userCenter_js/services/AS_orderDetailsSer.js?v='+v
                 ])
             }
         })
@@ -964,14 +985,30 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/myWallet',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myWallet.html",
+                    templateUrl: "templates/userCenter_templates/myWallet.html?v="+v,
                     controller: 'MyWalletCtrl'
                 }
             },
             title:'喵喵钱包-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/myWalletCtrl.js'
+                    './js/userCenter_js/controllers/myWalletCtrl.js?v='+v
+                ])
+            }
+        })
+        /*我的红包*/
+        .state('UCIndex.myCoupon', {
+            url: '/myCoupon',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/myCoupon.html?v="+v,
+                    controller: 'MyCouponCtrl'
+                }
+            },
+            title:'我的红包-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/myCouponCtrl.js?v='+v
                 ])
             }
         })
@@ -980,14 +1017,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/myDiscountCards/:params',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myDiscountCards.html",
+                    templateUrl: "templates/userCenter_templates/myDiscountCards.html?v="+v,
                     controller: 'MyDiscountCardsCtrl'
                 }
             },
             title:'我的折扣卡-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/myDiscountCardsCtrl.js'
+                    './js/userCenter_js/controllers/myDiscountCardsCtrl.js?v='+v
                 ])
             }
         })
@@ -996,15 +1033,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/editPassword',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/editPassword.html",
+                    templateUrl: "templates/userCenter_templates/editPassword.html?v="+v,
                     controller: 'EditPasswordCtrl'
                 }
             },
             title:'修改密码-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/editPasswordCtrl.js',
-                    './js/userCenter_js/services/editPasswordSer.js'
+                    './js/userCenter_js/controllers/editPasswordCtrl.js?v='+v,
+                    './js/userCenter_js/services/editPasswordSer.js?v='+v
                 ])
             }
         })
@@ -1013,18 +1050,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/myAddresses',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myAddresses.html",
+                    templateUrl: "templates/userCenter_templates/myAddresses.html?v="+v,
                     controller: 'MyAddressesCtrl'
                 }
             },
             title:'我的收货地址-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/myAddressesCtrl.js',
-                    './js/userCenter_js/directives/myAddressDirectives.js',
+                    './js/userCenter_js/controllers/myAddressesCtrl.js?v='+v,
+                    './js/userCenter_js/directives/myAddressDirectives.js?v='+v,
                     //'./lib/areaSelect/area.js'
-                    './lib/areaPicker/areaPicker.js',
-                    './lib/areaPicker/areaPicker.css'
+                    './lib/areaPicker/areaPicker.js?v='+v,
+                    './lib/areaPicker/areaPicker.css?v='+v
                 ])
             }
         })
@@ -1033,14 +1070,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/updateCellPhoneNum',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/updateCellPhoneNum.html",
+                    templateUrl: "templates/userCenter_templates/updateCellPhoneNum.html?v="+v,
                     controller: 'UpdateCellPhoneNumCtrl'
                 }
             },
             title:'修改绑定手机-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/updateCellPhoneNumCtrl.js'
+                    './js/userCenter_js/controllers/updateCellPhoneNumCtrl.js?v='+v
                 ])
             }
         })
@@ -1049,14 +1086,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/helpCenter',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/helpCenter.html",
+                    templateUrl: "templates/userCenter_templates/helpCenter.html?v="+v,
                     controller: 'HelpCenterCtrl'
                 }
             },
             title:'帮助中心-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/helpCenterCtrl.js'
+                    './js/userCenter_js/controllers/helpCenterCtrl.js?v='+v
                 ])
             }
         })
@@ -1065,14 +1102,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/about',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/about.html",
+                    templateUrl: "templates/userCenter_templates/about.html?v="+v,
                     controller: 'AboutCtrl'
                 }
             },
             title:'关于幸运猫-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/aboutCtrl.js'
+                    './js/userCenter_js/controllers/aboutCtrl.js?v='+v
                 ])
             }
         })
@@ -1081,7 +1118,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/adviceAndFeedback',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/adviceAndFeedback.html"
+                    templateUrl: "templates/userCenter_templates/adviceAndFeedback.html?v="+v
                 }
             },
             title:'建议和反馈-幸运猫'
@@ -1092,14 +1129,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/safeAccount',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/safeAccount.html",
+                    templateUrl: "templates/userCenter_templates/safeAccount.html?v="+v,
                     controller: 'SafeAccountCtrl'
                 }
             },
             title:'安全中心-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/safeAccountCtrl.js'
+                    './js/userCenter_js/controllers/safeAccountCtrl.js?v='+v
                 ])
             }
         })
@@ -1108,14 +1145,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/myMessage/:msg_type',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myMessage.html",
+                    templateUrl: "templates/userCenter_templates/myMessage.html?v="+v,
                     controller: 'MyMessageCtrl'
                 }
             },
             title:'我的消息-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/myMessageCtrl.js'
+                    './js/userCenter_js/controllers/myMessageCtrl.js?v='+v
                 ])
             }
         })
@@ -1124,15 +1161,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/myChallengeCards',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myChallengeCards.html",
+                    templateUrl: "templates/userCenter_templates/myChallengeCards.html?v="+v,
                     controller: 'MyChallengeCardsCtrl'
                 }
             },
             title:'我的挑战卡-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/myChallengeCardsCtrl.js',
-                    './js/services/activitySer.js'
+                    './js/userCenter_js/controllers/myChallengeCardsCtrl.js?v='+v,
+                    './js/services/activitySer.js?v='+v
                 ])
             }
         })
@@ -1142,14 +1179,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/messageDetails/:params',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/messageDetails.html",
+                    templateUrl: "templates/userCenter_templates/messageDetails.html?v="+v,
                     controller: 'MessageDetailsCtrl'
                 }
             },
             title:'消息详情-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/messageDetailsCtrl.js'
+                    './js/userCenter_js/controllers/messageDetailsCtrl.js?v='+v
                 ])
             }
         })
@@ -1159,16 +1196,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/afterService/:order_status/:order_id',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/afterService.html",
+                    templateUrl: "templates/userCenter_templates/afterService.html?v="+v,
                     controller: 'AfterServiceCtrl'
                 }
             },
             title:'售后服务申请-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/afterServiceCtrl.js',
-                    './lib/areaPicker/areaPicker.js',
-                    './lib/areaPicker/areaPicker.css'
+                    './js/userCenter_js/controllers/afterServiceCtrl.js?v='+v,
+                    './lib/areaPicker/areaPicker.js?v='+v,
+                    './lib/areaPicker/areaPicker.css?v='+v
                 ])
             }
         })
@@ -1179,14 +1216,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/logisticsInfo/:order_type/:order_id',
             views: {
                 'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/logisticsInfo.html",
+                    templateUrl: "templates/userCenter_templates/logisticsInfo.html?v="+v,
                     controller: 'LogisticsInfoCtrl'
                 }
             },
             title:'物流信息-幸运猫',
             resolve: {
                 loadFiles: load([
-                    './js/userCenter_js/controllers/logisticsInfoCtrl.js'
+                    './js/userCenter_js/controllers/logisticsInfoCtrl.js?v='+v
                 ])
             }
         })
@@ -1196,14 +1233,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             url: '/payHandler/:type/:trade_id/:auth',
             views: {
                 '': {
-                    templateUrl: "templates/payHandler.html",
+                    templateUrl: "templates/payHandler.html?v="+v,
                     controller: 'PayHandlerCtrl'
                 }
             },
             title:'正在处理...-幸运猫-享玩享购享折扣',
             resolve: {
                 loadFiles: load([
-                    './js/controllers/payHandlerCtrl.js'
+                    './js/controllers/payHandlerCtrl.js?v='+v
                 ])
             }
         })
@@ -1215,8 +1252,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
 
 
-
-        /*擂台赛*/
+/*
+        //擂台赛
         .state('activity', {
             url: '/activity',
             views: {
@@ -1234,7 +1271,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
         })
-        /*擂台赛首页*/
+        //擂台赛首页
         .state('activity.index', {
             url: '/index',
             views: {
@@ -1245,7 +1282,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             },
             title:'擂台赛'
         })
-        /*擂台赛详情*/
+       // 擂台赛详情
         .state('activity.details', {
             url: '/details/:id',
             views: {
@@ -1255,7 +1292,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 }
             },
             title:'擂台赛详情'
-        })
+        })*/
     /*===================接口配置  begin==================*/
     initAPI();
     function initAPI(){

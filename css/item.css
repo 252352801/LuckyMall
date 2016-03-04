@@ -254,12 +254,15 @@
     border-width:10px;
     left:-10px;
 }
+.pro-info .bar-o-p{
+    line-height:24px;
+}
 .pro-price .old-price{
-    margin-left:10px;
+
     text-decoration:line-through;
     color:#999;
     position:relative;
-    top:-2px;
+
 }
 .pro-property{
     margin-bottom:0px;
@@ -554,10 +557,10 @@ float:left;
 }*/
 
 .box-prices{
-    overflow:hidden;
-    background:#F1F1F1;
-    padding:15px 23px;
-    padding-right:10px;
+    background: #F1F1F1;
+    padding: 15px 23px;
+    padding-right: 10px;
+    height: 56px;
 }
 .box-prices .item-price{
     height:60px;
@@ -583,7 +586,7 @@ float:left;
     color:#999;
 }
 .price-interval .new_prices{
-    margin-top:10px;
+    /*margin-top:10px;*/
 }
 .price-interval .new_prices span{
     font-size:22px;
@@ -731,8 +734,98 @@ float:left;
 .item-ranking-table .final-price{
     font-size:16px;
 }
-
-
+.box-compare-price {
+    position:relative;
+    width:120px;
+    margin-right:10px;
+    border-top:2px solid transparent;
+    z-index: 20;
+}
+.box-compare-price  .tt{
+    background: #EDAB3A;
+    text-align:center;
+    color:#fff;
+    height:20px;
+    line-height:20px;
+    cursor: pointer;
+    text-indent: -8px;
+    border:1px solid transparent;
+}
+.box-compare-price ul{
+    display:none;
+    background: #fff;
+    width:150%;
+    border:1px solid transparent;
+    position:relative;
+    top:-1px;
+}
+.box-compare-price ul li{
+    padding:0px 10px;
+    line-height:24px;
+    overflow:hidden;
+}
+.box-compare-price ul li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow:hidden;
+}
+.box-compare-price ul li a:hover{
+    color:#333;
+}
+.box-compare-price ul li label{
+    max-width: 100px;
+    float: left;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.box-compare-price ul li span{
+    float: right;
+}
+.box-compare-price:hover{
+    border-top-color:#EDAB3A;
+    background-color: #fff;
+}
+.box-compare-price:hover .tt{
+    background: #fff;
+    color:#EDAB3A;
+    position: relative;
+    border-left-color: #ddd;
+    border-right-color: #ddd;
+    position:relative;
+    z-index:2;
+}
+.box-compare-price li:hover{
+    background: #f0f0f0;
+}
+.box-compare-price:hover .icon-arr-d{
+    display: none;
+}
+.box-compare-price .icon-arr-d{
+    position: absolute;
+    left:80%;
+    top:8px;
+    border:5px solid transparent;
+    border-top-color: #fff;
+}
+.box-compare-price .icon-arr-d:before{
+    content:'';
+    display: block;
+    position:absolute;
+    left:-5px;
+    top:-6px;
+    border:5px solid transparent;
+    border-top-color: #EDAB3A;
+}
+.box-compare-price:hover ul{
+    display:block;
+    border-color: #ddd;
+    position:relative;
+    z-index:1;
+}
 
 
 
