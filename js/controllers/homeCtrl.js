@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
- .controller('HomeCtrl',['$scope','HomeSer','ActivitySer','$cookies','$timeout',
-        function($scope,HomeSer,ActivitySer,$cookies,$timeout){
+ .controller('HomeCtrl',['$scope','HomeSer','ActivitySer','$cookies','$timeout','ShowOffOrdersSer',
+        function($scope,HomeSer,ActivitySer,$cookies,$timeout,ShowOffOrdersSer){
         if (HomeSer.getData().banner == null) {
             HomeSer.requestBannerData(function (response, status) {
                 if (status == 1) {
@@ -26,7 +26,7 @@ angular.module('LuckyMall.controllers')
             $scope.isFirstAcc=false;
         };
 
-
+            loadSOOData();
        /* loadActivityData();
         loadChallengeRecord();*/
         /**
@@ -73,6 +73,37 @@ angular.module('LuckyMall.controllers')
                 }
             });
         }
+
+
+            $scope.data_soo=null;
+
+        function loadSOOData(){
+            var params={
+                status:1, pSize:4, pIndex: 0
+            };
+            ShowOffOrdersSer.requestData(params,function(response,status){
+                if(status==1&&response){
+                    var data_soo=response;
+
+                   $scope.data_soo={
+                        general:response.slice(1,4),
+                        large:response[0]
+                    };
+                    console.log($scope.data_soo);
+                }
+            })
+
+        }
+
+
+
+
+
+
+
+
+
+
 
         /**
          * 挑战记录

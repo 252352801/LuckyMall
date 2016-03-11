@@ -20,12 +20,18 @@
                 location.href = 'http://m.xingyunmao.cn';
             } else {
                 if (location.hostname == 'xingyunmao.cn') {
-                    location.href = 'http://www.xingyunmao.cn/';
+                    location.href = 'https://www.xingyunmao.cn/';
+                }else{
+                    if(location.protocol!='https:'&&location.hostname=='www.xingyunmao.cn'){
+                        location.protocol='https:';
+                    }
                 }
             }
         }
         {
-            var v='20160304';
+            (function(){
+               window.v='20160310';
+            })();
         }
 
     </script>
@@ -40,35 +46,15 @@
     <link rel="stylesheet" type="text/css" href="./lib/sweetAlert/sweetalert.css">
 
 
-    <link class="dynamic-file" rel="stylesheet" type="text/css" href="./css/global.css">
-    <script class="dynamic-file" class="test" type="text/javascript" src="./lib/myfuntion/base.js"></script>
-    <script class="dynamic-file" class="test" type="text/javascript" src="./common/config/config.js"></script>
-    <script class="dynamic-file" type="text/javascript" src="./common/controllers/controllers.js"></script>
-    <script class="dynamic-file" type="text/javascript" src="./common/services/services.js"></script>
-    <script class="dynamic-file" type="text/javascript" src="./common/directives/directives.js"></script>
 
+    <link  rel="stylesheet" type="text/css" href="./css/iconFont/iconfont.css?v=20160310">
+    <link  rel="stylesheet" type="text/css" href="./css/global.css?v=20160310">
+    <script  type="text/javascript" src="./lib/myfuntion/base.js?v=20160310"></script>
+    <script  type="text/javascript" src="./common/config/config.js?v=20160310"></script>
+    <script  type="text/javascript" src="./common/controllers/controllers.js?v=20160310"></script>
+    <script  type="text/javascript" src="./common/services/services.js?v=20160310"></script>
+    <script  type="text/javascript" src="./common/directives/directives.js?v=20160310"></script>
 
-    <script id="script_log_df">
-        if(location.hostname.indexOf('127.0.0.1')>=0) {
-            (function () {
-                var elem = document.getElementsByClassName('dynamic-file');
-                var str = '';
-                for (var i = 0; i < elem.length; i++) {
-                    var outer_html = '';
-                    if (elem[i].nodeName == 'SCRIPT') {
-                        outer_html = elem[i].outerHTML.replace('.js', '.js?v=' + v);
-                    } else if (elem[i].nodeName == "LINK") {
-                        outer_html = elem[i].outerHTML.replace('.css', '.css?v=' + v);
-                    }
-                    str += outer_html + '\n';
-                }
-                console.log(str);
-            })();
-        }else{
-            var elem=document.getElementById('script_log_df');
-            document.getElementsByTagName('head')[0].removeChild(elem);
-        }
-    </script>
 </head>
 <body ng-controller="AppCtrl" ng-app="LuckyMall"  id="ng-app">
     <div ui-view ng-show="!page_loading">

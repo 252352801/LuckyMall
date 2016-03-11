@@ -81,8 +81,20 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                 } else {
                     $rootScope.avatar = null;
                 }
+                $rootScope.user=UserSer.getData();
+                $rootScope.user.simpleMobile = hideSomeStr($rootScope.user.UserModel.Mobile, 3, 8, '*');
+                if($rootScope.user.UserModel.NickName==''){
+                    $rootScope.user.UserModel.NickName=$rootScope.user.simpleMobile
+                }
             });
-
+            function hideSomeStr(str, start, end, replace_str) {
+                var sub_str = str.substring(start, end);
+                var finally_str = '';
+                for (var i = 0; i < (end - start); i++) {
+                    finally_str += replace_str;
+                }
+                return str.replace(sub_str, finally_str);
+            }
 
             function refresh() {
                 clearInterval($scope.refresher);

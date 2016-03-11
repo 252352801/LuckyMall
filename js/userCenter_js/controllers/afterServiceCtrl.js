@@ -115,7 +115,7 @@ angular.module('LuckyMall.controllers')
                         img_info.push(img_url);
                     }
                 }
-                console.log(img_info);return;
+               // console.log(img_info);return;
                 var params = {
                     OrderId: $scope.order_id,//订单ID
                     RepairType: $scope.service_type,//申请类型 0维修 1换货 2退款

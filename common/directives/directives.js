@@ -1135,14 +1135,14 @@ angular.module('LuckyMall')
     })
 
     /*进入游戏前的modal*/
-    .directive('modalBeforeGame', function () {
+/*    .directive('modalBeforeGame', function () {
         return {
             restrict: 'E',
             templateUrl: 'common/templates/modal-beforeGame.html',
             replace: true,
-           /* scope:{
+           *//* scope:{
 
-            },*/
+            },*//*
             link:function(scope, element, attrs){
             },
             controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout,MyOrdersSer,UserSer,SOTDSvc){
@@ -1217,7 +1217,7 @@ angular.module('LuckyMall')
                     } else {
                         $scope.energy.isEnough = false;
                     }
-                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.hostname + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.game_orderId = order.Id;
                     $scope.game_commodityId = order.CommodityId;
                     SOTDSvc.set({
@@ -1230,7 +1230,7 @@ angular.module('LuckyMall')
                     });
                 }
 
-                 /**检查能量是否够4发炮弹**/
+                 *//**检查能量是否够4发炮弹**//*
                 function testEnergy(total_cost,percent,paid_value,remain_energy) {
                     var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
                     var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
@@ -1271,7 +1271,7 @@ angular.module('LuckyMall')
                 }
             }
         }
-    })
+    })*/
 
     /*点击滚动到指定高度*/
     .directive('btnScrollTo', function ($timeout,$rootScope) {
@@ -1297,6 +1297,16 @@ angular.module('LuckyMall')
                         moveType: 'easeOut'//动画的缓动方式，默认为easeIn
                     });
                 });
+
+            }
+        };
+    })
+    /*图片自适应*/
+    .directive('imgAdaption', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var img=element.find('img');
 
             }
         };
@@ -1339,11 +1349,11 @@ angular.module('LuckyMall')
                     tips:''
                 };
                 if(TokenSer.getToken()) {
-                    loadUserData();
+                    loadUserData(watchOrder);
                     loadBalanceInfo();
                 }else{
                     $rootScope.$on("user-login",function(new_val,old_val){
-                        loadUserData();
+                        loadUserData(watchOrder);
                         loadBalanceInfo();
                     });
                 }
@@ -1402,14 +1412,16 @@ angular.module('LuckyMall')
                     });
                     $state.go('confirmOrder');
                 };
-                $scope.$watch("order",function(new_val,old_val){
-                    if(new_val!=old_val){
-                        initPage($scope.order,$scope.data_user);
-                        $scope.content_exchange_energy=false;
-                        $scope.content_exchange_earnest=false;
-                        $scope.content_pay_earnest=false;
-                    }
-                });
+                function watchOrder() {
+                    $scope.$watch("order", function (new_val, old_val) {
+                        if (new_val != old_val) {
+                            initPage($scope.order, $scope.data_user);
+                            $scope.content_exchange_energy = false;
+                            $scope.content_exchange_earnest = false;
+                            $scope.content_pay_earnest = false;
+                        }
+                    });
+                }
                 $scope.play=function(){
                     if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
                         if ($scope.energy.isEnough) {
@@ -1535,7 +1547,7 @@ angular.module('LuckyMall')
                         $scope.energy.isEnough = false;
                         $scope.isCanPlay=false;
                     }
-                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.hostname + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.game_orderId = order.Id;
                     $scope.game_commodityId = order.CommodityId;
 

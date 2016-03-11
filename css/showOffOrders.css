@@ -1,0 +1,293 @@
+/*==============
+ *晒单列表begin
+===============*/
+.showOffOrders *{
+    box-sizing: border-box;
+}
+.showOffOrders .soo-banner{
+    height:200px;
+    background-color:#FEAF45;
+    position: relative;
+}
+.showOffOrders .soo-banner img{
+    position: relative;
+    left: 50%;
+    margin-left: -960px;
+}
+.showOffOrders .ul-soo{
+    margin-top:20px;
+    overflow: hidden;
+}
+.showOffOrders .ul-soo li{
+    margin-top:12px;
+    margin-left:12px;
+    width:266px;
+    height:448px;
+    padding-top:266px;
+    background: #fff;
+    position: relative;
+    float: left;
+}
+.showOffOrders .ul-soo li:nth-child(4n+1){
+    margin-left: 0px;
+}
+.showOffOrders .ul-soo li .img-container{
+    position: absolute;
+    left:0px;
+    top:0px;
+    width:266px;
+    height:266px;
+/*    display:table-caption;*/
+    line-height:266px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.showOffOrders .ul-soo li .img-container img{
+    max-width: inherit;
+    max-height: inherit;
+    width:100%;
+}
+.showOffOrders .item-name{
+    line-height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    font-weight:500;
+    font-size:14px;
+    margin-bottom:3px;
+
+}
+.showOffOrders .soo-describe{
+    height:32px;
+    line-height:16px;
+    overflow:hidden;
+    margin-bottom:3px;
+}
+.showOffOrders .ul-soo .box-dt{
+    padding:10px;
+}
+.showOffOrders .bar-like{
+    line-height:40px;
+    font-size:13px;
+    padding-bottom: 4px;
+}
+.showOffOrders  .icon-like-cont{
+    margin-right:5px;
+    font-size:10px;
+    color:#999;
+    margin-left:2px;
+}
+.showOffOrders .bar-like .lm-heart{
+    font-size:14px;
+}
+.showOffOrders .bar-user{
+    width:100%;
+    height:60px;
+    padding-left: 60px;
+    position: relative;
+    line-height: 60px;
+    border-top:1px solid #ddd;
+}
+.showOffOrders .bar-user .avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid #e6e6e6;
+    position: absolute;
+    left:10px;
+    top:10px;
+}
+.showOffOrders .bar-user .user-name{
+    max-width: 100px;
+}
+.showOffOrders .bar-user .time{
+    margin-right:10px;
+}
+.showOffOrders .ul-soo .box-buttons{
+    position: absolute;
+    left:0px;
+    top:10px;
+    width:100%;
+    height:40px;
+  /*  background: rgba(0,0,0,0.5);*/
+    overflow: hidden;
+}
+.showOffOrders .ul-soo .box-buttons .btn-like{
+    display: none;
+    width:36px;
+    height:36px;
+    background: #fafafa;
+    text-align: center;
+    line-height:36px;
+    font-size:24px;
+    float:right;
+    margin-right:10px;
+    cursor:pointer;
+}
+.showOffOrders .ul-soo li:hover .box-buttons .btn-like{
+    display:block;
+}
+.ul-soo .box-buttons .btn-like .lm-heart{
+    font-size:18px;
+    color:#524f4d;
+}
+.ul-soo .box-buttons .btn-like.liked .lm-heart{
+    font-size:18px;
+    color:#EB3F53;
+}
+
+
+
+.soo-dt .page-location{
+    margin:14px 0px;
+}
+.soo-dt *{
+    box-sizing: border-box;
+}
+.soo-dt .page-location a:hover{
+    color:inherit;
+}
+.soo-dt .page-location a:last-child:after{
+    content:'';
+}
+.soo-dt .soo-dt-content{
+    min-height:600px;
+    background: #fff;
+    padding:20px;
+}
+.soo-dt .box-shower-order{
+    border:1px solid #eee;
+    margin:10px 10px;
+    height:180px;
+}
+.soo-dt .bso-left{
+    width:40%;
+    height:100%;
+    border-right: 1px dashed #eee;
+    padding: 40px 40px 40px 156px;
+    position:relative;
+    float: left;
+}
+.soo-dt .bso-left .avatar{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    border:1px solid #eee;
+    position:absolute;
+    left:40px;
+    top:40px;
+}
+.soo-dt .bso-left p,.soo-dt .bso-right p{
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.soo-dt .bso-left label{
+    color:#999;
+}
+.soo-dt .bso-right{
+    width:60%;
+    height:100%;
+    padding: 40px 40px 40px 156px;
+    position:relative;
+    float: left;
+    background: #fafafa;
+}
+.soo-dt .bso-right .item-img{
+    width:100px;
+    height:100px;
+    border:1px solid #eee;
+    position:absolute;
+    left:40px;
+    top:40px;
+}
+.soo-dt .bso-right p{
+    margin-bottom:5px;
+}
+.soo-dt .bso-right .item-name{
+    font-size:14px;
+    color:#333;
+}
+.soo-dt .bso-right .ul-property{
+    line-height: 20px;
+    height: 80px;
+    overflow: hidden;
+}
+.soo-dt .bso-right .ul-property li{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.soo-dt .box-submitInfo{
+    margin-top:20px;
+}
+.soo-dt .box-submitInfo .info-top{
+    border-bottom:1px solid #ddd;
+    height:40px;
+    line-height:50px;
+    padding:0px 10px;
+}
+.soo-dt .box-submitInfo .info-top .iconfont{
+    font-size:12px;
+}
+.soo-dt .box-submitInfo .info-top .pull-right{
+    cursor: pointer;
+}
+.soo-dt .info{
+    padding:20px 86px 20px 86px;
+    position: relative;
+}
+.soo-dt .info p:before,.soo-dt .info p:after{
+    content: "“";
+    display: block;
+    width:50px;
+    height:50px;
+    font-size:48px;
+    color:#ccc;
+    position:absolute;
+    top:inherit;
+    left:20px;
+    font-family:arial, "SimSun", "Microsoft Yahei";
+}
+.soo-dt .info p:after{
+    content: "”";
+    left:100%;
+    margin-left:-50px;
+}
+.soo-dt .info p{
+    line-height:20px;
+    margin-bottom:15px;
+}
+.soo-dt .info .ul-images{
+    width:100%;
+    height:70px;
+    overflow: hidden;
+    margin-bottom:15px;
+
+}
+.soo-dt .info .ul-images li{
+    width:70px;
+    height:70px;
+    margin-right:5px;
+    float: left;
+    border:2px solid transparent;
+}
+.soo-dt .info .ul-images li:hover{
+    border-color:#ffaa00;
+}
+.soo-dt .info .ul-images li.cur{
+    border-color:#ff3300!important;
+}
+.soo-dt .info .ul-images li img{
+    max-width:100%;
+    max-height:100%;
+}
+
+
+
+
+
+

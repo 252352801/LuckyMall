@@ -16,7 +16,8 @@ angular.module('LuckyMall.controllers')
                 imgCode: false,
                 code: false,
                 password: false,
-                repPassword: false
+                repPassword: false,
+                response:false
             };
 
             var lock_cc = true;//获取图片验证码的锁,防止疯狂点击
@@ -74,6 +75,7 @@ angular.module('LuckyMall.controllers')
 
             /*清除某一个错误状态,取消错误提示*/
             $scope.clearError = function (index) {
+                $scope.error['response'] = false;
                 $scope.error[index] = false;
                 $scope.showTips('');
             };
@@ -150,20 +152,26 @@ angular.module('LuckyMall.controllers')
                             "ShareCode": ""
                         }, function (response, status) {  //回调函数
                             if (status == 1) {
-                                swal("恭喜！注册成功！");
-                                $state.go('login');
-                                ga('send', 'pageview', {
-                                    'page': '/register_success',
-                                    'title': '注册成功'
-                                });
-                                LoginSer.setData(response);
-                                $cookies.put('Token', response.Token); //设置token cookie
-                                $rootScope.$broadcast("user-login");
-                                $rootScope.isLogin = true;
-                                $state.go('home');
+                                if(response.Code==0) {
+                                    swal("恭喜！注册成功！");
+                                    $state.go('login');
+                                    ga('send', 'pageview', {
+                                        'page': '/register_success',
+                                        'title': '注册成功'
+                                    });
+                                    LoginSer.setData(response.Data);
+                                    $cookies.put('Token', response.Data.Token); //设置token cookie
+                                    $rootScope.$broadcast("user-login");
+                                    $rootScope.isLogin = true;
+                                    $state.go('home');
+                                }else{
+                                    setCurrentError('response');
+                                    $scope.showTips(response.Msg);
+                                }
                             } else {
                                 swal({
                                     title: "注册失败！",
+                                    text:'请检查您的网络设置',
                                     type: "error",
                                     confirmButtonText: "确定"
                                 });

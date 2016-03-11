@@ -1,16 +1,16 @@
-<header ng-title="data_goods.CommodityName+' '+data_goods.Description+'_幸运猫'"></header>
+<header ng-title="item.itemData.CommodityName+' '+item.itemData.Description+'_幸运猫'"></header>
 <sub-header>
     <category has-sub-category="false"></category>
 </sub-header>
 <aside-right></aside-right>
 <!--中部 start-->
-<spinner ng-show="!loaded"></spinner>
+<spinner ng-show="item.loading"></spinner>
 <div class="G-details container">
-    <div class="content" ng-show="loaded">
-        <div class="page-location" ng-show="data_categoryName">
+    <div class="content" ng-show="!item.loading">
+        <div class="page-location" ng-show="item.categoryName">
             <a href="/home">幸运猫</a>
-            <a ng-bind="data_categoryName" href="/list/{{'category='+data_category.categoryId}}/0/"></a>
-            <a ng-repeat="item in data_category.items" ng-bind="item.itemValue" href="/list/{{'category='+data_category.categoryId}}/0/{{'filter='+item.filterId+'_0_'+'items='+item.itemId}}"></a>
+            <a ng-bind="item.categoryName" href="/list/{{'category='+item.categoryData.categoryId}}/0/"></a>
+            <a ng-repeat="i in item.categoryData.items" ng-bind="i.itemValue" href="/list/{{'category='+item.categoryData.categoryId}}/0/{{'filter='+i.filterId+'_0_'+'items='+i.itemId}}"></a>
         </div>
         <div class="box-goodsDetails">
             <!--<div class="tag-free-played" ng-if="data_goods.IsCanFree&&isFreePlayed">
@@ -19,42 +19,42 @@
             <div class="box-goods-img" slide-box-img >
                 <div class="big-goods-img tx-center" >
                    <!-- <img class="big-img" id="img_show"  ng-src={{imgHost+data_goods.SmallImages[index]}} alt=""  error-src="./res/images/default.png" />-->
-                    <img src="./res/images/item_before_sell.png" class="img-so" ng-if="data_goods.status==0||data_goods.status==-2"/>
-                    <img src="./res/images/item_out6.png" class="img-so" ng-if="data_goods.status==-1||data_goods.status==4||data_goods.status==5||data_goods.status==6"/>
+                    <img src="./res/images/item_before_sell.png" class="img-so" ng-if="item.itemData.status==0||item.itemData.status==-2"/>
+                    <img src="./res/images/item_out6.png" class="img-so" ng-if="item.itemData.status==-1||item.itemData.status==4||item.itemData.status==5||item.itemData.status==6"/>
                    <!-- <img src="./res/images/item_out4.png" class="img-so" ng-if="data_goods.status==4"/>-->
-                    <ul ng-style="{left:-index*460+'px',width:data_goods.SmallImages.length*460+'px'}">
-                        <li ng-repeat="Img in data_goods.SmallImages">
+                    <ul ng-style="{left:-index*460+'px',width:item.itemData.SmallImages.length*460+'px'}">
+                        <li ng-repeat="Img in item.itemData.SmallImages">
                             <img class="big-img" id={{'img_show'+$index}}  ng-src={{imgHost+Img+'@500w_500h_100Q.jpg'}} alt=""  error-src="./res/images/default.png" magnifier  magnifier-img={{imgHost+Img}} />
                         </li>
                     </ul>
                 </div>
                 <div class="small-goods-img">
                     <ul class="goods-index" id="details_goods_index">
-                        <li ng-class="{'cur': index==$index}" ng-repeat="sImg in data_goods.SmallImages"  ng-mouseenter="showBigImg($index)">
+                        <li ng-class="{'cur': index==$index}" ng-repeat="sImg in item.itemData.SmallImages"  ng-mouseenter="showBigImg($index)">
                             <img  real-src={{imgHost+sImg+'@70w_70h_100Q.png'}} alt="" temp-src="./res/images/default.png" />
                         </li>
                     </ul>
                 </div>
                 <div class="s-index">
-                    <a class="prev txtUnSelect" ng-click="prevImg(data_goods.SmallImages.length-1)"></a>
-                    <a class="next txtUnSelect" ng-click="nextImg(data_goods.SmallImages.length-1)"></a>
+                    <a class="prev txtUnSelect" ng-click="prevImg(item.itemData.SmallImages.length-1)"></a>
+                    <a class="next txtUnSelect" ng-click="nextImg(item.itemData.SmallImages.length-1)"></a>
                 </div>
             </div>
-            <form class="pro-info" ng-show="loaded">
-                <h1 ng-bind="data_goods.CommodityName"></h1>
-                <small ng-bind="data_goods.Description"></small>
+            <form class="pro-info" ng-show="!loading">
+                <h1 ng-bind="item.itemData.CommodityName"></h1>
+                <small ng-bind="item.itemData.Description"></small>
                 <div class="bar-time">
-                    <p ng-if="data_goods.status==-2">未到开售时间</p>
-                    <p class="remain-time" ng-if="data_goods.status==1">距下架时间：<span time-down="data_goods.remainTime"></span></p>
-                    <p ng-if="data_goods.status==6">该商品已售罄</p>
-                    <p ng-if="data_goods.status==0" class="color-red">未到开售时间</p>
-                    <p ng-if="data_goods.status==5||data_goods.status==-1">该商品已售罄</p>
-                    <p ng-if="data_goods.status==4">该商品已售罄</p>
+                    <p ng-if="item.itemData.status==-2">未到开售时间</p>
+                    <p class="remain-time" ng-if="item.itemData.status==1">距下架时间：<span time-down="item.itemData.remainTime"></span></p>
+                    <p ng-if="item.itemData.status==6">该商品已售罄</p>
+                    <p ng-if="item.itemData.status==0" class="color-red">未到开售时间</p>
+                    <p ng-if="item.itemData.status==5||item.itemData.status==-1">该商品已售罄</p>
+                    <p ng-if="item.itemData.status==4">该商品已售罄</p>
                 </div>
                 <div class="pro-price">
 
                     <div class="box-prices">
-                        <div class="item-price item-price1 number-slider" number-slider="data_goods">
+                        <div class="item-price item-price1 number-slider" number-slider="item.itemData">
                             <label>￥</label>
                             <ul class="prices-slider">
                                 <li>
@@ -100,23 +100,23 @@
                         <div class="item-price item-price2 price-interval">
 
                             <p class="new_prices">
-                                <span ng-bind="'￥'+data_goods.maxPrice"></span><small ng-bind="data_goods.minDiscount+'折'"></small>
+                                <span ng-bind="'￥'+item.itemData.maxPrice"></span><small ng-bind="item.itemData.minDiscount+'折'"></small>
                                 <label>~</label>
-                                <span ng-bind="'￥'+data_goods.minPrice"></span><small ng-bind="data_goods.maxDiscount+'折'"></small>
+                                <span ng-bind="'￥'+item.itemData.minPrice"></span><small ng-bind="item.itemData.maxDiscount+'折'"></small>
                             </p>
                             <div class="over-hidden">
                                 <div class="pull-right color-999 bar-o-p">
                                     原价
-                                    <span class="old-price" ng-bind="'￥'+data_goods.RetailPrice"></span>
+                                    <span class="old-price" ng-bind="'￥'+item.itemData.RetailPrice"></span>
                                 </div>
 
-                                <div class="pull-right box-compare-price" ng-show="data_poo.length>0">
+                                <div class="pull-right box-compare-price" ng-show="item.POOData.length>0">
                                     <div class="tt">
                                         价格比较
                                         <span class="icon-arr-d"></span>
                                     </div>
                                     <ul>
-                                        <li ng-repeat="p in data_poo" title="{{p.SiteName+'：￥'+p.SpPrice}}">
+                                        <li ng-repeat="p in item.POOData" title="{{p.SiteName+'：￥'+p.SpPrice}}">
                                             <a href="{{p.SpUrl}}" target="_blank">
                                                 <label ng-bind="p.SiteName"></label>
                                                 <span class="color-org" ng-bind="'￥'+p.SpPrice"></span>
@@ -131,15 +131,18 @@
 
 
                 </div>
-                <ul ng-class="{'pro-property':showTips==false,'pro-property unFinish':showTips==true}">
+                <ul ng-class="{'pro-property':item.showTips==false,'pro-property unFinish':item.showTips==true}">
                     <p class="tips">请勾选您需要的商品选项：</p>
-                        <li ng-repeat="property in data_goods.Property">
+                        <li ng-repeat="property in item.itemData.Property">
                             <label ng-bind="property.name"></label>
 
                             <p>
-                                <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled&&!isNoSelection()||!attributes.valid}" ng-style="{'cursor':!attributes.valid?'no-drop':'pointer'}"
+                                <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled||!attributes.valid}" ng-style="{'cursor':!attributes.valid?'no-drop':'pointer'}"
                                    ng-repeat="attributes in property.attributes" ng-bind="attributes.value"
-                                   ng-click="selectAttr(property.name,attributes.value,$parent.$index,$index,attributes.disabled,attributes.valid)" title="{{!attributes.valid?'库存不足':''}}"></a>
+                                   ng-click="item.toggleSelect($parent.$index,$index,attributes)" title="{{!attributes.valid?'库存不足':''}}"></a>
+                           <!--     <a ng-class="{'cur':attributes.isSelected,'disabled':attributes.disabled||!attributes.valid}" ng-style="{'cursor':!attributes.valid?'no-drop':'pointer'}"
+                                   ng-repeat="attributes in property.attributes" ng-bind="attributes.value"
+                                   ng-click="selectAttr(property.name,attributes.value,$parent.$index,$index,attributes.disabled,attributes.valid)" title="{{!attributes.valid?'库存不足':''}}"></a>-->
                             </p>
                         </li>
 
@@ -147,37 +150,38 @@
                 <div class="bar-amount">
                     <label>数量</label>
                     <div class="div-btn">
-                        <span class="btn-reduce txtUnSelect" ng-click="reduce()" ng-disabled="data_goods.status!=1">-</span>
-                        <input type="text" ng-model="amount" ng-disabled="!finishSelect||(data_goods.IsCanFree==true&&!isFreePlayed)||data_goods.status!=1" onpaste="return false" require-number max={{inventory}} style="ime-mode:disabled"/>
-                        <span class="btn-add txtUnSelect" ng-click="add()" ng-disabled="data_goods.status!=1">+</span>
+                        <span class="btn-reduce txtUnSelect" ng-click="item.reduce()" ng-disabled="item.itemData.status!=1">-</span>
+                        <input type="text" ng-model="item.amount" ng-disabled="(item.itemData.IsCanFree==true&&!isFreePlayed)||item.itemData.status!=1" onpaste="return false" require-number ng-change="item.testInventory()" style="ime-mode:disabled"/>
+                        <span class="btn-add txtUnSelect" ng-click="item.add()" ng-disabled="item.itemData.status!=1">+</span>
                        <!-- <p ng-show="inventory>=0&&inventory!=null&&inventory<=5">库存剩余<span ng-bind="inventory"></span>件</p>-->
-                        <p ng-show="inventory>=0&&inventory!=null&&inventory<=5"><span>该商品库存紧张</span></p>
+                        <p ng-show="item.inventory>=0&&item.inventory!=null&&item.inventory<=5"><span>该商品库存紧张</span></p>
                     </div>
                 </div>
                 <div class="bar-btn">
-                    <input  ng-class="{'btn-playGame':data_goods.status==1,'btn-playGame disabled':data_goods.status!=1}"  value="试玩练手" type="button" ng-click="playFreeGame(data_goods.Id)" ng-disabled="data_goods.status!=1"/>
-                    <input ng-if="data_goods.CommodityType==0" ng-class="{'btn-buy':data_goods.status==1,'btn-buy disabled':data_goods.status!=1}" type="button" ng-value="btn_value.buyNow"  ng-click="createOrder(1)" ng-disabled="data_goods.status!=1"/>
-                    <a class="btn-enterAct" href="/activity/index" ng-if="data_goods.CommodityType==1">进入擂台</a>
+                    <input  ng-class="{'btn-playGame':item.itemData.status==1,'btn-playGame disabled':item.itemData.status!=1}"  value="试玩练手" type="button" ng-click="item.playFreeGame()" ng-disabled="item.itemData.status!=1"/>
+                    <input ng-if="item.itemData.CommodityType==0" ng-class="{'btn-buy':item.itemData.status==1,'btn-buy disabled':item.itemData.status!=1}" type="button" ng-value="item.btnVal.buyNow.cur"  ng-click="item.createOrder(1)" ng-disabled="item.itemData.status!=1"/>
+                    <a class="btn-enterAct" href="/activity/index" ng-if="item.itemData.CommodityType==1">进入擂台</a>
                 </div>
             </form>
         </div>
         <div class="box-proIntro tabs">
             <div class="tab-item">
-                <span ng-class="{'item cur':showingTab=='tab1','item':showingTab!='tab1'}" ng-click="showTab('tab1')">详细信息</span>
-                <span ng-class="{'item cur':showingTab=='tab2','item':showingTab!='tab2'}" ng-click="showTab('tab2')">折扣排行榜</span>
+                <span ng-class="{'item cur':item.curTab==1,'item':item.curTab!=1}" ng-click="item.changeTab(1)">详细信息</span>
+                <span ng-class="{'item cur':item.curTab==2,'item':item.curTab!=2}" ng-click="item.changeTab(2)">折扣排行榜</span>
+                <span ng-class="{'item cur':item.curTab==3,'item':item.curTab!=3}" ng-click="item.changeTab(3)">商品晒单</span>
             </div>
-            <div class="tab-content tab-cont1" ng-show="showingTab=='tab1'">
+            <div class="tab-content tab-cont1" ng-show="item.curTab==1">
                 <ul class="pro-showing-images">
-                    <li ng-repeat="img in data_goods.BigImages">
+                    <li ng-repeat="img in item.itemData.BigImages">
                         <img lazy-src="{{imgHost+img}}" alt="" />
                     </li>
                 </ul>
                 <div class="box-pro-show">
                 </div>
             </div>
-            <div class="tab-content tab-cont2" ng-show="showingTab=='tab2'">
-                <p class="color-gray tx-center" ng-if="data_ranking.length==0">暂无</p>
-               <table class="item-ranking-table" ng-if="data_ranking.length>0">
+            <div class="tab-content tab-cont2" ng-show="item.curTab==2">
+                <p class="color-gray tx-center" ng-if="item.rankingData.length==0">暂无</p>
+               <table class="item-ranking-table" ng-if="item.rankingData.length>0">
                    <tr class="tr-th">
                        <th>排名</th>
                        <th>用户名</th>
@@ -187,7 +191,7 @@
                        <th>游戏分数</th>
                        <!--<th>日期</th>-->
                    </tr>
-                   <tr ng-repeat="rank in data_ranking">
+                   <tr ng-repeat="rank in item.rankingData">
                        <td>
                             <span class="{{$index<3?'top top'+($index+1):'top'}}" ng-bind="$index+1"></span>
                        </td>
@@ -198,7 +202,7 @@
                            <span class="icon-discount" ng-bind="rank.DiscountValue+'折'"></span>
                        </td>
                        <td>
-                           <span class="final-price color-org" ng-bind="'￥'+MathCeilPrice(data_goods.RetailPrice*rank.DiscountValue/10)"></span>
+                           <span class="final-price color-org" ng-bind="'￥'+MathCeilPrice(item.itemData.RetailPrice*rank.DiscountValue/10)"></span>
                        </td>
                        <td>
                            <span ng-bind="'￥'+rank.SaveMoney"></span>
@@ -212,6 +216,62 @@
                    </tr>
                </table>
                <p class="color-gray" ng-if="data_ranking.length>0">注：目前仅显示前10名</p>
+            </div>
+            <div class="tab-content tab-cont3" ng-show="item.curTab==3">
+                <ul class="ul-item-soo">
+                    <li class="li-item-soo">
+                        <div class="box-shower">
+                            <img class="avatar" src="./res/images/touxiang.jpg" />
+                            <div class="over-hidden">
+                                <p class="shower-name font-14 pull-left">你是傻逼吗啊</p>
+
+                                <p class="time color-gray pull-left">2016-03-07 16:50</p>
+                            </div>
+
+                                <label>获得折扣：</label><span class="so-icon-disc">1折</span>
+                            </p>
+                            <p >
+                                <label>买入价：</label><span class="font-14 color-org">￥100</span><span class="color-999 line-through">￥1000</span>
+                            </p>
+                        </div>
+                        <div class="info">
+                            <p >
+                                第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~费列罗巧
+                                克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~~费列罗巧克力3粒16条的，以前以为
+                                是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知
+                                道是真的，大家加油好运会降临的。
+                            </p>
+                            <ul class="ul-images ">
+                                <li class="cur">
+                                    <a class="img-container">
+                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
+                                    </a>
+                                </li>
+                                <li class="cur">
+                                    <a class="img-container">
+                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
+                                    </a>
+                                </li>
+                                <li class="cur">
+                                    <a class="img-container">
+                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
+                                    </a>
+                                </li>
+                                <li class="cur">
+                                    <a class="img-container">
+                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bar-buttons txt-right">
+                            <p class="btn-like pull-right">
+                                <i class="iconfont lm-heart"></i>
+                                <label>羡慕<span>（100）</span></label>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

@@ -29,7 +29,7 @@
 }
 .banner li{
     display:block;
-    max-width:1920px;
+ /*   max-width:1920px;*/
     width:100%;
     height:486px;
     float:left;
@@ -38,6 +38,7 @@
     left:0px;
     top:0px;
     opacity:0;
+    text-align: center;
 }
 .banner li a{
     display:block;
@@ -632,3 +633,242 @@ margin-left: 70px;
     text-align:center;
 }
 /*活动样式  end*/
+
+
+/*=================
+    晒单 begin
+==================*/
+.module-so *{
+    box-sizing: border-box;
+}
+.module-so a:hover{
+    color:inherit;
+}
+.module-so{
+    margin-top:20px;
+}
+.module-so .md-top{
+    line-height: 40px;
+    overflow:hidden;
+}
+.module-so .md-top h2{
+    float: left;
+    font-size:18px;
+    font-weight:500;
+    position: relative;
+}
+.module-so .md-top h2:before{
+    display: block;
+    content: '';
+    width:32px;
+    height:32px;
+    background: url(../res/icon/icon_camera.png);
+    position: relative;
+    top:4px;
+    float: left;
+    margin-right:10px;
+
+}
+.module-so .md-top span{
+    margin-left: 10px;
+    font-size:16px;
+}
+.module-so .md-top .more{
+    float: right;
+    font-size: 12px;
+    color:#666;
+    font-family: '宋体';
+}
+.module-so ul li{
+    float: left;
+}
+.module-so ul li:nth-child(1),.module-so ul li:nth-child(2),.module-so ul li:nth-child(3){
+    width:218px;
+    height:400px;
+    margin-right:2px;
+}
+
+.module-so .box-user{
+    height:50%;
+    background:#fff;
+    overflow: hidden;
+    text-align: center;
+    position:relative;
+    z-index: 10;
+}
+.module-so .box-dt{
+    height:50%;
+    background:#fff;
+    position: relative;
+    overflow: hidden;
+}
+.module-so ul li:nth-child(2) .box-user{
+    top:200px;
+}
+.module-so ul li:nth-child(2) .box-dt{
+    top:-200px;
+}
+.module-so .box-user .avatar{
+    width:60px;
+    height:60px;
+    line-height: 60px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:25px;
+    margin-bottom:8px;
+    border:1px solid #e6e6e6;
+    overflow: hidden;
+    border-radius:50%;
+}
+.module-so .box-user .avatar img{
+    max-width: 100%;
+    max-height:100%;
+    vertical-align:middle;
+}
+.module-so .box-user p{
+    margin-bottom:5px;
+}
+.module-so .box-user .user-name{
+    font-size: 14px;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 18px;
+    overflow: hidden;
+}
+
+.module-so .bar-icons{
+    margin-top:10px;
+}
+.module-so  .img-container{
+    width: 218px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.module-so  .img-container img{
+    max-width:inherit;
+    max-height:inherit;
+    width:100%;
+}
+.module-so  .ul-index-soo{
+    width:1100px;
+    height:400px;
+    background:#fff;
+}
+.module-so .so-describe{
+    width:100%;
+    height:100%;
+    position: absolute;
+    left:0px;
+    top:100%;
+    padding:10px;
+    background: rgba(0,0,0,0.5);
+    color:#fff;
+    line-height:20px;
+    -webkit-transition:top .5s,opacity .5s;
+    -moz-transition: top .5s,opacity .5s;
+    -ms-transition: top .5s,opacity .5s;
+    -o-transition: top .5s,opacity .5s;
+    transition: top .5s,opacity .5s;
+    opacity:0;
+    z-index:3;
+}
+.module-so ul li{
+    position: relative;
+}
+.module-so ul li:nth-child(2) .so-describe{
+    top:-100%;
+}
+.module-so ul li:nth-child(1):after,.module-so ul li:nth-child(2):after,.module-so ul li:nth-child(3):after{
+    content: '';
+    display: block;
+    width:0px;
+    height:0px;
+    border:8px solid transparent;
+    border-top-color:#fff ;
+    position: absolute;
+    left:50%;
+    top:200px;
+    margin-left:-8px;
+    z-index:2;
+}
+.module-so ul li:nth-child(2):after{
+    border-top-color:transparent;
+    border-bottom-color:#fff ;
+    top:184px;
+}
+.module-so .box-dt:hover .so-describe{
+    top:0px;
+    opacity:1;
+}
+
+.module-so ul li.large{
+    width:440px;
+    height:400px;
+    background: #fff;
+    padding-top:284px;
+    position: relative;
+}
+.module-so ul li.large .large-img{
+     position: absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:284px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.module-so .large-dt-user{
+    height:50px;
+    padding-left:80px;
+    position: relative;
+    padding-right:  10px;
+}
+.module-so .large-dt-user img{
+    width: 60px;
+    height: 60px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    position: absolute;
+    left:9px;
+    top: -20px;
+
+}
+.module-so .large .bar-show-info{
+    line-height: 50px;
+    height:50px;
+
+}
+.module-so .large .user-name{
+    font-size:14px;
+    margin-right:15px;
+    max-width:150px;
+}
+.module-so .large .large-dt-describe{
+    overflow: hidden;
+    line-height:22px;
+    height:56px;
+    padding: 10px;
+    font-size:13px;
+    color:#666;
+    text-overflow: ellipsis;
+}
+.module-so ul li:nth-child(4){
+    border:1px solid #f1f1f1;
+    margin-left:-1px;
+}
+.module-so ul li:nth-child(4) .large-img img{
+    opacity:0.95;
+    transition:all .3s;
+    width: 100%;
+}
+.module-so ul li:nth-child(4):hover .large-img img{
+    transform:scale(1.015);
+    opacity:1;
+}
+/*晒单  end*/

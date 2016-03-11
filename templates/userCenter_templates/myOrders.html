@@ -2,10 +2,10 @@
 <div>
     <div class="tabs">
         <div class="tab-item">
-            <a ng-class="{'item cur':curTab=='tab1','item':curTab!='tab1'}" href="/UCIndex/myOrders/unPay">待付款{{'（'+data_orders_upPay.length+'）'}}</a>
-            <a ng-class="{'item cur':curTab=='tab2','item':curTab!='tab2'}" href="/UCIndex/myOrders/paid">待收货{{'（'+data_orders_paid.length+'）'}}</a>
+            <a ng-class="{'item cur':curTab=='tab1','item':curTab!='tab1'}" href="/UCIndex/myOrders/unPay">待付款<span ng-show="data_orders_upPay" ng-bind="'（'+data_orders_upPay.length+'）'"></span></a>
+            <a ng-class="{'item cur':curTab=='tab2','item':curTab!='tab2'}" href="/UCIndex/myOrders/paid">待收货<span ng-show="data_orders_paid" ng-bind="'（'+data_orders_paid.length+'）'"></span></a>
             <!--  <a ng-class="{'item cur':curTab=='tab3','item':curTab!='tab3'}" href="/UCIndex/myOrders/unReceive">待收货{{'（'+data_orders_upReceive.length+'）'}}</a>-->
-            <a ng-class="{'item cur':curTab=='tab4','item':curTab!='tab4'}" href="/UCIndex/myOrders/finish">已完成{{'（'+data_orders_finish.length+'）'}}</a>
+            <a ng-class="{'item cur':curTab=='tab4','item':curTab!='tab4'}" href="/UCIndex/myOrders/finish">已完成<span ng-show="data_orders_finish" ng-bind="'（'+data_orders_finish.length+'）'"></span></a>
             <a ng-class="{'item cur':curTab=='tab5','item':curTab!='tab5'}" href="/UCIndex/myOrders/after">退款售后</a>
         </div>
     </div>
@@ -27,6 +27,7 @@
 
             <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
             <span class="icon-delete" ng-if="list.OrderStatus==1&&list.EarnestMoney==0" ng-click="removeOrder(list)"></span>
+            <a  class="pull-right" href="/UCIndex/submitShowOffOrder/{{list.Id}}" class="btn-showOffOrder" ng-if="list.OrderStatus==4">晒单领红包</a>
         </div>
         <div class="order-list-cont">
             <div class="cont1 pull-left">
@@ -75,7 +76,7 @@
 
                     <p><a  class="btn" ng-if="list.OrderStatus==1&&list.EarnestMoney==0" ng-click="removeOrder(list)">取消订单</a></p>
 
-                    <p><a href="/UCIndex/logisticsInfo/0/{{list.Id}}" class="btn btn-balanced" ng-if="list.OrderStatus!=1">查看物流</a></p>
+                    <p><a href="/UCIndex/logisticsInfo/0/{{list.Id}}" class="btn btn-balanced" ng-if="list.OrderStatus!=1&&list.OrderStatus!=4">查看物流</a></p>
 
                     <p><a ng-click="confirmReceive(list.Id)" class="btn btn-org" ng-if="list.OrderStatus==3">确认收货</a></p>
 

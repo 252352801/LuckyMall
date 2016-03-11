@@ -1,0 +1,76 @@
+<p class="menu-cont-title">
+    <label>我要晒单</label>
+
+</p>
+<div class="UC loading-tips" ng-show="loading">加载中...</div>
+<p class="tips-nothing ng-scope" ng-show="!canShowOff&&!loading">亲，您已经晒过这个订单了</p>
+<div class="submit-soo" ng-show="canShowOff">
+    <div class="box-order">
+       <div class="cont1" ng-show="!loading">
+            <a class="img-container">
+                <img ng-src="{{imgHost+data_order.imageUrl}}" error-src="./res/images/default.png" />
+            </a>
+           <div class="over-hidden">
+               <h2 class="pull-left item-name" ng-bind="data_order.CommodityName"></h2>
+               <small class="pull-left color-999" ng-bind="'×'+data_order.Count"></small>
+           </div>
+            <ul class="ul-property">
+                <li ng-repeat="property in data_order.Specifications" ng-bind="property.name+'：'+property.value"></li>
+            </ul>
+
+       </div>
+        <div class="cont2" ng-show="!loading">
+            <p>买下价格：<span class="color-org font-14" ng-bind="'￥'+data_order.DiscountPrice"></span></p>
+            <p>单品原价：<span class="line-through color-666" ng-bind="'￥'+data_order.UnitPrice"></span></p>
+            <p>获得折扣：<span class="so-icon-disc" ng-bind="data_order.DiscountValue+'折'"></span></p>
+        </div>
+    </div>
+    <form class="form-submit-soo" ng-submit="submitSOO()">
+        <div class="over-hidden form-group">
+            <label class="pull-left">晒单内容：</label>
+            <textarea class="pull-left" placeholder="说点什么吧！" ng-model="params_submit.content"></textarea>
+        </div>
+        <div class="over-hidden form-group">
+            <label class="pull-left">上传图片:</label>
+
+            <div class="upload-box pull-left">
+                <div class="items" ng-repeat="item in uploader.queue">
+                    <div>
+                        <div class="img-preview" >
+                            <img ng-src="{{item.imgUrl?imgHost+item.imgUrl:''}}" ng-show="item.progress==100"  temp-src="./res/spinner/spinner_s.gif"/>
+                            <span class="items-error" ng-show="item.isError">上传失败</span>
+                            <div class="box-progress" ng-show="item.progress<100">
+                                <div class="progress-val" ng-style="{'width':item.progress+'%'}">
+
+                                </div>
+                                {{item.progress+'%'}}
+                            </div>
+                        </div>
+                        <!--                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                    上传
+                                                </button>
+                                                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                    取消
+                                                </button>-->
+                        <div ng-show="uploader.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-remove" ng-click="item.remove()">
+                            移除
+                        </button>
+                    </div>
+                </div>
+                <div  max-file-count="1" class="btn-file-upload" max-count="5">
+                    <span class="btn-add">+</span>
+                    <p>上传图片</p>
+                    <input  type="file" nv-file-select="" uploader="uploader" title="上传图片" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group txt-right">
+            <input class="btn-org btn-submit" type="submit" ng-value="submitBtn.curVal" />
+        </div>
+    </form>
+</div>

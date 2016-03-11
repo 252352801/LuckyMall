@@ -117,6 +117,9 @@ angular.module('LuckyMall.services')
             }).error(function(data,status,headers,config){
                 callback(data,status);
             });
+        },
+        requestSOOData:function(callback){
+
         }
 	};
 })

@@ -117,6 +117,12 @@
             </ul>
         </div>
     </div>-->
+
+
+
+
+
+
     <ul class="floor-nav" floor-nav len="data_floor.length" ng-style="{'opacity':showFloorNav==true?'1':'0','transition':'opacity 1s'}">
         <li ng-repeat="f in data_floor" ng-click="scrollTo('floor'+$index)" ng-class="{'cur':cur_floor==$index}" ng-style="{'border-color':(cur_floor-1==$index||cur_floor==$index)?'transparent':'#eee'}">
             <p ng-bind="f.name"></p>
@@ -129,6 +135,59 @@
     <!--中部 start-->
     <div class="container">
         <div class="content">
+            <div class="module-so"> <!--晒单模块-->
+                <div class="md-top">
+                    <h2>晒单分享<span class="color-org">晒单分享可获得10元红包</span></h2>
+                    <a href="/showOffOrders" class="more">更多></a>
+                </div>
+                <ul class="over-hidden ul-index-soo">
+                    <li ng-repeat="soo in data_soo.general" ng-show="data_soo">
+                        <a href="/soo_dt/{{soo.Id}}" target="_blank">
+                            <div class="box-user">
+                                <div class="avatar">
+                                    <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
+                                </div>
+                                <p class="user-name" title={{soo.NickName}} ng-bind="soo.NickName"></p>
+                                <p class="color-999" ng-bind="soo.CreateTime"></p>
+                                <p class="bar-icons">
+                                    <span class="so-icon-disc" ng-bind="'获得'+soo.DiscountValue+'折'"></span>
+                                 </p>
+                            </div>
+                            <div class="box-dt">
+                                <div class="img-container" img-adaption>
+                                    <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png" />
+                                </div>
+                                <div class="so-describe" ng-bind="soo.Content">
+
+                                </div>
+                            </div>
+                        </a>
+
+                    </li>
+                    <li class="large" ng-show="data_soo">
+                        <a  href="/soo_dt/{{data_soo.large.Id}}" target="_blank">
+                            <div class="large-img">
+                                <img ng-src={{imgHost+data_soo.large.images[0]}} error-src="./res/images/touxiang.jpg"   />
+                            </div>
+                            <div class="large-dt">
+                                <div class="large-dt-user">
+                                    <img ng-src={{imgHost+data_soo.large.Avatar.image}} error-src="" />
+                                    <div class="over-hidden bar-show-info">
+                                        <p class="pull-left user-name" ng-bind="data_soo.large.NickName"></p>
+                                        <p class="pull-left color-999" ng-bind="data_soo.large.CreateTime"></p>
+                                        <p class=" pull-right">
+                                            <span class="so-icon-disc" ng-bind="'获得'+data_soo.large.DiscountValue+'折'"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="large-dt-describe" ng-bind="data_soo.large.Content">
+
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <grid griddata="data_floor"></grid>
         </div>
     </div>

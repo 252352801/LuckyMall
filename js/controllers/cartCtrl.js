@@ -85,8 +85,8 @@ angular.module('LuckyMall.controllers')
                 'page': '/enter_freegame',
                 'title': '进入免费游戏'
             });
-            var g_url=Host.game+ '?orderid=' + order_id + '&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
-/*            $rootScope.openGame(g_url,order_id,comm_id);*/
+            var g_url=Host.game+ '?orderid=' + order_id + '&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken();
+
             $scope.openModalBFFP(g_url,order_id,comm_id);
         };
         /*是否全部勾选*/

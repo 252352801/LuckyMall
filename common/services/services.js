@@ -1315,7 +1315,7 @@ angular.module('LuckyMall.services', [])
                         callback(response, 0);
                     }
                 }).error(function (data, status, headers, config) {
-                    callback(data, 0);
+                    callback(data, -1);
                 });
             }
         };
@@ -1817,14 +1817,18 @@ angular.module('LuckyMall.services', [])
 
     .factory('UploadSer', function (API, $http, TokenSer, FileUploader) {
         return {
-            initUploader: function (max_count, max_size) {
+            initUploader: function (max_count, max_size,errorCallback) {
                 var uploader = new FileUploader({
                     url: API.upload.url,
                     headers:{
                         Authorization : 'Basic ' + TokenSer.getToken()
                     }
                 });
-
+                var error=function(msg){
+                      if(typeof errorCallback=='function'){
+                          errorCallback(msg);
+                      }
+                };
                 uploader.filters.push({
                     name: 'customFilter',
                     fn: function (item /*{File|FileLikeObject}*/, options) {
@@ -1836,9 +1840,22 @@ angular.module('LuckyMall.services', [])
                     console.info('onWhenAddingFileFailed', item, filter, options);
                 };
                 uploader.onAfterAddingFile = function (fileItem) {
-                    fileItem.progress=0;
-                    fileItem.upload();
-                   // console.info('onAfterAddingFile', fileItem);
+                    console.log(fileItem);
+                    var img_type=fileItem.file.type.split("/");
+                    if(img_type[0]!='image'){
+                        error('您上传的不是图片文件！');
+                    }else{
+                        if(!(img_type[1]=='bmp'||img_type[1]=='gif'||img_type[1]=='jpg'||img_type[1]=='jpeg'||img_type[1]=='png')){
+                            error('您上传图片格式不符合要求！');
+                        }else{
+                            if(fileItem.file.size>max_size*1024){
+                                error('您上传的图片过大！');
+                            }else{
+                                fileItem.progress=0;
+                                fileItem.upload();
+                            }
+                        }
+                    }
                 };
                 uploader.onAfterAddingAll = function (addedFileItems) {
                     //console.info('onAfterAddingAll', addedFileItems);
@@ -1847,7 +1864,6 @@ angular.module('LuckyMall.services', [])
                     //console.info('onBeforeUploadItem', item);
                 };
                 uploader.onProgressItem = function (fileItem, progress) {
-                    console.info('onProgressItem', fileItem, progress);
                     fileItem.progress=progress;
                 };
                 uploader.onProgressAll = function (progress) {
@@ -2039,6 +2055,37 @@ angular.module('LuckyMall.services', [])
                 }).success(function (response, status) {
                     if(status==200&&response){
                         callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(response, status){
+                    callback(response,-1);
+                });
+            }
+        };
+    })
+
+/**
+ * 晒单列表
+ */
+    .factory('ShowOffOrdersSer',function(API,$http){
+        var initData=function(arr){
+            console.log(arr);
+             for(var o in  arr){
+                 arr[o].Avatar=angular.fromJson(arr[o].Avatar);
+                 arr[o].images=arr[o].Image.split('|');
+             }
+            return arr;
+        };
+        return {
+            requestData:function(params,callback){
+                $http({
+                    method: API.SOOList.method,
+                    url: API.SOOList.url,
+                    data:params
+                }).success(function (response, status) {
+                    if(status==200&&response){
+                        callback(initData(response),1);
                     }else{
                         callback(response,0);
                     }

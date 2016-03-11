@@ -2,9 +2,6 @@ angular.module('LuckyMall.controllers')
     .controller('MyOrdersCtrl',
     ['$scope', '$state', '$stateParams', '$timeout', 'MyOrdersSer', 'PaymentSer', 'LoginSer', 'SOTDSvc',
         function ($scope, $state, $stateParams, $timeout, MyOrdersSer, PaymentSer, LoginSer, SOTDSvc) {
-            if (!LoginSer.isLogin()) {
-                return;
-            }
             var pageSize = 4;//每页条数
             var cur_orders_tab = 1;
             $scope.pageIndex = 1;//当前页

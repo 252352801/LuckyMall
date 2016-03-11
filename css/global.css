@@ -19,6 +19,21 @@ body,input,button,select,textarea{
 li{
     list-style:none;
 }
+.b{
+    font-weight:bold;
+}
+.font-14{
+ font-size:14px;
+}
+.font-16{
+    font-size:16px;
+}
+.line-through{
+    text-decoration:line-through;
+}
+.hover-underline:hover{
+    text-decoration:underline;
+}
 a,input ,button {
     text-decoration:none;
     color:#333;
@@ -121,6 +136,16 @@ input:focus{
 }
 .tx-center{
     text-align:center;
+}
+.img-container{
+    display: table-caption;
+    text-align:center;
+}
+.img-container img{
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+
 }
 
 /*==============
@@ -258,6 +283,15 @@ input:focus{
 	text-indent: 26px;
 	margin-top: 30px;
 	background: url(../res/icon/icon_face.png) 15px 4px no-repeat;
+}
+.btn-org{
+    background: #ff6700;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+}
+.btn-org:hover{
+    background-color:#ff5600;
 }
 .btn-inline-service:hover{
 	color:#fff;
@@ -2319,6 +2353,9 @@ ul.dynamic li p a:hover{
 .txt-center{
     text-align:center!important;
 }
+.txt-right{
+    text-align:right!important;
+}
 .over-hidden{
     overflow:hidden;
 }
@@ -3790,3 +3827,34 @@ modal-beforeGame
     top:12px;
 }
 /*获取折扣modal end*/
+
+
+.so-icon-disc{
+    padding:5px 15px;
+    background: #ff8900;
+    color:#fff;
+    position: relative;
+}
+.so-icon-disc:before{
+    content: '';
+    display: inline-block;
+    width:12px;
+    height:12px;
+    background: #fff;
+    position: absolute;
+    left:-8px;
+    top:8px;
+    border-radius: 10px;
+}
+.so-icon-disc:after{
+    content: '';
+    display: inline-block;
+    width:10px;
+    height:10px;
+    background:#fff;
+    position: absolute;
+    left:100%;
+    top:8px;
+    margin-left:-4px;
+    border-radius: 10px;
+}

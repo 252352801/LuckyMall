@@ -1,0 +1,71 @@
+<header></header>
+<aside-right></aside-right>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+<div></div>
+<!--中部 start-->
+<div class="showOffOrders container">
+    <div class="soo-banner">
+        <img src="../res/images/background/bg_soo_banner.png"/>
+    </div>
+    <div class="content">
+        <ul class="ul-soo">
+            <li ng-repeat="soo in soo.data">
+                <a href="soo_dt/{{soo.Id}}" target="_blank">
+                    <div class="img-container">
+                        <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png"/>
+                    </div>
+                    <div class="box-dt">
+                        <h2 class="item-name" ng-bind="soo.CommodityName">
+
+                        </h2>
+
+                        <p class="soo-describe color-999" ng-bind="soo.Content">
+
+                        </p>
+
+                        <p class="bar-like over-hidden">
+                        <span class="pull-left icon-like-cont">
+                             <i class="lm-heart iconfont"></i>
+                        </span>
+                            <span class="color-666 icon-like pull-left" ng-bind="soo.LikeCount"></span>
+                            <a class="pull-right">
+                                <span class="so-icon-disc" ng-bind="'获得'+soo.DiscountValue+'折'"></span>
+                            </a>
+                        </p>
+
+                    </div>
+                    <div class="bar-user over-hidden">
+                        <img class="avatar" ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg"/>
+
+                        <p class="user-name pull-left" ng-bind="soo.Nickname"></p>
+
+                        <p class="time color-999 pull-right" ng-bind="soo.CreateTime"></p>
+                    </div>
+                    <div class="box-buttons">
+                        <div class="btn-like" title="赞一个">
+                            <i class="iconfont lm-heart"></i>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="page-index ng-hide" btn-scroll-to="180">
+            <div class="prev" ng-click="prevPage()" ><</div>
+            <div class="indexes">
+            <span ng-class="{'cur':soo.page.index==p}" ng-repeat="p in soo.page.items"
+
+                  ng-bind="(p==soo.page.index-5||p==soo.page.index+5)?'...':p+1"
+                  ng-if="(p>=soo.page.index-5&&p<=soo.page.indexx+5)"></span>
+            </div>
+            <div class="next" ng-click="nextPage()" >></div>
+        </div>
+    </div>
+</div>
+<!--中部 end-->
+
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>

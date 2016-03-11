@@ -220,7 +220,7 @@
     float:left;
     margin-bottom:70px;
     width:220px;
-    min-height:780px;
+    min-height:620px;
     margin-top:18px;
     background:#fff;
 }
@@ -273,7 +273,7 @@
     margin-top:17px;
     margin-bottom:20px;
     width: 78.4%;
-    min-height:780px;
+    min-height:620px;
     background:#fff;
     position:relative;
 }
@@ -2082,3 +2082,145 @@
 }
 
 /*红包 end*/
+
+/*=================
+    我的晒单 begin
+===================*/
+.my-soo.order-list .cont1{
+    width:50%;
+    min-height:90px;
+    padding-left: 100px;
+}
+.my-soo.order-list .cont1 .cont-img{
+    left:10px;
+}
+.my-soo.order-list{
+    width:94%;
+}
+.my-soo-th{
+    margin:20px auto;
+    width:94%;
+    height:40px;
+    background: #f1f1f1;
+    line-height:40px;
+}
+.my-soo-th .th1{
+    width:50%;
+    float: left;
+    text-indent:10%;
+}
+.my-soo-th .th2{
+    width:30%;
+    float: left;
+    text-align: center;
+}
+.my-soo-th .th3{
+    width:20%;
+    float: left;
+    text-align:center;
+}
+.my-soo .cont-payInfo{
+    width:30%;
+    text-align: center;
+    float: left;
+}
+.my-soo  p{
+    margin-bottom: 10px;
+}
+.my-soo .cont-payInfo .so-icon-disc{
+    margin-left:3px;
+}
+/*
+我的晒单 end*/
+
+/*=================
+    晒单提交 begin
+===================*/
+.submit-soo .box-order,.submit-soo .box-order *{
+    box-sizing: border-box;
+}
+.submit-soo .box-order{
+    width:94%;
+    height:120px;
+    margin:20px auto;
+    overflow: hidden;
+    border:1px solid #f1f1f1;
+    padding: 10px;
+}
+.submit-soo .box-order .cont1{
+    padding-left:110px;
+    width:70%;
+    position: relative;
+    float: left;
+}
+.submit-soo .box-order .cont1 .img-container{
+    width:100px;
+    height:100px;
+    border:1px solid #f1f1f1;
+    position: absolute;
+    left:0px;
+    top:0px;
+}
+.submit-soo .box-order .item-name{
+    max-width:80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:14px;
+    font-weight:500;
+    margin-right:10px;
+    margin-bottom:5px;
+}
+.submit-soo .box-order .ul-property{
+    height: 76px;
+    overflow: hidden;
+    line-height: 18px;
+}
+.submit-soo .box-order .ul-property li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color:#999;
+}
+.submit-soo .box-order .cont2{
+    width:30%;
+    float: left;
+    text-align: center;
+}
+.submit-soo .box-order .cont2 p{
+    margin-bottom:10px;
+}
+.form-submit-soo{
+    width:94%;
+    margin:0 auto;
+}
+.form-submit-soo textarea{
+    margin-left:8px;
+    width:88.7%;
+    height:150px;
+    border:1px solid #ddd;
+    padding:10px;
+}
+.form-submit-soo label{
+    color:#666;
+}
+.form-submit-soo .upload-box{
+    margin-left:15px;
+    margin-top:0px;
+    width: 80%;
+}
+.form-submit-soo .form-group{
+    margin-bottom:20px;
+}
+.form-submit-soo .form-group:last-child {
+    margin-top:10px;
+    border-top: 1px dashed #f1f1f1;
+    padding: 20px 0px;
+}
+.form-submit-soo .btn-submit{
+    padding: 10px 55px;
+    font-size:16px;
+}
+
+/*
+晒单提交 end*/

@@ -6,7 +6,7 @@ angular.module('LuckyMall.services')
         var initData=function(){
             for(var i=0;i<data.Property.length;i++){
                 for(var j=0;j<data.Property[i].attributes.length;j++){
-                    data.Property[i].attributes[j].disabled=true;//disabled=true表示不可选
+                    data.Property[i].attributes[j].disabled=false;//disabled=true表示不可选
                 }
             }
             for(var o in data.StockKeepingUnitModels){
@@ -146,90 +146,6 @@ angular.module('LuckyMall.services')
                         callback('',0);
                     }
                 })
-            },
-          /*  选择商品属性*/
-            selectAttr: function (attr,val,callback) {
-                for (var o in data.Property) {
-                    if (data.Property[o].name == attr) {
-                        for (var i in data.Property[o].attributes) {
-                            if (data.Property[o].attributes[i].value == val) {
-                                if(data.Property[o].attributes[i].isSelected==true){//如果该属性已选，则取消选择
-                                    callback();
-                                }else{
-                                    data.Property[o].attributes[i].isSelected = true;
-                                }
-                            } else {
-                                data.Property[o].attributes[i].isSelected = false;
-                            }
-                        }
-                        break;
-                    }
-                }
-            },
-            /*清除所有选择状态*/
-            clearSelections:function(){
-                for (var o in data.Property) {
-                        for (var i in data.Property[o].attributes) {
-                           data.Property[o].attributes[i].isSelected = false;
-                        }
-                }
-            },
-            cancelSelection:function(val){
-                for (var o in data.Property) {
-                    for (var i in data.Property[o].attributes) {
-                        if(val==data.Property[o].attributes[i].value){
-                            data.Property[o].attributes[i].isSelected = false;
-                        }
-                    }
-                }
-            },
-            /*检测库存*/
-            testSku:function(choice,callback){
-                initData();
-                var sku=data.StockKeepingUnitModels;
-                var remain_sku=new Array();
-                for(var i=0;i<sku.length;i++){
-                    if(angular.fromJson(sku[i].Specifications).length>0) {
-                        var flag = true;
-                        sku[i].specify = sku[i].Specifications.replace('[', '').replace(']', '').split(',');
-                        for (var j = 0; j < choice.length; j++) {
-                            if (choice[j] != sku[i].specify[j] && choice[j] != -1) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag == true) {
-                            remain_sku.push(sku[i].specify);
-                        }
-                    }
-                }
-                for(var i=0;i<remain_sku.length;i++){
-                        for(var j=0;j<remain_sku[i].length;j++){
-                            data.Property[j].attributes[parseInt(remain_sku[i][j])].disabled=false;
-                        }
-                }
-                callback();
-            },
-            /*获取选择的SKU*/
-            getSkuByChoice:function(arr){
-                for(var i=0;i<data.StockKeepingUnitModels.length;i++){
-                    if(arr.toString()==data.StockKeepingUnitModels[i].specify.toString()){
-                        return data.StockKeepingUnitModels[i];
-                    }
-                }
-            },
-            /*获取已选的规格、属性*/
-            getSelectedAttributes:function(){
-                var result=new Array();
-                for (var o in data.Property) {
-                        for (var i in data.Property[o].attributes) {
-                           if(data.Property[o].attributes[i].isSelected==true){
-                                var attr={"name":data.Property[o].name,"value":data.Property[o].attributes[i].value};
-                                result.push(attr);
-                           }
-                        }
-                }
-                return result;
             },
             addToCart:function(params,callback){
                 $http({
