@@ -89,7 +89,6 @@ angular.module('LuckyMall.controllers')
                         general:response.slice(1,4),
                         large:response[0]
                     };
-                    console.log($scope.data_soo);
                 }
             })
 

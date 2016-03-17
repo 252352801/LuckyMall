@@ -1832,27 +1832,30 @@ angular.module('LuckyMall.services', [])
                 uploader.filters.push({
                     name: 'customFilter',
                     fn: function (item /*{File|FileLikeObject}*/, options) {
-                        return this.queue.length < max_count;
+                        return this.queue.length <=max_count;
                     }
                 });
                 // CALLBACKS
                 uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                    console.info('onWhenAddingFileFailed', item, filter, options);
+                    error('最多能上传'+max_count+'张图片！');
                 };
                 uploader.onAfterAddingFile = function (fileItem) {
-                    console.log(fileItem);
-                    var img_type=fileItem.file.type.split("/");
-                    if(img_type[0]!='image'){
-                        error('您上传的不是图片文件！');
-                    }else{
-                        if(!(img_type[1]=='bmp'||img_type[1]=='gif'||img_type[1]=='jpg'||img_type[1]=='jpeg'||img_type[1]=='png')){
-                            error('您上传图片格式不符合要求！');
-                        }else{
-                            if(fileItem.file.size>max_size*1024){
-                                error('您上传的图片过大！');
-                            }else{
-                                fileItem.progress=0;
-                                fileItem.upload();
+                    if(uploader.queue.length>max_count){
+                        error('最多能上传'+max_count+'张图片！');
+                    }else {
+                        var img_type = fileItem.file.type.split("/");
+                        if (img_type[0] != 'image') {
+                            error('您上传的不是图片文件！');
+                        } else {
+                            if (!(img_type[1] == 'bmp' || img_type[1] == 'gif' || img_type[1] == 'jpg' || img_type[1] == 'jpeg' || img_type[1] == 'png')) {
+                                error('您上传图片格式不符合要求！');
+                            } else {
+                                if (fileItem.file.size > max_size * 1024) {
+                                    error('您上传的图片过大！');
+                                } else {
+                                    fileItem.progress = 0;
+                                    fileItem.upload();
+                                }
                             }
                         }
                     }
@@ -2070,12 +2073,18 @@ angular.module('LuckyMall.services', [])
  */
     .factory('ShowOffOrdersSer',function(API,$http){
         var initData=function(arr){
-            console.log(arr);
              for(var o in  arr){
                  arr[o].Avatar=angular.fromJson(arr[o].Avatar);
                  arr[o].images=arr[o].Image.split('|');
+                 arr[o].liked=false;
              }
             return arr;
+        };
+        var initDTData=function(obj){
+            obj.Avatar=angular.fromJson(obj.Avatar);
+            obj.images=obj.Image.split("|");
+            obj.liked=false;
+            return obj;
         };
         return {
             requestData:function(params,callback){
@@ -2092,6 +2101,74 @@ angular.module('LuckyMall.services', [])
                 }).error(function(response, status){
                     callback(response,-1);
                 });
+            },
+            requestSOODetails:function(id,callback){
+                $http.get(API.SOODetails.url+id)
+                    .success(function(response,status){
+                        if(status==200&&response) {
+                            callback(initDTData(response),1);
+                        }else{
+                            callback(response,0);
+                        }
+                    })
+                    .error(function(response,status){
+                        callback(response,-1);
+                    });
+            },
+            requestOrderInfoBySOOId:function(id,callback){
+                $http.get(API.SOOOrderbrief.url+id)
+                    .success(function(response,status){
+                        if(status==200&&response) {
+                            callback(response,1);
+                        }else{
+                            callback(response,0);
+                        }
+                    })
+                    .error(function(response,status){
+                        callback(response,-1);
+                    });
+            },
+            requestItemData:function(item_id,callback){
+                $http({
+                    method:API.goodsDetailsData.method,
+                    url: API.goodsDetailsData.url+item_id
+                }).success(function (response, status, headers, config) {
+                    if(status==200&&response!=null) {
+
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+
+                }).error(function (data, status, headers, config) {
+                    callback(data,-1);
+                });
+            },
+            like:function(id,callback){
+                $http.get(API.like.url+id)
+                    .success(function(response,status){
+                        if(status==200&&response) {
+                            callback(response,1);
+                        }else{
+                            callback(response,0);
+                        }
+                    })
+                    .error(function(response,status){
+                        callback(response,-1);
+                    });
+            },
+            failureReason:function(id,callback){
+                $http.get(API.failureReason.url+id)
+                    .success(function(response,status){
+                        if(status==200&&response) {
+                            callback(response,1);
+                        }else{
+                            callback(response,0);
+                        }
+                    })
+                    .error(function(response,status){
+                        callback(response,-1);
+                    });
             }
         };
     })

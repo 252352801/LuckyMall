@@ -19,7 +19,7 @@ angular.module('LuckyMall.controllers')
                 curVal:'提交',
                 disabled:false
             };
-            $scope.uploader = UploadSer.initUploader(10, 20480,function(msg){ // 最大数量10  最大总大小2048kb(20MB)
+            $scope.uploader = UploadSer.initUploader(5, 20480,function(msg){ // 最大数量10  最大总大小2048kb(20MB)
                 swal(msg,'','error');
                 $scope.uploader.queue.pop();
             });
@@ -52,8 +52,12 @@ angular.module('LuckyMall.controllers')
 
                  if($scope.params_submit.oid!=null&&!$scope.submitBtn.disabled){
                      if($scope.params_submit.content==''){
-                         swal('请输入晒单内容！','','error');
+                         swal('请输入晒单内容！','与小伙伴们分享你的好运吧','error');
                      }else{
+                         if($scope.params_submit.content.length<15){
+                             swal('字数不够！','15个字都没有T.T','error');
+                             return;
+                         }
                          if($scope.uploader.queue.length==0){
                              swal('请上传图片！','','error');
                          }else{
@@ -67,6 +71,13 @@ angular.module('LuckyMall.controllers')
                                  if ($scope.uploader.queue[o].imgUrl) {
                                      img_str.push($scope.uploader.queue[o].imgUrl[0]);
                                  }
+                             }
+                             if(img_str.length<3){
+                                 swal('至少上传3张图片！','','error');
+                                 return;
+                             }else if(img_str.length>5){
+                                 swal('最多上传5张图片！','','error');
+                                 return;
                              }
                              var params={
                                  "oid":$scope.params_submit.oid,

@@ -13,100 +13,73 @@
             <a>晒单详情</a>
         </div>
         <div class="soo-dt-content">
+            <div class="soo-failureInfo" ng-if="soo_dt.SOOInfo.ShaiDanStatus==2">
+                该晒单未通过审核！原因：<span>{{soo_dt.failureReason}}</span>
+            </div>
             <div class="box-shower-order">
                 <div class="bso-left">
-                    <img class="avatar" src="./res/images/touxiang.jpg" />
+                    <img class="avatar" ng-src={{imgHost+soo_dt.SOOInfo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
                     <p>
                         <label>幸运买家：</label>
-                        <span class="b font-14">helloworld</span>
+                        <span class="b font-14" ng-bind="soo_dt.SOOInfo.Nickname"></span>
                     </p>
                     <p>
                         <label>下单时间：</label>
-                        <span class="color-666">2016-03-07 16：00</span>
+                        <span class="color-666" ng-bind="soo_dt.orderInfo.CreateTime"></span>
                     </p>
                     <p>
                         <label>买下价格：</label>
-                        <span class="font-16 color-org">￥10</span>
-                        <span class="line-through color-gray">￥100</span>
+                        <span class="font-16 color-org" ng-bind="'￥'+soo_dt.SOOInfo.DiscountPrice">￥10</span>
+                        <span class="line-through color-gray"  ng-bind="'￥'+soo_dt.SOOInfo.RetailPrice">￥100</span>
                     </p>
                     <p>
                         <label>获得折扣：</label>
-                        <span class="so-icon-disc">1折</span>
+                        <span class="so-icon-disc" ng-bind="soo_dt.SOOInfo.DiscountValue+'折'">1折</span>
                     </p>
                 </div>
                 <div class="bso-right">
-                    <img class="item-img" src="./res/images/touxiang.jpg" />
-                    <p class="item-name">
-                        iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G iphone 6s 128G
+                    <a href="/item/{{soo_dt.SOOInfo.CommodityId}}" title={{soo_dt.SOOInfo.CommodityName}}>
+                        <img class="item-img"ng-show="soo_dt.itemData.image" ng-src={{imgHost+soo_dt.itemData.image+'@100w_100h_100Q.jpg'}} error-src="./res/images/default.png" />
+                    </a>
+
+                    <p class="item-name" title={{soo_dt.SOOInfo.CommodityName}} >
+                        <a ng-bind="soo_dt.SOOInfo.CommodityName" href="/item/{{soo_dt.SOOInfo.CommodityId}}" target="_blank"></a>
                     </p>
                     <ul class="ul-property">
-                        <li class="color-999">
-                            内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G内存：128G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
-                        </li>
-                        <li class="color-999">
-                            网络制式：双4G
+                        <li class="color-999" ng-repeat="spec in soo_dt.orderInfo.spec">
+                              {{spec.name+'：'+spec.value}}
                         </li>
 
                     </ul>
                 </div>
             </div>
+
             <div class="box-submitInfo">
                 <div class="info-top over-hidden">
-                    <span class="color-gray pull-left">2016-03-07</span>
-                    <div class="pull-right ">
-                        <i class="iconfont lm-heart"></i>
-                        <span>赞(100)</span>
+                    <span class="color-gray pull-left" ng-bind="soo_dt.SOOInfo.CreateTime">2016-03-07</span>
+                    <div class="pull-right txt-no-select relative" ng-click="soo_dt.like(soo_dt.SOOInfo)" ng-if="soo_dt.SOOInfo.ShaiDanStatus==1">
+                        <i class="iconfont lm-heart" ng-style="{'color':soo_dt.SOOInfo.liked?'red':'#666'}"></i>
+                        <span>{{soo_dt.SOOInfo.liked?'已赞':'赞'}}({{soo_dt.SOOInfo.LikeCount}})</span>
+
                     </div>
                 </div>
                 <div class="info">
-                    <p class="color-666">
+                    <p class="color-666" ng-bind="soo_dt.SOOInfo.Content">
                         第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~费列罗巧
                         克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~~费列罗巧克力3粒16条的，以前以为
                         是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知
                         道是真的，大家加油好运会降临的。
                     </p>
                     <ul class="ul-images">
-                        <li class="cur">
+                        <li ng-class="{'cur':soo_dt.imgIndex==$index}" ng-repeat="img in soo_dt.SOOInfo.images" ng-click="soo_dt.showImg($index)">
                             <a>
-                                <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
+                                <img real-src={{imgHost+img}} temp-src="./res/images/default.png" />
                             </a>
                         </li>
-                        <li>
-                            <a>
-                                <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
-                            </a>
-                        </li>
+
                     </ul>
-                    <div class="big-img">
-                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"/>
+                    <div >
+                        <img ng-show="!loading" ng-src={{imgHost+soo_dt.SOOInfo.images[soo_dt.imgIndex]}} error-src="./res/images/default.png" style="max-width: 100%" />
                     </div>
                 </div>
             </div>

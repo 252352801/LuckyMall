@@ -669,6 +669,47 @@ angular.module('LuckyMall')
             replace: true
         }
     })
+    /* 图片自适应*/
+    .directive('imgAdaptationSelf', function ($timeout) {
+        return {
+            link: function (scope, element, attrs) {
+                var old_src=attrs.tempSrc;
+                function checkSize(){
+                    element.checkSize=setTimeout(function(){
+                        element.width=parseInt(element[0].clientWidth);
+                        element.height=parseInt(element[0].clientHeight);
+                        if(element.width>0&&element.height>0&&attrs.src!=old_src){
+
+                            if(element.width>element.height){//高度小于宽度  把高度先撑满
+                                element.width*=(element[0].offsetParent.clientHeight/element.height);
+                                element.height=element[0].offsetParent.clientHeight;
+                                if(element.width<element[0].offsetParent.clientWidth){//高度撑满后宽度仍小于容器宽  把宽度撑满  高度按比例放大
+                                    element.height*=(element[0].offsetParent.clientWidth/element.width);
+                                    element.width=element[0].offsetParent.clientWidth;
+                                }
+
+                            }else{
+                                element.height*=(element[0].offsetParent.clientWidth/element.width);
+                                element.width=element[0].offsetParent.clientWidth;
+                                if(element.height<element[0].offsetParent.clientHeight){
+                                    element.width*=(element[0].offsetParent.clientHeight/element.height);
+                                    element.height=element[0].offsetParent.clientHeight;
+                                }
+
+                            }
+                            element[0].style.width=element.width+'px';
+                            element[0].style.height=element.height+'px';
+                            clearTimeout(element.checkSize);
+                            delete  element.checkSize;
+                        }else{
+                            checkSize();
+                        }
+                    },10);
+                }
+                checkSize();
+            }
+        }
+    })
 
     /*图片滚动出现时加载*/
     .directive('lazySrc', ['$window', '$document', function ($window, $document) {
@@ -1096,183 +1137,6 @@ angular.module('LuckyMall')
     })
 
 
-
-    /*进入免费游戏前的modal*/
-    .directive('modalBeforeFreePlay', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'common/templates/modal-beforeFreePlay.html',
-            replace: true,
-            link: function (scope, element, attrs) {
-            },
-            controller: function ($scope, TokenSer, $rootScope, RefreshUserDataSer, $state, Host, $timeout, MyOrdersSer) {
-               $rootScope.initFreeChance();
-                function initData(){
-                    $scope.game_url=null;
-                    $scope.game_orderId=null;
-                    $scope.game_commodityId=null;
-                }
-                initData();
-                $scope.isModalBFFPShow=false;
-                $scope.openModalBFFP=function(g_url,order_id,comm_id){
-                    $scope.isModalBFFPShow=true;
-                    $scope.game_url=g_url;
-                    $scope.game_orderId=order_id;
-                    $scope.game_commodityId=comm_id;
-                }
-                $scope.closeModalBFFP=function(){
-                    $scope.isModalBFFPShow=false;
-                    initData();
-                }
-                $scope.openFreeGame=function(){
-                    $rootScope.openGame($scope.game_url,$scope.game_orderId,$scope.game_commodityId);
-                    $timeout(function(){
-                        $scope.isModalBFFPShow=false;
-                    });
-                };
-            }
-        }
-    })
-
-    /*进入游戏前的modal*/
-/*    .directive('modalBeforeGame', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'common/templates/modal-beforeGame.html',
-            replace: true,
-           *//* scope:{
-
-            },*//*
-            link:function(scope, element, attrs){
-            },
-            controller:function($scope,TokenSer,$rootScope,RefreshUserDataSer,$state,Host,$timeout,MyOrdersSer,UserSer,SOTDSvc){
-                if(TokenSer.getToken()){//存有token时请求用户数据
-                    loadUserData();
-                }
-                $scope.isModal1show=false;
-                $scope.energy = {
-                    isEnough: true,
-                    tips: ''
-                };
-                $scope.play=function(){
-                    ga('send', 'pageview', {
-                        'page': '/enter_paygame',
-                        'title': '进入付定金游戏'
-                    });
-                    $rootScope.openGame($scope.gameUrl,$scope.game_orderId,$scope.game_commodityId);
-                    $scope.isModal1show=false;
-                }
-                $scope.showModal1 = function (order) {
-                    SOTDSvc.set({
-                        "from":'purchase',
-                        "orders":[order.Id]
-                    });
-                    if($scope.data_user!=undefined) {
-                        show(order);
-                    }else{
-                        loadUserData(function(){
-                            show(order);
-                        });
-                    }
-
-                };
-                $scope.purchase=function(){
-                    $state.go('confirmOrder');
-                };
-                $scope.closeModal1 = function () {
-                    $scope.isModal1show = false;
-                    $scope.agree = false;
-                    $scope.energy.tips = '';
-                };
-                $scope.showModal2 = function () {
-                    if(UserSer.getData().UserModel.IsAgreeEarnest==true){
-                        $state.go('payForEarnest',{params:'order_id='+$scope.data_eo.Id});
-                    }else{
-                        $scope.isModal2show = true;
-                    }
-                    $scope.isModal1show = false;
-                };
-                $scope.closeModal2 = function () {
-                    $scope.agree = false;
-                    $scope.isModal2show = false;
-                };
-                $scope.returnModal1 = function () {
-                    $scope.isModal1show = true;
-                    $scope.isModal2show = false;
-                };
-
-                $scope.payForEarnest = function () {
-                        UserSer.agreeEarnestProtocol(function(response,status){
-                            if(status==1){
-                                $scope.$emit('user-update');//更新用户数据
-                            }
-                        });
-                        $state.go('payForEarnest',{params:$scope.data_eo.Id});
-                };
-                function show(order){
-                    $scope.data_eo = order;
-                    $scope.data_orgCost = Math.ceil($scope.data_eo.UnitPrice * $scope.data_eo.Count);//打折前总花费
-                    if (testEnergy($scope.data_orgCost, order.EarnestPercent, order.EarnestMoney, $scope.data_user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
-                        $scope.energy.isEnough = true;
-                    } else {
-                        $scope.energy.isEnough = false;
-                    }
-                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
-                    $scope.game_orderId = order.Id;
-                    $scope.game_commodityId = order.CommodityId;
-                    SOTDSvc.set({
-                        "from":'purchase',
-                        "orders":[order.Id]
-                    });
-                    $scope.btn_buyNow_href = '/confirmOrder';
-                    $timeout(function () {
-                        $scope.isModal1show = true;
-                    });
-                }
-
-                 *//**检查能量是否够4发炮弹**//*
-                function testEnergy(total_cost,percent,paid_value,remain_energy) {
-                    var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
-                    var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
-                    if(remain_amount>=10){
-                        $scope.energy.tips = '喵喵体力充足，快去赢取更多折扣吧！';
-                        return true;
-                    }else{
-                        if(paid_value>0){
-                            if(remain_amount>=1){
-                                $scope.energy.tips = '进入游戏赢取更多折扣吧！';
-                                return true;
-                            }else{
-                                $scope.energy.tips = '喵喵体力不支，可先去付定金获得赠送体力！';
-                                return false;
-                            }
-                        }else{
-                            if(remain_amount<4){
-                                $scope.energy.tips = '喵喵体力不足，可先去付定金获得赠送体力！';
-                                return false;
-                            }else if(remain_amount>=4){
-                                $scope.energy.tips = '喵喵体力不多，建议先去支付定金获赠体力！';
-                                return true;
-                            }
-                        }
-                    }
-                }
-
-                function loadUserData(callback) {
-                    RefreshUserDataSer.requestUserData(function (response, status) {
-                        if (status == 1) {
-                            $scope.data_user = RefreshUserDataSer.getData();
-                            if(callback){
-                                callback();
-                            }
-                        }
-                    });
-
-                }
-            }
-        }
-    })*/
-
     /*点击滚动到指定高度*/
     .directive('btnScrollTo', function ($timeout,$rootScope) {
         return {
@@ -1301,17 +1165,40 @@ angular.module('LuckyMall')
             }
         };
     })
-    /*图片自适应*/
-    .directive('imgAdaption', function () {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                var img=element.find('img');
 
+
+/**
+ * 游戏菜单
+ */
+    .directive('modalGameMenu',function(){
+        return{
+            restrict:'E',
+            replace:true,
+            templateUrl:'./common/templates/modal-gameMenu.html',
+            scope:{
+                visible:"=visible",
+                gameUrl:"=gameurl",
+                gameMenu:'=gamectrl'
+            },
+            controller:function($scope,$rootScope){
+                $scope.closeModal=function(){
+                    $scope.visible=false;
+                };
+                $scope.play=function(game_name){
+                    if(game_name=='fishing'){
+                        $scope.gameMenu.gameUrl[game_name]=$scope.gameMenu.gameUrl[game_name].replace('mode=2','mode=5');
+                        $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                        $scope.visible=false;
+                        return;
+                    }
+                    $scope.visible=false;
+                    $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                };
+            },
+            link:function(scope,element,attrs){
             }
-        };
+        }
     })
-
 
     /*获取折扣modal*/
     .directive('modalGetDiscount', function () {
@@ -1322,11 +1209,15 @@ angular.module('LuckyMall')
                 visible:"=visible",
                 order:"=data",
                 imgHost:'=imghost',
-                luckyEnergy:'=luckyenergy'
+                luckyEnergy:'=luckyenergy',
+                gameMenu:'=gamectrl'
             },
             templateUrl: 'common/templates/modal-getDiscount.html',
             controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc){
 
+
+
+                console.log($scope.gameMenu);
                 $scope.data_user={};
                 $scope.isCheckedWallet=false;
                 $scope.isCheckedCoupon=false;
@@ -1425,12 +1316,8 @@ angular.module('LuckyMall')
                 $scope.play=function(){
                     if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
                         if ($scope.energy.isEnough) {
-                            ga('send', 'pageview', {
-                                'page': '/enter_paygame',
-                                'title': '进入付定金游戏'
-                            });
-                            $rootScope.openGame($scope.gameUrl, $scope.game_orderId, $scope.game_commodityId);
-                            $scope.visible = false;
+                            $scope.visible=false;
+                            $scope.gameMenu.show=true;
                         }
                     }
                 }
@@ -1445,7 +1332,8 @@ angular.module('LuckyMall')
                                 });
                                 loadBalanceInfo();
                                 $rootScope.$broadcast('cart-update');
-                                $rootScope.openGame($scope.gameUrl, $scope.game_orderId, $scope.game_commodityId);
+                                $scope.gameMenu.show=true;
+                                //$rootScope.openGame($scope.gameUrl, $scope.game_orderId, $scope.game_commodityId);
                                 $scope.visible = false;
                             } else {
                                 swal('兑换失败!', '', 'error');
@@ -1547,9 +1435,10 @@ angular.module('LuckyMall')
                         $scope.energy.isEnough = false;
                         $scope.isCanPlay=false;
                     }
-                    $scope.gameUrl = Host.game + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
-                    $scope.game_orderId = order.Id;
-                    $scope.game_commodityId = order.CommodityId;
+                    $scope.gameMenu.gameUrl.fishing = Host.game.fishing + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.gameMenu.gameUrl.fingerGuessing = Host.game.fingerGuessing + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                    $scope.gameMenu.orderId = order.Id;
+                    $scope.gameMenu.commodityId = order.CommodityId;
 
                     initExchangeData($scope.data_balance.Coupon.Balance,$scope.data_balance.Wallet.Balance);
 

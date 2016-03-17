@@ -2,42 +2,7 @@
    <div class="modal-getDisc">
        <div class="slider-left">
            <h2 class="modal-title">获取优惠</h2>
-         <!--  <div class="box-energy">
-               <img src="./res/logo/logo_cat.png" alt=""/>
 
-             &lt;!&ndash;  <h2>喵喵幸运物</h2>
-
-               <p class="level">体力级:<span
-                       ng-class="'icon icon-energy-level icon-lucky-energy-level'+luckyEnergy.level"></span></p>
-
-               <p class="bar-energy">
-                   <span class="energy-value" ng-style="{'width':luckyEnergy.percent+'%'}"></span>
-               </p>&ndash;&gt;
-               &lt;!&ndash;<p>您的体力充足，赶紧进入游戏赢取折扣吧</p>&ndash;&gt;
-               <div class="box-tips" ng-show="order.EarnestBusinessType==0">
-                   <h2>您可以通过付定金/付红包获取游戏机会，或者直接使用红包/钱包抵现金获取优惠!</h2>
-               </div>
-               <div class="box-tips" ng-show="order.EarnestBusinessType==4">
-                   <h2>该订单已获取优惠，赶紧购买吧!</h2>
-               </div>
-               <div class="box-tips" ng-show="order.EarnestBusinessType==3">
-                   <h2>已使用红包兑换游戏机会，赶紧进入游戏抢折扣吧!</h2>
-               </div>
-               <div  class="box-tips" ng-show="order.EarnestBusinessType==1">
-                   <h2>您已支付定金，赶紧进入游戏抢折扣吧!</h2>
-               </div>
-               <div class="box-play ng-hide" ng-show="order.EarnestBusinessType==1||order.EarnestBusinessType==3">
-               &lt;!&ndash;<div class="box-play" >&ndash;&gt;
-                   <p >
-                       <button ng-class="{'disabled':!energy.isEnough}" ng-click="play()">进入游戏</button>
-                   </p>
-                  &lt;!&ndash; <p ng-bind="energy.tips"></p>&ndash;&gt;
-               </div>
-           </div>-->
-           <!--<div class="label-other">
-               <span ng-show="order.EarnestBusinessType!=0">您还可以</span>
-               <span ng-show="order.EarnestBusinessType==0">您可以</span>
-           </div>-->
            <ul ng-class="{'menu':order.EarnestBusinessType==0,'menu disabled':order.EarnestBusinessType!=0}">
                <li ng-class="{'btn-play':isCanPlay,'btn-play disabled':!isCanPlay}" ng-click="play()">
                    进入游戏

@@ -1,65 +1,73 @@
-<p class="menu-cont-title">
+<div class="menu-cont-title">
     <label>我的晒单</label>
+    <p class="my-soo-tabs pull-right color-gray">
+        <a href="/UCIndex/myShowingOffOrders/wait" ng-class="{'cur':mySOO.status==0}">待审核</a>
+        <a href="/UCIndex/myShowingOffOrders/passed" ng-class="{'cur':mySOO.status==1}">审核通过</a>
+        <a href="/UCIndex/myShowingOffOrders/unPassed" ng-class="{'cur':mySOO.status==2}">审核不通过</a>
+        <a href="/UCIndex/myShowingOffOrders/endUp" ng-class="{'cur':mySOO.status==3}">已停用</a>
+    </p>
+</div>
+<div class="UC loading-tips" ng-show="mySOO.loading">正在加载...</div>
+<p class="tips-nothing" ng-show="mySOO.currentPage.length<=0&&!mySOO.loading">暂无</p>
+<ul class="ul-soo-common" ng-show="!mySOO.loading&&mySOO.currentPage.length>0">
+    <li class="li-soo-common" ng-repeat="soo in mySOO.currentPage">
+        <div class="box-shower">
+            <img class="avatar" ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
+            <div class="over-hidden">
+                <p class="shower-name font-14 pull-left" ng-bind="soo.Nickname"></p>
 
-</p>
-
-<div class="my-soo-th">
-    <span class="th1">商品信息</span>
-    <span class="th2">付款信息</span>
-    <span class="th3">操作</span>
- </div>
-<div class="my-soo order-list" >
-    <div class="order-list-top">
-        <img ng-if="list.Order.Brand.BrandImage" real-src={{imgHost+list.Order.Brand.BrandImage+'@64w_64h_100Q.png'}}  temp-src="./res/images/default.png" />
-        <p ng-if="list.Order.Brand.BrandName" class="seller-name"><a title="" ng-bind="list.Order.Brand.BrandName"></a></p>
-
-        <p class="create-time" ng-bind="'申请时间：'+list.DataTime"></p>
-
-        <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
-        <span class="icon-delete" ng-if="list.Order.OrderStatus==1" ng-click="removeOrder(list.Order)"></span>
-    </div>
-    <div class="order-list-cont">
-        <div class="cont1 pull-left">
-            <div class="cont-img">
-                <a href="">
-                    <img real-src={{'http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg'}} temp-src="./res/images/default.png" alt=""/>
-                </a>
+                <p class="time color-gray pull-left" ng-bind="soo.CreateTime"></p>
             </div>
-            <a class="goods-name" href="">
-                <h2 ng-bind="'商品名称'"></h2>
-                <small ng-bind="'×'+'1'"></small>
-            </a>
 
-            <p ng-repeat="property in list.Order.Specifications" ng-bind="property.name+'：'+property.value"></p>
-        </div>
-        <div class="cont-payInfo">
-            <p>买下价格：<span class="color-org font-14">￥200</span></p>
-            <p>单品原价：<span class="line-through color-666">￥400</span></p>
-            <p>获得折扣：<span class="so-icon-disc">5折</span></p>
-        </div>
-        <div class="cont-buttons">
-            <p class="txt-center">
-                <a class="color-org hover-underline">订单详情</a>
+            <label class="z-index-2">获得折扣：</label><span class="so-icon-disc" ng-bind="soo.DiscountValue+'折'"></span>
+            <a class="link-dt color-org z-index-2" href="/soo_dt/{{soo.Id}}" target="_blank" ng-if="soo.ShaiDanStatus!=2">[详情]</a>
+            <a class="link-dt color-red z-index-2" href="/soo_dt/{{soo.Id}}" target="_blank" ng-if="soo.ShaiDanStatus==2">[为什么审核不通过？]</a>
             </p>
-            <p class="txt-center hover-underline">
-                <a>晒单详情</a>
+            <p class="ng-hide">
+                <label>买入价：</label><span class="font-14 color-org">￥100</span><span class="color-999 line-through">￥1000</span>
             </p>
         </div>
+        <div class="info">
+            <p ng-bind="soo.Content">
 
-    </div>
-</div>
+            </p>
 
-</div>
+            <ul class="ul-images ">
+                <li ng-class="{'cur':soo.bigImgIndex==$index}" ng-repeat="img in soo.images" ng-click="mySOO.showBigImg($index,soo)">
+                    <a class="img-container">
+                        <img real-src={{imgHost+img}} temp-src="./res/images/default.png" />
+                    </a>
+                </li>
+            </ul>
+            <div class="big-img" ng-style="{'width':soo.bigImgIndex!=-1?'100%':'0px','height':soo.bigImgIndex!=-1?'inherit':'0px'}" ng-click="mySOO.showBigImg(-1,soo)">
+                <img ng-if="soo.bigImgIndex!=-1" ng-src={{imgHost+soo.bigImgUrl}} />
+            </div>
+        </div>
+        <div class="bar-buttons txt-right">
+            <p class="btn-like pull-right">
+                <i class="iconfont lm-heart"></i>
+                <label>赞(<span ng-bind="soo.LikeCount"></span>)</label>
+            </p>
+        </div>
+    </li>
+</ul>
 
 
-<div class="UC page-index" ng-show="true">
-    <div class="prev" ng-click="prevPage()" btn-scroll-to="355"><</div>
+<div class="UC page-index" ng-show="!mySOO.loading&&mySOO.currentPage.length>0">
+    <div class="prev" ng-click="mySOO.prevPage()" btn-scroll-to="355"><</div>
     <div class="indexes">
 
-            <span ng-class="{'cur':mySOO.page.index==p}" ng-repeat="p in mySOO.page.items"  ng-click=changePage($index+1)
+            <span ng-class="{'cur':mySOO.page.index==p}" ng-repeat="p in mySOO.page.items"  ng-click=mySOO.changePage(p)
 
                   ng-bind="(p==mySOO.page.index-5||p==mySOO.page.index+5)?'...':p+1"
                   ng-if="(p>=mySOO.page.index-5&&p<=mySOO.page.index+5)" btn-scroll-to="355"></span>
     </div>
-    <div class="next" ng-click="nextPage()" btn-scroll-to="355">></div>
+    <div class="next" ng-click="mySOO.nextPage()" btn-scroll-to="355">></div>
 </div>
+
+<!--
+<div class="modal-overlay">
+    <div class="modal-picturesShow">
+
+    </div>
+</div>-->

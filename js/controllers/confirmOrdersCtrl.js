@@ -200,18 +200,12 @@ angular.module('LuckyMall.controllers')
                             confirmButtonText: "确定"
                         });
                     }else if(response.Code=='0X02'){
-                        submit_time++;
-                        if(submit_time>=1&&submit_time<20){
-                            $scope.purchaseType=1;//第二次提交时改为重新支付方式
-                            $scope.submitOrder();
-                        }else{
-                            swal({
-                                title: "确认订单失败，请勿频繁重复提交订单！",
-                                text:'已提交的订单可以在“我的订单”里找到',
-                                type: "error",
-                                confirmButtonText: "确定"
-                            });
-                        }
+                        swal({
+                            title: "确认订单失败，请勿重复提交订单！",
+                            text:'已提交的订单可以在“我的订单”里找到',
+                            type: "error",
+                            confirmButtonText: "确定"
+                        });
 
                     }else if(response.Code=='0X03'){
                         swal({

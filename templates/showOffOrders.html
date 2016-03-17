@@ -10,11 +10,15 @@
         <img src="../res/images/background/bg_soo_banner.png"/>
     </div>
     <div class="content">
+        <div class="common-loading" ng-show="Soo.loading">
+            正在加载...
+        </div>
+        <p class="tips-nothing" ng-show="!Soo.loading&&Soo.page.count==0">暂无</p>
         <ul class="ul-soo">
-            <li ng-repeat="soo in soo.data">
+            <li ng-repeat="soo in Soo.currentPage">
                 <a href="soo_dt/{{soo.Id}}" target="_blank">
                     <div class="img-container">
-                        <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png"/>
+                        <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png" img-adaptation-self />
                     </div>
                     <div class="box-dt">
                         <h2 class="item-name" ng-bind="soo.CommodityName">
@@ -44,22 +48,22 @@
                         <p class="time color-999 pull-right" ng-bind="soo.CreateTime"></p>
                     </div>
                     <div class="box-buttons">
-                        <div class="btn-like" title="赞一个">
-                            <i class="iconfont lm-heart"></i>
+                        <div class="btn-like" title="赞一个" ng-click="Soo.like(soo)">
+                            <i class="iconfont lm-heart" ng-style="{'color':soo.liked?'red':'#666'}"></i>
                         </div>
                     </div>
                 </a>
             </li>
         </ul>
-        <div class="page-index ng-hide" btn-scroll-to="180">
-            <div class="prev" ng-click="prevPage()" ><</div>
+        <div class="page-index" btn-scroll-to="180" ng-show="!Soo.loading&&Soo.page.count>0">
+            <div class="prev" ng-click="Soo.prevPage()" ><</div>
             <div class="indexes">
-            <span ng-class="{'cur':soo.page.index==p}" ng-repeat="p in soo.page.items"
-
-                  ng-bind="(p==soo.page.index-5||p==soo.page.index+5)?'...':p+1"
-                  ng-if="(p>=soo.page.index-5&&p<=soo.page.indexx+5)"></span>
+            <span ng-class="{'cur':Soo.page.index==p}" ng-repeat="p in Soo.page.items"
+                    ng-click="Soo.changePage(p)"
+                  ng-bind="(p==Soo.page.index-5||p==Soo.page.index+5)?'...':p+1"
+                  ng-if="(p>=Soo.page.index-5&&p<=Soo.page.index+5)"></span>
             </div>
-            <div class="next" ng-click="nextPage()" >></div>
+            <div class="next" ng-click="Soo.nextPage()" >></div>
         </div>
     </div>
 </div>

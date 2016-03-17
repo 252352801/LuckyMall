@@ -6,11 +6,21 @@ angular.module('LuckyMall.controllers')
         loadUserData();
              $rootScope.$broadcast('cart-update');
                $scope.playGame=function(){
-                   var g_url=Host.game + '?id=' + order_id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken();
-                   $rootScope.openGame(g_url,order_id,goods_id);
+                   var auth=TokenSer.getToken();
+                   $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + order_id + '&mode=1&from=' + Host.playFrom+ '&authorization=' + auth;
+                   $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + order_id + '&mode=1&from=' + Host.playFrom+ '&authorization=' + auth;
+                   $scope.gameMenu.show=true;
                }
 
-
+        $scope.gameMenu={//游戏菜单
+            show:false,
+            orderId:'',
+            commodityId:'',
+            gameUrl:{
+                fingerGuessing:'',
+                fishing:''
+            }
+        };
 
         function loadUserData() {
             RefreshUserDataSer.requestUserData(function (response, status) {

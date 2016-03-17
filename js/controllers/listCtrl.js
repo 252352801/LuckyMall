@@ -106,7 +106,12 @@ angular.module('LuckyMall.controllers')
                 $scope.data_menu=CategorySer.getData();
                 var cate=CategorySer.getCategoryById($scope.cate_id);
                 $scope.category=cate;
-                $scope.cateName=cate.CategoryName;
+                if(cate!=null) {
+                    $scope.cateName = cate.CategoryName;
+                }else{
+                    alert('出错了！');
+                    return;
+                }
                 //console.log(cate);
                 if(cate.FilterModels.length>0) {
                     $scope.hasSubCate=false;

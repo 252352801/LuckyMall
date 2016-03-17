@@ -77,7 +77,7 @@
     max-height:100%;
     line-height:530px;
 }
-.G-details .prev{
+.G-details .prev-img{
     display:block;
     width:20px;
     height:75px;
@@ -89,7 +89,7 @@
     left:0px;
     top:228px;
 }
-.G-details .next{
+.G-details .next-img{
     display:block;
     width:20px;
     height:75px;
@@ -101,7 +101,7 @@
     left:480px;
     top:228px;
 }
-.G-details .prev:hover,.G-details .next:hover{
+.G-details .prev-img:hover,.G-details .next-img:hover{
     background-color:rgba(0,0,0,0.3);
 }
 .small-goods-img{
@@ -458,7 +458,7 @@ float:left;
 }
 .box-proIntro .tab-content{
     padding:20px;
-    min-height:200px;
+    min-height:600px;
 }
 .box-proIntro .tab-content .pro-explain{
     padding:26px 25px;
@@ -562,68 +562,63 @@ float:left;
 }*/
 
 .box-prices{
-    background: #F1F1F1;
+    background: #F5F5F5;
     padding: 15px 23px;
     padding-right: 10px;
-    height: 56px;
+    height: 66px;
 }
 .box-prices .item-price{
-    height:60px;
+    height:66px;
     box-sizing:border-box;
-    float:left;
+    padding-left:50px;
+    position: relative;
 }
 .box-prices .item-price1{
-    width:45%;
+    width:50%;
 }
 .box-prices .item-price2{
-    width:55%;
+    width:50%;
+    padding-left:30px;
+    padding-right:30px;
+}
+.box-prices .item-price2 p{
+    margin-bottom:5px;
 }
 .box-prices .number-slider{
-    border-right:1px solid #E2E2E2;
-    padding-top:10px;
-    overflow:hidden;
-}
-.price-interval small{
-    display:inline-block;
-}
-.price-interval p{
-	text-align:right;
-    color:#999;
-}
-.price-interval .new_prices{
-    /*margin-top:10px;*/
-}
-.price-interval .new_prices span{
-    font-size:22px;
-    color:#333;
-}
-.price-interval .new_prices small{
-    color:#999;
-    margin-left:1px;
-    position:relative;
-	vertical-align:text-top;
-}
-.price-interval .new_prices label{
-    font-size:22px;
+    overflow: hidden;
 }
 .box-prices .number-slider .prices-slider{
     float:left;
-    margin-right:8px;
+    margin-top:10px;
+}
+.box-prices .explain{
+    padding-left:55px;
+    margin-top:-15px;
 }
 .number-slider .prices-slider li{
-   width:26px;
-    height:45px;
-    background:#ff6700;
-    color:#fff;
-    border-radius:3px;
-    float:left;
-    text-align:center;
-    line-height:45px;
-    font-size:36px;
-    margin-left:2px;
-    position:relative;
-    left:-1px;
-    overflow:hidden;
+    width: 20px;
+    height: 32px;
+    background: #FB2834;
+    color: #fff;
+    border-radius: 3px;
+    float: left;
+    text-align: center;
+    line-height: 32px;
+    font-size: 32px;
+    margin-left: 2px;
+    position: relative;
+    left: -1px;
+    overflow: hidden;
+}
+.number-slider .prices-slider.free{
+    width: 50px;
+    height: 32px;
+    background: #FB2834;
+    font-size: 20px;
+    text-align: center;
+    line-height: 32px;
+    color: #fff;
+    border-radius: 4px;
 }
 .number-slider .prices-slider li .item-slider{
     position:relative;
@@ -639,12 +634,32 @@ float:left;
 .number-slider .item-num{
     height:45px;
 }
-.number-slider label{
+.number-slider .unit{
     float:left;
     font-size:24px;
-    color:#ff6700;
+    color:#FB2834;
     position:relative;
-    top:20px;
+    top:15px;
+}
+.number-slider label{
+    position: absolute;
+    left:0px;
+    top:0px;
+    line-height:66px;
+}
+.item-price .org-price{
+    font-size:36px;
+    color:#FB2834;
+    line-height:56px;
+}
+.item-price .img-get-disc{
+    float: left;
+    width:64px;
+    height:32px;
+    background:url(../res/images/img_getdisc.png);
+    position: relative;
+    top:10px;
+    margin-left:10px;
 }
 .number-slider .discount-slider{
     float:left;
@@ -655,15 +670,15 @@ float:left;
     background:#EDAB3A;
     text-align:center;
     position:relative;
-    top:26px;
-    left:5px;
+    top:24px;
+    left:2px;
 }
 .number-slider .discount-slider:before{
-    content:'';
+    /*content:'';
     border:9px solid transparent;
     border-right-color:#EDAB3A;
     position:absolute;
-    left:-18px;
+    left:-18px;*/
 }
 .number-slider .item-overlay{
     display:block;
@@ -673,14 +688,14 @@ float:left;
     left:0px;
     top:0px;
     z-index:10;
-    background:#ff6700;
+    background:#FB2834;
 }
 .item-ranking-table{
     width:100%;
     margin:0 auto;
     text-align:center;
     border-collapse:collapse;
-    font-weight:14px;
+    font-size:14px;
 }
 .item-ranking-table .tr-th{
     background:#f1f1f1;
@@ -832,101 +847,6 @@ float:left;
     z-index:1;
 }
 
-.ul-item-soo{
-    width:94%;
-    margin:0 auto;
-}
-.ul-item-soo *{
-    box-sizing: border-box;
-}
-.ul-item-soo .box-shower{
-    height:100px;
-    overflow: hidden;
-    padding:20px 0px 20px 90px;
-    position: relative;
-}
-.ul-item-soo .box-shower p{
-    margin-bottom:4px;
-}
-.ul-item-soo .box-shower .avatar{
-    width:80px;
-    height:80px;
-    border:1px solid #e6e6e6;
-    border-radius:50%;
-    position:absolute;
-    left:0px;
-    top:10px;
-}
-
-.ul-item-soo .shower-name{
-    margin-right:10px;
-}
-.ul-item-soo .so-icon-disc{
-    padding:2px 15px;
-
-}
-.ul-item-soo .so-icon-disc:before,.ul-item-soo .so-icon-disc:after{
-    top:5px;
-}
-.ul-item-soo .info p{
-    line-height:20px;
-    color:#666;
-}
-.ul-item-soo .info .ul-images{
-    width:100%;
-    height:100px;
-    overflow: hidden;
-    margin-top:5px;
-}
-.ul-item-soo .info .ul-images li{
-    width:100px;
-    height:100px;
-    float: left;
-    margin-right:8px;
-    line-height:100px;
-    background:#f1f1f1;
-}
-.ul-item-soo  .img-container{
-    width:100px;
-    height:100px;
-
-}
-.ul-item-soo .li-item-soo{
-    margin-bottom:20px;
-    border-bottom:1px solid #ddd;
-    padding-bottom:40px;
-    position: relative;
-}
-.ul-item-soo .li-item-soo:last-child{
-    border-bottom:none;
-}
-.ul-item-soo .bar-buttons{
-    width:100%;
-    height:40px;
-    position: absolute;
-    left:0px;
-    top:100%;
-    margin-top:-40px;
-    line-height: 40px;
-}
-.ul-item-soo .bar-buttons .iconfont{
-    font-size:14px;
-    line-height: 40px;
-}
-.ul-item-soo .btn-like{
-    -webkit-transition: color .3s;
-    -moz-transition: color .3s;
-    -ms-transition: color .3s;
-    -o-transition: color .3s;
-    transition: color .3s;
-}
-.ul-item-soo .btn-like:hover{
-    color:#ff6700;
-    cursor:pointer;
-}
-.ul-item-soo .btn-like label{
-    cursor:pointer;
-}
 
 
 

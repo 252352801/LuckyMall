@@ -91,6 +91,9 @@ input:focus{
     left:0px;
     top:0px;*/
 }
+.relative{
+    position:relative;
+}
 .pull-left{
     float:left;
 }
@@ -114,6 +117,22 @@ input:focus{
 }
 .color-999{
     color:#999!important;
+}
+.common-loading{
+    text-align: center;
+    color:#999;line-height: 200px;
+}
+.cursor-pointer{
+    cursor:pointer;
+}
+.tips-nothing{
+    width: 100%;
+    position: relative;
+    left: 0px;
+    top: 148px;
+    text-align: center;
+    font-size: 24px;
+    color: #ddd;
 }
 .small-font{
     font-size:12px;
@@ -897,7 +916,7 @@ a{
     background-clip: padding-box;
     border-radius:2px;
 
-    animation:modal_show .3s;
+    animation:modalShow .3s;
 }
 @keyframes modal_show{
     0%{transform:scale(0);}
@@ -3149,7 +3168,10 @@ modal-beforeGame
     background: #FF6700 none repeat scroll 0% 0%;
     color: #FFF;
 }
-
+.btn.btn-red {
+    background: #FB2834 none repeat scroll 0% 0%;
+    color: #FFF;
+}
 
 .modal-before-game .btn, .modal-protocol-payForEnergy .btn {
     display: inline-block;
@@ -3858,3 +3880,243 @@ modal-beforeGame
     margin-left:-4px;
     border-radius: 10px;
 }
+
+
+
+
+/*===================
+    晒单列表 begin
+===================*/
+.ul-soo-common{
+    width:94%;
+    margin:0 auto;
+}
+.ul-soo-common *{
+    box-sizing: border-box;
+}
+.ul-soo-common .box-shower{
+    height: 80px;
+    overflow: hidden;
+    padding: 20px 0px 20px 60px;
+    position: relative;
+}
+.ul-soo-common .box-shower p{
+    margin-bottom:4px;
+}
+.ul-soo-common .box-shower .avatar{
+    width:50px;
+    height:50px;
+    border:1px solid #e6e6e6;
+    border-radius:50%;
+    position:absolute;
+    left:0px;
+    top:15px;
+}
+
+.ul-soo-common .shower-name{
+    margin-right:10px;
+}
+.ul-soo-common .so-icon-disc{
+    padding:2px 15px;
+
+}
+.ul-soo-common .so-icon-disc:before,.ul-soo-common .so-icon-disc:after{
+    top:5px;
+}
+.ul-soo-common .info p{
+    line-height:20px;
+    color:#666;
+    word-break: break-all;
+    word-wrap:break-word;
+}
+.ul-soo-common .info .ul-images{
+    width:100%;
+    height:100px;
+    overflow: hidden;
+    margin-top:5px;
+}
+.ul-soo-common .info .ul-images li{
+    width:100px;
+    height:100px;
+    float: left;
+    margin-right:8px;
+    line-height:92px;
+    background:#fefefe;
+    border:2px solid #eee;
+}
+.ul-soo-common .info .ul-images li:hover{
+    border-color: #bbb;
+}
+.ul-soo-common .info .ul-images li.cur{
+    border-color: #ff6700;
+}
+.ul-soo-common  .img-container{
+    width:96px;
+    height:96px;
+    overflow: hidden;
+}
+
+.ul-soo-common .li-soo-common{
+    margin-bottom:20px;
+    border-bottom:1px solid #ddd;
+    padding-bottom:40px;
+    position: relative;
+}
+.ul-soo-common .li-soo-common:last-child{
+    border-bottom:none;
+}
+.ul-soo-common .bar-buttons{
+    width:100%;
+    height:40px;
+    position: absolute;
+    left:0px;
+    top:100%;
+    margin-top:-40px;
+    line-height: 40px;
+}
+.ul-soo-common .bar-buttons .iconfont{
+    font-size:14px;
+    line-height: 40px;
+}
+.ul-soo-common .btn-like{
+    -webkit-transition: color .3s;
+    -moz-transition: color .3s;
+    -ms-transition: color .3s;
+    -o-transition: color .3s;
+    transition: color .3s;
+}
+.ul-soo-common .btn-like:hover{
+    color:#ff6700;
+    cursor:pointer;
+}
+.ul-soo-common .btn-like label{
+    cursor:pointer;
+}
+.ul-soo-common .z-index-2{
+    position: relative;
+    z-index:2;
+}
+.ul-soo-common .info .big-img{
+    max-width:100%;
+    -webkit-transition: width 1s;
+    -moz-transition: width 1s;
+    -ms-transition: width 1s;
+    -o-transition: width 1s;
+    transition: width 1s;
+    overflow: hidden;
+    width:0px;
+    width:100%;
+}
+.ul-soo-common .info .big-img img{
+    max-width:100%;
+    max-height:500px;
+    margin-top:10px;
+}
+.like-response{
+    /*width:80px;
+    height:30px;
+    position: absolute;
+    background: #ccc;
+    left:-10px;
+    top:-20px;*/
+}
+/*
+晒单列表*/
+.modal-picturesShow{
+    min-width:550px;
+    min-height:550px;
+    background:#fff;
+    position: absolute;
+    left:50%;
+    top:50%;
+    margin-left:-275px;
+    margin-top:-275px;
+}
+
+
+
+
+
+
+
+
+/*==========================
+   游戏菜单 begin
+============================*/
+.modal-gameMenu{
+    width:600px;
+    height:400px;
+    background: #fff;
+    position: absolute;
+    left:50%;
+    top:50%;
+    margin-left:-300px;
+    margin-top:-200px;
+    animation:modalShow .4s;
+}
+.modal-gameMenu *{
+    box-sizing: border-box;
+}
+.modal-gameMenu .modal-title{
+    height:40px;
+    line-height:40px;
+    text-indent:20px;
+    font-size:16px;
+
+}
+.modal-gameMenu .ul-g-menu{
+    padding:40px 20px 20px 20px;
+    overflow: hidden;
+}
+.modal-gameMenu .ul-g-menu li{
+    width:50%;
+    height:240px;
+    float:left;
+    text-align: center;
+    padding-top:210px;
+    cursor:pointer;
+}
+.modal-gameMenu .fingerGuessing{
+    background: url(../res/images/background/bg_gmenu1.png) 60px 10px no-repeat;
+}
+.modal-gameMenu .fishing{
+    background: url(../res/images/background/bg_gmenu2.png) 60px 10px no-repeat;
+}
+.modal-gameMenu .ul-g-menu li:first-child{
+    border-right: 1px solid #eee;
+}
+.modal-gameMenu .btn-play{
+    padding:6px 36px;
+    background:#FF9C01;
+    border-radius:80px;
+    color:#fff;
+    font-size:15px;
+}
+.modal-gameMenu .btn-play:hover{
+    background-color: #FF8b01;
+}
+.modal-gameMenu .fishing .btn-play{
+     background:#ff6700;
+}
+.modal-gameMenu .fishing .btn-play:hover{
+       background-color: #ff4500;
+}
+.modal-gameMenu .btn-close{
+    display: block;
+    width:40px;
+    height:40px;
+    background: #f1f1f1;
+    text-align: center;
+    line-height:40px;
+    position: absolute;
+    left:100%;
+    top:0px;
+    font-size:24px;
+    cursor: pointer;
+    color:#999;
+}
+.modal-gameMenu .btn-close:hover{
+    color:#666;
+}
+/*
+游戏菜单  end*/

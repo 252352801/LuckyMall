@@ -154,8 +154,9 @@
                                  </p>
                             </div>
                             <div class="box-dt">
-                                <div class="img-container" img-adaption>
-                                    <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png" />
+                                <div class="img-container">
+                                    <!--<img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png"  img-adaptation-self />-->
+                                    <img real-src={{imgHost+soo.images[0]}} temp-src="./res/images/default.png"   img-adaptation-self />
                                 </div>
                                 <div class="so-describe" ng-bind="soo.Content">
 
@@ -167,11 +168,11 @@
                     <li class="large" ng-show="data_soo">
                         <a  href="/soo_dt/{{data_soo.large.Id}}" target="_blank">
                             <div class="large-img">
-                                <img ng-src={{imgHost+data_soo.large.images[0]}} error-src="./res/images/touxiang.jpg"   />
+                                <img ng-src={{imgHost+data_soo.large.images[0]}} error-src="./res/images/default.png" img-adaptation-self  />
                             </div>
                             <div class="large-dt">
                                 <div class="large-dt-user">
-                                    <img ng-src={{imgHost+data_soo.large.Avatar.image}} error-src="" />
+                                    <img ng-src={{imgHost+data_soo.large.Avatar.image}} error-src="./res/images/touxiang.jpg" />
                                     <div class="over-hidden bar-show-info">
                                         <p class="pull-left user-name" ng-bind="data_soo.large.NickName"></p>
                                         <p class="pull-left color-999" ng-bind="data_soo.large.CreateTime"></p>

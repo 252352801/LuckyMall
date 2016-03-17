@@ -27,7 +27,7 @@
 
             <p class="order-sn"><span>订单号：</span>{{list.Id}}</p>
             <span class="icon-delete" ng-if="list.OrderStatus==1&&list.EarnestMoney==0" ng-click="removeOrder(list)"></span>
-            <a  class="pull-right" href="/UCIndex/submitShowOffOrder/{{list.Id}}" class="btn-showOffOrder" ng-if="list.OrderStatus==4">晒单领红包</a>
+           <!-- <a  class="pull-right color-red" href="/UCIndex/submitShowOffOrder/{{list.Id}}" class="btn-showOffOrder" ng-if="list.OrderStatus==4">晒单领红包</a>-->
         </div>
         <div class="order-list-cont">
             <div class="cont1 pull-left">
@@ -72,6 +72,7 @@
             </div>
             <div class="cont5 pull-left">
                 <div>
+                    <p><a class="btn btn-red" ng-if="list.OrderStatus==4" href="/UCIndex/submitShowOffOrder/{{list.Id}}">晒单领红包</a></p>
                     <p><a class="btn btn-org" ng-if="list.OrderStatus==1" ng-click="repay(list)">立即支付</a></p>
 
                     <p><a  class="btn" ng-if="list.OrderStatus==1&&list.EarnestMoney==0" ng-click="removeOrder(list)">取消订单</a></p>

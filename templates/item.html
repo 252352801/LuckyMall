@@ -36,8 +36,8 @@
                     </ul>
                 </div>
                 <div class="s-index">
-                    <a class="prev txtUnSelect" ng-click="prevImg(item.itemData.SmallImages.length-1)"></a>
-                    <a class="next txtUnSelect" ng-click="nextImg(item.itemData.SmallImages.length-1)"></a>
+                    <a class="prev-img txtUnSelect" ng-click="prevImg(item.itemData.SmallImages.length-1)"></a>
+                    <a class="next-img txtUnSelect" ng-click="nextImg(item.itemData.SmallImages.length-1)"></a>
                 </div>
             </div>
             <form class="pro-info" ng-show="!loading">
@@ -54,79 +54,58 @@
                 <div class="pro-price">
 
                     <div class="box-prices">
-                        <div class="item-price item-price1 number-slider" number-slider="item.itemData">
-                            <label>￥</label>
-                            <ul class="prices-slider">
-                                <li>
+                        <div class="item-price number-slider" number-slider="item.itemData">
+                            <label>幸运价：</label>
+                            <span class="unit">￥</span>
+                            <span class="pull-left org-price" ng-bind="item.itemData.maxPrice"></span>
+                            <span class="img-get-disc"></span>
+                            <span class="unit" ng-show="cur_price>0">￥</span>
+                            <ul class="prices-slider" ng-show="cur_price>0">
+                                <li ng-show="cur_price>=1000">
                                     <div class="item-slider">
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
-                                    <div class="item-overlay" ng-show="overlay[0]"></div>
+                                   <!-- <div class="item-overlay" ng-show="overlay[0]"></div>-->
                                 </li>
-                                <li >
+                                <li ng-show="cur_price>=100">
                                     <div  class="item-slider">
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
-                                    <div class="item-overlay" ng-show="overlay[1]"></div>
+                                    <!--<div class="item-overlay" ng-show="overlay[1]"></div>-->
                                 </li>
-                                <li >
+                                <li ng-show="cur_price>10">
                                     <div  class="item-slider" >
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
-                                    <div class="item-overlay" ng-show="overlay[2]"></div>
+                                  <!--  <div class="item-overlay" ng-show="overlay[2]"></div>-->
                                 </li>
-                                <li >
+                                <li ng-show="cur_price>0">
                                     <div class="item-slider">
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                         <div class="item-num" ng-repeat="num in numbers" ng-bind="num"></div>
                                     </div>
-                                    <div class="item-overlay" ng-show="overlay[3]"></div>
+                                    <!--<div class="item-overlay" ng-show="overlay[3]"></div>-->
                                 </li>
                             </ul>
+                            <div class="prices-slider free"  ng-show="cur_price<=0">
+                                免单
+                            </div>
                             <div class="discount-slider">
                                 <ul>
                                     <li ng-bind="(cur_disc*10).toFixed(1)+'折'"></li>
                                 </ul>
                             </div>
-<!--                            <div class="discount"  ng-show="new_disc>0"ng-style="{'animation-play-state':dc_animate?'running':'paused'}">
-                                <div class="discount-bg">
-                                    <span ng-bind="(new_disc*10)">1</span>
-                                </div>
-                            </div>-->
                         </div>
-                        <div class="item-price item-price2 price-interval">
+                        <p class="explain"><span class="color-999">说明：</span>最终以玩游戏赢折扣的<span class="color-org">幸运价</span>为商品成交价</p>
+                       <!-- <div class="item-price item-price2">
 
-                            <p class="new_prices">
-                                <span ng-bind="'￥'+item.itemData.maxPrice"></span><small ng-bind="item.itemData.minDiscount+'折'"></small>
-                                <label>~</label>
-                                <span ng-bind="'￥'+item.itemData.minPrice"></span><small ng-bind="item.itemData.maxDiscount+'折'"></small>
-                            </p>
-                            <div class="over-hidden">
-                                <div class="pull-right color-999 bar-o-p">
-                                    原价
-                                    <span class="old-price" ng-bind="'￥'+item.itemData.RetailPrice"></span>
-                                </div>
 
-                                <div class="pull-right box-compare-price" ng-show="item.POOData.length>0">
-                                    <div class="tt">
-                                        价格比较
-                                        <span class="icon-arr-d"></span>
-                                    </div>
-                                    <ul>
-                                        <li ng-repeat="p in item.POOData" title="{{p.SiteName+'：￥'+p.SpPrice}}">
-                                            <a href="{{p.SpUrl}}" target="_blank">
-                                                <label ng-bind="p.SiteName"></label>
-                                                <span class="color-org" ng-bind="'￥'+p.SpPrice"></span>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            <p class="color-999">说明：</p>
+                            <p class="">最终以玩游戏迎折扣的<span class="color-org">幸运价</span>为商品成交价</p>
+                        </div>-->
                     </div>
 
 
@@ -218,66 +197,61 @@
                <p class="color-gray" ng-if="data_ranking.length>0">注：目前仅显示前10名</p>
             </div>
             <div class="tab-content tab-cont3" ng-show="item.curTab==3">
-                <ul class="ul-item-soo">
-                    <li class="li-item-soo">
+                <ul class="ul-soo-common" ng-show="item.currentPageOfSOO.length>=0&&!item.pageOfSOO.loading">
+                    <li class="li-soo-common" ng-repeat="soo in item.currentPageOfSOO track by $index">
                         <div class="box-shower">
-                            <img class="avatar" src="./res/images/touxiang.jpg" />
+                            <img class="avatar" ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
                             <div class="over-hidden">
-                                <p class="shower-name font-14 pull-left">你是傻逼吗啊</p>
+                                <p class="shower-name font-14 pull-left" ng-bind="soo.Nickname"></p>
 
-                                <p class="time color-gray pull-left">2016-03-07 16:50</p>
+                                <p class="time color-gray pull-left" ng-bind="soo.CreateTime"></p>
                             </div>
-
-                                <label>获得折扣：</label><span class="so-icon-disc">1折</span>
-                            </p>
-                            <p >
-                                <label>买入价：</label><span class="font-14 color-org">￥100</span><span class="color-999 line-through">￥1000</span>
+                            <p>
+                                <label>获得折扣：</label><span class="so-icon-disc" ng-bind="soo.DiscountValue+'折'"></span>
+                                <a class="link-dt color-org z-index-2" href="/soo_dt/{{soo.Id}}">[详情]</a>
                             </p>
                         </div>
                         <div class="info">
-                            <p >
-                                第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~费列罗巧
-                                克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~~费列罗巧克力3粒16条的，以前以为
-                                是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知
-                                道是真的，大家加油好运会降临的。
+                            <p ng-bind="soo.Content">
+
                             </p>
                             <ul class="ul-images ">
-                                <li class="cur">
+                                <li ng-class="{'cur':soo.bigImgIndex==$index}" ng-repeat="img in soo.images" ng-click="item.showBigImgOfSOO($index,soo)">
                                     <a class="img-container">
-                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
-                                    </a>
-                                </li>
-                                <li class="cur">
-                                    <a class="img-container">
-                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
-                                    </a>
-                                </li>
-                                <li class="cur">
-                                    <a class="img-container">
-                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
-                                    </a>
-                                </li>
-                                <li class="cur">
-                                    <a class="img-container">
-                                        <img src="http://image.luckyec.com/image/b8461534-1321-4618-8188-7e2908b7650d.jpg"  />
+                                        <img real-src={{imgHost+img}} temp-src="./res/images/default.png" />
                                     </a>
                                 </li>
                             </ul>
+                            <div class="big-img" ng-style="{'width':soo.bigImgIndex!=-1?'100%':'0px','height':soo.bigImgIndex!=-1?'inherit':'0px'}" ng-click="item.showBigImgOfSOO(-1,soo)">
+                                <img ng-if="soo.bigImgIndex!=-1" ng-src={{imgHost+soo.bigImgUrl}} />
+                            </div>
                         </div>
                         <div class="bar-buttons txt-right">
-                            <p class="btn-like pull-right">
+                            <p class="btn-like pull-right" ng-click="item.likeSOO(soo)" ng-style="{'color':soo.liked?'red':'#333'}">
                                 <i class="iconfont lm-heart"></i>
-                                <label>羡慕<span>（100）</span></label>
+                                <label>{{soo.liked?'已赞':'赞'}}<span>（{{soo.LikeCount}}）</span></label>
                             </p>
                         </div>
                     </li>
                 </ul>
+                <div class="loading-tips" ng-show="item.pageOfSOO.loading">正在加载...</div>
+                <p class="tips-nothing" ng-show="item.currentPageOfSOO.length<=0&&!item.pageOfSOO.loading">暂无</p>
+                <div class="page-index txt-no-select" ng-show="item.currentPageOfSOO.length>0&&!item.pageOfSOO.loading">
+                    <div class="prev" ng-click="item.prevPageOfSOO()" btn-scroll-to="825"><</div>
+                    <div class="indexes">
+                                 <span ng-class="{'cur':item.pageOfSOO.index==p}" ng-repeat="p in item.pageOfSOO.items" ng-click=item.changePageOfSOO(p)
+                                                ng-bind="(p==item.pageOfSOO.index-5||p==item.pageOfSOO.index+5)?'...':p+1"
+                                                ng-if="(p>=item.pageOfSOO.index-5&&p<=item.pageOfSOO.index+5)" btn-scroll-to="825"></span>
+                    </div>
+                    <div class="next" ng-click="item.nextPageOfSOO()" btn-scroll-to="825">></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!--中部 end-->
-<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" luckyenergy="luckyEnergy"></modal-get-discount>
+<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" luckyenergy="luckyEnergy" gamectrl="gameMenu" ></modal-get-discount>
+<modal-game-menu visible="gameMenu.show" gamectrl="gameMenu" ></modal-game-menu>
 <introduction></introduction>
 
 <sub-footer></sub-footer>

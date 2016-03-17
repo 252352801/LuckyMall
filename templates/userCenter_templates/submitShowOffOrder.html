@@ -1,5 +1,5 @@
 <p class="menu-cont-title">
-    <label>我要晒单</label>
+    <label>晒单领红包</label>
 
 </p>
 <div class="UC loading-tips" ng-show="loading">加载中...</div>
@@ -28,7 +28,7 @@
     <form class="form-submit-soo" ng-submit="submitSOO()">
         <div class="over-hidden form-group">
             <label class="pull-left">晒单内容：</label>
-            <textarea class="pull-left" placeholder="说点什么吧！" ng-model="params_submit.content"></textarea>
+            <textarea class="pull-left" placeholder="说点什么吧！（最少15个字喔！）" ng-model="params_submit.content"></textarea>
         </div>
         <div class="over-hidden form-group">
             <label class="pull-left">上传图片:</label>
@@ -62,12 +62,17 @@
                         </button>
                     </div>
                 </div>
-                <div  max-file-count="1" class="btn-file-upload" max-count="5">
+                <div   class="btn-file-upload">
                     <span class="btn-add">+</span>
                     <p>上传图片</p>
                     <input  type="file" nv-file-select="" uploader="uploader" title="上传图片" />
                 </div>
             </div>
+
+        </div>
+        <div class="form-group color-gray over-hidden">
+            <label class="pull-left color-gray">温馨提示：</label>
+            <p class="pull-left">支持bmp、jpg、jpeg、gif、png格式的图片(单张图片不能大于20MB)，至少上传3张，最多上传5张</p>
         </div>
         <div class="form-group txt-right">
             <input class="btn-org btn-submit" type="submit" ng-value="submitBtn.curVal" />

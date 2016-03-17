@@ -499,6 +499,7 @@
     margin-top:5px;
     font-size:12px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 .btn-org{
     background:#ff6700;
@@ -2130,6 +2131,23 @@
 .my-soo .cont-payInfo .so-icon-disc{
     margin-left:3px;
 }
+.my-soo-tabs{
+    line-height:60px;
+}
+.my-soo-tabs a{
+    color:#aaa;
+}
+.my-soo-tabs a:hover{
+    text-decoration: underline;
+    color:#333;
+}
+.my-soo-tabs a{
+    margin-right:10px;
+}
+.my-soo-tabs a.cur{
+    text-decoration:none;
+    color:#ff6700;
+}
 /*
 我的晒单 end*/
 
@@ -2218,7 +2236,8 @@
     padding: 20px 0px;
 }
 .form-submit-soo .btn-submit{
-    padding: 10px 55px;
+    width:150px;
+    height:40px;
     font-size:16px;
 }
 

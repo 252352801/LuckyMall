@@ -2,8 +2,9 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
 
     .controller('AppCtrl',
     ['SOTDSvc', '$http', 'API', '$scope', '$timeout', 'CartSer', 'LoginSer', '$cookies', '$rootScope', '$state', 'MyOrdersSer', 'WalletSer',
-        'AddressSer', 'MessageSer', 'ImgSer', 'RefreshUserDataSer', 'UserSer', 'TokenSer', 'MarketSer', 'FreePlaySvc',
-        function (SOTDSvc, $http, API, $scope, $timeout, CartSer, LoginSer, $cookies, $rootScope, $state, MyOrdersSer, WalletSer, AddressSer, MessageSer, ImgSer, RefreshUserDataSer, UserSer, TokenSer, MarketSer, FreePlaySvc) {
+        'AddressSer', 'MessageSer', 'ImgSer', 'RefreshUserDataSer', 'UserSer', 'TokenSer', 'MarketSer', 'FreePlaySvc','ENV',
+        function (SOTDSvc, $http, API, $scope, $timeout, CartSer, LoginSer, $cookies, $rootScope, $state, MyOrdersSer, WalletSer, AddressSer,
+                  MessageSer, ImgSer, RefreshUserDataSer, UserSer, TokenSer, MarketSer, FreePlaySvc,ENV) {
             $rootScope.login_target = {//登陆后跳转的目标
                 state: 'home',
                 params: {}
@@ -219,13 +220,16 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                 }
             });
 
-            /*获取阿里云图片服务器地址*/
+            /*设置阿里云图片服务器地址*/
             function getImgHost() {
-                ImgSer.requestData(function (response, status) {
-                    if (status == 1) {
-                        $rootScope.imgHost = ImgSer.getData();
-                    }
-                });
+                switch (ENV){
+                    case 0:
+                        $rootScope.imgHost='http://image.luckyec.com';
+                        break;
+                    case 1:
+                        $rootScope.imgHost=location.protocol+'//image.xingyunmao.cn';
+                        break;
+                }
             }
 
             /* 授权*/
@@ -236,12 +240,6 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                 }
                 LoginSer.authorization(function (response, status) {
                     if (status == 1) {
-                        /* $timeout(function(){
-                         $rootScope.isLogin=true;
-                         UserSer.setData(LoginSer.getData());//设置用户数据
-                         loadSomeUserData();//加载一些必要数据
-                         loadOrdersData();//加载部分订单数目
-                         });*/
                         $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
                         $rootScope.$broadcast('user-login');
                     } else {

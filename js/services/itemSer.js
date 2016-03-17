@@ -170,6 +170,28 @@ angular.module('LuckyMall.services')
                         callback('请求失败！',-2);
                     }
                 });
+            },
+            getSOOData:function(params,callback){
+                $http({
+                    method: API.SOOListOfItem.method,
+                    url: API.SOOListOfItem.url,
+                    data: params
+                }).success(function (response, status, headers, config) {
+                    if (status == 200 && response) {
+                        for(var o in response){
+                            response[o].Avatar=angular.fromJson(response[o].Avatar);
+                            response[o].images=response[o].Image.split('|');
+                            response[o].bigImgIndex=-1;
+                            response[o].bigImgUrl='';
+                        }
+                        callback(response, 1);
+                    } else {
+                        callback(response, 0);
+                    }
+                })
+                    .error(function (response, status) {
+                        callback(response, -1);
+                    });
             }
         };
 	

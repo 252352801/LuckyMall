@@ -1,7 +1,7 @@
 angular.module('LuckyMall.controllers')
     .controller('ItemCtrl',
-    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer',
-    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer) {
+    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer','ShowOffOrdersSer',
+    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer,ShowOffOrdersSer) {
 
 
         function Item(item_id){
@@ -11,6 +11,16 @@ angular.module('LuckyMall.controllers')
             this.categoryData={};//分类数据
             this.rankingData=[];//排行榜数据
             this.POOData=[];//其他平台的价格
+            this.SOOData=[];//晒单数据
+            this.currentPageOfSOO=[];//晒单数据
+            this.pageOfSOO={//晒单分页
+                index:0,
+                pageSize:10,
+                count:0,
+                pageCount:0,
+                items:[],
+                loading:false
+            };
             this.categoryName='';//商品所属分类名称
             this.loading=false;//是否在加载
             this.curTab=1;//当前显示的tab
@@ -191,6 +201,9 @@ angular.module('LuckyMall.controllers')
              */
             this.changeTab=function(index){
                 $this.curTab=index;
+                if(index==3){
+                    $this.loadSOOData();
+                }
             };
 
             this.isNoSelection=function(){
@@ -240,7 +253,6 @@ angular.module('LuckyMall.controllers')
                     $this.choices[pindex].primeNumber=1;
                 }
                 testDisabled();
-                console.log($this.choices);
                 if(isFinishSelect()){//如果完成选择
                     var choices_product=1;
                     for(var o in $this.choices){
@@ -344,6 +356,7 @@ angular.module('LuckyMall.controllers')
                         autoSelected();
                     }
                 });
+
                 ItemSer.requestCategoryByGoodsId($this.id, function (response, status) {//加载分类数据
                     if (status == 1) {
                         $this.categoryData = response;//品类数据  包含所属项和品类ID
@@ -365,29 +378,100 @@ angular.module('LuckyMall.controllers')
                 });
             };
 
+            var getCurrentPageOfSOO=function(pg_index){
+                return $this.SOOData.slice((pg_index)*$this.pageOfSOO.pageSize,(pg_index+1)*$this.pageOfSOO.pageSize)
+            };
+            this.loadSOOData=function(){
+                if($this.SOOData.length!=0){
+                    return;
+                }
+                var params={
+                    "cid": $this.id,
+                    "pSize": 100,
+                    "pIndex": 0
+                };
+                $this.pageOfSOO.loading=true;
+                  ItemSer.getSOOData(params,function(response,status){
+                      if(status==1){
+                          $this.SOOData=response;
+                          $this.pageOfSOO.count=$this.SOOData.length;
+                          $this.pageOfSOO.pageCount=Math.ceil($this.pageOfSOO.count/$this.pageOfSOO.pageSize);
+                          for(var i= 0;i<$this.pageOfSOO.pageCount;i++){
+                              $this.pageOfSOO.items.push(i);
+                          }
+                          $this.currentPageOfSOO=getCurrentPageOfSOO(0);
+                          console.log($this.currentPageOfSOO);
+                      }
+                      $this.pageOfSOO.loading=false;
+                  });
+            };
+            this.prevPageOfSOO=function(){
+                if($this.pageOfSOO.index>0) {
+                    $this.pageOfSOO.index--;
+                    $this.currentPageOfSOO =getCurrentPageOfSOO($this.pageOfSOO.index);
+                }
+            };
+            this.nextPageOfSOO=function(){
+                if($this.pageOfSOO.index<$this.pageOfSOO.pageCount-1){
+                    $this.pageOfSOO.index++;
+                    $this.currentPageOfSOO =getCurrentPageOfSOO($this.pageOfSOO.index);
+                }
+            };
+            this.changePageOfSOO=function(new_index){
+                $this.pageOfSOO.index=new_index;
+                $this.currentPageOfSOO =getCurrentPageOfSOO($this.pageOfSOO.index);
+            };
+            this.likeSOO=function(soo){//点赞
+                if(!soo.liked) {
+
+                    ShowOffOrdersSer.like(soo.Id, function (response, status) {
+                        if (status == 1) {
+                            if (response.code == 0) {
+                                //点赞成功
+                                soo.liked = true;
+                                soo.LikeCount = response.count;
+                            } else if (response.code == -1) {
+                                //点赞异常(通常是未登陆)
+                                soo.liked = true;
+                                soo.LikeCount++;
+                            } else if (response.code == 1) {
+                                //已经点赞
+                                soo.liked = true;
+                                 soo.LikeCount++;
+                            } else if (response.code == 2) {
+                                //点赞失败
+                                soo.liked = true;
+                                soo.LikeCount++;
+                            }
+                        }
+                    });
+                }
+            };
             /*试玩练手*/
             this.playFreeGame = function () {
                 var auth='';
+                $scope.gameMenu.commodityId=$this.id;
                 if(!$scope.isLogin){
                     if($rootScope.session_key!=null) {
                         auth = $rootScope.session_key;
-                        var g_url = Host.game + '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
-                        $rootScope.openGame(g_url, '', $this.id);
+                        $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
+                        $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
                     }else{
                         UserSer.getSessionKey(function(response,status){
                             if(status==1){
                                 $rootScope.session_key=response;
                                 auth = $rootScope.session_key;
-                                var g_url = Host.game + '?id=' + $this.id + '&mode=2&from=' + Host.playFrom + '&authorization=' + auth;
-                                $rootScope.openGame(g_url, '', $this.id);
+                                $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
+                                $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
                             }
                         });
                     }
                 }else{
                     auth=TokenSer.getToken();
-                    var g_url = Host.game + '?id=' + $this.id + '&mode=2&from=' + Host.playFrom + '&authorization=' + auth;
-                    $rootScope.openGame(g_url, '', $this.id);
+                    $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
+                    $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
                 }
+                $scope.gameMenu.show=true;
             };
             /*下单*/
             this.createOrder = function (act, callback) { //act : 0加入购物车  1 立即购买
@@ -465,6 +549,14 @@ angular.module('LuckyMall.controllers')
                     }
                 });
             };
+            this.showBigImgOfSOO=function(index,soo){
+                if(soo.bigImgIndex==index||index==-1){
+                    soo.bigImgIndex=-1;
+                }else{
+                    soo.bigImgIndex=index;
+                    soo.bigImgUrl=soo.images[index];
+                }
+            };
 
         }
 
@@ -474,6 +566,17 @@ angular.module('LuckyMall.controllers')
             $scope.item = new Item($stateParams.goods_id);
             $scope.item.loadData();
         }
+
+        $scope.gameMenu={//游戏菜单
+            show:false,
+            orderId:'',
+            commodityId:'',
+            gameUrl:{
+                fingerGuessing:'',
+                fishing:''
+            }
+        };
+
 
         $scope.showModalGetDisc=function(order){
             $scope.isModalGetDiscountShow=true;

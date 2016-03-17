@@ -1,8 +1,13 @@
 var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies','angularFileUpload']);
 app.constant('Host',{
     develop: "http://120.24.225.116:9000/", //开发服务器
-    public: "https://webapi.xingyunmao.cn/"//测试服务器
+    public: "https://webapi.xingyunmao.cn/",//测试服务器
+    game:{
+        fishing:'',//捕鱼游戏地址
+        fingerGuessing:''//猜拳游戏地址
+    }
 });
+app.constant('ENV',0);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
@@ -383,10 +388,30 @@ app.constant('API',{
     SOOList:{
         method:'post',
         url:'api/shaidan/bycreatetime'
+    },
+    SOODetails:{
+        method:'get',
+        url:'api/shaidan/'
+    },
+    SOOOrderbrief:{
+        method:'get',
+        url:'api/shaidan/orderbrief/'
+    },
+    SOOListOfItem:{
+        method:'post',
+        url:'api/shaidan/bycommodity'
+    },
+    like:{ //点赞
+        method:'get',
+        url:'api/shaidan/like/'
+    },
+    failureReason:{//晒单失败理由
+        method:'get',
+        url:'api/shaidan/failurereason/'
     }
 });
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API',
-    function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $cookiesProvider,Host,API) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV',
+    function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $cookiesProvider,Host,API,ENV) {
     function load(url) {
         for(var i= 0,len=url.length;i<len;i++){
             url[i]+='?v='+v;
@@ -763,8 +788,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './css/showOffOrders.css',
-                   './js/controllers/showOffOrdersCtrl.js',
-                    './js/services/showOffOrdersSer.js'
+                   './js/controllers/showOffOrdersCtrl.js'
                 ])
             }
 
@@ -945,23 +969,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         })
  /*--------------------------------------game--------------------------------------------------*/
 
-        /*游戏返回*/
-        .state('afterGame', {
-            url: '/afterGame/:params',
-            views: {
-                '': {
-                   /* templateUrl: "templates/afterGame.html",*/
-                    controller: 'AfterGameCtrl'
-                }
-            },
-            title:'正在处理...',
-            resolve: {
-                loadFiles: load([
-                    './js/controllers/afterGameCtrl.js'
-                ])
-            }
-        })
-
         /*--------------------------------------分割线----------------------------------------------------------*/
         /*用户中心首页*/
         .state('UCIndex', {
@@ -1003,7 +1010,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         })
         /*我的晒单*/
         .state('UCIndex.myShowingOffOrders', {
-            url: '/myShowingOffOrders',
+            url: '/myShowingOffOrders/:status',
             views: {
                 'uc-menu-cont': {
                     templateUrl: "templates/userCenter_templates/myShowingOffOrders.html?v="+v,
@@ -1387,12 +1394,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     /*===================接口配置  begin==================*/
     initAPI();
     function initAPI(){
-        var cur_host=Host.develop;//##############当前环境
-        switch(cur_host){
-            case Host.develop:
-                Host.game='http://120.24.225.116:9004';//开发
+        var cur_host=(ENV===0?Host.develop:Host.public);//##############根据当前环境设置接口主机
+        switch(ENV){
+            case 0:
+                Host.game.fishing='http://120.24.225.116:9004';
+                Host.game.fingerGuessing='http://120.24.225.116:9005';
                 break;
-            case Host.public:
+            case 1:
                 Host.game='https://game.xingyunmao.cn';//发布版
                 break;
         }

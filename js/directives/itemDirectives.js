@@ -216,11 +216,13 @@ angular.module('LuckyMall')
 
                     var slider=getByClass("item-slider");
                     scope.h=45;//高度
-                    var price = data_goods.RetailPrice;
-                    var max_disc = data_goods.MaxDiscount;
-                    var min_disc = data_goods.MinDiscount;
+                    var price = data_goods.CeilingPrice;
+                    var max_disc = 0;
+                    var min_disc = 1;
                     scope.cur_disc = min_disc;
-                    var cur_price = Math.ceil(price * min_disc);
+
+                    var cur_price = Math.round(price * min_disc);
+                    scope.cur_price = cur_price;
                     initPrice(cur_price);
                     initOverlayStatus();
                     for(var o=0;o<scope.indexes.length;o++){
@@ -249,10 +251,11 @@ angular.module('LuckyMall')
                                 } else {
                                     scope.cur_disc *= scope.new_disc;
                                 }
-                                if (scope.cur_disc < max_disc) {
+                                if (scope.cur_disc <=0.01) {
                                     scope.cur_disc = max_disc;
                                 }
-                                cur_price = Math.ceil(price *(scope.cur_disc.toFixed(2)));
+                                cur_price = Math.round(price *(scope.cur_disc.toFixed(2)));
+                                scope.cur_price = cur_price;
                                 var old_index = scope.indexes;
                                 initPrice(cur_price);
                                 /*#################end####################*/
