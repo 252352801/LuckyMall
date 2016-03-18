@@ -13,9 +13,6 @@
             <a>晒单详情</a>
         </div>
         <div class="soo-dt-content">
-            <div class="soo-failureInfo" ng-if="soo_dt.SOOInfo.ShaiDanStatus==2">
-                该晒单未通过审核！原因：<span>{{soo_dt.failureReason}}</span>
-            </div>
             <div class="box-shower-order">
                 <div class="bso-left">
                     <img class="avatar" ng-src={{imgHost+soo_dt.SOOInfo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
@@ -53,7 +50,9 @@
                     </ul>
                 </div>
             </div>
-
+            <div class="soo-failureInfo" ng-if="soo_dt.SOOInfo.ShaiDanStatus==2">
+                该晒单未通过审核！原因：<span>{{soo_dt.failureReason}}</span>
+            </div>
             <div class="box-submitInfo">
                 <div class="info-top over-hidden">
                     <span class="color-gray pull-left" ng-bind="soo_dt.SOOInfo.CreateTime">2016-03-07</span>
@@ -72,8 +71,8 @@
                     </p>
                     <ul class="ul-images">
                         <li ng-class="{'cur':soo_dt.imgIndex==$index}" ng-repeat="img in soo_dt.SOOInfo.images" ng-click="soo_dt.showImg($index)">
-                            <a>
-                                <img real-src={{imgHost+img}} temp-src="./res/images/default.png" />
+                            <a style="display:block;width:66px;height:66px;">
+                                <img real-src={{imgHost+img}} temp-src="./res/images/default.png"  />
                             </a>
                         </li>
 

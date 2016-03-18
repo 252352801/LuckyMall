@@ -151,8 +151,9 @@
 .G-details .pro-info{
     min-height:560px;
     border-left:1px solid #e5e5e5;
-    padding:20px 30px;
+    padding:20px 30px 40px 30px;
     overflow:hidden;
+    position:relative;
 }
 .G-details .pro-property{
    /* width:100%;*/
@@ -161,7 +162,7 @@
     border-radius:1px;
     border:1px solid transparent;
     position:relative;
-	margin-top:30px;
+	margin-top:20px;
 }
 .G-details .pro-property .tips{
     position:absolute;
@@ -280,6 +281,7 @@
     line-height:50px;
     left:0px;
     top:0px;
+    margin-left:10px;
 }
 .pro-property li p{
 
@@ -331,6 +333,7 @@
     color:#666;
     margin-bottom:8px;
 	margin-top:10px;
+   text-indent:10px;
 	width:66px;
 }
 .bar-amount .div-btn{ 
@@ -847,8 +850,91 @@ float:left;
     z-index:1;
 }
 
-
-
+.G-details .bar-reference,.G-details .bar-reference *{
+    box-sizing:border-box;
+}
+.G-details .bar-reference{
+    height:40px;
+    position:relative;
+    line-height:40px;
+}
+.G-details .bar-reference label{
+    position: absolute;
+    left:10px;
+    color:#999;
+    z-index:2;
+}
+.G-details .bar-reference ul{
+    width:100%;
+    padding-left: 80px;
+    height: 40px;
+    overflow: hidden;
+    position: absolute;
+    left: 0px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    line-height: 40px;
+    z-index:1;
+}
+.G-details .bar-reference ul:hover{
+    border: 2px dashed #FB2834;
+    height:auto;
+    padding-bottom: 20px;
+}
+.G-details .bar-reference ul li{
+    padding:0px 5px;
+    float: left;
+    width:25%;
+    white-space: nowrap;
+}
+.G-details .bar-reference ul li a{
+    color:#333;
+}
+.G-details .bar-reference em{
+    color:#FB2834;
+    font-style:normal;
+    font-size: 13px;
+}
+.G-details .pro-info .ul-svc{
+   width:100%;
+    box-sizing: border-box;
+    height:40px;
+   padding:0px 30px;
+    overflow:hidden;
+    position:absolute;
+    left:0px;
+    top:100%;
+    margin-top:-40px;
+}
+.G-details .pro-info .ul-svc li{
+    box-sizing: border-box;
+    border-top:1px dashed #eee;
+    width:33.33333%;
+    line-height:36px;
+    padding-left:40px;
+    float:left;
+    color:#666;
+    position: relative;
+}
+.G-details .pro-info .ul-svc li:before{
+    content: '';
+    display: block;
+    width:19px;
+    height:19px;
+    position:absolute;
+    left:10px;
+    top:10px;
+}
+.G-details .pro-info .ul-svc li:nth-child(1):before{
+    background:url(../res/icon/item_svc.png) 0px -1px no-repeat;
+}
+.G-details .pro-info .ul-svc li:nth-child(2):before{
+    background:url(../res/icon/item_svc.png) 0px -23px no-repeat;
+}
+.G-details .pro-info .ul-svc li:nth-child(3):before{
+    background:url(../res/icon/item_svc.png) 0px -46px no-repeat;
+}
 
 
 

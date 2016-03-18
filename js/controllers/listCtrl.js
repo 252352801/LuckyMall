@@ -21,8 +21,10 @@ angular.module('LuckyMall.controllers')
         $scope.showAllBrands=false;//显示所有品牌
         $scope.showBMSBox=false;//品牌多选框是否显示
         var pageSize = 40;//每页大小（个数）
-        initParams();
-        testCategory();
+                initParams();
+                testCategory();
+
+
         function initParams(){
             var collect_ft = new Array();
             if($stateParams.filters) {
@@ -89,40 +91,41 @@ angular.module('LuckyMall.controllers')
 
 
         function testCategory(){
-            var brand_id_param;
-            if (CategorySer.getData()== null) {
-                /*如果分类数据为空则请求数据*/
-                CategorySer.requestData(function (){//请求成功后的回调
-                     handleResult();
-                    loadBrands(brand_id_param,initData);
-                });
-            }else{
+                var brand_id_param;
+                if (CategorySer.getData() == null) {
+                    /*如果分类数据为空则请求数据*/
+                    CategorySer.requestData(function () {//请求成功后的回调
+                        handleResult();
+                        loadBrands(brand_id_param, initData);
+                    });
+                } else {
                     handleResult();
-                    loadBrands(brand_id_param,initData);
-            }
+                    loadBrands(brand_id_param, initData);
+                }
 
 
-            function handleResult(){
-                $scope.data_menu=CategorySer.getData();
-                var cate=CategorySer.getCategoryById($scope.cate_id);
-                $scope.category=cate;
-                if(cate!=null) {
-                    $scope.cateName = cate.CategoryName;
-                }else{
-                    alert('出错了！');
-                    return;
+                function handleResult() {
+                        $scope.data_menu = CategorySer.getData();
+                        var cate = CategorySer.getCategoryById($scope.cate_id);
+                        $scope.category = cate;
+                        if (cate != null) {
+                            $scope.cateName = cate.CategoryName;
+                        }else{
+                            $state.go('404');
+                            return;
+                        }
+                        //console.log(cate);
+                        if (cate.FilterModels.length > 0) {
+                            $scope.hasSubCate = false;
+                            FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
+                            brand_id_param = $scope.cate_id;
+                        } else {
+                            $scope.hasSubCate = true;
+                            brand_id_param = $scope.cate_sub_id ? $scope.cate_sub_id : $scope.cate_id;
+                            FilterSer.setCategoryData(cate);
+                        }
                 }
-                //console.log(cate);
-                if(cate.FilterModels.length>0) {
-                    $scope.hasSubCate=false;
-                    FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
-                    brand_id_param=$scope.cate_id;
-                }else{
-                    $scope.hasSubCate=true;
-                    brand_id_param=$scope.cate_sub_id?$scope.cate_sub_id:$scope.cate_id;
-                    FilterSer.setCategoryData(cate);
-                }
-            }
+
         }
 
 
@@ -134,7 +137,7 @@ angular.module('LuckyMall.controllers')
             $scope.data_filter = FilterSer.getSubCategoryById(subCate_id);
             goListPage();
         };
-    
+
         /*选择全部子类*/
         $scope.selectAllSubCategory=function(){
             FilterSer.resetSubCategorySelection();
@@ -176,7 +179,7 @@ angular.module('LuckyMall.controllers')
             FilterSer.addSelection(filter_id,item_id);
             goListPage();
         };
-    
+
         /*多选品牌提交搜索*/
         $scope.multiBrandSearch=function(){
             var has_change=false;
@@ -219,7 +222,7 @@ angular.module('LuckyMall.controllers')
         $scope.toggleBrandsMultiSelect=function(){
             $scope.showBMSBox=!$scope.showBMSBox;
         };
-    
+
         /*多选框开关*/
         $scope.toggleMultiSelect=function(filter_id){
             FilterSer.toggleMultiSelect(filter_id);
@@ -358,21 +361,25 @@ angular.module('LuckyMall.controllers')
 
         /*初始化数据*/
         function initData() {
-            FilterSer.setSelectData($scope.params);
-            FilterSer.setSelectBrandData($scope.brandParams);
-            if(!$scope.hasSubCate){
-                FilterSer.setSubCategory(null);
-                FilterSer.clearSelect();
-                FilterSer.select();
-                $scope.data_filter = FilterSer.getCategoryData();
-            }else {
-                 FilterSer.setSubCategory($scope.cate_sub_id);
-                 $scope.data_filter = FilterSer.getSubCategoryById($scope.cate_sub_id);
-                 FilterSer.clearSelectWithSubCategory();
-                 FilterSer.selectWithSubCategory();
+            try {
+                FilterSer.setSelectData($scope.params);
+                FilterSer.setSelectBrandData($scope.brandParams);
+                if (!$scope.hasSubCate) {
+                    FilterSer.setSubCategory(null);
+                    FilterSer.clearSelect();
+                    FilterSer.select();
+                    $scope.data_filter = FilterSer.getCategoryData();
+                } else {
+                    FilterSer.setSubCategory($scope.cate_sub_id);
+                    $scope.data_filter = FilterSer.getSubCategoryById($scope.cate_sub_id);
+                    FilterSer.clearSelectWithSubCategory();
+                    FilterSer.selectWithSubCategory();
+                }
+                $scope.sortByPrice = true;//价格排序方式 true:升序,false:降序
+                search({sort_price: $scope.sortByPrice});//搜索数据
+            }catch (err){
+                $state.go('404');
             }
-            $scope.sortByPrice = true;//价格排序方式 true:升序,false:降序
-            search({sort_price: $scope.sortByPrice});//搜索数据
         }
 
         /*搜索*/

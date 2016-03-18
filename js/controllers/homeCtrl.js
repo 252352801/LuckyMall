@@ -75,7 +75,7 @@ angular.module('LuckyMall.controllers')
         }
 
 
-            $scope.data_soo=null;
+            $scope.data_soo=[];
 
         function loadSOOData(){
             var params={
@@ -86,6 +86,7 @@ angular.module('LuckyMall.controllers')
                     var data_soo=response;
 
                    $scope.data_soo={
+                        orgData:response,
                         general:response.slice(1,4),
                         large:response[0]
                     };

@@ -134,6 +134,11 @@ input:focus{
     font-size: 24px;
     color: #ddd;
 }
+.tb-content{
+    display:inline-block;
+    vertical-align: middle;
+    line-height: inherit;
+}
 .small-font{
     font-size:12px;
 }
@@ -905,7 +910,7 @@ a{
 .modal-login{
     width:300px;
     background:#fff;
-    border:10px solid rgba(0,0,0,0.25);
+    border:10px solid rgba(255,255,255,0.25);
     padding:20px 30px;
     position:absolute;
     left:50%;
@@ -3001,7 +3006,7 @@ modal-beforeGame
     transition:all 0.5s;
 }
 @keyframes modalShow{
-    0% {transform:scale(0);}
+    0% {transform:scale(0.75);}
     60% {transform:scale(1.02)}
     80% {transform:scale(0.98)}
     100% {transform:scale(1)}
@@ -3466,6 +3471,7 @@ modal-beforeGame
     border-radius:4px;
     background:#fff;
     overflow:hidden;
+    animation:modalShow .4s;
 }
 .modal-getDisc .modal-title{
     line-height:40px;
@@ -4075,12 +4081,50 @@ modal-beforeGame
     text-align: center;
     padding-top:210px;
     cursor:pointer;
+    position: relative;
 }
-.modal-gameMenu .fingerGuessing{
-    background: url(../res/images/background/bg_gmenu1.png) 60px 10px no-repeat;
+.modal-gameMenu  .img-btn{
+    width:160px;
+    height:160px;
+    position:absolute;
+    left:62px;
+    top:5px;
+    border: 5px solid #F9B300;
+    border-radius: 10px;
 }
-.modal-gameMenu .fishing{
-    background: url(../res/images/background/bg_gmenu2.png) 60px 10px no-repeat;
+.modal-gameMenu .fingerGuessing .img-btn{
+    background: url(../res/images/background/bg_gmenu1.png);
+}
+.modal-gameMenu .fishing .img-btn{
+    background: url(../res/images/background/bg_gmenu2.png);
+}
+.modal-gameMenu .fingerGuessing .img-btn:before{
+    display: block;
+    content: '猜拳游戏';
+    width: 70px;
+    height: 24px;
+    background: rgba(255,103,0,0.7);
+    color: #fff;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 20px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.modal-gameMenu .fishing .img-btn:before{
+    display: block;
+    content: '捕鱼游戏';
+    width: 70px;
+    height: 24px;
+    background: rgba(255,103,0,0.7);
+    color: #fff;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 20px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
 }
 .modal-gameMenu .ul-g-menu li:first-child{
     border-right: 1px solid #eee;

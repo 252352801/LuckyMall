@@ -1106,6 +1106,7 @@ angular.module('LuckyMall')
                                     break;
                             }
                             $rootScope.closeGame();
+                            scope.isLoadingGame = true;
                         }
                     }
                     //}
@@ -1185,12 +1186,12 @@ angular.module('LuckyMall')
                     $scope.visible=false;
                 };
                 $scope.play=function(game_name){
-                    if(game_name=='fishing'){
+                 /*   if(game_name=='fishing'){
                         $scope.gameMenu.gameUrl[game_name]=$scope.gameMenu.gameUrl[game_name].replace('mode=2','mode=5');
                         $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                         $scope.visible=false;
                         return;
-                    }
+                    }*/
                     $scope.visible=false;
                     $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                 };
@@ -1214,11 +1215,6 @@ angular.module('LuckyMall')
             },
             templateUrl: 'common/templates/modal-getDiscount.html',
             controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc){
-
-
-
-                console.log($scope.gameMenu);
-                $scope.data_user={};
                 $scope.isCheckedWallet=false;
                 $scope.isCheckedCoupon=false;
                 $scope.content_exchange_energy=false;
@@ -1240,11 +1236,11 @@ angular.module('LuckyMall')
                     tips:''
                 };
                 if(TokenSer.getToken()) {
-                    loadUserData(watchOrder);
+                    watchOrder();
                     loadBalanceInfo();
                 }else{
                     $rootScope.$on("user-login",function(new_val,old_val){
-                        loadUserData(watchOrder);
+                        watchOrder();
                         loadBalanceInfo();
                     });
                 }
@@ -1306,7 +1302,7 @@ angular.module('LuckyMall')
                 function watchOrder() {
                     $scope.$watch("order", function (new_val, old_val) {
                         if (new_val != old_val) {
-                            initPage($scope.order, $scope.data_user);
+                            initPage($scope.order);
                             $scope.content_exchange_energy = false;
                             $scope.content_exchange_earnest = false;
                             $scope.content_pay_earnest = false;
@@ -1314,11 +1310,13 @@ angular.module('LuckyMall')
                     });
                 }
                 $scope.play=function(){
-                    if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
-                        if ($scope.energy.isEnough) {
+                    if(($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3)&&$scope.energy.isEnough) {
+                            if(parseInt($scope.order.OriginalPrice)>200){//大于两百时直接进入捕鱼游戏
+                                $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                            }else{
+                                $scope.gameMenu.show=true;
+                            }
                             $scope.visible=false;
-                            $scope.gameMenu.show=true;
-                        }
                     }
                 }
                 $scope.playWidthCoupon=function(){
@@ -1384,6 +1382,7 @@ angular.module('LuckyMall')
 
                 /**检查能量是否够4发炮弹**/
                 function testEnergy(total_cost,percent,paid_value,remain_energy) {
+                    return true;
                     var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
                     var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
                     if(remain_amount>=10){
@@ -1409,22 +1408,10 @@ angular.module('LuckyMall')
                         }
                     }
                 }
-                function loadUserData(callback) {
-                    RefreshUserDataSer.requestUserData(function (response, status) {
-                        if (status == 1) {
-                            $scope.data_user = RefreshUserDataSer.getData();
-
-                            if(callback){
-                                callback();
-                            }
-                        }
-                    });
-
-                }
-                function initPage(order,user){
+                function initPage(order){
                    var data_orgCost = Math.round(order.UnitPrice * $scope.order.Count);//打折前总花费
                     $scope.order.earnest_cost=parseInt($scope.order.TotalEarnestPrice)-$scope.order.EarnestMoney;//需支付的定金总额
-                    if (testEnergy(data_orgCost ,order.EarnestPercent, order.EarnestMoney, user.LuckyEnergy.PaidValue)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
+                    if (testEnergy(data_orgCost ,order.EarnestPercent, order.EarnestMoney, $scope.order.LuckyEnergy)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
                         $scope.energy.isEnough = true;
                         if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
                             $scope.isCanPlay = true;

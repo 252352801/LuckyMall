@@ -373,6 +373,9 @@ angular.module('LuckyMall.controllers')
                 });
                 ItemSer.getPricesOfOthers($this.id,function(response,status){
                     if(status==1){
+                        for(var o in response){
+                            response[o].sSiteName=response[o].SiteName.length>4?response[o].SiteName.substr(0,4):response[o].SiteName;
+                        }
                         $this.POOData=response;//其他平台的价格
                     }
                 });
@@ -451,27 +454,32 @@ angular.module('LuckyMall.controllers')
             this.playFreeGame = function () {
                 var auth='';
                 $scope.gameMenu.commodityId=$this.id;
+                var initGame=function(authorization){
+                    $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + authorization;
+                    $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + authorization;
+                    if($this.itemData.maxPrice>200) {
+                        $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                    }else{
+                        $scope.gameMenu.show = true;
+                    }
+                };
                 if(!$scope.isLogin){
                     if($rootScope.session_key!=null) {
                         auth = $rootScope.session_key;
-                        $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
-                        $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
+                        initGame(auth);
                     }else{
                         UserSer.getSessionKey(function(response,status){
                             if(status==1){
                                 $rootScope.session_key=response;
                                 auth = $rootScope.session_key;
-                                $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
-                                $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
+                                initGame(auth);
                             }
                         });
                     }
                 }else{
                     auth=TokenSer.getToken();
-                    $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
-                    $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + auth;
+                    initGame(auth);
                 }
-                $scope.gameMenu.show=true;
             };
             /*下单*/
             this.createOrder = function (act, callback) { //act : 0加入购物车  1 立即购买

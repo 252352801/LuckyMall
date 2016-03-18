@@ -61,11 +61,14 @@
                     <p ng-bind="'￥'+list.orgCost"></p>
                 </div>
                 <div class="cont3">
-                    <p class="price" ng-bind="'￥'+list.cost"></p>
-                    <p>
-                        已享用折扣卡
-                        <span class="icon-discount" ng-bind="list.finalDiscount+'折'"></span>
-                    </p>
+                    <div class="tb-content">
+                        <p class="price" ng-bind="'￥'+list.cost"></p>
+                        <p ng-if="list.finalDiscount<10">
+                            已享用折扣卡
+                            <span class="icon-discount" ng-bind="list.finalDiscount+'折'"></span>
+                        </p>
+                    </div>
+
                 </div>
                 <div class="cont4">
                     <p class="wait-to-pay" ng-bind="'￥'+list.needToPay"></p>

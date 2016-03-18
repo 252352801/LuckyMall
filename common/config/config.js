@@ -1348,7 +1348,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'正在处理...-幸运猫-享玩享购享折扣'
         })
 
-
+        .state('404', {
+            url: '/404',
+            views: {
+                '': {
+                    templateUrl: "templates/404.html?v="+v
+                }
+            },
+            title:'页面找不到了-幸运猫-享玩享购享折扣'
+        })
 
 /*
         //擂台赛

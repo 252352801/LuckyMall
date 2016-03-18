@@ -131,13 +131,12 @@
      width:12.5%;
     font-size:17px;
     text-decoration:line-through;
-    line-height:120px;
  }
 .cart-list-cont .cont3{
     width:24.5%;
     line-height:26px;
 }
-.cart-list-cont .cont3 p:first-child,.cart-list-cont .cont4 p:first-child{
+.cart-list-cont .cont2,.cart-list-cont .cont3 p:first-child,.cart-list-cont .cont4 p:first-child{
     margin-top:30px;
 }
 .cart-list-cont .cont4{

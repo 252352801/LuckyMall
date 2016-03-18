@@ -23,7 +23,7 @@ body.stop-scrolling {
     font-family:"Microsoft YaHei";
   width: 478px;
   padding: 17px;
-    border: 10px solid rgba(0,0,0,0.05);
+    border: 10px solid rgba(255,255,255,0.15);
     background-clip: padding-box;
   border-radius: 5px;
   text-align: center;

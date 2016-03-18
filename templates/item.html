@@ -110,6 +110,17 @@
 
 
                 </div>
+                <div class="bar-reference" ng-if="item.POOData.length>0">
+                    <label>价格参考</label>
+                    <ul>
+                        <li ng-repeat="p in item.POOData">
+                            <a href={{p.SpUrl}} title="{{p.SiteName+'：'+'￥'+p.SpPrice}}" target="_blank">
+                                <span ng-bind="p.sSiteName">京东</span>
+                                <em ng-bind="'￥'+p.SpPrice"></em>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <ul ng-class="{'pro-property':item.showTips==false,'pro-property unFinish':item.showTips==true}">
                     <p class="tips">请勾选您需要的商品选项：</p>
                         <li ng-repeat="property in item.itemData.Property">
@@ -141,7 +152,13 @@
                     <input ng-if="item.itemData.CommodityType==0" ng-class="{'btn-buy':item.itemData.status==1,'btn-buy disabled':item.itemData.status!=1}" type="button" ng-value="item.btnVal.buyNow.cur"  ng-click="item.createOrder(1)" ng-disabled="item.itemData.status!=1"/>
                     <a class="btn-enterAct" href="/activity/index" ng-if="item.itemData.CommodityType==1">进入擂台</a>
                 </div>
+                <ul class="ul-svc">
+                            <li>全场包邮</li>
+                            <li>100%正品</li>
+                            <li>售后无忧</li>
+                </ul>
             </form>
+
         </div>
         <div class="box-proIntro tabs">
             <div class="tab-item">
@@ -159,7 +176,7 @@
                 </div>
             </div>
             <div class="tab-content tab-cont2" ng-show="item.curTab==2">
-                <p class="color-gray tx-center" ng-if="item.rankingData.length==0">暂无</p>
+                <p class="tips-nothing" ng-if="item.rankingData.length==0">暂无</p>
                <table class="item-ranking-table" ng-if="item.rankingData.length>0">
                    <tr class="tr-th">
                        <th>排名</th>
@@ -218,7 +235,7 @@
                             <ul class="ul-images ">
                                 <li ng-class="{'cur':soo.bigImgIndex==$index}" ng-repeat="img in soo.images" ng-click="item.showBigImgOfSOO($index,soo)">
                                     <a class="img-container">
-                                        <img real-src={{imgHost+img}} temp-src="./res/images/default.png" />
+                                        <img real-src={{imgHost+img}} temp-src="./res/images/default.png"  />
                                     </a>
                                 </li>
                             </ul>
