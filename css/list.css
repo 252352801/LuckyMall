@@ -193,7 +193,7 @@
     -moz-transform: rotate(45deg);
 }
 .list .goods-info .price{
-    color:#ff6700;
+    color:#ec3640;
     font-size:18px;
     position:relative;
 }
@@ -322,7 +322,7 @@
     margin-bottom:8px;
     border:1px solid transparent;
     padding:1px 8px;
-    color:#B16B33;
+    color:#333;
     font-size:12px;
     font-weight:500;
     cursor:pointer;
@@ -338,9 +338,9 @@
 }
 .filters ul li a.cur{
     color: #fff;
-    background: #f69c00;
+    background: #ec3640;
     font-size:12px;
-    border-radius: 2px;
+
 }
 .filters ul li a.cur:hover{
     color:#fff;

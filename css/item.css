@@ -146,7 +146,7 @@
     border-color:#ff9900;
 }
 .small-goods-img li.cur{
-    border-color:#ff6700;
+    border-color:#ec3640;
 }
 .G-details .pro-info{
     min-height:560px;
@@ -406,7 +406,7 @@ float:left;
     line-height: 46px;
 }
 .pro-info .bar-btn input.btn-buy{
-    background:#ff6700;
+    background:#ec3640;
     border:none;
     color:#fff;
 }
@@ -420,7 +420,7 @@ float:left;
 .pro-info .bar-btn .btn-playGame{
     display:inline-block;
     color:#fff;
-    background:#F79D00;
+    background:#eeb60e;
     border:none;
     margin-right:15px;
 }
@@ -905,7 +905,7 @@ float:left;
     position:absolute;
     left:0px;
     top:100%;
-    margin-top:-40px;
+    margin-top:-36px;
 }
 .G-details .pro-info .ul-svc li{
     box-sizing: border-box;
@@ -924,10 +924,10 @@ float:left;
     height:19px;
     position:absolute;
     left:10px;
-    top:10px;
+    top:7px;
 }
 .G-details .pro-info .ul-svc li:nth-child(1):before{
-    background:url(../res/icon/item_svc.png) 0px -1px no-repeat;
+    background:url(../res/icon/item_svc.png) 0px -0px no-repeat;
 }
 .G-details .pro-info .ul-svc li:nth-child(2):before{
     background:url(../res/icon/item_svc.png) 0px -23px no-repeat;

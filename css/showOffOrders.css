@@ -82,19 +82,20 @@
     margin-left:2px;
 }
 .showOffOrders .bar-like .lm-heart{
-    font-size:14px;
+    font-size:17px;
+    color: #c5c5c5;
 }
 .showOffOrders .bar-user{
     width:100%;
-    height:60px;
+    height:50px;
     padding-left: 60px;
     position: relative;
-    line-height: 60px;
-    border-top:1px solid #ddd;
+    line-height: 50px;
+    border-top:1px solid #f5f5f5;
 }
 .showOffOrders .bar-user .avatar{
-    width:40px;
-    height:40px;
+    width:30px;
+    height:30px;
     border-radius:50%;
     border:1px solid #e6e6e6;
     position: absolute;
@@ -232,12 +233,15 @@
 }
 .soo-dt .box-submitInfo .info-top{
     border-bottom:1px solid #ddd;
-    height:40px;
-    line-height:50px;
-    padding:0px 10px;
+
+
+    padding:20px 10px;
 }
 .soo-dt .box-submitInfo .info-top .iconfont{
-    font-size:12px;
+    font-size:17px;
+    color: #999 !important;
+    vertical-align: sub;
+    margin-right: 3px;
 }
 .soo-dt .box-submitInfo .info-top .pull-right{
     cursor: pointer;

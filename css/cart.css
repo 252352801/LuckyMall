@@ -87,22 +87,19 @@
     margin-left:25px;
 }
 .cart-list-top .a-forDiscount{
-    margin-right: 30px;
+    margin-right: 10px;
     margin-top: 7px;
-    width: 80px;
-    height: 36px;
-    line-height: 36px;
-    border-radius: 3px;
+    width: 113px;
+    height: 32px;
+    line-height: 32px;
     color: #fff;
     text-align: center;
     float: right;
     cursor: pointer;
-    background: #49bb46;
+    background:url(../res/icon/zhekouka.png);
     font-size: 16px;
 }
-.cart-list-top .a-forDiscount:hover{
-    background-color:#499946;
-}
+
 .cart-th .cart-checkedAll{
     position:absolute;
     left:20px;
@@ -207,7 +204,7 @@
     height:32px;
     background:url(../res/icon/icon_delete.png);
     position:relative;
-    left:50%;
+    left:60%;
     top:35px;
     opacity:0.5;
 }
@@ -233,9 +230,9 @@
     color:#ff0000;
 }
 #btn_sure_pay{
-    padding:10px 45px;
+    padding:10px 50px;
     font-size:18px;
-    background:#ff6700;
+    background:#ec3640;
     color:#fff;
     border:none;
     margin-top:10px;

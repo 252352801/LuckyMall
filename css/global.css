@@ -973,6 +973,9 @@ a{
     background:rgba(0,0,0,0.4);
     z-index:999;
 }
+.modal-overlay.deep{
+    background:rgba(0,0,0,0.6);
+}
 .modal-add-address{
     width:430px;
     background:#fff;
@@ -4164,3 +4167,160 @@ modal-beforeGame
 }
 /*
 游戏菜单  end*/
+
+
+
+
+/*====================
+    抢红包 begin
+*======================*/
+.img-btn-getCoupons{
+    width:200px;
+    height:200px;
+    background: url(../res/images/coupon/img_btn_getCoupon.png);
+    background-size:100%;
+    position: fixed;
+    left:50%;
+    top:100%;
+    margin-left:-750px;
+    margin-top:-250px;
+    z-index:100;
+    cursor:pointer;
+    animation: btnCouponAnimation 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function:linear;
+}
+@keyframes btnCouponAnimation{
+    0%{transform:translate(0,0)}
+
+    50%{transform:translate(-1px,-10px)}
+    100%{transform:translate(0px,0px)}
+}
+.img-btn-getCoupons:hover{
+    animation-play-state:paused;
+}
+.modal-getCoupons{
+    width:1100px;
+    height:100%;
+    position:fixed;
+    left:50%;
+    top:0px;
+    margin-left:-550px;
+    background:transparent;
+    animation: modalShow .4s;
+}
+.modal-getCoupons .ul-gc-steps{
+    display:inline-block;
+    width:100%;
+    height:620px;
+    position:relative;
+    top:50%;
+    margin-top:-310px;
+    overflow:hidden;
+}
+.modal-getCoupons .ul-gc-steps .gc-step{
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0px;
+    top:0px;
+    transition:left 0.3s;
+}
+.modal-getCoupons .ul-gc-steps .gc-step1{
+    background: url(../res/images/coupon/gc_step1.png) 50% 0% no-repeat;
+}
+.modal-getCoupons .ul-gc-steps .gc-step2{
+    background: url(../res/images/coupon/gc_step2.png) 62% 0% no-repeat;
+}
+.modal-getCoupons .ul-gc-steps .gc-step3{
+    background: url(../res/images/coupon/gc_step3.png) 50% 0% no-repeat;
+}
+.modal-getCoupons .ul-gc-steps .gc-step4{
+    background: url(../res/images/coupon/gc_step4.png) 42% 0% no-repeat;
+}
+.modal-getCoupons .ul-gc-steps .btn{
+    display:block;
+    width:242px;
+    height:47px;
+    margin:20px auto 10px auto;
+    border:none;
+    cursor: pointer;
+}
+.modal-getCoupons .ul-gc-steps .box-buttons{
+    margin-top:400px;
+    overflow: hidden;
+}
+.modal-getCoupons .ul-gc-steps .gc-step3 .box-buttons{
+    margin-top:500px;
+}
+.modal-getCoupons .ul-gc-steps .btn.btn-play{
+    background: url(../res/images/coupon/gc_play.png);
+}
+.modal-getCoupons .ul-gc-steps .gc-step1 .btn-next{
+    background: url(../res/images/coupon/gc_step1_btn.png);
+}
+.modal-getCoupons .ul-gc-steps .gc-step2 .btn-next{
+    background: url(../res/images/coupon/gc_step2_btn.png);
+}
+.modal-getCoupons .ul-gc-steps .gc-step3 .btn-next{
+    background: url(../res/images/coupon/gc_step3_btn.png);
+}
+.modal-getCoupons .ul-gc-steps .gc-step4 .btn-next{
+    background: url(../res/images/coupon/gc_step4_btn.png);
+}
+.modal-getCoupons .box-remain-count{
+    width:100%;
+    height:110px;
+    text-align: center;
+    font-size:20px;
+    position:absolute;
+    left:0px;
+    top:210px;
+    line-height:110px;
+    color:#dc4048;
+}
+.modal-getCoupons  .box-qrcode-img{
+    width:200px;
+    height:200px;
+    margin:30px auto;
+    padding-bottom:20px;
+    background: #fff;
+    position: relative;
+}
+.modal-getCoupons  .box-qrcode-img img{
+    margin-top:40px;
+}
+.modal-getCoupons  .box-qrcode-img p{
+    width:100%;
+    line-height:40px;
+    position:absolute;
+    left:0px;
+    top:100%;
+    margin-top:-40px;
+    line-height:40px;
+    text-align: center;
+}
+.modal-getCoupons .box-remain-count span{
+    font-size:64px;
+    color:#d92b46;
+}
+.modal-getCoupons .box-remain-count span.font-sm{
+    font-size:36px;
+}
+.modal-getCoupons .btn-close{
+    display:block;
+    width:34px;
+    height:34px;
+    background: url(../res/images/coupon/btn_close.png);
+    position:absolute;
+    z-index: 2;
+    left:50%;
+    top:0px;
+    margin-left:200px;
+    cursor: pointer;
+}
+.modal-getCoupons .gc-step5 .btn-close{
+    margin-left:120px;
+}
+/*
+抢红包 end*/
