@@ -15,6 +15,110 @@ angular.module('LuckyMall.services', [])
         };
     })
 
+    .factory('svc', function ($http) {
+        return {
+           get:function (url,callback){
+               $http.get(url)
+                 .success(function (response,status) {
+                       callback(response, status);
+                    })
+               .error(function (response,status) {
+                   callback(response, status);
+               });
+           },
+            post:function(url,callback,params){
+                $http.get(url,params)
+                    .success(function (response,status) {
+                        callback(response, status);
+                    })
+                    .error(function (response,status) {
+                        callback(response, status);
+                    });
+            }
+        };
+    })
+
+
+
+
+    .factory('woopraService', function (ENV,UserSer) {
+        var ws = {};
+        ws.debug = ENV==0?true:false;
+
+        ws.auth = function () {
+            if (ws.debug) {
+              //  $log.info({email: $rootScope.loginUser.Mobile, nickname: $rootScope.loginUser.NickName});
+            }
+            else {
+                woopra.identify({email: UserSer.getData().UserModel.Mobile, nickname: UserSer.getData().UserModel.NickName});
+                woopra.track();
+            }
+        };
+
+        ws.evet = {
+            WC: {
+                name: 'wincoupon',//抢红包
+                properties: {betin: 0, payout: 0}
+            },
+            PO: {
+                name: 'placeorder',//下订单
+                properties: {productname: ''}
+            },
+            PE: {
+                name: 'payearnest',//支付定金
+                properties: {productname: '', earnest: 0}
+            },
+            TG: {
+                name: 'trygame',//试玩游戏
+                properties: {gamename: '', betin: 0, payout_discount: 0, payout_coupon: 0, productname: ''}
+            },
+            PG: {
+                name: 'playgame',//正式游戏
+                properties: {gamename: '', mode: '', betin: 0, payout_discount: 0, payout_coupon: 0, productname: ''}
+            },
+            CP: {
+                name: 'completepurchase',//支付订单
+                properties: {productname: '', originprice: 0, earnest: 0, discount: 0, coupon: 0, finalmoney: 0}
+            }
+        };
+
+        ws.track = function (e) {
+            if (ws.debug) {
+                console.log(e);
+            }else {
+                woopra.track(e.name, e.properties);
+            }
+        };
+
+        return ws;
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*获取阿里云图片服务器ser*/
     .factory('ImgSer', function (API, $http) {
         var data;
@@ -1668,8 +1772,7 @@ angular.module('LuckyMall.services', [])
                 var spe = data[o].Order.Specifications;
                 data[o].Order.goodsProperty = angular.fromJson(spe);
                 data[o].imgUrl = data[o].Order.Commodity.RollingImages.split('|')[0];
-                data[o].discountPrice = Math.ceil(data[o].Order.UnitPrice-data[o].BaseDiscountMoney);
-                data[o].BaseDiscount = Math.ceil(Math.round(data[o].BaseDiscount * 10000) / 100) / 10;
+                data[o].discountPrice = data[o].Order.DiscountPrice;
             }
             return data;
         }

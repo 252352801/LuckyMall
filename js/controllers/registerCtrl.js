@@ -1,8 +1,8 @@
 angular.module('LuckyMall.controllers')
 
     .controller('RegisterCtrl',
-    ['$rootScope', '$scope', 'VerifyCodeSer', '$timeout', 'RegisterSer', '$state', 'LoginSer', '$cookies',
-        function ($rootScope, $scope, VerifyCodeSer, $timeout, RegisterSer, $state, LoginSer, $cookies) {
+    ['$rootScope', '$scope', 'VerifyCodeSer', '$timeout', 'RegisterSer', '$state', 'LoginSer', '$cookies','Host',
+        function ($rootScope, $scope, VerifyCodeSer, $timeout, RegisterSer, $state, LoginSer, $cookies,Host) {
             $scope.hasInputError = false;//是否有错误输入
             $scope.tips = '';//提示信息初始化
             $scope.value_btn = '立即注册';
@@ -153,7 +153,7 @@ angular.module('LuckyMall.controllers')
                         }, function (response, status) {  //回调函数
                             if (status == 1) {
                                 if(response.Code==0) {
-                                    swal("恭喜！注册成功！");
+                                    swal("恭喜！注册成功！",'','success');
                                     $state.go('login');
                                     ga('send', 'pageview', {
                                         'page': '/register_success',
@@ -163,6 +163,22 @@ angular.module('LuckyMall.controllers')
                                     $cookies.put('Token', response.Data.Token); //设置token cookie
                                     $rootScope.$broadcast("user-login");
                                     $rootScope.isLogin = true;
+                                    swal({
+                                            title: "注册成功！",
+                                            text: "您获得了一个抢红包的机会，是否马上开抢？",
+                                            type: "success",
+                                            showCancelButton: true,
+                                            confirmButtonColor: "#DD6B55",
+                                            cancelButtonText: '下次再说',
+                                            confirmButtonText: "立即抢红包",
+                                            closeOnConfirm: false,
+                                            showLoaderOnConfirm: true
+                                        },
+                                        function () {
+                                            var g_url = Host.game.fishing + '?id=0&mode=5&from=' + Host.playFrom + '&authorization=' + response.Data.Token; //设置游戏地址
+                                            $rootScope.openGame(g_url,'','');
+                                        }
+                                    );
                                     $state.go('home');
                                 }else{
                                     setCurrentError('response');

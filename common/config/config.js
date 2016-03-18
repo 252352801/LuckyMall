@@ -341,10 +341,6 @@ app.constant('API',{
         method:'post',
         url:'api/commodity/searchkeyword'
     },
-    isCanPlayActivity:{//是否可以参加擂台赛
-       method:'get',
-       url:'api/arenarecord/in/'
-    },
     arenaTickets:{//获取擂台挑战票数量
         method:'get',
         url:'api/user/arenatickets'
@@ -408,6 +404,14 @@ app.constant('API',{
     failureReason:{//晒单失败理由
         method:'get',
         url:'api/shaidan/failurereason/'
+    },
+    getVieCouponCoupon:{
+        method:'get',
+        url:'api/user/getviecouponcount'
+    },
+    gameType:{
+        method:'get',
+        url:'api/order/gametype/'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV',
@@ -436,14 +440,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'HomeCtrl'
                 }
             },
-            title:'幸运猫-享玩享购享折扣',
+            title:'幸运猫-够抵购好玩',
             resolve: {
                 loadFiles: load([
                     './css/index.css',
                     './js/controllers/homeCtrl.js',
                     './js/services/homeSer.js',
-                    './js/directives/homeDirectives.js',
-                    './js/services/activitySer.js'
+                    './js/directives/homeDirectives.js'
                 ])
             }
         })
@@ -960,7 +963,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller:'GuideCtrl'
                 }
             },
-            title:'新手指南-幸运猫-享玩享购享折扣',
+            title:'新手指南-幸运猫-够抵购好玩',
             resolve: {
                 loadFiles: load([
                     './js/controllers/guideCtrl.js'
@@ -1254,23 +1257,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 ])
             }
         })
-        /*我的挑战卡*/
-        .state('UCIndex.myChallengeCards', {
-            url: '/myChallengeCards',
-            views: {
-                'uc-menu-cont': {
-                    templateUrl: "templates/userCenter_templates/myChallengeCards.html?v="+v,
-                    controller: 'MyChallengeCardsCtrl'
-                }
-            },
-            title:'我的挑战卡-幸运猫',
-            resolve: {
-                loadFiles: load([
-                    './js/userCenter_js/controllers/myChallengeCardsCtrl.js',
-                    './js/services/activitySer.js'
-                ])
-            }
-        })
 
         /*消息详情*/
         .state('UCIndex.messageDetails', {
@@ -1335,7 +1321,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'PayHandlerCtrl'
                 }
             },
-            title:'正在处理...-幸运猫-享玩享购享折扣',
+            title:'正在处理...-幸运猫-够抵购好玩',
             resolve: {
                 loadFiles: load([
                     './js/controllers/payHandlerCtrl.js'
@@ -1345,7 +1331,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         .state('payWin', {
             url: '/payWin',
-            title:'正在处理...-幸运猫-享玩享购享折扣'
+            title:'正在处理...-幸运猫-够抵购好玩'
         })
 
         .state('404', {
@@ -1355,50 +1341,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/404.html?v="+v
                 }
             },
-            title:'页面找不到了-幸运猫-享玩享购享折扣'
+            title:'页面找不到了-幸运猫-够抵购好玩'
         })
 
-/*
-        //擂台赛
-        .state('activity', {
-            url: '/activity',
-            views: {
-                '': {
-                    templateUrl: "templates/activity/main.html",
-                    controller: 'ActivityCtrl'
-                }
-            },
-            title:'擂台赛',
-            resolve: {
-                loadFiles: load([
-                    './css/activity/activity.css',
-                    './js/controllers/activityCtrl.js',
-                    './js/services/activitySer.js'
-                ])
-            }
-        })
-        //擂台赛首页
-        .state('activity.index', {
-            url: '/index',
-            views: {
-                'view_activity': {
-                    templateUrl: "templates/activity/activity-index.html",
-                    controller: 'ActivityIndexCtrl'
-                }
-            },
-            title:'擂台赛'
-        })
-       // 擂台赛详情
-        .state('activity.details', {
-            url: '/details/:id',
-            views: {
-                'view_activity': {
-                    templateUrl: "templates/activity/activity-details.html",
-                    controller: 'ActivityDetailsCtrl'
-                }
-            },
-            title:'擂台赛详情'
-        })*/
+
     /*===================接口配置  begin==================*/
     initAPI();
     function initAPI(){
@@ -1409,7 +1355,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 Host.game.fingerGuessing='http://120.24.225.116:9005';
                 break;
             case 1:
-                Host.game='https://game.xingyunmao.cn';//发布版
+                Host.game.fishing=window.location.protocol+'//gamecf.xingyunmao.cn:';
+                Host.game.fingerGuessing=window.location.protocol+'//gamefg.xingyunmao.cn:';
                 break;
         }
         Host.hostname=location.hostname;
@@ -1425,13 +1372,28 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
     }]);
 
-app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout',function($rootScope, $location, $window,$cookies,$http,$timeout) {
+app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woopraService',
+    function($rootScope, $location, $window,$cookies,$http,$timeout,woopraService) {
 
-   // $cookies.put('isGameOpen',false);
+    /*=======================
+        woopra分析
+     =======================*/
+    window.getWoopraService=function() {
+       return woopraService;
+    };
+    $rootScope.woopra=getWoopraService();
 
-    // initialise google analytics
+
+
+      /*=======================
+         initialise google analytics
+      =======================*/
     $window.ga('create', 'UA-71031576-1', 'auto');  //UA-71031576-1为key
 
+
+        /*=======================
+           游戏
+         =======================*/
     $rootScope.game={ //游戏
        url:null,
        orderId:null,
@@ -1453,6 +1415,7 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout',func
             $rootScope.game.isOpen=false;
         });
     };
+
 
     $rootScope.$on('$stateChangeStart', function() {
         $rootScope.page_loading=true;//loading图片显示

@@ -1379,7 +1379,7 @@ a{
     cursor:pointer;
 }
 .btn-user{background-color: #f1f3f7;}
-.btn-cart{background-color: #f69c00;}
+.btn-cart{background-color: #ec3640;}
 .btn-cart .label{ color:#FFF;}
 .btn-cart  .icon-arrow-down{border-top: 5px solid #fff !important;}
 .btn-user:hover .hide-user a:hover{
@@ -1658,7 +1658,7 @@ a.icon-mb-link{
     height: 36px;
     line-height: 30px;
     padding: 0px 10px;
-    border: 1px solid #FF9908;
+    border: 1px solid #ec3640;
     outline: none;
     float: left;
     font-size: 13px;
@@ -1670,7 +1670,7 @@ a.icon-mb-link{
     width:40px;
     height:36px;
     background-image:url(../res/icon/icon_Search.png);
-    background-color:#FF9908;
+    background-color:#ec3640;
     background-repeat:no-repeat;
     background-position:12px 10px ;
     color:#fff;
@@ -1754,7 +1754,7 @@ a.icon-mb-link{
 }
 .category-top{
     height: 40px;
-	background: #ff6700;
+	background: #ec3640;
 	margin-top: -40px;
     position:relative;
 }

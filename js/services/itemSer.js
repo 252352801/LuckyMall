@@ -60,8 +60,8 @@ angular.module('LuckyMall.services')
                 }).success(function (response, status, headers, config) {
                     if(status==200&&response!=null) {
                         data = response;
-                        data.minPrice=data.FloorPrice;//Math.ceil(data.RetailPrice*data.MaxDiscount);
-                        data.maxPrice=data.CeilingPrice;//Math.ceil(data.RetailPrice*data.MinDiscount);
+                        data.minPrice=parseInt(data.FloorPrice);//Math.ceil(data.RetailPrice*data.MaxDiscount);
+                        data.maxPrice=parseInt(data.CeilingPrice);//Math.ceil(data.RetailPrice*data.MinDiscount);
                         data.minDiscount=(data.MinDiscount*10).toFixed(1);
                         data.maxDiscount=(data.MaxDiscount*10).toFixed(1);
                         data.SmallImages = data.RollingImages.split('|');

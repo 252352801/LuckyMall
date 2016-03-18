@@ -95,7 +95,7 @@
                             </div>
                             <div class="discount-slider">
                                 <ul>
-                                    <li ng-bind="(cur_disc*10).toFixed(1)+'折'"></li>
+                                    <li ng-bind="cur_disc<1?(cur_disc*10).toFixed(1)+'折':'最高价'"></li>
                                 </ul>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                            <span class="icon-discount" ng-bind="rank.DiscountValue+'折'"></span>
                        </td>
                        <td>
-                           <span class="final-price color-org" ng-bind="'￥'+MathCeilPrice(item.itemData.RetailPrice*rank.DiscountValue/10)"></span>
+                           <span class="final-price color-org" ng-bind="'￥'+(item.itemData.maxPrice-rank.SaveMoney)"></span>
                        </td>
                        <td>
                            <span ng-bind="'￥'+rank.SaveMoney"></span>

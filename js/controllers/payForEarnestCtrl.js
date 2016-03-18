@@ -101,13 +101,7 @@ angular.module('LuckyMall.controllers')
                                 $scope.$emit('cart-update');
                                 $rootScope.$broadcast('orders-update');
                                 if ($scope.pay_type == 'weixin') { //如果是微信支付
-                                    //   var used_blc=($scope.data_balance>=$scope.earnest_cost)?$scope.earnest_cost:$scope.data_balance;
                                     WXPaySer.setTotalCost($scope.earnest_cost);
-                                    var order_id = $stateParams.params;
-                                    var g_url = Host.game + '?orderid=' + order_id + '&from=' + Host.hostname + '&authorization=' + TokenSer.getToken();
-                                    $rootScope.game.url = g_url;
-                                    $rootScope.game.orderId = order_id;
-                                    $rootScope.game.commodityId = $scope.commodityId;
                                     $state.go('WXPay', {trade_id: response.OutTradeNo, type: 0});
                                 } else {
                                     $timeout(function () {
@@ -182,7 +176,7 @@ angular.module('LuckyMall.controllers')
                         callback();
                     }
                 });
-                if (UserSer.getData() == null) {
+                if (UserSer.getData().UserModel == null) {
                     RefreshUserDataSer.requestUserData(function (response, status) {
                         if (status == 1) {
                             UserSer.setUserData(RefreshUserDataSer.getData());
@@ -194,6 +188,7 @@ angular.module('LuckyMall.controllers')
                         }
                     });
                 } else {
+                    console.log(UserSer.getData());
                     if (UserSer.getData().UserModel.IsAgreeEarnest == true) {
                         $scope.isProtocolShow = false;
                     } else {
@@ -270,10 +265,6 @@ angular.module('LuckyMall.controllers')
                         if (status === 1) {
                             $rootScope.$broadcast('user-update');
                             $rootScope.$broadcast('orders-update');
-                            ga('send', 'pageview', {
-                                'page': '/complete_earnest',
-                                'title': '完成支付定金'
-                            });
                             $state.go('payEarnestSuccess', {order_id: $stateParams.params, commodity_id: $scope.commodityId});
 
                         } else {

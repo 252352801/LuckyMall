@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
- .controller('HomeCtrl',['$scope','HomeSer','ActivitySer','$cookies','$timeout','ShowOffOrdersSer',
-        function($scope,HomeSer,ActivitySer,$cookies,$timeout,ShowOffOrdersSer){
+ .controller('HomeCtrl',['$scope','HomeSer','$cookies','$timeout','ShowOffOrdersSer',
+        function($scope,HomeSer,$cookies,$timeout,ShowOffOrdersSer){
         if (HomeSer.getData().banner == null) {
             HomeSer.requestBannerData(function (response, status) {
                 if (status == 1) {

@@ -2,20 +2,33 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
 
     .controller('AppCtrl',
     ['SOTDSvc', '$http', 'API', '$scope', '$timeout', 'CartSer', 'LoginSer', '$cookies', '$rootScope', '$state', 'MyOrdersSer', 'WalletSer',
-        'AddressSer', 'MessageSer', 'ImgSer', 'RefreshUserDataSer', 'UserSer', 'TokenSer', 'MarketSer', 'FreePlaySvc','ENV',
+        'AddressSer', 'MessageSer', 'ImgSer', 'RefreshUserDataSer', 'UserSer', 'TokenSer', 'MarketSer', 'FreePlaySvc','ENV','svc',
         function (SOTDSvc, $http, API, $scope, $timeout, CartSer, LoginSer, $cookies, $rootScope, $state, MyOrdersSer, WalletSer, AddressSer,
-                  MessageSer, ImgSer, RefreshUserDataSer, UserSer, TokenSer, MarketSer, FreePlaySvc,ENV) {
+                  MessageSer, ImgSer, RefreshUserDataSer, UserSer, TokenSer, MarketSer, FreePlaySvc,ENV,svc) {
+
+
+
+
+
+
+
+
+
+
+
             $rootScope.login_target = {//登陆后跳转的目标
                 state: 'home',
                 params: {}
             };
             $rootScope.freePlay = FreePlaySvc.getData();//免费试玩数据   chance：次数   isCanSignUp:是否可签到
-            $scope.cartAmount = 0;//购物车商品数量
-            $scope.isLoginModalShow = false;//登陆框是否显示
-            $scope.isFeedbackModalShow = false;//反馈框是否显示
+            $rootScope.cartAmount = 0;//购物车商品数量
+            $rootScope.isLoginModalShow = false;//登陆框是否显示
+            $rootScope.isFeedbackModalShow = false;//反馈框是否显示
+            $rootScope.isGetCouponsModalShow=false;
             $rootScope.isLogin = false;//是否已经登陆
             $scope.refresher = undefined;//刷新用户数据
             $rootScope.session_key = null;
+            $rootScope.getCouponsCount=-1;
             getImgHost();//获取图片服务器地址
             authorization();//授权登录
             loadMarketData();//市场活动专题
@@ -87,6 +100,18 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                 if($rootScope.user.UserModel.NickName==''){
                     $rootScope.user.UserModel.NickName=$rootScope.user.simpleMobile
                 }
+
+
+
+                svc.get(API.getVieCouponCoupon.url,function(response,status){//抢红包次数
+                    if(status==200){
+                       $rootScope.getCouponsCount=response;
+                    }
+                });
+
+
+
+                $rootScope.woopra.auth();
             });
             function hideSomeStr(str, start, end, replace_str) {
                 var sub_str = str.substring(start, end);

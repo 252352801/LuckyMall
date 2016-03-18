@@ -411,7 +411,7 @@
 .modal-waitingPay{
     box-sizing:border-box;
     width:500px;
-    border:10px solid rgba(0,0,0,0.1);
+    border:10px solid rgba(255,255,255,0.15);
     padding:25px 50px;
     font-size:14px;
     background:#fff;

@@ -4,7 +4,7 @@
            <h2 class="modal-title">获取优惠</h2>
 
            <ul ng-class="{'menu':order.EarnestBusinessType==0,'menu disabled':order.EarnestBusinessType!=0}">
-               <li ng-class="{'btn-play':isCanPlay,'btn-play disabled':!isCanPlay}" ng-click="play()">
+               <li ng-class="{'btn-play':isCanPlay,'btn-play disabled':!isCanPlay}" ng-click="play()" ng-show="gameType!=-1">
                    进入游戏
                </li>
                <li class="btn-payForEarnest" ng-click="payEarnest()">

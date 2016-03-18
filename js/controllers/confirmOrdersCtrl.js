@@ -403,6 +403,15 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
+
+
+                        $rootScope.woopra.evet.CP.properties.productname=$scope.data_orders[0].CommodityName;
+                        $rootScope.woopra.evet.CP.properties.originprice=$scope.data_orders[0].OriginalPrice;
+                        $rootScope.woopra.evet.CP.properties.EarnestMoney=$scope.data_orders[0].earnest;
+                        $rootScope.woopra.evet.CP.properties.discount=$scope.data_orders[0].DiscountValue;
+                        $rootScope.woopra.evet.CP.properties.coupon=$scope.data_orders[0].CouponMoney;
+                        $rootScope.woopra.evet.CP.properties.finalmoney=$scope.data_orders[0].Unpaid;
+                        $rootScope.woopra.track($rootScope.woopra.evet.CP);
                         $state.go('paySuccess');
                     }else{
                         pollingTradeStatus(trade_id);

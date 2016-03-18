@@ -349,7 +349,6 @@ angular.module('LuckyMall.controllers')
 
                             };
                         }
-                        console.log($this);
 
                     }
                     if($this.itemData.status==1) {
@@ -547,6 +546,9 @@ angular.module('LuckyMall.controllers')
                             });
 
                         }
+                        $rootScope.woopra.evet.PO.properties.productname=$this.itemData.CommodityName;
+                        $rootScope.woopra.track($rootScope.woopra.evet.PO);
+
                     } else if (status == 0) {
                         $this.btnVal.addToCart.cur = $this.btnVal.addToCart.org;
                         $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;;

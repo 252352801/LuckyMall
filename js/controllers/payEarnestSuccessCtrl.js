@@ -2,14 +2,32 @@ angular.module('LuckyMall.controllers')
     .controller('PayEarnestSuccessCtrl', function ($scope, CartSer,$stateParams, $state,$cookies, $timeout, MyOrdersSer,TokenSer,RefreshUserDataSer,OrderDetailsSer,
                                            Host,$rootScope) {
              var order_id=$stateParams.order_id;
-             var goods_id=$stateParams.commodity_id;
-        loadUserData();
+        $scope.data_order=undefined;
+        loadOrderInfo();
              $rootScope.$broadcast('cart-update');
                $scope.playGame=function(){
-                   var auth=TokenSer.getToken();
-                   $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + order_id + '&mode=1&from=' + Host.playFrom+ '&authorization=' + auth;
-                   $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + order_id + '&mode=1&from=' + Host.playFrom+ '&authorization=' + auth;
-                   $scope.gameMenu.show=true;
+                   var auth = TokenSer.getToken();
+                   $scope.gameMenu.gameUrl.fingerGuessing = Host.game.fingerGuessing + '?id=' + order_id + '&mode=1&from=' + Host.playFrom + '&authorization=' + auth;
+                   $scope.gameMenu.gameUrl.fishing = Host.game.fishing + '?id=' + order_id + '&mode=1&from=' + Host.playFrom + '&authorization=' + auth;
+                   if(!auth){
+                       $state.go('login');
+                   }else {
+                       if ($scope.data_order != undefined) {
+                             if(parseInt($scope.data_order.OriginalPrice>200)){
+                                 $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                             }else{
+                                 $scope.gameMenu.show = true;
+                             }
+                       } else {
+                           loadOrderInfo(function () {
+                               if(parseInt($scope.data_order.OriginalPrice>200)){
+                                   $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                               }else{
+                                   $scope.gameMenu.show = true;
+                               }
+                           });
+                       }
+                   }
                }
 
         $scope.gameMenu={//游戏菜单
@@ -22,49 +40,23 @@ angular.module('LuckyMall.controllers')
             }
         };
 
-        function loadUserData() {
-            RefreshUserDataSer.requestUserData(function (response, status) {
-                if (status == 1) {
-                    $scope.data_user = RefreshUserDataSer.getData();
-                    loadOrderInfo(function(){
-                        var org_cost= Math.ceil($scope.data_order.UnitPrice*$scope.data_order.Count);
-                        $scope.isEnough=testEnergy(org_cost, $scope.data_order.EarnestPercent, $scope.data_order.EarnestMoney, $scope.data_user.LuckyEnergy.PaidValue);
-                    });
-                }
-            });
-        }
 
 
         function loadOrderInfo(callback){
             OrderDetailsSer.requestData(order_id,function(resp,status){
                 if(status==1){
                     $scope.data_order=OrderDetailsSer.getData();
-                    callback();
-                }
-            });
-        }
-
-        /**检查能量是否够进入游戏*/
-        function testEnergy(total_cost,percent,paid_value,remain_energy) {
-            var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
-            var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
-            if(remain_amount>=10){
-                return true;
-            }else{
-                if(paid_value>0){
-                    if(remain_amount>=1){
-                        return true;
+                    if(typeof callback=='function') {
+                        callback();
                     }else{
-                        return false;
+                        $rootScope.woopra.evet.PE.properties.productname=$scope.data_order.CommodityName;
+                        $rootScope.woopra.evet.PE.properties.earnest=$scope.data_order.EarnestMoney;
+                        $rootScope.woopra.track($rootScope.woopra.evet.PE);
                     }
                 }else{
-                    if(remain_amount<4){
-                        return false;
-                    }else if(remain_amount>=4){
-                        return true;
-                    }
+                    $state.go('404');
                 }
-            }
+            });
         }
 
     });

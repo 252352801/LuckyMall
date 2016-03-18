@@ -27,6 +27,60 @@ angular.module('LuckyMall')
         };
     })
 
+
+/**
+ * 抢红包按钮
+ */
+    .directive('btnGetCoupons', function () {
+        return {
+            restrict: 'E',
+            template: '<div class="img-btn-getCoupons txt-no-select" ng-click="open()"></div>',
+            scope:{
+
+            },
+            controller:function($scope,$rootScope,$state){
+                $scope.open=function(){
+                    if($rootScope.isLogin) {
+                        $rootScope.isGetCouponsModalShow = true;
+                    }else{
+                        $scope.$emit("show-login-modal");
+                    }
+                };
+            }
+        };
+    })
+/**
+ * 抢红包模态框
+ */
+    .directive('modalGetCoupons', function (svc,API) {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/modal-getCoupons.html',
+            scope:{
+                visible:'=',
+                count:'=count'
+            },
+            controller:function($scope,$rootScope,Host,TokenSer){
+                $scope.close=function(){
+                    $scope.visible=false;
+                   $rootScope.isGetCouponsModalShow=$scope.visible;
+                    $scope.index=0;
+                };
+                $scope.index=0;
+                $scope.changeStep=function(new_index){
+                    $scope.index=new_index;
+                };
+                $scope.play=function(){
+                    if($scope.count>0) {
+                        var g_url = Host.game.fishing + '?id=0&mode=5&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
+                        $rootScope.openGame(g_url, '', '');
+                        $scope.visible=false;
+                    }
+                };
+            }
+        };
+    })
+
     /*回到顶部*/
     .directive('btnPageUp', function () {
         return {
@@ -1186,12 +1240,6 @@ angular.module('LuckyMall')
                     $scope.visible=false;
                 };
                 $scope.play=function(game_name){
-                 /*   if(game_name=='fishing'){
-                        $scope.gameMenu.gameUrl[game_name]=$scope.gameMenu.gameUrl[game_name].replace('mode=2','mode=5');
-                        $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
-                        $scope.visible=false;
-                        return;
-                    }*/
                     $scope.visible=false;
                     $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                 };
@@ -1214,7 +1262,7 @@ angular.module('LuckyMall')
                 gameMenu:'=gamectrl'
             },
             templateUrl: 'common/templates/modal-getDiscount.html',
-            controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc){
+            controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc,svc,API){
                 $scope.isCheckedWallet=false;
                 $scope.isCheckedCoupon=false;
                 $scope.content_exchange_energy=false;
@@ -1223,7 +1271,7 @@ angular.module('LuckyMall')
                 $scope.use_wallet=0;
                 $scope.use_coupon=0;
 
-
+                $scope.gameType=-1;//-1  未定义  0没玩过游戏  1捕鱼   2猜拳
 
 
 
@@ -1314,7 +1362,13 @@ angular.module('LuckyMall')
                             if(parseInt($scope.order.OriginalPrice)>200){//大于两百时直接进入捕鱼游戏
                                 $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                             }else{
-                                $scope.gameMenu.show=true;
+                                if($scope.gameType==0) {
+                                    $scope.gameMenu.show = true;
+                                }else if($scope.gameType==1){
+                                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                                }else if($scope.gameType==2){
+                                    $rootScope.openGame($scope.gameMenu.gameUrl.fingerGuessing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                                }
                             }
                             $scope.visible=false;
                     }
@@ -1330,8 +1384,11 @@ angular.module('LuckyMall')
                                 });
                                 loadBalanceInfo();
                                 $rootScope.$broadcast('cart-update');
-                                $scope.gameMenu.show=true;
-                                //$rootScope.openGame($scope.gameUrl, $scope.game_orderId, $scope.game_commodityId);
+                                if(parseInt($scope.order.OriginalPrice)>200){
+                                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing, $scope.game_orderId, $scope.game_commodityId);
+                                }else {
+                                    $scope.gameMenu.show = true;
+                                }
                                 $scope.visible = false;
                             } else {
                                 swal('兑换失败!', '', 'error');
@@ -1381,37 +1438,18 @@ angular.module('LuckyMall')
                 };
 
                 /**检查能量是否够4发炮弹**/
-                function testEnergy(total_cost,percent,paid_value,remain_energy) {
+                function testEnergy() {
+                    svc.get(API.gameType.url+$scope.order.Id,function(response,status){
+                            if(status==200){
+                                $scope.gameType=response;
+                            }
+                        });
                     return true;
-                    var per_cost=total_cost*percent/10; // 每发消耗￥=每发消耗能量=原价*定金百分比/10
-                    var remain_amount=remain_energy/per_cost;//剩余能量支持的弹药数量
-                    if(remain_amount>=10){
-                        $scope.energy.tips = '喵喵体力充足，快去赢取更多折扣吧！';
-                        return true;
-                    }else{
-                        if(paid_value>0){
-                            if(remain_amount>=1){
-                                $scope.energy.tips = '进入游戏赢取更多折扣吧！';
-                                return true;
-                            }else{
-                                $scope.energy.tips = '喵喵体力不支，可先去付定金获得赠送体力！';
-                                return false;
-                            }
-                        }else{
-                            if(remain_amount<4){
-                                $scope.energy.tips = '喵喵体力不足，可先去付定金获得赠送体力！';
-                                return false;
-                            }else if(remain_amount>=4){
-                                $scope.energy.tips = '喵喵体力不多，建议先去支付定金获赠体力！';
-                                return true;
-                            }
-                        }
-                    }
                 }
                 function initPage(order){
                    var data_orgCost = Math.round(order.UnitPrice * $scope.order.Count);//打折前总花费
                     $scope.order.earnest_cost=parseInt($scope.order.TotalEarnestPrice)-$scope.order.EarnestMoney;//需支付的定金总额
-                    if (testEnergy(data_orgCost ,order.EarnestPercent, order.EarnestMoney, $scope.order.LuckyEnergy)) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
+                    if (testEnergy()) {//判断能量是否能进入游戏; 参数依次为  总价 定金比例 已付定金 用户剩余能量
                         $scope.energy.isEnough = true;
                         if($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3) {
                             $scope.isCanPlay = true;
@@ -1422,6 +1460,7 @@ angular.module('LuckyMall')
                         $scope.energy.isEnough = false;
                         $scope.isCanPlay=false;
                     }
+
                     $scope.gameMenu.gameUrl.fishing = Host.game.fishing + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.gameMenu.gameUrl.fingerGuessing = Host.game.fingerGuessing + '?id=' + order.Id + '&mode=1&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                     $scope.gameMenu.orderId = order.Id;
