@@ -25,9 +25,7 @@ angular.module('LuckyMall.controllers')
        /* 支付方式显示*/
         $scope.showPayType=function(){
             var result='';
-           /* if($scope.data_balance>0&&$scope.total_earnest>0){
-                    result+='喵喵钱包余额+';
-            };*/
+
             switch($scope.pay_type){
                 case 'zhifubao':result+='支付宝';break;
                 case 'weixin':result+='微信支付';break;
@@ -161,7 +159,9 @@ angular.module('LuckyMall.controllers')
                         tmp.from='repay';
                         SOTDSvc.set(tmp);
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
-                           // var used_blc=($scope.data_balance>=$scope.total_earnest?$scope.total_earnest:$scope.data_balance);
+
+                            setWPP(); //设置提交woopra的信息
+
                             WXPaySer.setTotalCost($scope.total_cost);
                             $state.go('WXPay',{trade_id:response.Data.OutTradeNo,type:1});
                         }else{
@@ -179,7 +179,9 @@ angular.module('LuckyMall.controllers')
                                     'page': '/complete_checkout',
                                     'title': '完成购买'
                                 });
-                                //  $rootScope.initFreeChance();//支付成功刷新机会
+                                setWPP();
+                                $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
+                                $rootScope.woopra.track($rootScope.woopra.evet.CP);
                                 $state.go('paySuccess');
                             }
                         }
@@ -190,7 +192,9 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
-                      //  $rootScope.initFreeChance();//支付成功刷新机会
+                        setWPP();
+                        $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
+                        $rootScope.woopra.track($rootScope.woopra.evet.CP);
                         $state.go('paySuccess');
 
                     }else if(response.Code=='0X01'){
@@ -239,6 +243,9 @@ angular.module('LuckyMall.controllers')
                         'title': '完成购买'
                     });
                     //$rootScope.initFreeChance();
+                    setWPP();
+                    $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
+                    $rootScope.woopra.track($rootScope.woopra.evet.CP);
                     $state.go('paySuccess');
                 }else{
                     $scope.isTipsUnFinishShow=true;
@@ -403,20 +410,26 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
-
-
-                        $rootScope.woopra.evet.CP.properties.productname=$scope.data_orders[0].CommodityName;
-                        $rootScope.woopra.evet.CP.properties.originprice=$scope.data_orders[0].OriginalPrice;
-                        $rootScope.woopra.evet.CP.properties.EarnestMoney=$scope.data_orders[0].earnest;
-                        $rootScope.woopra.evet.CP.properties.discount=$scope.data_orders[0].DiscountValue;
-                        $rootScope.woopra.evet.CP.properties.coupon=$scope.data_orders[0].CouponMoney;
-                        $rootScope.woopra.evet.CP.properties.finalmoney=$scope.data_orders[0].Unpaid;
-                        $rootScope.woopra.track($rootScope.woopra.evet.CP);
+                        {
+                            //设置提交woopra的信息
+                            setWPP();
+                            $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
+                            $rootScope.woopra.track($rootScope.woopra.evet.CP);
+                        }
                         $state.go('paySuccess');
                     }else{
                         pollingTradeStatus(trade_id);
                     }
                 });
             },2000);
+        }
+
+        function setWPP(){//设置woopra的properties
+            $rootScope.woopraTempData.confirmOrders.properties.productname = $scope.data_orders[0].CommodityName;
+            $rootScope.woopraTempData.confirmOrders.properties.originprice = $scope.data_orders[0].OriginalPrice;
+            $rootScope.woopraTempData.confirmOrders.properties.EarnestMoney = $scope.data_orders[0].earnest;
+            $rootScope.woopraTempData.confirmOrders.properties.discount = $scope.data_orders[0].DiscountValue;
+            $rootScope.woopraTempData.confirmOrders.properties.coupon = $scope.data_orders[0].CouponMoney;
+            $rootScope.woopraTempData.confirmOrders.properties.finalmoney = $scope.data_orders[0].Unpaid;
         }
 }]);

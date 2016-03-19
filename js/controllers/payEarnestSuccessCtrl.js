@@ -49,9 +49,7 @@ angular.module('LuckyMall.controllers')
                     if(typeof callback=='function') {
                         callback();
                     }else{
-                        $rootScope.woopra.evet.PE.properties.productname=$scope.data_order.CommodityName;
-                        $rootScope.woopra.evet.PE.properties.earnest=$scope.data_order.EarnestMoney;
-                        $rootScope.woopra.track($rootScope.woopra.evet.PE);
+
                     }
                 }else{
                     $state.go('404');

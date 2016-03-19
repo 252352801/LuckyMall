@@ -101,6 +101,8 @@ angular.module('LuckyMall.controllers')
                                 $scope.$emit('cart-update');
                                 $rootScope.$broadcast('orders-update');
                                 if ($scope.pay_type == 'weixin') { //如果是微信支付
+                                    $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
+                                    $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.EarnestMoney;
                                     WXPaySer.setTotalCost($scope.earnest_cost);
                                     $state.go('WXPay', {trade_id: response.OutTradeNo, type: 0});
                                 } else {
@@ -108,7 +110,6 @@ angular.module('LuckyMall.controllers')
                                         $scope.isModalWaitingShow = true;
                                     });
                                     newWin.location.href = API.aliPaySubmit.url + response.OutTradeNo;//新窗口地址改变
-                                    //location.href = API.aliPaySubmit.url + response.OutTradeNo;
                                     pollingTradeStatus(response.OutTradeNo);
                                     $scope.trade_id = response.OutTradeNo;
                                 }
@@ -265,6 +266,12 @@ angular.module('LuckyMall.controllers')
                         if (status === 1) {
                             $rootScope.$broadcast('user-update');
                             $rootScope.$broadcast('orders-update');
+                            {
+                                $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
+                                $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.EarnestMoney;
+                                $rootScope.woopra.evet.PE.properties=$rootScope.woopraTempData.payForEarnest.properties;
+                                $rootScope.woopra.track($rootScope.woopra.evet.PE);
+                            }
                             $state.go('payEarnestSuccess', {order_id: $stateParams.params, commodity_id: $scope.commodityId});
 
                         } else {

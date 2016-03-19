@@ -100,6 +100,12 @@ input:focus{
 .pull-right{
     float:right;
 }
+.color-base{
+    color:#ec3640;!important;
+}
+.bg-base{
+    background-color:#ec3640;!important;;
+}
 .color-org{
     color:#ff6700!important;
 }
@@ -1580,7 +1586,7 @@ a.btn-to-pay{
     top:-8px;
 }
 .nav a.cur{
-    color:#ff6700;
+    color:#ec3640;
 }
 .nav a.new:before{
     content: '';
@@ -1679,7 +1685,7 @@ a.icon-mb-link{
     float:left;
 }
 .sub-header .box-search .btn-search:hover{
-    background-color:#ff6700 ;
+    background-color:#c60f19 ;
 }
 .sub-header ul.kw-list{
     width: 298px;
@@ -4229,16 +4235,16 @@ modal-beforeGame
     transition:left 0.3s;
 }
 .modal-getCoupons .ul-gc-steps .gc-step1{
-    background: url(../res/images/coupon/gc_step1.png) 50% 0% no-repeat;
+    background: url(../res/images/coupon/gc_step1.png) 61% 0% no-repeat;
 }
 .modal-getCoupons .ul-gc-steps .gc-step2{
-    background: url(../res/images/coupon/gc_step2.png) 62% 0% no-repeat;
+    background: url(../res/images/coupon/gc_step2.png) 50% 0% no-repeat;
 }
 .modal-getCoupons .ul-gc-steps .gc-step3{
     background: url(../res/images/coupon/gc_step3.png) 50% 0% no-repeat;
 }
 .modal-getCoupons .ul-gc-steps .gc-step4{
-    background: url(../res/images/coupon/gc_step4.png) 42% 0% no-repeat;
+    background: url(../res/images/coupon/gc_step4.png) 50% 0% no-repeat;
 }
 .modal-getCoupons .ul-gc-steps .btn{
     display:block;
@@ -4252,8 +4258,11 @@ modal-beforeGame
     margin-top:400px;
     overflow: hidden;
 }
+.modal-getCoupons .ul-gc-steps .gc-step2 .box-buttons{
+    margin-top:470px;
+}
 .modal-getCoupons .ul-gc-steps .gc-step3 .box-buttons{
-    margin-top:500px;
+    margin-left:105px;
 }
 .modal-getCoupons .ul-gc-steps .btn.btn-play{
     background: url(../res/images/coupon/gc_play.png);

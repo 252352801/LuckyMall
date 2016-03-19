@@ -28,108 +28,6 @@
     </div>
     <!--css3-banner图  end-->
 
-    <!--<div class="content home bar-clg-rec" ng-show="data_record.length>0">
-        <h3 class="bar-title txt-center">擂台记录</h3>
-
-        <div ng-style="{'position':'relative','top':-record_index*60+'px','transition':!isScrollRecEnd?'top .8s':'none'}">
-            <ul class="ul-clg-rec" >
-                <li ng-repeat="rec in data_record">
-                    <div class="cont cont1">
-                        <img ng-src="{{rec.UserAvatar.image?imgHost+rec.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg" />
-
-                        <p class="color-org user-name" ng-bind="rec.UserName"></p>
-
-                        <p class="color-gray" ng-bind="rec.CreateTimeStr"></p>
-                    </div>
-                    <div class="cont cont2">
-                        <h2 ng-bind="rec.CommodityName"></h2>
-                    </div>
-                    <div class="cont cont3">
-                        <a class="icon-disc">
-                            <span ng-bind="rec.UserDiscount"></span>折卡
-                        </a>
-
-                    </div>
-                    <div class="cont cont4 color-gray">
-                        得分：<span class="score" ng-bind="rec.UserGameScore"></span>
-                    </div>
-                    <div class="cont cont5">
-                        <span class="icon-clg-result success" ng-if="rec.IsPass"></span>
-                        <span class="icon-clg-result fail" ng-if="!rec.IsPass"></span>
-                    </div>
-                </li>
-            </ul>
-            <ul class="ul-clg-rec">
-                <li ng-repeat="rec in data_record">
-                    <div class="cont cont1">
-                        <img ng-src="{{rec.UserAvatar.image?imgHost+rec.UserAvatar.image:'./res/images/touxiang.jpg'}}" error-src="./res/images/touxiang.jpg"/>
-
-                        <p class="color-org user-name" ng-bind="rec.UserName"></p>
-
-                        <p class="color-gray" ng-bind="rec.CreateTimeStr"></p>
-                    </div>
-                    <div class="cont cont2">
-                        <h2 ng-bind="rec.CommodityName"></h2>
-                    </div>
-                    <div class="cont cont3">
-                        <a class="icon-disc">
-                            <span ng-bind="rec.UserDiscount"></span>折卡
-                        </a>
-
-                    </div>
-                    <div class="cont cont4 color-gray">
-                        得分：<span class="score" ng-bind="rec.UserGameScore"></span>
-                    </div>
-                    <div class="cont cont5">
-                        <span class="icon-clg-result success" ng-if="rec.IsPass"></span>
-                        <span class="icon-clg-result fail" ng-if="!rec.IsPass"></span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="home content box-act" ng-show="data_act_group.length>0">
-        <div class="box-act-title">
-            <label>擂台商品</label>
-            <a class="btn" href="/activity/index">进入擂台赛</a>
-        </div>
-        <div class="act-slider">
-   &lt;!&ndash;         <ul class="ul-act" ng-repeat="group in data_act_group" ng-style="{'left':(100*($index-act_group_index))+'%','transition':'left .8s'}">&ndash;&gt;
-              <ul class="ul-act" ng-repeat="group in data_act_group track by $index" ng-style="{'z-index':$index==act_group_index?'2':'-1','opacity':$index==act_group_index?'1':'0','transition':'opacity 1.5s'}">
-                <li ng-repeat="act in group track by $index">
-                    <a class="img-container" href="/activity/details/{{act.Id}}">
-                        <img ng-src="{{imgHost+act.CommodityImage+'@220w_220h_100Q.jpg'}}" error-src="./res/images/default.png" />
-                    </a>
-
-                    <div class="act-info">
-                        <h2 >
-                            <a  href="/activity/details/{{act.Id}}" ng-bind="act.CommodityName"></a>
-                        </h2>
-
-                        <p class="price">
-                            低至<span class="color-org">￥</span><span class="min-price" ng-bind="act.minPrice"></span>
-
-                        </p>
-                        <p class="bar-time">结束倒计时：<span time-down="act.remainTime" timeovershow="已结束"></span></p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>-->
-
-
-
-
-
-
-    <ul class="floor-nav" floor-nav len="data_floor.length" ng-style="{'opacity':showFloorNav==true?'1':'0','transition':'opacity 1s'}">
-        <li ng-repeat="f in data_floor" ng-click="scrollTo('floor'+$index)" ng-class="{'cur':cur_floor==$index}" ng-style="{'border-color':(cur_floor-1==$index||cur_floor==$index)?'transparent':'#eee'}">
-            <p ng-bind="f.name"></p>
-        </li>
-    </ul>
-
-
 
 
     <!--中部 start-->
@@ -137,7 +35,7 @@
         <div class="content">
             <div class="module-so" ng-show="data_soo.orgData.length>=4"> <!--晒单模块-->
                 <div class="md-top">
-                    <h2>晒单分享<span class="color-org">晒单分享可获得10元红包</span></h2>
+                    <h2>晒单分享<span class="color-base">晒单分享可获得10元红包</span></h2>
                     <a href="/showOffOrders" class="more">更多></a>
                 </div>
                 <ul class="over-hidden ul-index-soo">
@@ -147,7 +45,7 @@
                                 <div class="avatar">
                                     <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
                                 </div>
-                                <p class="user-name" title={{soo.NickName}} ng-bind="soo.NickName"></p>
+                                <p class="user-name" title={{soo.NickName}} ng-bind="soo.Nickname"></p>
                                 <p class="color-999" ng-bind="soo.CreateTime"></p>
                                 <p class="bar-icons">
                                     <span class="so-icon-disc" ng-bind="'获得'+soo.DiscountValue+'折'"></span>
@@ -174,7 +72,7 @@
                                 <div class="large-dt-user">
                                     <img ng-src={{imgHost+data_soo.large.Avatar.image}} error-src="./res/images/touxiang.jpg" />
                                     <div class="over-hidden bar-show-info">
-                                        <p class="pull-left user-name" ng-bind="data_soo.large.NickName"></p>
+                                        <p class="pull-left user-name" ng-bind="data_soo.large.Nickname"></p>
                                         <p class="pull-left color-999" ng-bind="data_soo.large.CreateTime"></p>
                                         <p class=" pull-right">
                                             <span class="so-icon-disc" ng-bind="'获得'+data_soo.large.DiscountValue+'折'"></span>
@@ -196,11 +94,11 @@
 
 
 
-            <div class="soo-slide-box">
+<!--            <div class="soo-slide-box">
                  <ul>
                      <li></li>
                  </ul>
-            </div>
+            </div>-->
 
             <grid griddata="data_floor"></grid>
         </div>

@@ -48,8 +48,14 @@ angular.module('LuckyMall.controllers')
                                     'page': '/complete_checkout',
                                     'title': '完成购买'
                                 });
+                                {
+                                    $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
+                                    $rootScope.woopra.track($rootScope.woopra.evet.CP);
+                                }
                                 $state.go('paySuccess');
                             } else {
+                                $rootScope.woopra.evet.PE.properties=$rootScope.woopraTempData.payForEarnest.properties;
+                                $rootScope.woopra.track($rootScope.woopra.evet.PE);
                                 $state.go('payEarnestSuccess', {order_id: $rootScope.game.orderId, commodity_id: $rootScope.game.commodityId});
                             }
                         } else {

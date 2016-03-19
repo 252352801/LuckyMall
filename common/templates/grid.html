@@ -13,11 +13,12 @@
                  ng-style="{'border':'0px solid #f1f1f1','background':'#fff','width':(1/box.col)*grid.colSpace*100+'%',
                  'height':(grid.mode==1&&box.isAllBrands)?(w/box.col)*grid.rowSpace/2+'px':(w/box.col)*grid.rowSpace+'px','position':'absolute','left':(1/box.col)*100*grid.startX+'%',
                  'top':(w/box.col)*grid.startY+'px','text-align':'center'}">
-                <a ng-class="{'item-link link':grid.mode==2,'link':grid.mode!=2}" target="_blank" ng-href="{{grid.href}}" ng-style="{'border-left':grid.mode!=1?'1px solid #f1f1f1':'none',
-                'border-right':grid.mode!=1?'1px solid #f1f1f1':'none','border-top':'2px solid #f1f1f1','display':'block','padding':'0px','width':'100%','height':'100%'}">
+               <!-- <a ng-class="{'item-link link':grid.mode==2,'link':grid.mode!=2}" target="_blank" ng-href="{{grid.href}}" ng-style="{'border-left':grid.mode!=1?'1px solid #f1f1f1':'none',
+                'border-right':grid.mode!=1?'1px solid #f1f1f1':'none','border-top':'2px solid #f1f1f1','display':'block','padding':'0px','width':'100%','height':'100%'}">-->
+                <a ng-class="{'item-link link':grid.mode==2,'link':grid.mode!=2}" target="_blank" ng-href="{{grid.href}}" ng-style="{'border':grid.mode!=1?'1px solid #f1f1f1':'1px solid transparent','display':'block','padding':'0px','width':'100%','height':'100%'}">
                     <div class="bar-item-info">
                         <h2  ng-if="grid.mode==2" ng-bind="grid.data.name"></h2>
-                        <p   class="bar-price" ng-if="grid.mode==2" >低至<span class="color-org">￥</span><span class="min-price" ng-bind="grid.data.lowestPrice"></span></p>
+                        <p   class="bar-price" ng-if="grid.mode==2" >幸运价<span class="color-base">￥</span><span class="min-price" ng-bind="grid.data.lowestPrice"></span></p>
                     </div>
                     <img lazy-src="{{imgHost+grid.img}}" />
                 </a>

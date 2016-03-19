@@ -33,6 +33,30 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
             authorization();//授权登录
             loadMarketData();//市场活动专题
             getSessionKey();
+
+
+
+
+            $rootScope.woopraTempData={
+                confirmOrders:{
+                    valid:false,
+                    properties:$rootScope.woopra.evet.CP.properties
+                },
+                payForEarnest:{
+                    valid:false,
+                    properties:$rootScope.woopra.evet.PE.properties
+                }
+            };
+
+
+
+
+
+
+
+
+
+
             function getSessionKey() {
                 UserSer.getSessionKey(function (response, status) {
                     if (status == 1) {

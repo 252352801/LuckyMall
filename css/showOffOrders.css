@@ -83,7 +83,7 @@
 }
 .showOffOrders .bar-like .lm-heart{
     font-size:17px;
-    color: #c5c5c5;
+    color: #888;
 }
 .showOffOrders .bar-user{
     width:100%;
@@ -239,7 +239,7 @@
 }
 .soo-dt .box-submitInfo .info-top .iconfont{
     font-size:17px;
-    color: #999 !important;
+    color: #999;
     vertical-align: sub;
     margin-right: 3px;
 }
@@ -308,7 +308,7 @@
     margin:10px;
     min-height:40px;
     background: #fff0f0;
-    border:1px dashed #ff0000;
+    border:1px dashed #ec3640;
     padding:10px;
     color:#333;
     font-size:14px;
