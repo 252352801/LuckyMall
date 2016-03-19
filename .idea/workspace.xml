@@ -26,8 +26,8 @@
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="343.64" vertical-offset="9389" max-vertical-offset="11020">
-              <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
+            <state vertical-scroll-proportion="-11.28" vertical-offset="9389" max-vertical-offset="11020">
+              <caret line="509" column="14" selection-start-line="509" selection-start-column="14" selection-end-line="509" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -36,8 +36,8 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5854342" vertical-offset="912" max-vertical-offset="1729">
-              <caret line="70" column="5" selection-start-line="68" selection-start-column="2" selection-end-line="70" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.57198954" vertical-offset="912" max-vertical-offset="1767">
+              <caret line="71" column="42" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -46,8 +46,18 @@
       <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8148148" vertical-offset="0" max-vertical-offset="2299">
-              <caret line="12" column="62" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="62" />
+            <state vertical-scroll-proportion="-2.8395061" vertical-offset="321" max-vertical-offset="2375">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Desktop/活动上传/LuckyMall/templates/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.035714" vertical-offset="413" max-vertical-offset="1406">
+              <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="42" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -171,11 +181,11 @@
         <option value="$PROJECT_DIR$/templates/sooDetails.html" />
         <option value="$PROJECT_DIR$/css/showOffOrders.css" />
         <option value="$PROJECT_DIR$/css/index.css" />
-        <option value="$PROJECT_DIR$/templates/home.html" />
         <option value="$PROJECT_DIR$/common/config/config.js" />
         <option value="$USER_HOME$/Desktop/新建文件夹/LuckyMall/index.html" />
         <option value="$PROJECT_DIR$/common/templates/grid.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/templates/home.html" />
       </list>
     </option>
   </component>
@@ -619,14 +629,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/directives/directives.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="19862" max-vertical-offset="28747">
-          <caret line="1108" column="54" selection-start-line="1108" selection-start-column="54" selection-end-line="1108" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/templates/sub-header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1520" max-vertical-offset="2527">
@@ -957,14 +959,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="343.64" vertical-offset="9389" max-vertical-offset="11020">
-          <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/index.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.4" vertical-offset="5915" max-vertical-offset="16796">
@@ -997,14 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8148148" vertical-offset="0" max-vertical-offset="2299">
-          <caret line="12" column="62" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/templates/grid.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.571428" vertical-offset="0" max-vertical-offset="608">
@@ -1013,10 +999,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/common/controllers/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.28" vertical-offset="9389" max-vertical-offset="11020">
+          <caret line="509" column="14" selection-start-line="509" selection-start-column="14" selection-end-line="509" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/活动上传/LuckyMall/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.035714" vertical-offset="413" max-vertical-offset="1406">
+          <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="42" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8395061" vertical-offset="321" max-vertical-offset="2375">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5854342" vertical-offset="912" max-vertical-offset="1729">
-          <caret line="70" column="5" selection-start-line="68" selection-start-column="2" selection-end-line="70" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.57198954" vertical-offset="912" max-vertical-offset="1767">
+          <caret line="71" column="42" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
           <folding />
         </state>
       </provider>

@@ -28,7 +28,11 @@
     </div>
     <!--css3-banner图  end-->
 
-
+    <ul class="floor-nav" floor-nav len="data_floor.length" ng-style="{'opacity':showFloorNav==true?'1':'0','transition':'opacity 1s'}">
+        <li ng-repeat="f in data_floor" ng-click="scrollTo('floor'+$index)" ng-class="{'cur':cur_floor==$index}" ng-style="{'border-color':(cur_floor-1==$index||cur_floor==$index)?'transparent':'#eee'}">
+            <p ng-bind="f.name"></p>
+        </li>
+    </ul>
 
     <!--中部 start-->
     <div class="container">
