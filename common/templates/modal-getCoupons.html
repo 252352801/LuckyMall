@@ -1,0 +1,42 @@
+<div class="modal-overlay deep ng-hide" ng-show="visible">
+    <div class="modal-getCoupons">
+        <ul class="ul-gc-steps">
+            <li class="gc-step gc-step1" ng-style="{'left':index==0?'0px':(0-index)*1100+'px'}" ng-show="count>=0">
+                <div class="box-remain-count">
+                    <span ng-bind="count>=0?count:0" ng-class="{'font-sm':count>=100}"></span>
+                    <label>次</label>
+                </div>
+                <div class="box-buttons">
+                    <button class="btn btn-play" ng-click="play()" ng-style="{'opacity':count>0?1:0.5}"></button>
+                    <button class="btn btn-next" ng-click="changeStep(1)"></button>
+                </div>
+                <span class="btn-close" ng-click="close()"></span>
+            </li>
+            <li class="gc-step gc-step2" ng-style="{'left':index==1?'0px':(1-index)*1100+'px'}">
+                <div class="box-buttons">
+                    <button class="btn btn-next" ng-click="changeStep(2)"></button>
+                </div>
+                <span class="btn-close"  ng-click="close()"></span>
+            </li>
+            <li class="gc-step gc-step3" ng-style="{'left':index==2?'0px':(2-index)*1100+'px'}">
+                <div class="box-buttons">
+                    <button class="btn btn-next" ng-click="changeStep(3)" ></button>
+                </div>
+                <span class="btn-close"  ng-click="close()"></span>
+            </li>
+            <li class="gc-step gc-step4" ng-style="{'left':index==3?'0px':(3-index)*1100+'px'}">
+                <div class="box-buttons">
+                    <button class="btn btn-next"  ng-click="changeStep(4)"></button>
+                </div>
+                <span class="btn-close"  ng-click="close()"></span>
+            </li>
+            <li class="gc-step gc-step5" ng-style="{'left':index==4?'0px':(4-index)*1100+'px'}">
+                <div class="box-qrcode-img txt-center">
+                    <img src="https://webapi.xingyunmao.cn/api/system/appqrcode" />
+                    <p>扫一扫下载APP邀请好友注册</p>
+                </div>
+                <span class="btn-close"  ng-click="close()"></span>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -14,6 +14,7 @@ angular.module('LuckyMall.controllers')
         HomeSer. requestFloorData(function(response,status){
             if(status==200){
                 $scope.data_floor=response;
+                console.log($scope.data_floor);
             }
         });
         if(localStorage.getItem('access')){

@@ -90,6 +90,58 @@
                 </div>
             </div>
         </div>
+
+    <!--    <table style="background: #fff">
+            <tr>
+                <th></th>
+                <th>商品信息</th>
+                <th>原价</th>
+                <th>折后价</th>
+                <th>待支付</th>
+                <th>操作</th>
+            </tr>
+            <table ng-repeat="list in data_cart">
+                <tr>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>
+                            <a href="/item/{{list.CommodityId}}" title={{list.CommodityName}} ng-bind="list.CommodityName"></a>
+                        </h2>
+                    </td>
+                    <td>
+                        <p ng-bind="'￥'+list.orgCost"></p>
+                    </td>
+                    <td>
+                        <div class="tb-content">
+                            <p class="price" ng-bind="'￥'+list.cost"></p>
+                            <p ng-if="list.finalDiscount<10">
+                                已享用折扣卡
+                                <span class="icon-discount" ng-bind="list.finalDiscount+'折'"></span>
+                            </p>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="wait-to-pay" ng-bind="'￥'+list.needToPay"></p>
+                        <p ng-if="list.EarnestMoney>0&&list.EarnestBusinessType!=4">
+                            已付定金：
+                            <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
+                        </p>
+                        <p ng-if="list.EarnestBusinessType==3" class="color-gray">
+                            已兑游戏机会
+                        </p>
+                        <p ng-if="list.EarnestBusinessType==4&&(list.CouponMoney+list.EarnestMoney)>0">
+                            已抵用：
+                            <span class="payed" ng-bind="'￥'+(list.CouponMoney+list.EarnestMoney)"></span>
+                        </p>
+                    </td>
+                    <td>
+                        <span ng-if="list.EarnestMoney==0" class="icon-remove" title="从购物车移除该商品" ng-click="removeOrder(list.Id)"></span>
+                    </td>
+                </tr>
+            </table>
+        </table>-->
         <div class="tips" ng-if="data_cart.length<=0">
             <p>您的购物车空空如也</p>
         </div>

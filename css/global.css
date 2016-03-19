@@ -2914,6 +2914,8 @@ ul.dynamic li p a:hover{
     top:10%;
     animation:openGame 0.5s;
     max-width: 100%;
+    border: 10px solid rgba(255,255,255,0.5);
+    background-clip: content-box;
 }
 @media screen and (max-height:720px) {
     .window-game{
