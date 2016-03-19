@@ -7,7 +7,7 @@ app.constant('Host',{
         fingerGuessing:''//猜拳游戏地址
     }
 });
-app.constant('ENV',0);//当前环境 0开发   1发布
+app.constant('ENV',1);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
@@ -1401,10 +1401,9 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
        isOpen:false
     };
     $rootScope.openGame=function(url,order_id,com_id){//打开游戏
-        $rootScope.game.url=url;
+        $rootScope.game.url='http://127.0.0.1:9000/#/logon';//url;
         $rootScope.game.orderId=order_id;
         $rootScope.game.commodityId=com_id;
-        console.log($rootScope.game);
         $rootScope.game.isOpen=true;
     };
     $rootScope.closeGame=function(){//关闭游戏
