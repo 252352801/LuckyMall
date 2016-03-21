@@ -114,7 +114,6 @@ angular.module('LuckyMall.controllers')
                                 });
                                ShowOffOrdersSer.requestItemData($this.SOOInfo.CommodityId,function(resp,stat){
                                    if(stat==1){
-                                       console.log(resp);
                                        resp.image=resp.RollingImages.split('|')[0];
                                        $this.itemData=resp;
                                    }

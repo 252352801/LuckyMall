@@ -1,6 +1,19 @@
 angular.module('LuckyMall.controllers')
- .controller('HomeCtrl',['$scope','HomeSer','$cookies','$timeout','ShowOffOrdersSer',
-        function($scope,HomeSer,$cookies,$timeout,ShowOffOrdersSer){
+ .controller('HomeCtrl',['$scope','$rootScope','$state','HomeSer','$cookies','$timeout','ShowOffOrdersSer','TokenSer','UserSer','Host','ENV',
+        function($scope,$rootScope,$state,HomeSer,$cookies,$timeout,ShowOffOrdersSer,TokenSer,UserSer,Host,ENV){
+
+          $scope.gameMenu={
+              show:false,
+              orderId:'',
+              commodityId:'',
+              gameUrl:{
+                  fingerGuessing:'',
+                  fishing:''
+              }
+          };
+
+
+
         if (HomeSer.getData().banner == null) {
             HomeSer.requestBannerData(function (response, status) {
                 if (status == 1) {
@@ -14,9 +27,61 @@ angular.module('LuckyMall.controllers')
         HomeSer. requestFloorData(function(response,status){
             if(status==200){
                 $scope.data_floor=response;
-                console.log($scope.data_floor);
             }
         });
+
+
+
+
+       $scope.actionBanner=function(banner){
+           if (banner.PromotionType == 1) {
+               if(banner.TypeId!=0){
+                   $state.go('item',{id:banner.TypeId});
+               }
+           } else if (banner.PromotionType == 0) {
+               $state.go('brand',{brand_id:banner.TypeId});
+           }else if(banner.PromotionType == 2){
+               $state.go('market',{id:banner.TypeId});
+           }else if(banner.PromotionType == 3){
+               //擂台的 已停用
+           }else if(banner.PromotionType == 4){
+               var auth='';
+               $scope.gameMenu.commodityId=ENV==1?459700190:2494474873;
+               var initGame=function(authorization){
+                   $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $scope.gameMenu.commodityId + '&mode=2&from=' + Host.playFrom+ '&authorization=' + authorization;
+                   $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $scope.gameMenu.commodityId + '&mode=2&from=' + Host.playFrom+ '&authorization=' + authorization;
+                   if(banner.TypeId==1) {
+                       $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                   }else if(banner.TypeId==2) {
+                       $rootScope.openGame($scope.gameMenu.gameUrl.fingerGuessing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                   }else{
+                       $scope.gameMenu.show = true;
+                   }
+               };
+               if(!$rootScope.isLogin){
+                   if($rootScope.session_key!=null) {
+                       auth = $rootScope.session_key;
+                       initGame(auth);
+                   }else{
+                       UserSer.getSessionKey(function(response,status){
+                           if(status==1){
+                               $rootScope.session_key=response;
+                               auth = $rootScope.session_key;
+                               initGame(auth);
+                           }
+                       });
+                   }
+               }else{
+                   auth=TokenSer.getToken();
+                   initGame(auth);
+               }
+           }
+       };
+
+
+
+
+
         if(localStorage.getItem('access')){
             $scope.isFirstAcc=false;
         }else{

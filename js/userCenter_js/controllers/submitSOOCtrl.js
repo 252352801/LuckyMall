@@ -90,7 +90,7 @@ angular.module('LuckyMall.controllers')
                                  $scope.submitBtn.disabled=false;
                                  $scope.submitBtn.curVal=$scope.submitBtn.orgVal;
                                  if(status==1){
-                                     swal('晒单成功！','','success');
+                                     swal('成功提交，请耐心等待审核！','','success');
                                      $state.go('UCIndex.myOrders',{"status":'finish'});
                                  }else{
                                      swal('晒单失败，请重试！','','error');

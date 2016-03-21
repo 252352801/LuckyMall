@@ -571,10 +571,14 @@ angular.module('LuckyMall.controllers')
         }
 
         {//init
-            $scope.isLogin = LoginSer.isLogin();//是否应经登录
-            $scope.isModalGetDiscountShow=false;
-            $scope.item = new Item($stateParams.goods_id);
-            $scope.item.loadData();
+            if($stateParams.id==''||$stateParams.id==null||$stateParams.id==undefined){
+                $state.go('home');
+            }else{
+                $scope.isLogin = LoginSer.isLogin();//是否应经登录
+                $scope.isModalGetDiscountShow=false;
+                $scope.item = new Item($stateParams.id);
+                $scope.item.loadData();
+            }
         }
 
         $scope.gameMenu={//游戏菜单

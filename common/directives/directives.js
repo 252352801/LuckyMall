@@ -74,7 +74,7 @@ angular.module('LuckyMall')
                     if($scope.count>0) {
                         var g_url = Host.game.fishing + '?id=0&mode=5&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken(); //设置游戏地址
                         $rootScope.openGame(g_url, '', '');
-                        $scope.visible=false;
+                        $scope.close();
                     }
                 };
             }
@@ -1152,9 +1152,12 @@ angular.module('LuckyMall')
                                     $state.go('login');
                                     break;
                                 case 4://详情页
-                                    $rootScope.$broadcast('cart-update');
-                                   // $rootScope.$broadcast('refresh-item-isCanFree');
-                                    $state.go('item', {goods_id: $rootScope.game.commodityId});
+                                    if($state.current.name=='home') {
+
+                                    }else {
+                                        $rootScope.$broadcast('cart-update');
+                                       // $state.go('item', {goods_id: $rootScope.game.commodityId});
+                                    }
                                     break;
                                 case 5://无任何处理
                                     break;

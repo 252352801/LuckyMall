@@ -4188,10 +4188,10 @@ modal-beforeGame
     background: url(../res/images/coupon/img_btn_getCoupon.png);
     background-size:100%;
     position: fixed;
-    left:50%;
+    left:100%;
     top:100%;
-    margin-left:-750px;
-    margin-top:-250px;
+    margin-left:-210px;
+    margin-top:-210px;
     z-index:100;
     cursor:pointer;
     animation: btnCouponAnimation 2s;

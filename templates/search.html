@@ -26,10 +26,6 @@
 
     <ul class="pro-list-cont">
         <li ng-repeat="list in data_items" >
-            <div class="list-disc">
-                <p>低至</p>
-                <p ng-bind="(list.MaxDiscount*10).toFixed(1)+'折'"></p>
-            </div>
             <a class="a-goodsImg" href="/item/{{list.Id}}" target="_blank" title="">
                 <img lazy-src="{{imgHost+list.RollingImages[0]}}" />
                 <img src="./res/images/out.png" class="img-so" ng-if="list.Status==4"/>
@@ -40,8 +36,6 @@
                 </a>
                 <p class="price">
                     <span class="prices" ng-bind="'￥'+list.maxPrice"></span>
-                    <span class="old-price" ng-bind="'￥'+list.RetailPrice" ></span>
-
                 </p>
             </div>
         </li>

@@ -1171,8 +1171,8 @@ angular.module('LuckyMall.services', [])
         var initData = function (data, type) { //type 0 售前单   1 售后单
             for (var o in data) {
                 var obj = (type == 0) ? data[o] : data[o].Order;
-                obj.Specifications = angular.fromJson(obj.Specifications);//产品规格字符串转换json
                 try{
+                    obj.Specifications = angular.fromJson(obj.Specifications);//产品规格字符串转换json
                     obj.imageUrl = obj.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
                 }catch(err){
 
@@ -1982,7 +1982,7 @@ angular.module('LuckyMall.services', [])
                    // console.info('onErrorItem', fileItem, response, status, headers);
                 };
                 uploader.onCancelItem = function (fileItem, response, status, headers) {
-                    //console.info('onCancelItem', fileItem, response, status, headers);
+                   // console.info('onCancelItem', fileItem, response, status, headers);
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {
                     //console.info('onCompleteItem', fileItem, response, status, headers);
@@ -1991,6 +1991,7 @@ angular.module('LuckyMall.services', [])
                 uploader.onCompleteAll = function () {
                     //console.info('onCompleteAll');
                 };
+
                 return uploader;
             }
         }

@@ -10,10 +10,10 @@
     <!--css3-banner图  begin-->
     <div class="banner banner-css3" banner-css3="data_banner">
         <ul>
-            <li ng-repeat="img in data_banner" ng-style="{'opacity':(banner_index==$index)?1:0,transition:'opacity 1s','z-index':(banner_index==$index)?1:0}">
+            <li ng-repeat="banner in data_banner" ng-style="{'opacity':(banner_index==$index)?1:0,transition:'opacity 1s','z-index':(banner_index==$index)?1:0}">
             <!--<li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">-->
-                <a ng-href="{{img.href}}" title="">
-                    <img ng-src={{imgHost+img.ImageData+'@1920w_450h_100Q.jpg'}} alt="" error-src="./res/images/default.png"/>
+                <a  title="" ng-click="actionBanner(banner)">
+                    <img ng-src={{imgHost+banner.ImageData+'@1920w_450h_100Q.jpg'}} alt="" error-src="./res/images/default.png"/>
                 </a>
             </li>
 
@@ -39,7 +39,7 @@
         <div class="content">
             <div class="module-so" ng-show="data_soo.orgData.length>=4"> <!--晒单模块-->
                 <div class="md-top">
-                    <h2>晒单分享<span class="color-base">晒单分享可获得10元红包</span></h2>
+                    <h2>晒单分享<span class="color-base">晒单抢红包</span></h2>
                     <a href="/showOffOrders" class="more">更多></a>
                 </div>
                 <ul class="over-hidden ul-index-soo">
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-
+    <modal-game-menu visible="gameMenu.show" gamectrl="gameMenu" ></modal-game-menu>
 
     <!--中部 end-->
     <introduction></introduction>

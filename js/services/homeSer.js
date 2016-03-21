@@ -23,6 +23,8 @@ angular.module('LuckyMall.services')
                       }else{
                           obj[o].href = '/activity/details/'+obj[o].TypeId;
                       }
+                  }else if(obj[o].PromotionType == 4){
+
                   }
                   obj[o].remainTime = setRemainTime(obj[o].CurrentTime,obj[o].EndTime);
                   result.push(obj[o]);

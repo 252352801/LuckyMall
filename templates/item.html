@@ -91,11 +91,11 @@
                                 </li>
                             </ul>
                             <div class="prices-slider free"  ng-show="cur_price<=0">
-                                免单
+                                0
                             </div>
                             <div class="discount-slider">
                                 <ul>
-                                    <li ng-bind="cur_disc<1?(cur_disc*10).toFixed(1)+'折':'最高价'"></li>
+                                    <li ng-bind="cur_disc<1?(cur_disc>0?(cur_disc*10).toFixed(1)+'折':'免单'):'无折扣'"></li>
                                 </ul>
                             </div>
                         </div>

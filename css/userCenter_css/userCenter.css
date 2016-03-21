@@ -64,6 +64,8 @@
     height: 30px;
     line-height: 30px;
     overflow: hidden;
+    word-break: break-all;
+    word-wrap:break-word;
 }
 .bar-userInfo-left  small{
 

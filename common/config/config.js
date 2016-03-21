@@ -578,7 +578,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         /*商品详情*/
         .state('item', {
-            url: '/item/:goods_id',
+            url: '/item/:id',
             views: {
                 '': {
                     templateUrl: "templates/item.html?v="+v,
@@ -1401,7 +1401,7 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
        isOpen:false
     };
     $rootScope.openGame=function(url,order_id,com_id){//打开游戏
-        $rootScope.game.url='http://127.0.0.1:9000/#/logon';//url;
+        $rootScope.game.url=url;
         $rootScope.game.orderId=order_id;
         $rootScope.game.commodityId=com_id;
         $rootScope.game.isOpen=true;
@@ -1427,7 +1427,7 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
     // track pageview on state change
     $rootScope.$on('$stateChangeSuccess', function (event,toState) {
         $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
-
+        woopra.track();
         $window.ga('send', 'pageview', $location.path()); //google监测
         $rootScope.page_loading=false;//loading图片隐藏
         /*设置标题*/
