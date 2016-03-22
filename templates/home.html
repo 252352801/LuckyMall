@@ -56,9 +56,9 @@
                                  </p>
                             </div>
                             <div class="box-dt">
-                                <div class="img-container">
+                                <div class="img-adapt">
                                     <!--<img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png"  img-adaptation-self />-->
-                                    <img real-src={{imgHost+soo.images[0]}} temp-src="./res/images/default.png"   img-adaptation-self />
+                                    <img real-src={{imgHost+soo.images[0]}} temp-src="./res/images/default.png"   img-adapt-self />
                                 </div>
                                 <div class="so-describe" ng-bind="soo.Content">
 
@@ -70,7 +70,7 @@
                     <li class="large" ng-show="data_soo">
                         <a  href="/soo_dt/{{data_soo.large.Id}}" target="_blank">
                             <div class="large-img">
-                                <img ng-src={{imgHost+data_soo.large.images[0]}} error-src="./res/images/default.png" img-adaptation-self  />
+                                <img ng-src={{imgHost+data_soo.large.images[0]}} error-src="./res/images/default.png" img-adapt-self  />
                             </div>
                             <div class="large-dt">
                                 <div class="large-dt-user">
@@ -97,10 +97,34 @@
 
 
 
-
-<!--            <div class="soo-slide-box">
+<!--
+            <div class="soo-slide-box">
+                <div class="md-top">
+                    <h2>晒单分享<span class="color-base">晒单抢红包</span></h2>
+                    <a href="/showOffOrders" class="more">更多></a>
+                </div>
                  <ul>
-                     <li></li>
+                     <li>
+                         <div class="soo-shower">
+                             <img />
+                             <p>
+                                 <span>岁月如歌、</span>
+                                 <span>20160703</span>
+                             </p>
+                             <p>
+                                  <span class="soo-disc-card"></span>
+                                 <span>iphone</span>
+                             </p>
+                         </div>
+                         <div>
+                             今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折
+                         </div>
+                         <div>
+                             <a class="img-adapt" ng-if="$index<3">
+                                    <img />
+                             </a>
+                         </div>
+                     </li>
                  </ul>
             </div>-->
 

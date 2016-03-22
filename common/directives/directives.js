@@ -727,7 +727,7 @@ angular.module('LuckyMall')
         }
     })
     /* 图片自适应*/
-    .directive('imgAdaptationSelf', function ($timeout) {
+    .directive('imgAdaptSelf', function ($timeout) {
         return {
             link: function (scope, element, attrs) {
                 var old_src=attrs.tempSrc;
@@ -736,7 +736,6 @@ angular.module('LuckyMall')
                         element.width=parseInt(element[0].clientWidth);
                         element.height=parseInt(element[0].clientHeight);
                         if(element.width>0&&element.height>0&&attrs.src!=old_src){
-                           console.log(element);
                             if(element.width>element.height){//高度小于宽度  把高度先撑满
                                 element.width*=(element[0].offsetParent.clientHeight/element.height);
                                 element.height=element[0].offsetParent.clientHeight;
@@ -746,7 +745,6 @@ angular.module('LuckyMall')
                                 }
 
                             }else{
-                                console.log("宽度小于高度");
                                 element.height*=(element[0].offsetParent.clientWidth/element.width);
                                 element.width=element[0].offsetParent.clientWidth;
                                 if(element.height<element[0].offsetParent.clientHeight){
@@ -1135,6 +1133,7 @@ angular.module('LuckyMall')
                                 scope.isLoadingGame = false;
                             });
                         } else {
+                            console.log(e.data.mode);
                             switch (e.data.mode) {
                                 case 0://返回购物车
                                     $rootScope.$broadcast('cart-update');
@@ -1155,7 +1154,8 @@ angular.module('LuckyMall')
                                 case 3://登陆
                                     $state.go('login');
                                     break;
-                                case 4://详情页
+                                case 4://
+                                    scope.$emit('refresh-coupon');
                                     if($state.current.name=='home') {
 
                                     }else {

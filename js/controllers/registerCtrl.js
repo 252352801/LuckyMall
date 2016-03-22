@@ -139,6 +139,7 @@ angular.module('LuckyMall.controllers')
             };
             /* 注册提交*/
             $scope.submitRegister = function () {
+
                 if ($scope.form_register.$valid && $scope.form_register.re_password.$modelValue == $scope.form_register.password.$modelValue) {
                     clearErrors();
                     if ($scope.isValid($scope.mobile)) {
@@ -153,8 +154,7 @@ angular.module('LuckyMall.controllers')
                         }, function (response, status) {  //回调函数
                             if (status == 1) {
                                 if(response.Code==0) {
-                                    swal("恭喜！注册成功！",'','success');
-                                    $state.go('login');
+                                    $scope.$emit('refresh-coupon');
                                     ga('send', 'pageview', {
                                         'page': '/register_success',
                                         'title': '注册成功'
@@ -171,12 +171,14 @@ angular.module('LuckyMall.controllers')
                                             confirmButtonColor: "#DD6B55",
                                             cancelButtonText: '下次再说',
                                             confirmButtonText: "立即抢红包",
-                                            closeOnConfirm: false,
+                                            closeOnConfirm: true,
                                             showLoaderOnConfirm: true
                                         },
                                         function () {
-                                            var g_url = Host.game.fishing + '?id=0&mode=5&from=' + Host.playFrom + '&authorization=' + response.Data.Token; //设置游戏地址
-                                            $rootScope.openGame(g_url,'','');
+                                            $timeout(function(){
+                                                var g_url = Host.game.fishing + '?id=0&mode=5&from=' + Host.playFrom + '&authorization=' +response.Data.Token; //设置游戏地址
+                                                $rootScope.openGame(g_url,'','');
+                                            },10);
                                         }
                                     );
                                     $state.go('home');

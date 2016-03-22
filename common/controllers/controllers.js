@@ -124,19 +124,22 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                 if($rootScope.user.UserModel.NickName==''){
                     $rootScope.user.UserModel.NickName=$rootScope.user.simpleMobile
                 }
-
-
-
-                svc.get(API.getVieCouponCoupon.url,function(response,status){//抢红包次数
-                    if(status==200){
-                       $rootScope.getCouponsCount=response;
-                    }
-                });
+                loadCouponData();
 
 
 
                 $rootScope.woopra.auth();
             });
+            $scope.$on('refresh-coupon', function () {//红包数据刷新
+                loadCouponData();
+            });
+            function loadCouponData(){
+                svc.get(API.getVieCouponCoupon.url,function(response,status){//抢红包次数
+                    if(status==200){
+                        $rootScope.getCouponsCount=response;
+                    }
+                });
+            }
             function hideSomeStr(str, start, end, replace_str) {
                 var sub_str = str.substring(start, end);
                 var finally_str = '';

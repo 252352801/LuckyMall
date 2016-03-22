@@ -16,24 +16,27 @@
         <p class="tips-nothing" ng-show="!Soo.loading&&Soo.page.count==0">暂无</p>
         <ul class="ul-soo">
             <li ng-repeat="soo in Soo.currentPage">
-                <a href="soo_dt/{{soo.Id}}" target="_blank">
+
                     <div class="img-container">
-                        <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png" img-adaptation-self />
+                        <a href="soo_dt/{{soo.Id}}" target="_blank">
+                            <img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png" img-adapt-self />
+                        </a>
                     </div>
                     <div class="box-dt">
-                        <h2 class="item-name" ng-bind="soo.CommodityName">
+                        <a href="soo_dt/{{soo.Id}}" target="_blank">
+                            <h2 class="item-name" ng-bind="soo.CommodityName">
 
-                        </h2>
+                            </h2>
 
-                        <p class="soo-describe color-999" ng-bind="soo.Content">
+                            <p class="soo-describe color-999" ng-bind="soo.Content">
 
-                        </p>
-
+                            </p>
+                        </a>
                         <p class="bar-like over-hidden">
-                        <span class="pull-left icon-like-cont">
-                             <i class="lm-heart iconfont"></i>
+                        <span class="pull-left icon-like-cont" ng-click="Soo.like(soo)" >
+                             <i class="lm-heart iconfont" ng-style="{'color':soo.liked?'red':'#666'}"></i>
                         </span>
-                            <span class="color-666 icon-like pull-left" ng-bind="soo.LikeCount"></span>
+                          <span class="color-666 icon-like pull-left" ng-bind="soo.LikeCount"></span>
                             <a class="pull-right">
                                 <span class="so-icon-disc" ng-bind="'获得'+soo.DiscountValue+'折'"></span>
                             </a>
@@ -52,7 +55,6 @@
                             <i class="iconfont lm-heart" ng-style="{'color':soo.liked?'red':'#666'}"></i>
                         </div>
                     </div>
-                </a>
             </li>
         </ul>
         <div class="page-index" btn-scroll-to="180" ng-show="!Soo.loading&&Soo.page.count>0">

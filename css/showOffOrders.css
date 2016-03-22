@@ -84,6 +84,7 @@
 .showOffOrders .bar-like .lm-heart{
     font-size:17px;
     color: #888;
+    cursor: pointer;
 }
 .showOffOrders .bar-user{
     width:100%;
