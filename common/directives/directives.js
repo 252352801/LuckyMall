@@ -1111,9 +1111,10 @@ angular.module('LuckyMall')
         link: function (scope, element, attrs) {
 
               scope.isLoadingGame=true;
-                var IFrame_game=element.find('iframe');
+
                 scope.$watch("game.url", function (new_val, old_val) {
                      if (new_val!=old_val) {
+                         var IFrame_game=element.find('iframe');
                          IFrame_game.attr('src', new_val);
                      }
                 });
@@ -1133,7 +1134,6 @@ angular.module('LuckyMall')
                                 scope.isLoadingGame = false;
                             });
                         } else {
-                            console.log(e.data.mode);
                             switch (e.data.mode) {
                                 case 0://返回购物车
                                     $rootScope.$broadcast('cart-update');

@@ -1,8 +1,8 @@
 angular.module('LuckyMall.controllers')
 
     .controller('RegisterCtrl',
-    ['$rootScope', '$scope', 'VerifyCodeSer', '$timeout', 'RegisterSer', '$state', 'LoginSer', '$cookies','Host',
-        function ($rootScope, $scope, VerifyCodeSer, $timeout, RegisterSer, $state, LoginSer, $cookies,Host) {
+    ['$rootScope', '$scope', 'VerifyCodeSer', '$timeout', 'RegisterSer', '$state', 'LoginSer', '$cookies','Host','$http',
+        function ($rootScope, $scope, VerifyCodeSer, $timeout, RegisterSer, $state, LoginSer, $cookies,Host,$http) {
             $scope.hasInputError = false;//是否有错误输入
             $scope.tips = '';//提示信息初始化
             $scope.value_btn = '立即注册';
@@ -161,6 +161,7 @@ angular.module('LuckyMall.controllers')
                                     });
                                     LoginSer.setData(response.Data);
                                     $cookies.put('Token', response.Data.Token); //设置token cookie
+                                    $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
                                     $rootScope.$broadcast("user-login");
                                     $rootScope.isLogin = true;
                                     swal({

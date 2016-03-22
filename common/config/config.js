@@ -1351,8 +1351,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                 Host.game.fingerGuessing='http://120.24.225.116:9005';
                 break;
             case 1:
-                Host.game.fishing=window.location.protocol+'//gamecf.xingyunmao.cn:';
-                Host.game.fingerGuessing=window.location.protocol+'//gamefg.xingyunmao.cn:';
+                Host.game.fishing=window.location.protocol+'//gamecf.xingyunmao.cn';
+                Host.game.fingerGuessing=window.location.protocol+'//gamefg.xingyunmao.cn';
                 break;
         }
         Host.hostname=location.hostname;
