@@ -736,7 +736,7 @@ angular.module('LuckyMall')
                         element.width=parseInt(element[0].clientWidth);
                         element.height=parseInt(element[0].clientHeight);
                         if(element.width>0&&element.height>0&&attrs.src!=old_src){
-
+                           console.log(element);
                             if(element.width>element.height){//高度小于宽度  把高度先撑满
                                 element.width*=(element[0].offsetParent.clientHeight/element.height);
                                 element.height=element[0].offsetParent.clientHeight;
@@ -746,6 +746,7 @@ angular.module('LuckyMall')
                                 }
 
                             }else{
+                                console.log("宽度小于高度");
                                 element.height*=(element[0].offsetParent.clientWidth/element.width);
                                 element.width=element[0].offsetParent.clientWidth;
                                 if(element.height<element[0].offsetParent.clientHeight){
