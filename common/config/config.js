@@ -7,7 +7,7 @@ app.constant('Host',{
         fingerGuessing:''//猜拳游戏地址
     }
 });
-app.constant('ENV',1);//当前环境 0开发   1发布
+app.constant('ENV',0);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
@@ -459,7 +459,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'ListCtrl'
                 }
             },
-            title:'商品列表-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/list.css',
@@ -565,7 +564,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'BrandPageCtrl'
                 }
             },
-            title:'品牌-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/list.css',
@@ -585,7 +583,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'ItemCtrl'
                 }
             },
-            title:'商品详情-幸运猫',
             resolve: {
                 loadFiles: load([
                     './css/item.css',
@@ -751,7 +748,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'MarketCtrl'
                 }
             },
-            title:'活动-幸运猫',
             resolve: {
                 loadFiles: load([
                     './js/controllers/marketCtrl.js',
@@ -1427,12 +1423,12 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
     // track pageview on state change
     $rootScope.$on('$stateChangeSuccess', function (event,toState) {
         $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
-        woopra.track();
         $window.ga('send', 'pageview', $location.path()); //google监测
         $rootScope.page_loading=false;//loading图片隐藏
         /*设置标题*/
         if(toState.title){
             document.title=toState.title;
+            woopra.track();
         }else{
             document.title='幸运猫';
         }

@@ -5,8 +5,11 @@ angular.module('LuckyMall')
             restrict: 'A',
             link: function (scope, element, attrs) {
                 if(attrs.ngTitle) {
-                    scope.$watch(attrs.ngTitle, function (val) {
-                        document.title=val;
+                    scope.$watch(attrs.ngTitle, function (new_val,old_val) {
+                        if(new_val!=old_val) {
+                            document.title = new_val;
+                            woopra.track();
+                        }
                     });
                 }
             }
@@ -198,7 +201,7 @@ angular.module('LuckyMall')
                     }
                 };
                 $scope.goItemPage=function(kw){
-                    $state.go('item',{goods_id:kw.key});
+                    $state.go('item',{id:kw.key});
                 };
                 $scope.searchWithKeyWord=function(kw){
                     if(kw){
