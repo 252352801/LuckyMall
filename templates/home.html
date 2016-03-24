@@ -41,7 +41,7 @@
 
 
 
-            <div class="lucky-bro" ng-if="data_broadcasts.length>0">
+            <div class="lucky-bro" ng-if="data_broadcasts.length>2">
                 <div class="lucky-bro-title">
 
                 </div>
@@ -99,14 +99,16 @@
                                 </p>
                             </div>
                             <div class="describe text-break">
-                                <a>
-                                   {{soo.Content}}
+                                <a href="/soo_dt/{{soo.Id}}">
+                                    <span>{{soo.Content}}</span>
                                 </a>
                             </div>
                             <div class="images">
-                                <div class="img-adapt" ng-repeat="img in soo.images" ng-if="$index<3" >
-                                    <img real-src={{imgHost+img+'@200w_200h_100Q.jpg'}} temp-src="./res/images/default.png"   img-adapt-self/>
-                                </div>
+                                <a href="/soo_dt/{{soo.Id}}">
+                                    <div class="img-adapt" ng-repeat="img in soo.images" ng-if="$index<3" >
+                                        <img real-src={{imgHost+img+'@200w_200h_100Q.jpg'}} temp-src="./res/images/default.png"   img-adapt-self/>
+                                    </div>
+                                 </a>
 
                             </div>
                         </li>
@@ -127,15 +129,16 @@
                                 </p>
                             </div>
                             <div class="describe text-break">
-                                <a>
-                                    {{soo.Content}}
+                                <a href="/soo_dt/{{soo.Id}}">
+                                    <span>{{soo.Content}}</span>
                                 </a>
                             </div>
                             <div class="images">
-                                <div class="img-adapt" ng-repeat="img in soo.images" ng-if="$index<3">
-                                    <img real-src={{imgHost+img+'@200w_200h_100Q.jpg'}} temp-src="./res/images/default.png"   img-adapt-self  />
-                                </div>
-
+                                <a href="/soo_dt/{{soo.Id}}">
+                                    <div class="img-adapt" ng-repeat="img in soo.images" ng-if="$index<3">
+                                        <img real-src={{imgHost+img+'@200w_200h_100Q.jpg'}} temp-src="./res/images/default.png"   img-adapt-self  />
+                                    </div>
+                                </a>
                             </div>
                         </li>
                     </ul>
