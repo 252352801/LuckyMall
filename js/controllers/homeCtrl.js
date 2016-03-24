@@ -124,6 +124,7 @@ angular.module('LuckyMall.controllers')
                 changeTime:3000
             };
             loadBroadCasts(function(){
+                return;
                 var count=0;
                 if($scope.data_broadcasts.length>2) {
                     slide();
@@ -172,7 +173,7 @@ angular.module('LuckyMall.controllers')
 
             });
             function loadBroadCasts(callback) {
-
+                return;
                 HomeSer.requestBroadCasts(function (response,status) {
                     if(status==200&&response) {
                         for (var o in response) {
