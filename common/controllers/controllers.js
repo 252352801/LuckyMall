@@ -15,7 +15,6 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
 
 
 
-
             $rootScope.login_target = {//登陆后跳转的目标
                 state: 'home',
                 params: {}
@@ -129,6 +128,7 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
 
 
                 $rootScope.woopra.auth();
+                console.log(UserSer.getData().UserModel.Avatar);
             });
             $scope.$on('refresh-coupon', function () {//红包数据刷新
                 loadCouponData();

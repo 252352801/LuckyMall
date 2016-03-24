@@ -638,256 +638,14 @@ margin-left: 70px;
 /*=================
     晒单 begin
 ==================*/
-.module-so *{
-    box-sizing: border-box;
-}
-.module-so a:hover{
-    color:inherit;
-}
-.module-so{
-    margin-top:20px;
-}
-.module-so .md-top{
-    line-height: 40px;
-    overflow:hidden;
-}
-.module-so .md-top h2{
-    float: left;
-    font-size:18px;
-    font-weight:500;
-    position: relative;
-}
-.module-so .md-top h2:before{
-    display: block;
-    content: '';
-    width:32px;
-    height:32px;
-    background: url(../res/icon/icon_camera.png);
-    position: relative;
-    top:4px;
-    float: left;
-    margin-right:10px;
-
-}
-.module-so .md-top span{
-    margin-left: 10px;
-    font-size:14px;
-}
-.module-so .md-top .more{
-    float: right;
-    font-size: 12px;
-    color:#666;
-    font-family: '宋体';
-}
-.module-so ul li{
-    float: left;
-}
-.module-so ul li:nth-child(1),.module-so ul li:nth-child(2),.module-so ul li:nth-child(3){
-    width: 220px;
-    height: 400px;
-    border-right: 2px solid #f1f1f1;
-}
-
-.module-so .box-user{
-    height:50%;
-    background:#fff;
-    overflow: hidden;
-    text-align: center;
-    position:relative;
-    z-index: 10;
-}
-.module-so .box-dt{
-    height:50%;
-    background:#fff;
-    position: relative;
-    overflow: hidden;
-}
-.module-so ul li:nth-child(2) .box-user{
-    top:200px;
-}
-.module-so ul li:nth-child(2) .box-dt{
-    top:-200px;
-}
-.module-so .box-user .avatar{
-    width:60px;
-    height:60px;
-    line-height: 60px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:25px;
-    margin-bottom:8px;
-    border:1px solid #e6e6e6;
-    overflow: hidden;
-    border-radius:50%;
-}
-.module-so .box-user .avatar img{
-    max-width: 100%;
-    max-height:100%;
-    vertical-align:middle;
-}
-.module-so .box-user p{
-    margin-bottom:5px;
-}
-.module-so .box-user .user-name{
-    font-size: 14px;
-    max-width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    height: 18px;
-    overflow: hidden;
-}
-
-.module-so .bar-icons{
-    margin-top:10px;
-}
-.module-so  .img-adapt{
-    width: 218px;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.module-so  .img-adapt img{
-    max-width:inherit;
-    max-height:inherit;
-    width:100%;
-}
-.module-so  .ul-index-soo{
-    width:1100px;
-    height:400px;
-    background:#fff;
-}
-.module-so .so-describe{
-    width:100%;
-    height:100%;
-    position: absolute;
-    left:0px;
-    top:100%;
-    padding:10px;
-    background: rgba(0,0,0,0.5);
-    color:#fff;
-    line-height:20px;
-    -webkit-transition:top .5s,opacity .5s;
-    -moz-transition: top .5s,opacity .5s;
-    -ms-transition: top .5s,opacity .5s;
-    -o-transition: top .5s,opacity .5s;
-    transition: top .5s,opacity .5s;
-    opacity:0;
-    z-index:3;
-    word-break: break-all;
-    word-wrap:break-word;
-}
-.module-so ul li{
-    position: relative;
-}
-.module-so ul li:nth-child(2) .so-describe{
-    top:-100%;
-}
-.module-so ul li:nth-child(1):after,.module-so ul li:nth-child(2):after,.module-so ul li:nth-child(3):after{
-    content: '';
-    display: block;
-    width:0px;
-    height:0px;
-    border:8px solid transparent;
-    border-top-color:#fff ;
-    position: absolute;
-    left:50%;
-    top:200px;
-    margin-left:-8px;
-    z-index:2;
-}
-.module-so ul li:nth-child(2):after{
-    border-top-color:transparent;
-    border-bottom-color:#fff ;
-    top:184px;
-}
-.module-so .box-dt:hover .so-describe{
-    top:0px;
-    opacity:1;
-}
-
-.module-so ul li.large{
-    width:440px;
-    height:400px;
-    background: #fff;
-    padding-top:284px;
-    position: relative;
-}
-.module-so ul li.large .large-img{
-     position: absolute;
-    left:0px;
-    top:0px;
-    width:100%;
-    height:284px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.module-so .large-dt-user{
-    height:50px;
-    padding-left:80px;
-    position: relative;
-    padding-right:  10px;
-}
-.module-so .large-dt-user img{
-    width: 60px;
-    height: 60px;
-    border: 1px solid #eee;
-    border-radius: 50%;
-    position: absolute;
-    left:9px;
-    top: -20px;
-
-}
-.module-so .large .bar-show-info{
-    line-height: 50px;
-    height:50px;
-
-}
-.module-so .large .user-name{
-    font-size:14px;
-    margin-right:15px;
-    max-width:150px;
-}
-.module-so .large .large-dt-describe{
-    overflow: hidden;
-    line-height:22px;
-    height:56px;
-    padding: 10px;
-    font-size:13px;
-    color:#666;
-    text-overflow: ellipsis;
-}
-.module-so ul li:nth-child(4){
-    border:1px solid #f1f1f1;
-}
-.module-so ul li:nth-child(4) .large-img img{
-    opacity:0.95;
-    transition:all .3s;
-    width: 100%;
-}
-.module-so ul li:nth-child(4):hover .large-img img{
-    transform:scale(1.015);
-    opacity:1;
-}
-
-
-
-
-
-
-
-
 
 
 
 .module-soo{
    width:100%;
-    height:400px;
-    background: #ccc;
     margin-top:20px;
+    overflow: hidden;
+    position: relative;
 }
 .module-soo,.module-soo *{
     box-sizing:border-box;
@@ -921,32 +679,268 @@ margin-left: 70px;
 .module-soo .md-top .more{
     float: right;
     font-size: 12px;
-    color:#666;
+    color:#999;
     font-family: '宋体';
+    position:relative;
+   padding-right:20px;
 }
+.module-soo .md-top .more span{
 
+    position: absolute;
+    display: block;
+    content: '+';
+    width: 15px;
+    height: 15px;
+    left: 0px;
+    background: #aaa;
+    top: 13px;
+    left: 15px;
+    line-height: 15px;
+    text-align: center;
+    color: #f1f1f1;
+    font-size: 24px;
+    transition:all .3s;
+}
+.module-soo .md-top .more:hover{
+    color:#ED9C05;
+}
+.module-soo .md-top .more:hover span{
+    background:#ED9C05;
+}
 .module-soo .soo-slider-box{
     width:500%;
-    height:360px;
     background: #fff;
     overflow-y:hidden;
     overflow-x:auto;
+    position: relative;
+    left:0px;
+    top:0px;
 }
 .module-soo .soo-slider-box ul{
-    width:100%;
-    height:360px;
-    background: red;
+    width:20%;
+    height:320px;
+    padding:20px 0px 20px 0px;
     float:left;
+    overflow: hidden;
 }
-
-
-
-
-
-
-
+.module-soo .li-soo{
+    height:100%;
+    width:50%;
+    padding:0px 20px 0px 20px;
+    float: left;
+}
+.module-soo .li-soo:first-child{
+    border-right:1px solid #eee;
+}
+.module-soo .soo-shower{
+    padding-left: 70px;
+    padding-top: 10px;
+    position: relative;
+    min-height:60px;
+    margin-bottom:20px;
+}
+.module-soo .soo-shower img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    position: absolute;
+    left:0px;
+    top:0px;
+}
+.module-soo .describe{
+    height:22px;
+    line-height:22px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-bottom:10px;
+    white-space: nowrap;
+}
+.module-soo .nickname{
+    font-size:14px;
+    color:#000;
+}
+.module-soo .images{
+    width:100%;
+    height:190px;
+    overflow: hidden;
+}
+.module-soo .img-adapt{
+    width:162px;
+    height:162px;
+    line-height:162px;
+    float: left;
+    margin-left:5px;
+    overflow:hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border:1px solid #f1f1f1;
+}
+.module-soo .img-adapt img{
+    max-width: inherit;
+    max-height:inherit;
+    width:100%;
+}
+.module-soo .soo-disc-card{
+    display:block;
+    width:70px;
+    height:20px;
+    background: url(../res/icon/zhekouka.png) no-repeat;
+    background-size:100%;
+    margin-right:15px;
+    line-height:18px;
+    text-align: center;
+    color:#fff;
+}
+.module-soo .soo-shower p{
+    margin-bottom:8px;
+}
+.module-soo .item-name{
+    color: #8ECA3F;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 352px;
+}
+.module-soo .btn-prev,.module-soo .btn-next{
+    display:none;
+    width:30px;
+    height:60px;
+    background-color: rgba(0,0,0,0.3);
+    position: absolute;
+    top:180px;
+    left:0px;
+    cursor: pointer;
+}
+.module-soo:hover .btn-prev,.module-soo:hover .btn-next{
+    display: block;
+}
+.module-soo .btn-prev:hover,.module-soo .btn-next:hover{
+    background-color: rgba(0,0,0,0.5);
+}
+.module-soo .btn-prev{
+    background-image:url(../res/icon/icon_prev.png);
+    background-repeat:no-repeat;
+    background-position: 2px 15px;
+}
+.module-soo .btn-next{
+    left:100%;
+    margin-left:-30px;
+    text-align: center;
+    background-image:url(../res/icon/icon_next.png);
+    background-repeat:no-repeat;
+    background-position: 2px 15px;
+}
 /*晒单  end*/
 
 
+/*==============
+ 幸运播报
 
+=============*/
+.lucky-bro{
+    padding-left: 180px;
+    position: relative;
+    font-size:14px;
+}
+
+.lucky-bro .avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid #eee;
+    position: absolute;
+    left:5px;
+    top:10px;
+}
+.lucky-bro{
+    width:100%;
+    height:60px;
+    background:#fff;
+    margin-top:20px;
+    overflow: hidden;
+}
+.lucky-bro,.lucky-bro *{
+    box-sizing: border-box;
+}
+.lucky-bro-title{
+    width:150px;
+    height:30px;
+    border-right:1px dashed #eee;
+    position: absolute;
+    left:0px;
+    top:15px;
+    background: url(../res/images/bro_title.png) 30px 0px no-repeat;
+}
+.lucky-bro ul{
+    position: relative;
+}
+.lucky-bro .user h2{
+
+    overflow: hidden;
+    text-overflow:ellipsis;
+    font-weight:500;
+    color:#333;
+    font-size:16px;
+}
+.lucky-bro ul li{
+    width:100%;
+    height:60px;
+    padding-left:65px;
+    position: absolute;
+    left:0px;
+    background: #fff;
+    z-index: 2;
+}
+.lucky-bro .td1{
+    height:100%;
+    overflow: hidden;
+    line-height:60px;
+    width:100px;
+}
+.lucky-bro .td2{
+    width:500px;
+    height:100%;
+    text-align: center;
+    line-height:60px;
+    padding:0px 10px 0px 10px;
+}
+.lucky-bro .td2 .inner{
+    width:100%;
+    margin:0 auto;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:#8ECA3F;
+}
+.lucky-bro .item-name{
+    color:#8ECA3F;
+}
+.lucky-bro .td3{
+    height:100%;
+    text-align: center;
+    line-height:60px;
+    padding:0px 10px 0px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    width:250px;
+    color:#4095CF;
+    font-size:14px;
+}
+
+.lucky-bro .disc-card {
+    display: block;
+    width: 85px;
+    height: 24px;
+    background: url(../res/icon/zhekouka.png) no-repeat;
+    background-size: 100% 100%;
+    line-height: 24px;
+    position: relative;
+    top: 17px;
+    margin:0 auto;
+    color:#fff;
+}
 

@@ -120,8 +120,14 @@ angular.module('LuckyMall.services')
                 callback(data,status);
             });
         },
-        requestSOOData:function(callback){
-
+        requestBroadCasts:function(callback){
+            $http.get(API.broadcasts.url)
+                .success(function(response,status){
+                    callback(response,status)
+                })
+                .error(function(response,status){
+                    callback(response,status)
+                })
         }
 	};
 })

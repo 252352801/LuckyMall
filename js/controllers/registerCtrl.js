@@ -159,6 +159,7 @@ angular.module('LuckyMall.controllers')
                                         'page': '/register_success',
                                         'title': '注册成功'
                                     });
+                                    $rootScope.woopra.track($rootScope.woopra.evet.RG);
                                     LoginSer.setData(response.Data);
                                     $cookies.put('Token', response.Data.Token); //设置token cookie
                                     $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头

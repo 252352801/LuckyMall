@@ -412,6 +412,10 @@ app.constant('API',{
     gameType:{
         method:'get',
         url:'api/order/gametype/'
+    },
+    broadcasts:{
+        method:'get',
+        url:'api/system/broadcasts'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV',
@@ -1341,6 +1345,19 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         })
 
 
+
+
+        /*====================
+            myLog
+        ===================== */
+        window.$myLog=function(obj){
+            if(!ENV){
+                console.log(obj);
+            }
+        };
+
+
+
     /*===================接口配置  begin==================*/
     initAPI();
     function initAPI(){
@@ -1362,7 +1379,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         }
         Host.localMsgOrigin='http://127.0.0.1';
     }
-
+    window.ENV=location.hostname.indexOf('xingyunmao')>=0?1:0;
    /*===================接口配置  end====================*/
 
 
@@ -1377,8 +1394,12 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
     window.getWoopraService=function() {
        return woopraService;
     };
+    window.woopraTrack=function(){
+         if(window.ENV){
+             woopra.track();
+         }
+    };
     $rootScope.woopra=getWoopraService();
-
 
 
       /*=======================
@@ -1428,7 +1449,7 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
         /*设置标题*/
         if(toState.title){
             document.title=toState.title;
-            woopra.track();
+            woopraTrack();
         }else{
             document.title='幸运猫';
         }

@@ -8,9 +8,10 @@ angular.module('LuckyMall')
                 var change_time=4000;//切换时间
                 scope.banner_index = 0;
                 if(attrs.bannerCss3) {
-                    scope.$watch(attrs.bannerCss3, function (new_val,old_val) {
+                    var bannerWatch=scope.$watch(attrs.bannerCss3, function (new_val,old_val) {
                         if(new_val) {
                             start(new_val.length);
+                            bannerWatch();
                         }
                     });
                 }
@@ -279,7 +280,6 @@ angular.module('LuckyMall')
                 };
                 scope.$watch(attrs['griddata'],function(n_val,o_val){
                     if(n_val!=o_val){
-                        //console.log(n_val);
                         scope.data_grid=init(n_val);
                     }
                 });
@@ -351,15 +351,88 @@ angular.module('LuckyMall')
                             element: obj,
                             attr: 'scrollTop',//需要改变的属性
                             value: change_val,//改变的值 可以为正负
-                            time: 200,//执行动画的时间
+                            time: 300,//执行动画的时间
                             moveName: 'Quadratic',//动画名，默认为Linear
                             moveType: 'easeOut',//动画的缓动方式，默认为easeIn
                             callback:function(){
-                                //console.log('current_scroll_top:'+obj.scrollTop);
+
                             }
                         });
                     };
 
+                }
+            }
+        };
+    })
+    .directive('sooSlider',function($timeout) {
+        return {
+            restrict: 'A',
+
+
+            link: function (scope, element, attrs) {
+
+                var c_t=3000;//切换时间
+                scope.data_slider=scope.data_soo;
+                run();
+
+                function run(){
+                    var lock=false;//锁
+                    var index=0;
+                    var elem=element[0];
+                    var len=scope.data_slider.length*2;
+                    var per_w=1100;
+                    element.slider =setTimeout(function(){
+                        slide(-1,true);
+                    },c_t);
+                    function slide(d,isInfinite){//d 方向   1向右  -1向左   isInfinite是否无限滚
+                        if (index >= len / 2&&d==-1) {
+                            index = 0;
+                            elem.style.left = '0px';
+                        } else if (index <= 0&&d==1) {
+                            index=len/2;
+                            elem.style.left = -len/2*per_w+'px';
+
+                        }
+                        lock = true;
+                        tweenMove({
+                            element: element[0],
+                            attr: 'left',
+                            value: per_w * d,
+                            time: 300,
+                            moveName: 'Quadratic',
+                            moveType: 'easeOut',
+                            callback: function () {
+                                lock = false;
+                                index -= d;
+                                if(isInfinite) {
+                                    element.slider = setTimeout(function () {
+                                        slide(-1,true);
+                                    }, c_t);
+                                }
+                            }
+                        });
+                    }
+                    element.parent().bind('mouseenter',function(){
+                        clearTimeout(element.slider);
+                    });
+                    element.parent().bind('mouseleave',function(){
+                        clearTimeout(element.slider);
+                        element.slider =setTimeout(function(){
+                            slide(-1,true);
+                        },c_t);
+                    });
+                    scope.prev=function(){
+                        if(!lock) {
+                            clearTimeout(element.slider);
+                            slide(1,false);
+                        }
+                    };
+                    scope.next=function(){
+                        if(!lock) {
+                            clearTimeout(element.slider);
+                            slide(-1,false);
+                        }
+                    };
                 }
             }
         };

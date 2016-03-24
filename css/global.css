@@ -131,6 +131,10 @@ input:focus{
 .cursor-pointer{
     cursor:pointer;
 }
+.text-break{
+    word-break: break-all;
+    word-wrap:break-word;
+}
 .tips-nothing{
     width: 100%;
     position: relative;

@@ -8,7 +8,7 @@ angular.module('LuckyMall')
                     scope.$watch(attrs.ngTitle, function (new_val,old_val) {
                         if(new_val!=old_val) {
                             document.title = new_val;
-                            woopra.track();
+                            woopraTrack();
                         }
                     });
                 }
@@ -731,27 +731,28 @@ angular.module('LuckyMall')
         return {
             link: function (scope, element, attrs) {
                 var old_src=attrs.tempSrc;
+                var parent_w=element[0].offsetParent.clientWidth;
+                var parent_h=element[0].offsetParent.clientHeight;
                 function checkSize(){
                     element.checkSize=setTimeout(function(){
-                        element.width=parseInt(element[0].clientWidth);
-                        element.height=parseInt(element[0].clientHeight);
+                        element.width=element[0].clientWidth;
+                        element.height=element[0].clientHeight;
                         if(element.width>0&&element.height>0&&attrs.src!=old_src){
                             if(element.width>element.height){//高度小于宽度  把高度先撑满
-                                element.width*=(element[0].offsetParent.clientHeight/element.height);
-                                element.height=element[0].offsetParent.clientHeight;
-                                if(element.width<element[0].offsetParent.clientWidth){//高度撑满后宽度仍小于容器宽  把宽度撑满  高度按比例放大
-                                    element.height*=(element[0].offsetParent.clientWidth/element.width);
-                                    element.width=element[0].offsetParent.clientWidth;
+                                element.width*=(parent_h/element.height);
+                                element.height=parent_h;
+                                if(element.width<parent_w){//高度撑满后宽度仍小于容器宽  把宽度撑满  高度按比例放大
+                                    element.height*=(parent_w/element.width);
+                                    element.width=parent_w;
                                 }
 
                             }else{
-                                element.height*=(element[0].offsetParent.clientWidth/element.width);
-                                element.width=element[0].offsetParent.clientWidth;
-                                if(element.height<element[0].offsetParent.clientHeight){
-                                    element.width*=(element[0].offsetParent.clientHeight/element.height);
-                                    element.height=element[0].offsetParent.clientHeight;
+                                element.height*=(parent_w/element.width);
+                                element.width=parent_w;
+                                if(element.height<parent_h){
+                                    element.width*=(parent_h/element.height);
+                                    element.height=parent_h;
                                 }
-
                             }
                             element[0].style.width=element.width+'px';
                             element[0].style.height=element.height+'px';

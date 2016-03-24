@@ -43,14 +43,23 @@ angular.module('LuckyMall.services', [])
 
     .factory('woopraService', function (ENV,UserSer) {
         var ws = {};
-        ws.debug = ENV==0?true:false;
-
+        ws.debug = window.ENV?false:true;
         ws.auth = function () {
             if (ws.debug) {
-              //  $log.info({email: $rootScope.loginUser.Mobile, nickname: $rootScope.loginUser.NickName});
-            }
-            else {
-                woopra.identify({email: UserSer.getData().UserModel.Mobile, nickname: UserSer.getData().UserModel.NickName});
+
+            }else {
+                var data_avatar = angular.fromJson(UserSer.getData().UserModel.Avatar);
+                var avatar='';
+                if (data_avatar.type == 1) {
+                    avatar= location.protocol+'//image.xingyunmao.cn'+data_avatar.image;
+                } else {
+                    avatar = location.protocol+'//www.xingyunmao.cn/res/images/touxiang.jpg';
+                }
+                woopra.identify({
+                    email: UserSer.getData().UserModel.Mobile,
+                    nickname: UserSer.getData().UserModel.NickName,
+                    avatar:avatar
+                });
                 woopra.track();
             }
         };
@@ -79,6 +88,10 @@ angular.module('LuckyMall.services', [])
             CP: {
                 name: 'completepurchase',//支付订单
                 properties: {productname: '', originprice: 0, earnest: 0, discount: 0, coupon: 0, finalmoney: 0}
+            },
+            RG:{
+                name: 'register',//注册
+                properties: {}
             }
         };
 

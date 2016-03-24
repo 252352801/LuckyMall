@@ -37,55 +37,39 @@
     <!--中部 start-->
     <div class="container">
         <div class="content">
-            <div class="module-so" ng-show="data_soo.orgData.length>=4"> <!--晒单模块-->
-                <div class="md-top">
-                    <h2>晒单分享<span class="color-base">晒单抢红包</span></h2>
-                    <a href="/showOffOrders" class="more">更多></a>
+
+
+
+
+            <div class="lucky-bro" ng-if="data_broadcasts.length>0">
+                <div class="lucky-bro-title">
+
                 </div>
-                <ul class="over-hidden ul-index-soo">
-                    <li ng-repeat="soo in data_soo.general" ng-show="data_soo">
-                        <a href="/soo_dt/{{soo.Id}}" target="_blank">
-                            <div class="box-user">
-                                <div class="avatar">
-                                    <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
-                                </div>
-                                <p class="user-name" title={{soo.NickName}} ng-bind="soo.Nickname"></p>
-                                <p class="color-999" ng-bind="soo.CreateTime"></p>
-                                <p class="bar-icons">
-                                    <span class="so-icon-disc" ng-bind="'获得'+soo.DiscountValue+'折'"></span>
-                                 </p>
+                <ul>
+                    <li ng-repeat="bro in data_broadcasts track by $index"
+                        ng-style="{'z-index':(bro_ctrl.index==0&&$index==data_broadcasts.length-1)||bro_ctrl.index==$index||bro_ctrl.index-1==$index?'10':'2',
+                        'top':(bro_ctrl.index==0&&$index==data_broadcasts.length-1)||bro_ctrl.index-1==$index?'-60px':(bro_ctrl.index==$index?'0px':'60px'),
+                        'transition':'top .6s'}">
+                        <a href="/item/{{bro.CommodityId}}" target="_blank">
+                            <img class="avatar" ng-src={{imgHost+bro.Avatar.image}}
+                                 error-src="./res/images/touxiang.jpg"/>
+
+                            <div class="td1 user pull-left">
+                                <h2 class="pull-left text-break" ng-bind="bro.Nickname"></h2>
                             </div>
-                            <div class="box-dt">
-                                <div class="img-adapt">
-                                    <!--<img ng-src="{{imgHost+soo.images[0]}}" error-src="./res/images/default.png"  img-adaptation-self />-->
-                                    <img real-src={{imgHost+soo.images[0]}} temp-src="./res/images/default.png"   img-adapt-self />
-                                </div>
-                                <div class="so-describe" ng-bind="soo.Content">
+                            <div class="td2 pull-left">
+                                <div class="inner">
+
+                                    <span class="color-999" ng-bind="bro.CreateTime"></span>
+                                    <span class="color-999">玩游戏获得</span>
+                                    <span class="item-name" ng-bind="bro.CommodityName"></span>
 
                                 </div>
                             </div>
-                        </a>
-
-                    </li>
-                    <li class="large" ng-show="data_soo">
-                        <a  href="/soo_dt/{{data_soo.large.Id}}" target="_blank">
-                            <div class="large-img">
-                                <img ng-src={{imgHost+data_soo.large.images[0]}} error-src="./res/images/default.png" img-adapt-self  />
-                            </div>
-                            <div class="large-dt">
-                                <div class="large-dt-user">
-                                    <img ng-src={{imgHost+data_soo.large.Avatar.image}} error-src="./res/images/touxiang.jpg" />
-                                    <div class="over-hidden bar-show-info">
-                                        <p class="pull-left user-name" ng-bind="data_soo.large.Nickname"></p>
-                                        <p class="pull-left color-999" ng-bind="data_soo.large.CreateTime"></p>
-                                        <p class=" pull-right">
-                                            <span class="so-icon-disc" ng-bind="'获得'+data_soo.large.DiscountValue+'折'"></span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="large-dt-describe" ng-bind="data_soo.large.Content">
-
-                                </div>
+                            <div class="td3 pull-left">
+                                <p class="disc-card">
+                                    {{bro.DiscountValue}}<span class="font-14">折卡</span>
+                                </p>
                             </div>
                         </a>
                     </li>
@@ -93,93 +77,73 @@
             </div>
 
 
-
-
-
-<!--
-            <div class="module-soo">
+            <div class="module-soo" ng-if="data_soo.length>0">
                 <div class="md-top">
                     <h2>晒单分享<span class="color-base">晒单抢红包</span></h2>
-                    <a href="/showOffOrders" class="more">更多></a>
+                    <a href="/showOffOrders" class="more">更多<span>+</span></a>
                 </div>
-                <div class="soo-slider-box">
-                    <ul>
-                        <li>
+                <div class="soo-slider-box" soo-slider="data_soo" ng-style="{'width':data_soo.length*100*2+'%'}">
+                    <ul ng-repeat="slier in data_soo" ng-style="{'width':(100/data_soo.length/2)+'%'}">
+                        <li class="li-soo" ng-repeat="soo in slier">
                             <div class="soo-shower">
-                                <img/>
+                                <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
 
                                 <p>
-                                    <span>岁月如歌、</span>
-                                    <span>20160703</span>
+                                    <span class="nickname" ng-bind="soo.Nickname">岁月如歌、</span>
+                                    <span class="color-999" ng-bind="soo.CreateTime"></span>
                                 </p>
 
-                                <p>
-                                    <span class="soo-disc-card"></span>
-                                    <span>iphone</span>
+                                <p class="over-hidden">
+                                    <span class="soo-disc-card pull-left">{{soo.DiscountValue+'折卡'}}</span>
+                                    <span class="item-name pull-left text-break" >{{soo.CommodityName}}</span>
                                 </p>
                             </div>
-                            <div>
-                                今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折
-                            </div>
-                            <div>
-                                <a class="img-adapt" ng-if="$index<3">
-                                    <img/>
+                            <div class="describe text-break">
+                                <a>
+                                   {{soo.Content}}
                                 </a>
+                            </div>
+                            <div class="images">
+                                <div class="img-adapt" ng-repeat="img in soo.images" ng-if="$index<3" >
+                                    <img real-src={{imgHost+img+'@200w_200h_100Q.jpg'}} temp-src="./res/images/default.png"   img-adapt-self/>
+                                </div>
+
                             </div>
                         </li>
                     </ul>
-                    <ul>
-                        <li>
+                    <ul ng-repeat="slier in data_soo" ng-style="{'width':(100/data_soo.length/2)+'%'}">
+                        <li class="li-soo" ng-repeat="soo in slier">
                             <div class="soo-shower">
-                                <img/>
+                                <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
 
                                 <p>
-                                    <span>岁月如歌、</span>
-                                    <span>20160703</span>
+                                    <span class="nickname" ng-bind="soo.Nickname">岁月如歌、</span>
+                                    <span class="color-999" ng-bind="soo.CreateTime"></span>
                                 </p>
 
-                                <p>
-                                    <span class="soo-disc-card"></span>
-                                    <span>iphone</span>
+                                <p class="over-hidden">
+                                    <span class="soo-disc-card pull-left">{{soo.DiscountValue+'折卡'}}</span>
+                                    <span class="item-name pull-left text-break" >{{soo.CommodityName}}</span>
                                 </p>
                             </div>
-                            <div>
-                                今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折
-                            </div>
-                            <div>
-                                <a class="img-adapt" ng-if="$index<3">
-                                    <img/>
+                            <div class="describe text-break">
+                                <a>
+                                    {{soo.Content}}
                                 </a>
+                            </div>
+                            <div class="images">
+                                <div class="img-adapt" ng-repeat="img in soo.images" ng-if="$index<3">
+                                    <img real-src={{imgHost+img+'@200w_200h_100Q.jpg'}} temp-src="./res/images/default.png"   img-adapt-self  />
+                                </div>
+
                             </div>
                         </li>
                     </ul>
-                    <ul>
-                        <li>
-                            <div class="soo-shower">
-                                <img/>
 
-                                <p>
-                                    <span>岁月如歌、</span>
-                                    <span>20160703</span>
-                                </p>
-
-                                <p>
-                                    <span class="soo-disc-card"></span>
-                                    <span>iphone</span>
-                                </p>
-                            </div>
-                            <div>
-                                今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折今天这是第一个，还是碗中了一折
-                            </div>
-                            <div>
-                                <a class="img-adapt" ng-if="$index<3">
-                                    <img/>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
-            </div>-->
+                <i class="btn-prev txt-no-select" ng-click="prev()"></i>
+                <i class="btn-next txt-no-select" ng-click="next()"></i>
+            </div>
 
             <grid griddata="data_floor"></grid>
         </div>
