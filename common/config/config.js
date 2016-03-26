@@ -7,7 +7,7 @@ app.constant('Host',{
         fingerGuessing:''//猜拳游戏地址
     }
 });
-app.constant('ENV',1);//当前环境 0开发   1发布
+app.constant('ENV',0);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
