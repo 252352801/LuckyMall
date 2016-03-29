@@ -21,11 +21,13 @@
 
             <label class="z-index-2">获得折扣：</label><span class="so-icon-disc" ng-bind="soo.DiscountValue+'折'"></span>
             <a class="link-dt color-org z-index-2" href="/soo_dt/{{soo.Id}}" target="_blank" ng-if="soo.ShaiDanStatus!=2">[详情]</a>
-            <a class="link-dt color-red z-index-2" href="/soo_dt/{{soo.Id}}" target="_blank" ng-if="soo.ShaiDanStatus==2">[为什么审核不通过？]</a>
+            <a class="link-dt color-red z-index-2" href="/soo_dt/{{soo.Id}}" target="_blank" ng-if="soo.ShaiDanStatus==2">[查看原因]</a>
+            <a class="link-dt color-balanced z-index-2" href="/UCIndex/resubmitSoo/{{soo.Id}}" target="_blank" ng-if="soo.ShaiDanStatus==2">[重新提交]</a>
             </p>
             <p class="ng-hide">
                 <label>买入价：</label><span class="font-14 color-org">￥100</span><span class="color-999 line-through">￥1000</span>
             </p>
+
         </div>
         <div class="info">
             <p ng-bind="soo.Content">
@@ -43,7 +45,7 @@
                 <img ng-if="soo.bigImgIndex!=-1" ng-src={{imgHost+soo.bigImgUrl}} />
             </div>
         </div>
-        <div class="bar-buttons txt-right">
+        <div class="bar-buttons txt-right" ng-if="soo.ShaiDanStatus==1">
             <p class="btn-like pull-right">
                 <i class="iconfont lm-heart"></i>
                 <label>赞(<span ng-bind="soo.LikeCount"></span>)</label>

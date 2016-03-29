@@ -24,6 +24,7 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
             $rootScope.isLoginModalShow = false;//登陆框是否显示
             $rootScope.isFeedbackModalShow = false;//反馈框是否显示
             $rootScope.isGetCouponsModalShow=false;
+            $rootScope.isDownloadAppModalShow=false;//下载APP
             $rootScope.isLogin = false;//是否已经登陆
             $scope.refresher = undefined;//刷新用户数据
             $rootScope.session_key = null;

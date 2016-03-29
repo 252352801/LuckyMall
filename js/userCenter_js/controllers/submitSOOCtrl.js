@@ -3,7 +3,7 @@ angular.module('LuckyMall.controllers')
     ['$scope', '$state', '$stateParams','UploadSer','OrderDetailsSer','SubmitSOOSer',
         function ($scope, $state, $stateParams,UploadSer,OrderDetailsSer,SubmitSOOSer) {
             $scope.$emit('changeMenu', 4);
-            var order_id=$stateParams.id;
+            var id=$stateParams.id;
             $scope.canShowOff=false;
             $scope.params_submit={
                 "oid":null,
@@ -23,7 +23,7 @@ angular.module('LuckyMall.controllers')
                 swal(msg,'','error');
                 $scope.uploader.queue.pop();
             });
-            OrderDetailsSer.requestData(order_id,function(response,status){
+            OrderDetailsSer.requestData(id,function(response,status){
                 if(status==1){
                     $scope.params_submit.oid=response.Id;
                     $scope.data_order=response;

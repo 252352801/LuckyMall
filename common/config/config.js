@@ -7,7 +7,7 @@ app.constant('Host',{
         fingerGuessing:''//猜拳游戏地址
     }
 });
-app.constant('ENV',0);//当前环境 0开发   1发布
+app.constant('ENV',1);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
@@ -966,6 +966,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'新手指南-幸运猫-够抵购好玩',
             resolve: {
                 loadFiles: load([
+                    './css/support.css',
                     './js/controllers/guideCtrl.js'
                 ])
             }
@@ -1041,6 +1042,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             resolve: {
                 loadFiles: load([
                     './js/userCenter_js/controllers/submitSOOCtrl.js',
+                    './js/userCenter_js/services/submitSOOSer.js'
+                ])
+            }
+        })
+        /*晒单重新提交*/
+        .state('UCIndex.resubmitSoo', {
+            url: '/resubmitSoo/:id',
+            views: {
+                'uc-menu-cont': {
+                    templateUrl: "templates/userCenter_templates/resubmitSoo.html?v="+v,
+                    controller: 'ResubmitSooCtrl'
+                }
+            },
+            title:'晒带重新提交-幸运猫',
+            resolve: {
+                loadFiles: load([
+                    './js/userCenter_js/controllers/resubmitSooCtrl.js',
                     './js/userCenter_js/services/submitSOOSer.js'
                 ])
             }

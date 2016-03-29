@@ -385,6 +385,9 @@ angular.module('LuckyMall')
                         slide(-1,true);
                     },c_t);
                     function slide(d,isInfinite){//d 方向   1向右  -1向左   isInfinite是否无限滚
+                        if(lock){
+                            return;
+                        }
                         if (index >= len / 2&&d==-1) {
                             index = 0;
                             elem.style.left = '0px';
@@ -398,7 +401,7 @@ angular.module('LuckyMall')
                             element: element[0],
                             attr: 'left',
                             value: per_w * d,
-                            time: 300,
+                            time: 250,
                             moveName: 'Quadratic',
                             moveType: 'easeOut',
                             callback: function () {

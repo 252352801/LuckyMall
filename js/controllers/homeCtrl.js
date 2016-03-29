@@ -11,6 +11,14 @@ angular.module('LuckyMall.controllers')
                     fishing: ''
                 }
             };
+            $scope.modalDownloadApp={
+                show:false
+            };
+
+            $scope.closeModalDownloadApp=function(){
+                $scope.modalDownloadApp.show=false;
+            };
+
             $scope.data_soo = [];
 
 
@@ -32,17 +40,17 @@ angular.module('LuckyMall.controllers')
 
 
             $scope.actionBanner = function (banner) {
-                if (banner.PromotionType == 1) {
+                if (banner.PromotionType == 1) {//详情
                     if (banner.TypeId != 0) {
                         $state.go('item', {id: banner.TypeId});
                     }
-                } else if (banner.PromotionType == 0) {
+                } else if (banner.PromotionType == 0) {//品牌
                     $state.go('brand', {brand_id: banner.TypeId});
-                } else if (banner.PromotionType == 2) {
+                } else if (banner.PromotionType == 2) {//市场活动
                     $state.go('market', {id: banner.TypeId});
-                } else if (banner.PromotionType == 3) {
-                    //擂台的 已停用
-                } else if (banner.PromotionType == 4) {
+                } else if (banner.PromotionType == 3) {//0元购
+                    $rootScope.isModalDownloadAppShow=true;
+                } else if (banner.PromotionType == 4) {//游戏
                     var auth = '';
                     $scope.gameMenu.commodityId = ENV == 1 ? 1060328483 : 2494474873;
                     var initGame = function (authorization) {

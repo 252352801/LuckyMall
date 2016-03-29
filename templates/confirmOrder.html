@@ -44,7 +44,7 @@
             <span>折后价</span>
             <span>待支付</span>
         </div>
-        <div class="goods-list" ng-repeat="order in data_orders">
+        <div ng-class="{'goods-list freeShopping':order.OrderType==3,'goods-list':order.OrderType!=3}" ng-repeat="order in data_orders">
             <div class="bar-sellerInfo">
                 <img real-src={{imgHost+order.Brand.BrandImage+'@64w_32h_100Q.png'}} temp-src="./res/images/default.png" alt="" ng-if="order.Brand.BrandImage"/>
                 <p ng-bind="order.Brand.BrandName"></p>

@@ -30,7 +30,7 @@
         }
         {
             (function(){
-               window.v='20160326';
+               window.v='20160329';
             })();
         }
 
@@ -46,13 +46,13 @@
 
 
 
-    <link  rel="stylesheet" type="text/css" href="./css/iconFont/iconfont.css?v=20160326">
-    <link  rel="stylesheet" type="text/css" href="./css/global.css?v=20160326">
-    <script  type="text/javascript" src="./lib/myfuntion/base.js?v=20160326"></script>
-    <script  type="text/javascript" src="./common/config/config.js?v=20160326"></script>
-    <script  type="text/javascript" src="./common/controllers/controllers.js?v=20160326"></script>
-    <script  type="text/javascript" src="./common/services/services.js?v=20160326"></script>
-    <script  type="text/javascript" src="./common/directives/directives.js?v=20160326"></script>
+    <link  rel="stylesheet" type="text/css" href="./css/iconFont/iconfont.css?v=20160329">
+    <link  rel="stylesheet" type="text/css" href="./css/global.css?v=20160329">
+    <script  type="text/javascript" src="./lib/myfuntion/base.js?v=20160329"></script>
+    <script  type="text/javascript" src="./common/config/config.js?v=20160329"></script>
+    <script  type="text/javascript" src="./common/controllers/controllers.js?v=20160329"></script>
+    <script  type="text/javascript" src="./common/services/services.js?v=20160329"></script>
+    <script  type="text/javascript" src="./common/directives/directives.js?v=20160329"></script>
 
 </head>
 <body ng-controller="AppCtrl" ng-app="LuckyMall"  id="ng-app">
@@ -61,6 +61,7 @@
     <modal-login ng-show="isLoginModalShow"></modal-login>
     <modal-feedback ng-show="isFeedbackModalShow"></modal-feedback>
     <loading ng-show="page_loading"></loading>
+    <modal-download-app visible="isModalDownloadAppShow"></modal-download-app>
     <btn-get-coupons></btn-get-coupons>
      <modal-get-coupons visible="isGetCouponsModalShow" count="getCouponsCount"></modal-get-coupons>
     <game-window ng-show="game.isOpen"></game-window>
@@ -83,5 +84,5 @@
         domain: 'xingyunmao.cn'
     });
 </script>
-
+<script type="text/javascript" src="https://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500043817" ></script>
 </html>

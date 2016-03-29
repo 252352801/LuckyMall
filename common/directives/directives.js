@@ -52,6 +52,30 @@ angular.module('LuckyMall')
             }
         };
     })
+
+
+
+    .directive('modalDownloadApp', function (svc,API) {
+        return {
+            restrict: 'E',
+            templateUrl: 'common/templates/modal-downloadApp.html',
+            replace: true,
+            scope:{
+                visible:'=visible'
+            },
+            controller: function ($scope, $rootScope) {
+                $scope.closeDownloadAppModal=function(){
+                    $rootScope.isModalDownloadAppShow=false;
+                    $scope.visible=false;
+                };
+            }
+        };
+    })
+
+
+
+
+
 /**
  * 抢红包模态框
  */
@@ -193,6 +217,9 @@ angular.module('LuckyMall')
                             }
                         });
                     }
+                };
+                $scope.openDownloadAppModal=function(){
+                    $rootScope.isModalDownloadAppShow = true;
                 };
                 $scope.search=function(){
                     if($scope.kw){

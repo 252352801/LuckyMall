@@ -986,6 +986,9 @@ a{
 .modal-overlay.deep{
     background:rgba(0,0,0,0.6);
 }
+.modal-overlay.deepest{
+    background:rgba(0,0,0,0.8);
+}
 .modal-add-address{
     width:430px;
     background:#fff;
@@ -3353,10 +3356,6 @@ modal-beforeGame
     height:60px;
     cursor:pointer;
 }
-@keyframes slideDown{
-    0%{opacity:0}
-    100%{opacity: 1}
-}
 
 .lm-loading-wrap{
     width:100%;height:100%;position:fixed;left:0px;top:0px;background:#fff;
@@ -3920,6 +3919,9 @@ modal-beforeGame
     overflow: hidden;
     padding: 20px 0px 20px 60px;
     position: relative;
+}
+.ul-soo-common .box-shower .btn-resubmit{
+
 }
 .ul-soo-common .box-shower p{
     margin-bottom:4px;

@@ -223,6 +223,27 @@
     background:#f1f1f1;
     margin-bottom: 12px;
     margin-top:12px;
+    position: relative;
+    overflow: hidden;
+}
+.box-confirmOrder .goods-list.freeShopping:after{
+    display: block;
+    content: '0元购';
+    width: 80px;
+    height: 30px;
+    background: #6dd17b;
+    position: absolute;
+    left: 100%;
+    top: -0px;
+    line-height: 30px;
+    margin-left: -60px;
+    text-align: center;
+    color: #fff;
+    -webkit-transform: rotate(40deg);
+    -ms-transform: rotate(40deg);
+    -moz-transform: rotate(40deg);
+    -o-transform: rotate(40deg);
+    transform: rotate(40deg);
 }
 .box-confirmOrder .bar-sellerInfo{
     padding:0px 20px;

@@ -72,7 +72,7 @@
                     <ul class="ul-images">
                         <li ng-class="{'cur':soo_dt.imgIndex==$index}" ng-repeat="img in soo_dt.SOOInfo.images" ng-click="soo_dt.showImg($index)">
                             <a style="display:block;width:66px;height:66px;">
-                                <img real-src={{imgHost+img}} temp-src="./res/images/default.png"  />
+                                <img real-src={{imgHost+img+'@100w_100h_100Q.jpg'}} temp-src="./res/images/default.png"  />
                             </a>
                         </li>
 

@@ -37,10 +37,10 @@
                 <div class="items" ng-repeat="item in uploader.queue">
                     <div>
                         <div class="img-preview" >
-                            <img ng-src="{{item.imgUrl?imgHost+item.imgUrl:''}}" ng-show="item.progress==100"  temp-src="./res/spinner/spinner_s.gif"/>
+                            <img ng-src="{{item.imgUrl?imgHost+item.imgUrl+'@100w_100h_100Q.jpg':''}}" ng-show="item.progress==100"  temp-src="./res/spinner/spinner_s.gif"/>
                             <span class="items-error" ng-show="item.isError">上传失败</span>
                             <div class="box-progress" ng-show="item.progress<100">
-                                <div class="progress-val" ng-style="{'width':item.progress+'%'}">
+                                <div class="progress-val" ng-style="{'width':item.progress+'%','transition':'width .3s'}">
 
                                 </div>
                                 {{item.progress+'%'}}
@@ -62,7 +62,7 @@
                         </button>
                     </div>
                 </div>
-                <div   class="btn-file-upload">
+                <div   class="btn-file-upload" ng-show="uploader.queue.length<5">
                     <span class="btn-add">+</span>
                     <p>上传图片</p>
                     <input  type="file" nv-file-select="" uploader="uploader" title="上传图片" />

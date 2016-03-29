@@ -1933,7 +1933,7 @@ angular.module('LuckyMall.services', [])
 
     .factory('UploadSer', function (API, $http, TokenSer, FileUploader) {
         return {
-            initUploader: function (max_count, max_size,errorCallback) {
+            initUploader: function (max_count, max_size,errorCallback,initImages) {
                 var uploader = new FileUploader({
                     url: API.upload.url,
                     headers:{
@@ -1956,6 +1956,7 @@ angular.module('LuckyMall.services', [])
                     error('最多能上传'+max_count+'张图片！');
                 };
                 uploader.onAfterAddingFile = function (fileItem) {
+                    console.log(fileItem);
                     if(uploader.queue.length>max_count){
                         error('最多能上传'+max_count+'张图片！');
                     }else {
@@ -2004,7 +2005,9 @@ angular.module('LuckyMall.services', [])
                 uploader.onCompleteAll = function () {
                     //console.info('onCompleteAll');
                 };
-
+                uploader.setMaxCount=function(new_count){
+                     max_count=new_count;
+                };
                 return uploader;
             }
         }

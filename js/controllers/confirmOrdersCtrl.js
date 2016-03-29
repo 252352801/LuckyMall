@@ -114,6 +114,11 @@ angular.module('LuckyMall.controllers')
         };
         /*提交订单*/
         $scope.submitOrder=function(){
+
+
+
+
+
             $scope.polling=false;//取消轮询是否已支付
             clearTimeout($scope.timer_trade_status);
 
@@ -123,6 +128,10 @@ angular.module('LuckyMall.controllers')
             }
             var order_id=new Array();
             for(var o in $scope.data_orders){
+                if($scope.data_orders[o].OrderType==3){
+                    swal('0元购订单请到手机端支付！','右上角有二维码喔','error');
+                    return;
+                }
                 order_id.push($scope.data_orders[o].Id);
             }
             var pay_method=($scope.pay_type=='weixin')?1:0;//1：微信支付，0：支付宝支付
