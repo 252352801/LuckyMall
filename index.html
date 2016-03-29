@@ -84,5 +84,14 @@
         domain: 'xingyunmao.cn'
     });
 </script>
-<script type="text/javascript" src="https://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500043817" ></script>
+<script>
+    (function(){
+        if(location.hostname.indexOf('xingyunmao')>=0){
+            var script=document.createElement('script');
+            script.setAttribute('name','MTAH5');
+            script.setAttribute('sid','500043817');
+            script.src='https://pingjs.qq.com/h5/stats.js';
+        }
+    })();
+</script>
 </html>

@@ -1,0 +1,85 @@
+<p class="menu-cont-title">
+    <label>重新晒单</label>
+
+</p>
+<div class="UC loading-tips" ng-show="loading">加载中...</div>
+<div class="submit-soo" ng-show="!loading">
+    <div class="box-order">
+       <div class="cont1" ng-show="!loading">
+            <a class="img-container">
+                <img ng-src="{{imgHost+data_order.imageUrl}}" error-src="./res/images/default.png" />
+            </a>
+           <div class="over-hidden">
+               <h2 class="pull-left item-name" ng-bind="data_order.CommodityName"></h2>
+               <small class="pull-left color-999" ng-bind="'×'+orderInfo.Count"></small>
+           </div>
+            <ul class="ul-property">
+                <li ng-repeat="property in orderInfo.spec" ng-bind="property.name+'：'+property.value"></li>
+            </ul>
+
+       </div>
+        <div class="cont2" ng-show="!loading">
+            <p>买下价格：<span class="color-org font-14" ng-bind="'￥'+data_order.DiscountPrice"></span></p>
+            <p>单品原价：<span class="line-through color-666" ng-bind="'￥'+orderInfo.UnitPrice"></span></p>
+            <p>获得折扣：<span class="so-icon-disc" ng-bind="data_order.DiscountValue+'折'"></span></p>
+        </div>
+    </div>
+    <form class="form-submit-soo" ng-submit="submitSOO()">
+        <div class="over-hidden form-group">
+            <label class="pull-left">晒单内容：</label>
+            <textarea class="pull-left" placeholder="说点什么吧！（最少15个字喔！）" ng-model="params_submit.content"></textarea>
+        </div>
+        <div class="over-hidden form-group">
+            <label class="pull-left">上传图片:</label>
+
+            <div class="upload-box pull-left">
+                <div class="items" ng-repeat="item in params_submit.images">
+                    <div>
+                        <div class="img-preview" >
+                            <img ng-src="{{item?imgHost+item:''}}"  temp-src="./res/spinner/spinner_s.gif"/>
+
+                        </div>
+                        <button type="button" class="btn-remove" ng-click="removeOldImages($index)">
+                            移除
+                        </button>
+                    </div>
+                </div>
+                <div class="items" ng-repeat="item in uploader.queue">
+                    <div>
+                        <div class="img-preview" >
+                            <img ng-src="{{item.imgUrl?imgHost+item.imgUrl+'@100w_100h_100Q.jpg':''}}" ng-show="item.progress==100"  temp-src="./res/spinner/spinner_s.gif"/>
+                            <span class="items-error" ng-show="item.isError">上传失败</span>
+                            <div class="box-progress" ng-show="item.progress<100">
+                                <div class="progress-val" ng-style="{'width':item.progress+'%'}">
+
+                                </div>
+                                {{item.progress+'%'}}
+                            </div>
+                        </div>
+                        <div ng-show="uploader.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-remove" ng-click="item.remove()">
+                            移除
+                        </button>
+                    </div>
+                </div>
+                <div   class="btn-file-upload" ng-show="(uploader.queue.length+params_submit.images.length)<5">
+                    <span class="btn-add">+</span>
+                    <p>上传图片</p>
+                    <input  type="file" nv-file-select="" uploader="uploader" title="上传图片" />
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group color-gray over-hidden">
+            <label class="pull-left color-gray">温馨提示：</label>
+            <p class="pull-left">支持bmp、jpg、jpeg、gif、png格式的图片(单张图片不能大于20MB)，至少上传3张，最多上传5张</p>
+        </div>
+        <div class="form-group txt-right">
+            <input class="btn-org btn-submit" type="submit" ng-value="submitBtn.curVal" />
+        </div>
+    </form>
+</div>
