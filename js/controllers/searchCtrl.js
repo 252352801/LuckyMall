@@ -22,6 +22,11 @@ angular.module('LuckyMall.controllers')
                     pageItems: []
                 }
 
+
+
+                $rootScope.woopra.evet.SC.properties.keyword=$scope.kw;
+                $rootScope.woopra.track($rootScope.woopra.evet.SC);
+
             }
             /*===============init end===================*/
             /**

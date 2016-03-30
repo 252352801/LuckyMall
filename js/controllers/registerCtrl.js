@@ -10,6 +10,8 @@ angular.module('LuckyMall.controllers')
             $scope.invalidMobile = new Array();
             $scope.s_key = '';//会话密钥
             $scope.captchaCode = '';
+            $scope.img_code='XXXX';
+            $scope.shareCode='';
 
             $scope.error = {//注册时的错误对象
                 mobile: false,
@@ -21,7 +23,6 @@ angular.module('LuckyMall.controllers')
             };
 
             var lock_cc = true;//获取图片验证码的锁,防止疯狂点击
-
 
             RegisterSer.getSessionKey(function (response, status) {
                 if (status == 1) {
@@ -85,11 +86,8 @@ angular.module('LuckyMall.controllers')
                     setCurrentError('mobile');
                     $scope.showTips('请先正确输入接收验证码的手机号喔！');
                 } else {
-                    if ($scope.form_register.img_code.$invalid) {
-                        setCurrentError('imgCode');
-                        $scope.showTips('请先输入图片中的验证码喔！');
-                    } else if ($scope.isValid($scope.mobile)) {
-                        VerifyCodeSer.getVerifyCode(mobile_num, $scope.s_key, $scope.img_code, function (response, status) {
+                    if ($scope.isValid($scope.mobile)) {
+                        VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.img_code, function (response, status) {
                             if (status == 1) {
                                 //$scope.verify_code = response;
                                 var resp = angular.fromJson(response);
@@ -150,7 +148,7 @@ angular.module('LuckyMall.controllers')
                             "PhoneNumber": $scope.mobile,
                             "Password": $scope.password,
                             "Code": $scope.code,
-                            "ShareCode": ""
+                            "ShareCode": $scope.shareCode
                         }, function (response, status) {  //回调函数
                             if (status == 1) {
                                 if(response.Code==0) {

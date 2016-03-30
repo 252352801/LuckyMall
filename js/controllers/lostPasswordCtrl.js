@@ -6,7 +6,8 @@ angular.module('LuckyMall.controllers')
 
             $scope.tips = '';//提示信息初始化
             $scope.invalidMobile = new Array();
-            $scope.s_key = '';//会话密钥
+            $scope.img_code='XXXX';
+            $scope.s_key='';
             $scope.captchaCode = '';
             $scope.error = {//注册时的错误对象
                 mobile: false,
@@ -57,23 +58,18 @@ angular.module('LuckyMall.controllers')
                     setCurrentError('mobile');
                     $scope.showTips('请先正确输入接收验证码的手机号喔！');
                 } else {
-                    if ($scope.form_resetPW.img_code.$invalid) {
-                        setCurrentError('imgCode');
-                        $scope.showTips('请先输入图片中的验证码喔！');
-                    } else {
-                        VerifyCodeSer.getVerifyCode(mobile_num, $scope.s_key, $scope.img_code, function (response, status) {
-                            if (status == 1) {
-                                $scope.verify_code = response;
-                                //console.log(response);
-                                var resp = angular.fromJson(response);
-                                if (resp.code == '104') {
-                                    setCurrentError('imgCode');
-                                    $scope.showTips(resp.msg);
-                                    $scope.getCaptchaCode();
-                                }
+                    VerifyCodeSer.getVerifyCode(mobile_num,$scope.s_key,$scope.img_code, function (response, status) {
+                        if (status == 1) {
+                            $scope.verify_code = response;
+                            //console.log(response);
+                            var resp = angular.fromJson(response);
+                            if (resp.code == '104') {
+                                setCurrentError('imgCode');
+                                $scope.showTips(resp.msg);
+                                $scope.getCaptchaCode();
                             }
-                        });
-                    }
+                        }
+                    });
                 }
             };
             /* 找回密码提交*/

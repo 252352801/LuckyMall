@@ -92,7 +92,16 @@ angular.module('LuckyMall.services', [])
             RG:{
                 name: 'register',//注册
                 properties: {}
+            },
+            SC:{
+                name: 'search',//搜索
+                properties: {keyword: ''}
+            },
+            FBP: {
+                name: 'freebuypurchase',//0元购购买
+                properties: {productname: '', originprice: 0}
             }
+
         };
 
         ws.track = function (e) {
@@ -876,9 +885,11 @@ angular.module('LuckyMall.services', [])
                     method: API.getAllCategory.method,
                     url: API.getAllCategory.url
                 }).success(function (response, status, headers, config) {
-                    data = response;
-                    if (typeof callback == 'function') {
-                        callback();
+                    if(status==200&&response) {
+                        data = response;
+                        if (typeof callback == 'function') {
+                            callback();
+                        }
                     }
                 }).error(function (data, status, headers, config) {
 
@@ -904,11 +915,11 @@ angular.module('LuckyMall.services', [])
     /* 获取手机验证码服务*/
     .factory('VerifyCodeSer', function (API, $http) {
         return {
-            getVerifyCode: function (mobile_num, sk, img_code, callback) {
+            getVerifyCode: function (mobile_num,s_key,img_code,callback) {
                 $http({
                     method: API.getVerifyCode.method,
                     url: API.getVerifyCode.url,
-                    data: [img_code, sk, mobile_num]
+                    data: [img_code,s_key, mobile_num]
                 }).success(function (response, status) {
                     if (response && status == 200) {
                         callback(response, 1);

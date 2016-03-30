@@ -11,7 +11,6 @@ angular.module('LuckyMall.controllers')
             $scope.$on('stop-polling-tradeStatus', function () {
                 $scope.polling = false;
             });
-
             $scope.goBackRePay = function () {
                 if ($scope.type == 1) {
                     var tmp = SOTDSvc.get();
@@ -44,6 +43,7 @@ angular.module('LuckyMall.controllers')
                         if (status === 1) {
                             $rootScope.$broadcast('orders-update');
                             if ($scope.type == 1) {
+                                localStorage.removeItem('unFinishTradeOfOrders');
                                 ga('send', 'pageview', {
                                     'page': '/complete_checkout',
                                     'title': '完成购买'
@@ -54,11 +54,13 @@ angular.module('LuckyMall.controllers')
                                 }
                                 $state.go('paySuccess');
                             } else {
+                                localStorage.removeItem('unFinishTradeOfEarnest');
                                 $rootScope.woopra.evet.PE.properties=$rootScope.woopraTempData.payForEarnest.properties;
                                 $rootScope.woopra.track($rootScope.woopra.evet.PE);
                                 $state.go('payEarnestSuccess', {order_id: $rootScope.game.orderId, commodity_id: $rootScope.game.commodityId});
                             }
                         } else {
+
                             pollingTradeStatus();
                         }
                     });

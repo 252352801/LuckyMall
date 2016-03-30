@@ -8,6 +8,8 @@ angular.module('LuckyMall.controllers')
             $scope.isUseBalance = false;//是否使用余额
             $scope.pay_type = 'zhifubao';//支付方式
             $scope.isProtocolShow = false;
+
+
             loadPageData(loadWallet);//加载本页必须的数据
             /*支付方式切换*/
             $scope.changePayType = function (new_type) {
@@ -81,7 +83,7 @@ angular.module('LuckyMall.controllers')
                 var pay_method = ($scope.pay_type == 'weixin') ? 1 : 0;//1：微信支付，0：支付宝支付
                 var pay_type = (pay_method == 1) ? 0 : ($scope.pay_type == 'zhifubao') ? 0 : 1;
                 var post_data = (pay_method == 0) ? {"ShowUrl": '', "BankSimpleCode": initBankSimpleCode($scope.pay_type), "Token": TokenSer.getToken(), "RedirectUrl": 'http://' + location.hostname + '/payEarnestSuccess'}
-                    : {"ProductId": $scope.data_order.Commodity.Id, "Token": '', "RedirectUrl": ''};
+                    : {"ProductId": $scope.data_order.Commodity.Id, "Token":TokenSer.getToken(), "RedirectUrl": ''};
                 var param = {
                     "Method": pay_method,
                     "Type": pay_type,
@@ -100,9 +102,12 @@ angular.module('LuckyMall.controllers')
                             if (response != '' && response != null && response != undefined) {
                                 $scope.$emit('cart-update');
                                 $rootScope.$broadcast('orders-update');
+                                setLocalStorageData(response.OutTradeNo);
                                 if ($scope.pay_type == 'weixin') { //如果是微信支付
+                                    $rootScope.game.orderId=$scope.data_order.Id;
+                                    $rootScope.game.commodityId=$scope.commodityId;
                                     $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
-                                    $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.EarnestMoney;
+                                    $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.earnest_cost;
                                     WXPaySer.setTotalCost($scope.earnest_cost);
                                     $state.go('WXPay', {trade_id: response.OutTradeNo, type: 0});
                                 } else {
@@ -138,6 +143,7 @@ angular.module('LuckyMall.controllers')
             $scope.testTradeStatus = function () {
                 PaymentSer.getStatusOfTrade($scope.trade_id, function (response, status) {
                     if (status === 1) {
+                        localStorage.removeItem('unFinishTradeOfEarnest');
                         $rootScope.$broadcast('user-update');
                         $rootScope.$broadcast('orders-update');
                         ga('send', 'pageview', {
@@ -189,7 +195,6 @@ angular.module('LuckyMall.controllers')
                         }
                     });
                 } else {
-                    console.log(UserSer.getData());
                     if (UserSer.getData().UserModel.IsAgreeEarnest == true) {
                         $scope.isProtocolShow = false;
                     } else {
@@ -264,11 +269,12 @@ angular.module('LuckyMall.controllers')
                 $timeout(function () {
                     PaymentSer.getStatusOfTrade(trade_id, function (response, status) {
                         if (status === 1) {
+                            localStorage.removeItem('unFinishTradeOfEarnest');
                             $rootScope.$broadcast('user-update');
                             $rootScope.$broadcast('orders-update');
                             {
                                 $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
-                                $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.EarnestMoney;
+                                $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.earnest_cost;
                                 $rootScope.woopra.evet.PE.properties=$rootScope.woopraTempData.payForEarnest.properties;
                                 $rootScope.woopra.track($rootScope.woopra.evet.PE);
                             }
@@ -279,5 +285,17 @@ angular.module('LuckyMall.controllers')
                         }
                     });
                 }, 1000);
+            }
+
+
+
+            function setLocalStorageData(trade_num){
+                var obj={
+                    tradeNum:trade_num,
+                    properties:{}
+                };
+                obj.properties.productname = $scope.data_order.CommodityName;
+                obj.properties.earnest = $scope.earnest_cost;
+                localStorage.setItem('unFinishTradeOfEarnest',angular.toJson(obj));
             }
         }]);

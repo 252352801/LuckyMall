@@ -167,9 +167,11 @@ angular.module('LuckyMall.controllers')
                         var tmp=SOTDSvc.get();
                         tmp.from='repay';
                         SOTDSvc.set(tmp);
+                        setLocalStorageData(response.Data.OutTradeNo);
                         if ($scope.pay_type== 'weixin') { //如果是微信支付
 
                             setWPP(); //设置提交woopra的信息
+
 
                             WXPaySer.setTotalCost($scope.total_cost);
                             $state.go('WXPay',{trade_id:response.Data.OutTradeNo,type:1});
@@ -184,6 +186,7 @@ angular.module('LuckyMall.controllers')
                                 $scope.trade_id = response.Data.OutTradeNo;
                             }else{//除了使用定金钱包的余额外，需要支付的金额为0时
                                 newWin.close();
+                                localStorage.removeItem('unFinishTradeOfOrders');
                                 ga('send', 'pageview', {
                                     'page': '/complete_checkout',
                                     'title': '完成购买'
@@ -201,6 +204,7 @@ angular.module('LuckyMall.controllers')
                             'page': '/complete_checkout',
                             'title': '完成购买'
                         });
+                        localStorage.removeItem('unFinishTradeOfOrders');
                         setWPP();
                         $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
                         $rootScope.woopra.track($rootScope.woopra.evet.CP);
@@ -252,6 +256,7 @@ angular.module('LuckyMall.controllers')
                         'title': '完成购买'
                     });
                     //$rootScope.initFreeChance();
+                    localStorage.removeItem('unFinishTradeOfOrders');
                     setWPP();
                     $rootScope.woopra.evet.CP.properties = $rootScope.woopraTempData.confirmOrders.properties;
                     $rootScope.woopra.track($rootScope.woopra.evet.CP);
@@ -414,6 +419,7 @@ angular.module('LuckyMall.controllers')
             $scope.timer_trade_status=$timeout(function(){
                 PaymentSer.getStatusOfTrade(trade_id,function(response,status){
                     if(status===1){
+                        localStorage.removeItem('unFinishTradeOfOrders');
                         $rootScope.$broadcast('orders-update');
                         ga('send', 'pageview', {
                             'page': '/complete_checkout',
@@ -441,4 +447,18 @@ angular.module('LuckyMall.controllers')
             $rootScope.woopraTempData.confirmOrders.properties.coupon = $scope.data_orders[0].CouponMoney;
             $rootScope.woopraTempData.confirmOrders.properties.finalmoney = $scope.data_orders[0].Unpaid;
         }
+
+       function setLocalStorageData(trade_num){
+           var obj={
+               tradeNum:trade_num,
+               properties:{}
+           };
+           obj.properties.productname = $scope.data_orders[0].CommodityName;
+           obj.properties.originprice = $scope.data_orders[0].OriginalPrice;
+           obj.properties.EarnestMoney = $scope.data_orders[0].earnest;
+           obj.properties.discount = $scope.data_orders[0].DiscountValue;
+           obj.properties.coupon = $scope.data_orders[0].CouponMoney;
+           obj.properties.finalmoney = $scope.data_orders[0].Unpaid;
+           localStorage.setItem('unFinishTradeOfOrders',angular.toJson(obj));
+       }
 }]);

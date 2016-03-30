@@ -39,6 +39,11 @@ angular.module('LuckyMall.controllers')
             });
 
 
+
+
+
+
+
             $scope.actionBanner = function (banner) {
                 if (banner.PromotionType == 1) {//详情
                     if (banner.TypeId != 0) {

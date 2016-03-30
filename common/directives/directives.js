@@ -318,7 +318,67 @@ angular.module('LuckyMall')
             restrict: 'E',
             templateUrl: 'common/templates/category.html',
             replace: true,
-            controller: function ($scope, $timeout) {
+            scope:{
+
+            },
+            controller: function ($scope, $timeout,CategorySer) {
+                var initCategory=function(){
+                    var data = CategorySer.getData().slice(0, 9);//截9个  不能再多了
+                    var result = [];
+                    for (var o in data) {
+                        var obj = {
+                            categoryName: data[o].CategoryName,
+                            link: '/list/category=' + data[o].Id + '/0/',
+                            children: []
+                        };
+                        //result.push(obj);
+                        if (data[o].SubCategories == '' || data[o].SubCategories == null) {//没有子类时
+                            for (var s in data[o].FilterModels) {
+                                var children = {
+                                    childName: data[o].FilterModels[s].FilterName,
+                                    link: '/list/category=' + data[o].Id + '/0/',
+                                    items: []
+                                };
+                                for (var i in data[o].FilterModels[s].FilterItemModels) {
+                                    var item = {
+                                        itemName: data[o].FilterModels[s].FilterItemModels[i].ItemValue,
+                                        link: '/list/category=' + data[o].Id + '/0/filter=' + data[o].FilterModels[s].Id + '_0_items=' + data[o].FilterModels[s].FilterItemModels[i].Id
+                                    };
+                                    children.items.push(item);
+                                }
+                                obj.children.push(children);
+                            }
+                        } else {
+                            for (var s in data[o].SubCategories) {
+                                var children = {
+                                    childName: data[o].SubCategories[s].CategoryName,
+                                    link: '/list/category=' + data[o].Id + '_' + data[o].SubCategories[s].Id + '/0/',
+                                    items: []
+                                };
+                                for (var i in data[o].SubCategories[s].FilterModels) {
+                                    for (var j in data[o].SubCategories[s].FilterModels[i].FilterItemModels) {
+                                        var item = {
+                                            itemName: data[o].SubCategories[s].FilterModels[i].FilterItemModels[j].ItemValue,
+                                            link: '/list/category=' + data[o].Id + '_' + data[o].SubCategories[s].Id + '/0/filter=' + data[o].SubCategories[s].FilterModels[i].Id + '_0_items=' + data[o].SubCategories[s].FilterModels[i].FilterItemModels[j].Id
+                                        };
+                                        children.items.push(item);
+                                    }
+                                }
+                                obj.children.push(children);
+                            }
+                        }
+                        result.push(obj);
+                    }
+                    $scope.data = result;
+                };
+                if(CategorySer.getData()!=null){
+                    initCategory();
+                }else {
+                    CategorySer.requestData(function () {
+                        initCategory();
+
+                    });
+                }
             },
             link: function (scope, element, attrs) {
                 scope.showCategoryContent = attrs.hasSubCategory ? ((attrs.hasSubCategory == 'false') ? false : true) : true;

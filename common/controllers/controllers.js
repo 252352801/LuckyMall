@@ -2,9 +2,9 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
 
     .controller('AppCtrl',
     ['SOTDSvc', '$http', 'API', '$scope', '$timeout', 'CartSer', 'LoginSer', '$cookies', '$rootScope', '$state', 'MyOrdersSer', 'WalletSer',
-        'AddressSer', 'MessageSer', 'ImgSer', 'RefreshUserDataSer', 'UserSer', 'TokenSer', 'MarketSer', 'FreePlaySvc','ENV','svc',
+        'AddressSer', 'MessageSer', 'ImgSer', 'RefreshUserDataSer', 'UserSer', 'TokenSer', 'MarketSer', 'FreePlaySvc','ENV','svc','PaymentSer',
         function (SOTDSvc, $http, API, $scope, $timeout, CartSer, LoginSer, $cookies, $rootScope, $state, MyOrdersSer, WalletSer, AddressSer,
-                  MessageSer, ImgSer, RefreshUserDataSer, UserSer, TokenSer, MarketSer, FreePlaySvc,ENV,svc) {
+                  MessageSer, ImgSer, RefreshUserDataSer, UserSer, TokenSer, MarketSer, FreePlaySvc,ENV,svc,PaymentSer) {
 
 
 
@@ -49,9 +49,40 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
             };
 
 
-
-
-
+            /**
+             * trade test
+             */
+            $rootScope.testTrade=function(){
+                if(localStorage.getItem('unFinishTradeOfOrders')){
+                    var obj=angular.fromJson(localStorage.getItem('unFinishTradeOfOrders'));
+                    PaymentSer.getStatusOfTrade(obj.tradeNum,function(response,status){
+                        if(status===1){
+                            localStorage.removeItem('unFinishTradeOfOrders');
+                            ga('send', 'pageview', {
+                                'page': '/complete_checkout',
+                                'title': '完成购买'
+                            });
+                            {
+                                $rootScope.woopra.evet.CP.properties = obj.properties;
+                                $rootScope.woopra.track($rootScope.woopra.evet.CP);
+                            }
+                        }
+                    });
+                }
+                if(localStorage.getItem('unFinishTradeOfEarnest')){
+                    var obj=angular.fromJson(localStorage.getItem('unFinishTradeOfEarnest'));
+                    console.log(obj.properties);
+                    PaymentSer.getStatusOfTrade(obj.tradeNum,function(response,status){
+                        if(status===1){
+                            localStorage.removeItem('unFinishTradeOfEarnest');
+                            {
+                                $rootScope.woopra.evet.PE.properties = obj.properties;
+                                $rootScope.woopra.track($rootScope.woopra.evet.PE);
+                            }
+                        }
+                    });
+                }
+            };
 
 
 
@@ -129,7 +160,7 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
 
 
                 $rootScope.woopra.auth();
-                console.log(UserSer.getData().UserModel.Avatar);
+               // $rootScope.testTrade();
             });
             $scope.$on('refresh-coupon', function () {//红包数据刷新
                 loadCouponData();
