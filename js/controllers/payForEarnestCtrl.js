@@ -127,7 +127,7 @@ angular.module('LuckyMall.controllers')
                                 newWin.close();
                             }
                         } else {
-                            $state.go('payEarnestSuccess', {order_id: $scope.data_order.Id, commodity_id: $scope.data_order.Commodity.Id});
+                            $state.go('payEarnestSuccess', {order_id: $scope.data_order.Id, commodity_id: $scope.commodityId});
                         }
                     } else {
                         swal({

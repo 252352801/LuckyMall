@@ -3,6 +3,7 @@ angular.module('LuckyMall.controllers')
                                            Host,$rootScope) {
              var order_id=$stateParams.order_id;
         $scope.data_order=undefined;
+        $scope.isEnough=false;
         loadOrderInfo();
              $rootScope.$broadcast('cart-update');
                $scope.playGame=function(){
@@ -51,6 +52,7 @@ angular.module('LuckyMall.controllers')
                     }else{
 
                     }
+                    $scope.isEnough=true;
                 }else{
                     $state.go('404');
                 }
