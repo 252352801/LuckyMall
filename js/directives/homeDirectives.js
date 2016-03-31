@@ -440,5 +440,76 @@ angular.module('LuckyMall')
             }
         };
     })
+    .directive('fsSlider',function($timeout) {
+        return {
+            restrict: 'A',
+
+
+            link: function (scope, element, attrs) {
+                var watcher=scope.$watch('data_fs',function(new_val,old_val){
+                        if(new_val!=old_val){
+
+                            run(new_val);
+                            watcher();
+                        }
+                });
+                var c_t=3000;//切换时间
+                function run(data){
+
+                    var lock=false;//锁
+                    var index=0;
+                    var elem=element[0];
+                    var len=data.length*2;
+                    var per_w=220;
+                    element.slider =setTimeout(function(){
+                        slide(-1,true);
+                    },c_t);
+                    function slide(d,isInfinite) {//d 方向   1向右  -1向左   isInfinite是否无限滚
+                        if (lock) {
+                            return;
+                        }else{
+                            if (index >= len / 2&&d==-1) {
+                                index = 0;
+                                elem.style.left = '0px';
+                            } else if (index <= 0&&d==1) {
+                                index=len/2;
+                                elem.style.left = -len/2*per_w+'px';
+
+                            }
+                            lock = true;
+                            tweenMove({
+                                element:elem,
+                                attr: 'left',
+                                value: per_w * d,
+                                time: 150,
+                                moveName: 'Quadratic',
+                                moveType: 'easeOut',
+                                callback: function () {
+                                    lock = false;
+                                    index -= d;
+                                    if(isInfinite) {
+                                        element.slider = setTimeout(function () {
+                                            slide(-1,true);
+                                        }, c_t);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    element.parent().bind('mouseenter',function(){
+                        clearTimeout(element.slider);
+                    });
+                    element.parent().bind('mouseleave',function(){
+                        clearTimeout(element.slider);
+                        element.slider =setTimeout(function(){
+                            slide(-1,true);
+                        },c_t);
+                    });
+
+                };
+
+            }
+        }
+    })
 
 

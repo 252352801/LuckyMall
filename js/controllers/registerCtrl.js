@@ -12,7 +12,6 @@ angular.module('LuckyMall.controllers')
             $scope.captchaCode = '';
             $scope.img_code='XXXX';
             $scope.shareCode='';
-
             $scope.error = {//注册时的错误对象
                 mobile: false,
                 imgCode: false,
@@ -21,7 +20,6 @@ angular.module('LuckyMall.controllers')
                 repPassword: false,
                 response:false
             };
-
             var lock_cc = true;//获取图片验证码的锁,防止疯狂点击
 
             RegisterSer.getSessionKey(function (response, status) {
@@ -138,6 +136,7 @@ angular.module('LuckyMall.controllers')
             /* 注册提交*/
             $scope.submitRegister = function () {
 
+
                 if ($scope.form_register.$valid && $scope.form_register.re_password.$modelValue == $scope.form_register.password.$modelValue) {
                     clearErrors();
                     if ($scope.isValid($scope.mobile)) {
@@ -155,7 +154,7 @@ angular.module('LuckyMall.controllers')
                                     $scope.$emit('refresh-coupon');
                                     ga('send', 'pageview', {
                                         'page': '/register_success',
-                                        'title': '注册成功'
+                                        'title': '注册成功!'
                                     });
                                     $rootScope.woopra.track($rootScope.woopra.evet.RG);
                                     LoginSer.setData(response.Data);

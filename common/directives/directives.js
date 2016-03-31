@@ -1117,9 +1117,10 @@ angular.module('LuckyMall')
             restrict: 'A',
             link: function (scope, element, attrs) {
                 if(attrs.timeDown){
-                    scope.$watch(attrs.timeDown,function(new_val,old_val){
+                    var watcher=scope.$watch(attrs.timeDown,function(new_val,old_val){
                         if(new_val!=undefined&&new_val!='') {
                             start(new_val);
+                            watcher();
                         }
                     });
                 }

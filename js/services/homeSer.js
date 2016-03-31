@@ -128,6 +128,14 @@ angular.module('LuckyMall.services')
                 .error(function(response,status){
                     callback(response,status)
                 })
+        },
+        requestFreeShoppingData:function(params,callback){
+            $http.post(API.freeShopping.url,params)
+            .success(function(response,status,headers,config){
+                callback(response,status);
+            }).error(function(data,status,headers,config){
+                callback(data,status);
+            });
         }
 	};
 })

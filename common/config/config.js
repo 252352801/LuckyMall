@@ -416,6 +416,10 @@ app.constant('API',{
     broadcasts:{
         method:'get',
         url:'api/system/broadcasts'
+    },
+    freeShopping:{
+        method:'post',
+        url:'api/zerodollarshopping/queryonline'
     }
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV',

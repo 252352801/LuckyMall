@@ -204,7 +204,27 @@ angular.module('LuckyMall.controllers')
                     }
                 });
             }
+            $scope.data_fs=[];
+            loadFreeShoppingData();
+            function loadFreeShoppingData(){
+                var params={
+                    pSize: 10,
+                    pIndex: 0
+                };
+                HomeSer.requestFreeShoppingData(params,function(response,status){
+                    if(status==200&&response){
 
+                        var arr=response.Data;
+                        if(arr.length>0) {
+                            for (var o in arr) {
+                                arr[o].remainTime = ((new Date(arr[o].EndTime.replace(/-/g, '/')).getTime()) - (new Date(arr[o].CurrentTime.replace(/-/g, '/')).getTime()))/1000;
+                            }
+                            $scope.data_fs=arr;
+
+                        }
+                    }
+                });
+            }
 
 
             function setTimeGoOn(time_str){
