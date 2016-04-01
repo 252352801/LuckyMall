@@ -1178,6 +1178,85 @@ angular.module('LuckyMall')
         };
     })
 
+
+
+    /*剩余时间(小时)*/
+    .directive('timeDownAdapt', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                if(attrs.timeDownAdapt){
+                    var watcher=scope.$watch(attrs.timeDownAdapt,function(new_val,old_val){
+                        if(new_val!=undefined&&new_val!='') {
+                            start(new_val);
+                            watcher();
+                        }
+                    });
+                }
+
+                function start(time_second){
+                    element.time = parseInt(time_second);
+                    var inner = initTime(element.time);
+                    element.html(inner);
+                    countDown();
+                    function countDown() {
+                        element.timer = setInterval(function () {
+                            if (element.time >= 0) {
+                                element.time--;
+                                var new_inner = initTime(element.time);
+                                element.html(new_inner);
+                            } else {
+                                clearInterval(element.timer);
+                                if (typeof scope[attrs.timeOver] == "function") {
+                                    scope[attrs.timeOver]();
+                                }
+                                if(attrs.timevershow){
+                                    element.html(attrs.timevershow);
+                                }
+                            }
+                        }, 1000);
+                    }
+
+                }
+
+                function initTime(time){
+                    var t=time;
+                    if(t<0){
+                        if(attrs.timevershow){
+                            element.html(attrs.timevershow);
+                        }
+                        return;
+                    }
+                    var str='';
+                    if(t>3600*24){
+                        str+=parseInt(t/(3600*24))+'天';
+                        t=t%(3600*24);
+                    }
+                    if(t>3600){
+                        str+=parseInt(t/3600)+'时';
+                        t=t%3600;
+                    }
+                    if(t>60){
+                        str+=parseInt(t/60)+'分';
+                        t=t%60;
+                    }
+                    str+=t+'秒';
+                    if(str.indexOf('天')>=0){
+                        var str_index=str.indexOf('时');
+                        str=str.substring(0,str_index+1);
+                        return '剩余'+str;
+                    }else if(str.indexOf('时')>=0){
+                        var str_index=str.indexOf('分');
+                        str=str.substring(0,str_index+1);
+                        return '剩余'+str;
+                    }else{
+                        return str;
+                    }
+                }
+            }
+        };
+    })
+
 /*图片出错*/
 .directive('errorSrc', function ($compile) {
     return {
@@ -1357,7 +1436,7 @@ angular.module('LuckyMall')
                 luckyEnergy:'=luckyenergy',
                 gameMenu:'=gamectrl'
             },
-            templateUrl: 'common/templates/modal-getDiscount.html',
+            templateUrl: 'common/templates/modal-getDiscount.html?v='+v,
             controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc,svc,API){
                 $scope.isCheckedWallet=false;
                 $scope.isCheckedCoupon=false;
@@ -1563,28 +1642,30 @@ angular.module('LuckyMall')
                     $scope.gameMenu.commodityId = order.CommodityId;
 
                     initExchangeData($scope.data_balance.Coupon.Balance,$scope.data_balance.Wallet.Balance);
-
-
+                    console.log($scope.data_balance);
+                    if($scope.order.EarnestBusinessType==0) {
+                        if ($scope.data_balance.Coupon.Balance >= $scope.order.earnest_cost) {
+                            $timeout(function () {
+                                $scope.content_exchange_energy = true;
+                            })
+                        } else if ($scope.data_balance.Wallet.Balance >= $scope.order.earnest_cost) {
+                            // $scope.payEarnest();
+                        } else {
+                            $scope.payEarnest();
+                        }
+                    }
 
                 }
 
                function initExchangeData(coupon_val,wallet_val){
                    var coupon_balance=coupon_val;//红包可支配余额
                    var wallet_balance=wallet_val;//钱包可支配余额
-                   if(coupon_balance>0){
-                       $scope.isCheckedCoupon=true;
-                       if(coupon_balance>=$scope.order.earnest_cost){
-                           $scope.isCheckedWallet=false;
-                       }else{
-                           $scope.isCheckedWallet=true;
-                       }
+
+                   $scope.isCheckedCoupon=false;
+                   if(wallet_balance>0){
+                       $scope.isCheckedWallet=true;
                    }else{
-                       $scope.isCheckedCoupon=false;
-                       if(wallet_balance>0){
-                           $scope.isCheckedWallet=true;
-                       }else{
-                           $scope.isCheckedWallet=false;
-                       }
+                       $scope.isCheckedWallet=false;
                    }
                     initUsedBalance(coupon_balance,wallet_balance);
 

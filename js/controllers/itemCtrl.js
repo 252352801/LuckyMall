@@ -40,9 +40,9 @@ angular.module('LuckyMall.controllers')
                     cur:'试玩练手'
                 },
                 buyNow: {
-                    org:'抢折购买',
+                    org:'幸运购',
                     temp:'正在处理...',
-                    cur:'抢折购买'
+                    cur:'幸运购'
                 }
             };
             /**
@@ -373,7 +373,7 @@ angular.module('LuckyMall.controllers')
                 ItemSer.getPricesOfOthers($this.id,function(response,status){
                     if(status==1){
                         for(var o in response){
-                            response[o].sSiteName=response[o].SiteName.length>4?response[o].SiteName.substr(0,4):response[o].SiteName;
+                            response[o].sSiteName=response[o].name.length>4?response[o].name.substr(0,4):response[o].name;
                         }
                         $this.POOData=response;//其他平台的价格
                     }

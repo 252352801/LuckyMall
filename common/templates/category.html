@@ -4,7 +4,7 @@
        <!-- <span ng-show="isShowCategoryBtn" class="btn-slide-down" ng-click="showCategoryContent=!showCategoryContent" ng-style="{transform:showCategoryContent?'rotate(180deg)':'rotate(0deg)',top:showCategoryContent?'10px':'18px',transition:'all 0.3s'}"></span>-->
     </div>
 
-    <ul ng-style="{height:showCategoryContent?'450px':'0px',transition:'height .3s','overflow':showCategoryContent?'visible':'hidden'}" class="static category-cont">
+    <ul ng-show="data.length>0" ng-style="{height:showCategoryContent?'450px':'0px',transition:'height .3s','overflow':showCategoryContent?'visible':'hidden'}" class="static category-cont">
         <li ng-repeat="c in data">
             <h3 >
                 <a href="{{c.link}}">{{c.categoryName}}</a>

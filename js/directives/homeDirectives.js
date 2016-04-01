@@ -444,18 +444,21 @@ angular.module('LuckyMall')
         return {
             restrict: 'A',
 
-
             link: function (scope, element, attrs) {
-                var watcher=scope.$watch('data_fs',function(new_val,old_val){
+               /* var watcher=scope.$watch(attrs.fsSlider,function(new_val,old_val){
+                    console.log("&&");
                         if(new_val!=old_val){
-
+                            console.log("&&1");
                             run(new_val);
                             watcher();
                         }
-                });
+                });*/
                 var c_t=3000;//切换时间
-                function run(data){
+                $timeout(function(){
 
+                },c_t);
+                run(scope.data_fs);
+                function run(data){
                     var lock=false;//锁
                     var index=0;
                     var elem=element[0];
@@ -481,8 +484,8 @@ angular.module('LuckyMall')
                                 element:elem,
                                 attr: 'left',
                                 value: per_w * d,
-                                time: 150,
-                                moveName: 'Quadratic',
+                                time: 180,
+                                moveName: 'Linear',
                                 moveType: 'easeOut',
                                 callback: function () {
                                     lock = false;

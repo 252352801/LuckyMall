@@ -3636,15 +3636,15 @@ modal-beforeGame
 }
 .modal-getDisc .menu li{
     box-sizing:border-box;
-   width:140px;
-    height:140px;
+   width:240px;
+    height:240px;
     float:left;
-    margin-left:24px;
-    margin-top:20px;
+    margin-left:60px;
+    margin-top:50px;
     border:1px solid #f1f1f1;
     cursor: pointer;
     text-align:center;
-    padding-top:100px;
+    padding-top:150px;
     position:relative;
 }
 .modal-getDisc .menu li:hover{
@@ -3683,9 +3683,9 @@ modal-beforeGame
     width:50px;
     height:50px;
     background: url(../res/icon/icon_wallet.png);
-    position:absolute;
-    left:45px;
-    top:25px;
+    position: absolute;
+    left: 94px;
+    top: 70px;
 }
 .modal-getDisc .btn-play:before{
     display:block;
@@ -3720,9 +3720,9 @@ modal-beforeGame
     height:50px;
     background: url(../res/icon/icon_payEarnest.png);
     background-size:100%;
-    position:absolute;
-    left:45px;
-    top:25px;
+    position: absolute;
+    left: 94px;
+    top: 70px;
 }
 .modal-getDisc .box-energy {
     min-height:100px;

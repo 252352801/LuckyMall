@@ -219,8 +219,10 @@ angular.module('LuckyMall.controllers')
                             for (var o in arr) {
                                 arr[o].remainTime = ((new Date(arr[o].EndTime.replace(/-/g, '/')).getTime()) - (new Date(arr[o].CurrentTime.replace(/-/g, '/')).getTime()))/1000;
                             }
-                            $scope.data_fs=arr;
-
+                            $timeout(function(){
+                                $scope.data_fs=arr;
+                            });
+                            //$scope.data_fs=arr;
                         }
                     }
                 });

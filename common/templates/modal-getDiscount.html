@@ -4,30 +4,24 @@
            <h2 class="modal-title">获取优惠</h2>
 
            <ul ng-class="{'menu':order.EarnestBusinessType==0,'menu disabled':order.EarnestBusinessType!=0}">
-               <li ng-class="{'btn-play':isCanPlay,'btn-play disabled':!isCanPlay}" ng-click="play()" ng-show="gameType!=-1">
-                   进入游戏
-               </li>
                <li class="btn-payForEarnest" ng-click="payEarnest()">
                    付定金进游戏
                </li>
-               <li class="btn-exc-e" ng-click="showContentExchangeEnergy()">
-                   付红包进游戏
-               </li>
                <li class="btn-exc-m" ng-click="showContentExchangeEarnest()">
-                   红包/钱包抵现金
+                  钱包抵现金
                </li>
-               <li class="btn-purchase" ng-click="purchase()">
+           <!--    <li class="btn-purchase" ng-click="purchase()">
                    立即购买
-               </li>
+               </li>-->
               <!-- <li class="btn-play">
                    进入游戏
                </li>-->
            </ul>
        </div>
 
-       <div class="slider-right content-exchangeEnergy" ng-style="{'left':content_exchange_energy?'0%':'100%','transition':'left .5s'}">
+       <div class="slider-right content-exchangeEnergy" ng-style="{'left':content_exchange_energy?'0%':'100%','transition':'left 0s'}">
            <h2 class="modal-title">付红包进游戏
-               <span class="btn-return pull-right" ng-click="hideContentExchangeEnergy()">返回</span>
+               <span class="btn-return pull-right " ng-click="closeModal()" style="font-size: 24px" >×</span>
            </h2>
            <table >
                <tr>
@@ -67,9 +61,9 @@
                 该订单已获取过优惠，不能重复获取！
            </div>
        </div>
-       <div class="slider-right content-exchangeEarnest" ng-style="{'left':content_exchange_earnest?'0%':'100%','transition':'left .5s'}">
+       <div class="slider-right content-exchangeEarnest" ng-style="{'left':content_exchange_earnest?'0%':'100%','transition':'left 0.3s'}">
            <h2 class="modal-title">
-               红包/钱包抵现金
+               钱包抵现金
                <span class="btn-return pull-right" ng-click="hideContentExchangeEarnest()">返回</span>
            </h2>
            <table >
@@ -92,21 +86,7 @@
                    </td>
                </tr>
            </table>
-           <div class="box-coupon-info" ng-click="toggleCheckCoupon()">
-               <p>
-                   <label>我的红包</label>
-               </p>
-               <p>
-                   可用余额
-                   <span class="color-org" ng-bind="'￥'+data_balance.Coupon.Balance"></span>
-               </p>
-               <p class="use-blc" ng-show="use_coupon>0">
-                   将扣除<span class="color-org" ng-bind="'￥'+use_coupon"></span>
-               </p>
-               <a ng-if="data_balance.Coupon.Balance>0" ng-class="{'ck-box checked':isCheckedCoupon,'ck-box':!isCheckedCoupon}">
-               </a>
-               <a class="no-blc" ng-if="data_balance.Coupon.Balance==0">无可用余额</a>
-           </div>
+
            <div class="box-wallet-info" ng-click="toggleCheckWallet()">
                <p>
                    <label>喵喵钱包</label>

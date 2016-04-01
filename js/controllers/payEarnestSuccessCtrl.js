@@ -53,6 +53,7 @@ angular.module('LuckyMall.controllers')
 
                     }
                     $scope.isEnough=true;
+                    $scope.playGame();
                 }else{
                     $state.go('404');
                 }

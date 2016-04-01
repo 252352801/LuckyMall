@@ -77,40 +77,59 @@
             </div>
 
 
-            <div class="md-fs">
+            <div class="md-fs" ng-if="data_fs.length>0">
                 <div class="md-top">
-                    <h2>0元购<span class="color-base">请在手机端参与</span></h2>
+                    <h2>0元购<span class="color-base">玩到0元就拿走</span></h2>
                 </div>
-                <ul fs-slider ng-style="{'width':data_fs.length*220*2+'px'}">
+                <ul fs-slider="data_fs" ng-style="{'width':data_fs.length*220*2+'px'}">
                     <li ng-repeat="fs in data_fs">
-                        <a class="img-adapt">
+                        <a href="/freeShopping">
+                        <div class="img-adapt">
                             <img real-src={{imgHost+fs.CommodityImage}} temp-src="./res/images/default.png" />
-                        </a>
+                        </div>
                         <h2 class="txt-nowrap-ellipsis" >{{fs.CommodityName}}</h2>
-                        <p class="color-red font-16">￥{{fs.UnitPrice}}</p>
+                        <div class="bar-progress">
+                            <div class="progress">
+                                <div class="progress-val" ng-style="{'width':(fs.SurplusCount/fs.TotalCount)*100+'%'}"></div>
+                            </div>
+                            <div class="over-hidden">
+                                <div class="pull-left">剩余<span class="color-org">{{fs.SurplusCount}}</span></div>
+                                <div class="pull-right">已抢购<span class="color-org">{{fs.TotalCount-fs.SurplusCount}}</span></div>
+                            </div>
+                        </div>
                         <div class="bar-time over-hidden">
-                            <div class="item pull-left" time-down="fs.remainTime" timevershow="已结束"></div>
+                            <div class="item pull-left color-red font-16">￥{{fs.UnitPrice}}</div>
                             <div class="item pull-left">0元抢购</div>
                         </div>
-                        <div class="hidden-qrcode">
-                            <img src="./res/images/app.png" />
-                            <p>请扫描二维码下载APP参与</p>
-                        </div>
+                            <div class="bar-time-down" >
+                                    <p>剩余：<span time-down="fs.remainTime" timeovershow="已结束"></span></p>
+                            </div>
+                        </a>
                     </li>
                     <li ng-repeat="fs in data_fs">
-                        <a class="img-adapt">
+                        <a href="/freeShopping">
+                        <div class="img-adapt">
                             <img real-src={{imgHost+fs.CommodityImage}} temp-src="./res/images/default.png" />
-                        </a>
+                        </div>
+
                         <h2 class="txt-nowrap-ellipsis" >{{fs.CommodityName}}</h2>
-                        <p class="color-red font-16">￥{{fs.UnitPrice}}</p>
+                            <div class="bar-progress">
+                                <div class="progress">
+                                    <div class="progress-val" ng-style="{'width':(fs.SurplusCount/fs.TotalCount)*100+'%'}"></div>
+                                </div>
+                                <div class="over-hidden">
+                                    <div class="pull-left">剩余<span class="color-org">{{fs.SurplusCount}}</span></div>
+                                    <div class="pull-right">已抢购<span class="color-org">{{fs.TotalCount-fs.SurplusCount}}</span></div>
+                                </div>
+                            </div>
                         <div class="bar-time over-hidden">
-                            <div class="item pull-left" time-down="fs.remainTime" timevershow="已结束"></div>
+                            <div class="item pull-left color-red font-16">￥{{fs.UnitPrice}}</div>
                             <div class="item pull-left">0元抢购</div>
                         </div>
-                        <div class="hidden-qrcode">
-                            <img src="./res/images/app.png" />
-                            <p>请扫描二维码下载APP参与</p>
-                        </div>
+                            <div class="bar-time-down" >
+                                <p>剩余：<span time-down="fs.remainTime" timeovershow="已结束"></span></p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>

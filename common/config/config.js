@@ -367,7 +367,7 @@ app.constant('API',{
     },
     getPricesOfOthers:{//其他平台的价格
         method:'get',
-        url:'api/parity/get/'
+        url:'api/parity/getsimple/'
     },
     canShowOff:{
         method:'get',
@@ -409,18 +409,23 @@ app.constant('API',{
         method:'get',
         url:'api/user/getviecouponcount'
     },
-    gameType:{
+    gameType:{//获取订单已选游戏类型
         method:'get',
         url:'api/order/gametype/'
     },
-    broadcasts:{
+    broadcasts:{//幸运播报
         method:'get',
         url:'api/system/broadcasts'
     },
-    freeShopping:{
+    freeShopping:{//0元购数据
         method:'post',
         url:'api/zerodollarshopping/queryonline'
+    },
+    freeShoppingPlayChance:{//0元购游戏僧与次数
+        method:'get',
+        url:'api/zerodollarshopping/usershoppingcount'
     }
+
 });
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV',
     function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $cookiesProvider,Host,API,ENV) {
@@ -1366,7 +1371,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'页面找不到了-幸运猫-够抵购好玩'
         })
 
-
+        .state('freeShopping', {
+            url: '/freeShopping',
+            views: {
+                '': {
+                    templateUrl: "templates/freeShopping.html?v="+v,
+                    controller:'FreeShoppingCtrl'
+                }
+            },
+            resolve: {
+                loadFiles: load([
+                    './css/activity/fs_css.css',
+                    './js/services/freeShoppingSer.js',
+                    './js/controllers/freeShoppingCtrl.js'
+                ])
+            },
+            title:'0元购-幸运猫-够抵购好玩'
+        })
 
 
         /*====================

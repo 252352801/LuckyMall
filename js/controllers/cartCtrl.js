@@ -116,8 +116,12 @@ angular.module('LuckyMall.controllers')
 
 
             $scope.showModalGetDisc = function (order) {
-                $scope.isModalGetDiscountShow = true;
                 $scope.data_modal_getDisc = order;
+                if(order.EarnestBusinessType==1||order.EarnestBusinessType==3){
+                    $scope.gameMenu.show=true;
+                }else {
+                    $scope.isModalGetDiscountShow = true;
+                }
             };
             function loadCartData() {
                 $scope.loaded = false;
