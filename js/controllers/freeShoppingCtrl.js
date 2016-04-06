@@ -67,7 +67,7 @@ angular.module('LuckyMall.controllers')
                         $scope.$emit("show-login-modal");
                     }else {
                         FreeShoppingSer.getFreeShoppingPlayChance(function (response, status) {
-                            if (status == 200 && response) {
+                            if (status == 200) {
                                 $myLog('0元购游戏机会：');
                                 $myLog(response);
                                 if (response > 0) {
@@ -87,7 +87,6 @@ angular.module('LuckyMall.controllers')
                                                     $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + fs.Id + '&mode=6&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
                                                     $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' +  fs.Id + '&mode=6&from=' + Host.playFrom+ '&authorization='+ TokenSer.getToken();
                                                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
-
                                             },50);
 
                                         }
@@ -104,15 +103,15 @@ angular.module('LuckyMall.controllers')
 
             $scope.freeShopping=new FreeShopping();
             $scope.freeShopping.loadData(0,true);
-                $scope.gameMenu={//游戏菜单
-                    show:false,
-                    orderId:'',
-                    commodityId:'',
-                    gameUrl:{
-                        fingerGuessing:'',
-                        fishing:''
-                    }
-                };
+            $scope.gameMenu = {//游戏菜单
+                show:false,
+                orderId: '',
+                commodityId: '',
+                gameUrl: {
+                    fingerGuessing: '',
+                    fishing: ''
+                }
+            };
 
 
 

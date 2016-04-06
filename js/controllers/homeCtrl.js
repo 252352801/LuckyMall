@@ -54,7 +54,7 @@ angular.module('LuckyMall.controllers')
                 } else if (banner.PromotionType == 2) {//市场活动
                     $state.go('market', {id: banner.TypeId});
                 } else if (banner.PromotionType == 3) {//0元购
-                    $rootScope.isModalDownloadAppShow=true;
+                    $state.go('freeShopping');
                 } else if (banner.PromotionType == 4) {//游戏
                     var auth = '';
                     $scope.gameMenu.commodityId = ENV == 1 ? 1060328483 : 2494474873;

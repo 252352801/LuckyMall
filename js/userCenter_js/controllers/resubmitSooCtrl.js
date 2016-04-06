@@ -5,7 +5,7 @@ angular.module('LuckyMall.controllers')
             var id=$stateParams.id;
             $scope.loading=true;
             $scope.params_submit={
-                "oid":null,
+                "sid":null,
                 "images": [],
                 "content": ''
             };
@@ -18,7 +18,7 @@ angular.module('LuckyMall.controllers')
             $scope.orderInfo={};
             ShowOffOrdersSer.requestSOODetails(id,function(response,status){
                 if(status==1){
-                    $scope.params_submit.oid=response.Id;
+                    $scope.params_submit.sid=response.Id;
                     $scope.data_order=response;
                     $scope.params_submit.images=$scope.data_order.Image.split("|");
                     $scope.data_order.imageUrl=$scope.params_submit.images[0];
@@ -48,7 +48,7 @@ angular.module('LuckyMall.controllers')
 
             $scope.submitSOO=function(){
 
-                if($scope.params_submit.oid!=null&&!$scope.submitBtn.disabled){
+                if($scope.params_submit.sid!=null&&!$scope.submitBtn.disabled){
                     if($scope.params_submit.content==''){
                         swal('请输入晒单内容！','与小伙伴们分享你的好运吧','error');
                     }else{
@@ -74,18 +74,17 @@ angular.module('LuckyMall.controllers')
                                 return;
                             }
                             var params={
-                                "oid":$scope.params_submit.oid,
+                                "sid":$scope.params_submit.sid,
                                 "images": img_str.join('|'),
                                 "content":$scope.params_submit.content
                             };
-                            $myLog(params);return;
                             $scope.submitBtn.curVal=$scope.submitBtn.tempVal;
                             $scope.submitBtn.disabled=true;
-                            SubmitSOOSer.submit(params,function(response,status){
+                            SubmitSOOSer.reSubmit(params,function(response,status){
                                 $scope.submitBtn.disabled=false;
                                 $scope.submitBtn.curVal=$scope.submitBtn.orgVal;
                                 if(status==1){
-                                    swal('成功提交，请耐心等待审核！','','success');
+                                    swal('提交成功，请耐心等待审核！','','success');
                                     $state.go('UCIndex.myOrders',{"status":'finish'});
                                 }else{
                                     swal('晒单失败，请重试！','','error');

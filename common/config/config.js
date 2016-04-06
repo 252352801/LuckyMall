@@ -377,6 +377,10 @@ app.constant('API',{
         method:'post',
         url:'api/shaidan/add'
     },
+    sooUpdate:{//晒单重新提交
+        method:'post',
+        url:'api/shaidan/update'
+    },
     mySOOList:{
         method:'post',
         url:'api/shaidan/byuser'
@@ -999,7 +1003,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/userCenter_js/controllers/userCenterCtrl.js',
                     './js/userCenter_js/directives/avatarEditDirectives.js',
                     './js/userCenter_js/services/userSer.js',
-                    'https://open.web.meitu.com/sources/xiuxiu.js'
+                    'http://open.web.meitu.com/sources/xiuxiu.js'
 
                 ])
             }

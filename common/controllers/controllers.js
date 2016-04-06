@@ -543,7 +543,7 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
             $scope.changeKeepLogin = function () {
                 $scope.keepLogin = !$scope.keepLogin;
             };
-            $scope.value_btn = "登陆"; //登陆按钮显示字符串
+            $scope.value_btn = "登录"; //登陆按钮显示字符串
             /* 登陆操作*/
             $scope.login = function () {
                 if ($scope.form_login.$valid) {
@@ -588,7 +588,7 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                                 break;
                         }
                         $timeout(function () {
-                            $scope.value_btn = "登陆";
+                            $scope.value_btn = "登录";
                         }, 0);
                     });
                 } else if ($scope.form_login.username.$invalid) {
