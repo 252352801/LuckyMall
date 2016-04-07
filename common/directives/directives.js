@@ -1614,11 +1614,11 @@ angular.module('LuckyMall')
 
                 /**检查能量是否够4发炮弹**/
                 function testEnergy() {
-                    svc.get(API.gameType.url+$scope.order.Id,function(response,status){
+                   /* svc.get(API.gameType.url+$scope.order.Id,function(response,status){
                             if(status==200){
                                 $scope.gameType=response;
                             }
-                        });
+                        });*/
                     return true;
                 }
                 function initPage(order){

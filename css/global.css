@@ -3027,23 +3027,38 @@ ul.dynamic li p a:hover{
     line-height:200px;
 }
 
-.window-game{
+.window-game1{
     margin:0 auto;
-    width:1280px;
-    height:720px;
+    width:800px;
+    height:480px;
     background:#fff;
     position:relative;
-    top:10%;
+    top:50%;
+    margin-top:-240px;
+    animation:openGame 0.5s;
+    max-width: 100%;
+    border: 10px solid rgba(255,255,255,0.5);
+    background-clip: content-box;
+}
+.window-game2{
+    margin:0 auto;
+    width:432px;
+    height:768px;
+    max-height: 100%;
+    background:#fff;
+    position:relative;
+    top:50%;
+    margin-top:-384px;
     animation:openGame 0.5s;
     max-width: 100%;
     border: 10px solid rgba(255,255,255,0.5);
     background-clip: content-box;
 }
 @media screen and (max-height:720px) {
-    .window-game{
+    .window-game2{
         width:auto;
-        height:100%;
         top:0px;
+        margin-top:0px;
     }
 }
 .btn-close-game{

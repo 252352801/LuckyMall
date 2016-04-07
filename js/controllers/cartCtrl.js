@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
-    .controller('CartCtrl', ['$scope', 'CartSer', 'LoginSer', '$state', '$timeout', 'TokenSer', 'RefreshUserDataSer', 'Host', 'SOTDSvc', '$rootScope',
-        function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer, Host, SOTDSvc, $rootScope) {
+    .controller('CartCtrl', ['$scope', 'CartSer', 'LoginSer', '$state', '$timeout', 'TokenSer', 'RefreshUserDataSer', 'Host', 'SOTDSvc', '$rootScope','svc','API',
+        function ($scope, CartSer, LoginSer, $state, $timeout, TokenSer, RefreshUserDataSer, Host, SOTDSvc, $rootScope,svc,API) {
             $scope.data_eo = {};//要付定金的订单数据
             $scope.isModal1show = false;
             $scope.isModal2show = false;
@@ -115,10 +115,27 @@ angular.module('LuckyMall.controllers')
             };
 
 
-            $scope.showModalGetDisc = function (order) {
+            $scope.getDisc = function (order) {
                 $scope.data_modal_getDisc = order;
                 if(order.EarnestBusinessType==1||order.EarnestBusinessType==3){
-                    $scope.gameMenu.show=true;
+                    $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + order.Id + '&mode=1&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
+                    $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + order.Id + '&mode=1&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
+                    svc.get(API.gameType.url+order.Id,function(response,status){
+                        if(status==200){
+                            var game_type=response;
+                            if(game_type==0){
+                                if(parseInt(order.OriginalPrice)<=200) {
+                                    $scope.gameMenu.show = true;
+                                }else{
+                                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing,order.Id,order.CommodityId)
+                                }
+                            }else if(game_type==1){
+                                $rootScope.openGame($scope.gameMenu.gameUrl.fishing,order.Id,order.CommodityId);
+                            }else if(game_type==2){
+                                $rootScope.openGame($scope.gameMenu.gameUrl.fingerGuessing,order.Id,order.CommodityId);
+                            }
+                        }
+                    });
                 }else {
                     $scope.isModalGetDiscountShow = true;
                 }

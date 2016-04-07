@@ -1003,7 +1003,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/userCenter_js/controllers/userCenterCtrl.js',
                     './js/userCenter_js/directives/avatarEditDirectives.js',
                     './js/userCenter_js/services/userSer.js',
-                    'http://open.web.meitu.com/sources/xiuxiu.js'
+                    './lib/meituxiuxiu/xiuxiu.js'
 
                 ])
             }
@@ -1432,8 +1432,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
     }]);
 
-app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woopraService',
-    function($rootScope, $location, $window,$cookies,$http,$timeout,woopraService) {
+app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woopraService','Host',
+    function($rootScope, $location, $window,$cookies,$http,$timeout,woopraService,Host) {
 
     /*=======================
         woopra分析
@@ -1462,13 +1462,21 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
        url:null,
        orderId:null,
        commodityId:null,
-       isOpen:false
+       isOpen:false,
+       gameOption:0
     };
     $rootScope.openGame=function(url,order_id,com_id){//打开游戏
         $rootScope.game.url=url;
         $rootScope.game.orderId=order_id;
         $rootScope.game.commodityId=com_id;
+
+        if(url.indexOf(Host.game.fishing)>=0){//捕鱼游戏时切换捕鱼游戏外框样式
+            $rootScope.game.gameOption=1;
+        }else if(url.indexOf(Host.game.fingerGuessing)>=0){
+            $rootScope.game.gameOption=2;
+        }
         $rootScope.game.isOpen=true;
+
     };
     $rootScope.closeGame=function(){//关闭游戏
         $timeout(function(){

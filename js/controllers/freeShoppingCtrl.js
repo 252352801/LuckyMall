@@ -63,6 +63,15 @@ angular.module('LuckyMall.controllers')
                     $this.loadData($this.page.index,false);
                 };
                 this.fsPlay=function(fs){
+                    if(fs.SurplusCount==0){
+                        swal({
+                            title:'该商品已被抢购一空！',
+                            text:'看看其他商品吧',
+                            type:'error',
+                            confirmButtonText:'确定'
+                        });
+                        return;
+                    }
                     if(!$rootScope.isLogin){
                         $scope.$emit("show-login-modal");
                     }else {
@@ -83,12 +92,27 @@ angular.module('LuckyMall.controllers')
                                             showLoaderOnConfirm: false
                                         },
                                         function () {
-                                            $timeout(function () {
-                                                    $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + fs.Id + '&mode=6&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
-                                                    $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' +  fs.Id + '&mode=6&from=' + Host.playFrom+ '&authorization='+ TokenSer.getToken();
+                                            $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + fs.Id + '&mode=6&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
+                                            $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' +  fs.Id + '&mode=6&from=' + Host.playFrom+ '&authorization='+ TokenSer.getToken();
+                                            if(fs.OptionalGameType==0){
+                                               /* $timeout(function() {
+                                                    $scope.gameMenu.show = true;
+                                                });*/
+                                                $timeout(function(){
                                                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
-                                            },50);
+                                                });
+                                            }else if(fs.OptionalGameType==1){
+                                                $timeout(function(){
+                                                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                                                });
 
+                                            }else if(fs.OptionalGameType==2){
+                                                $timeout(function() {
+                                                    $rootScope.openGame($scope.gameMenu.gameUrl.fingerGuessing, $scope.gameMenu.orderId, $scope.gameMenu.commodityId);
+                                                });
+                                            }else if(fs.OptionalGameType==3){
+                                                swal('弹珠游戏未开放！');
+                                            }
                                         }
                                     );
                                 } else {

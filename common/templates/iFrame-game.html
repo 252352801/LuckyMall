@@ -1,5 +1,5 @@
 <div class="modal-overlay">
-    <div class="window-game">
+    <div ng-class="{'window-game window-game1':game.gameOption==1,'window-game window-game2':game.gameOption==2}">
         <div class="loading-game" ng-show="isLoadingGame==true">
             <div class="animation">
 

@@ -39,6 +39,7 @@
                         <span class="fs_praIs">￥{{fs.UnitPrice}}</span>
                     </div>
                 </div>
+                <div ng-class="{'icon-game-type icon-game-type1':fs.OptionalGameType==0||fs.OptionalGameType==1,'icon-game-type icon-game-type2':fs.OptionalGameType==2}"></div>
             </li>
         </ul>
         <div class="page txt-no-select" ng-if="freeShopping.page.pageCount>1">

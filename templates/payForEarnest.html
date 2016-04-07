@@ -10,16 +10,22 @@
         <div class="pull-left">
             <h1>支付定金</h1>
         </div>
+        <div class="shopping-steps pull-right">
+            <span class="cur">支付定金</span>
+            <span class="has-arrow-org">玩游戏赢折扣</span>
+            <span class="has-arrow-white">确认支付</span>
+            <span class="has-arrow-white">完成</span>
+        </div>
     </div>
+
 </div>
 <form class="form-confirm-order">
     <div class="content box-confirmOrder earnest">
         <p class="label-cont-name"><label>商品信息</label></p>
         <div class="confirmOrder-th">
             <span>商品信息</span>
-            <span>原价</span>
-            <span>折后价</span>
-            <span>待支付定金</span>
+            <span style="width:200px">原价</span>
+            <span style="width:300px">待支付定金</span>
         </div>
         <div class="goods-list" ng-show="data_order">
             <div class="bar-sellerInfo">
@@ -39,18 +45,18 @@
                     </a>
                     <p ng-bind="property.name+'：'+property.value" ng-repeat="property in data_order.Specifications"></p>
                 </div>
-                <div class="cont2">
+                <div class="cont2" style="width:200px">
                     <div class="cont-container">
                         <p ng-bind="'￥'+data_order.UnitPrice*data_order.Count"></p>
                     </div>
                 </div>
-                <div class="cont3">
+                <!--<div class="cont3">
                     <div class="cont-container">
                         <p class="discount-price"  ng-bind="'￥'+mathCeilPrice(data_order.cost)"></p>
                         <p>已享用折扣卡<span class="icon-discount" ng-bind="data_order.finalDiscount+'折'"></span></p>
                     </div>
-                </div>
-                <div class="cont4">
+                </div>-->
+                <div class="cont4" style="width:300px">
                     <div class="cont-container">
                         <p class="unPay" ng-bind="'￥'+earnest_cost"></p>
                         <p ng-if="data_order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+data_order.EarnestMoney"></span></p>

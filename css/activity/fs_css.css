@@ -18,7 +18,7 @@
 .fs_daojishi .fs_span2{ color: #feff03; font-size: 22px; margin-right: 5px;}
 .fs_daojishi .fs_span3{ color: #bd3500;}
 .fs_shangpin{ overflow: hidden; padding-top: 40px;}
-.fs_shangpin li{ width: 500px; height: 210px; background: #fbecd7;  float: left; margin: 15px 0 15px 30px;}
+.fs_shangpin li{ width: 500px; height: 210px; background: #fbecd7;  float: left; margin: 15px 0 15px 30px;position: relative}
 .fs_shangpin li:nth-child(2n){ float: right; margin-right: 30px;}
 .fs_shangpin li img{ width:210px; float: left;}
 .fs_jdt {
@@ -117,4 +117,21 @@
 }
 .fs .page ul li:first-child,.fs .page ul li:last-child{
     width:60px;
+}
+.icon-game-type{
+    position: absolute;
+    left:175px;
+    top:175px;
+    width:30px;
+    height:30px;
+    background-color:#ccc;
+    border-radius:4px;
+}
+.icon-game-type.icon-game-type1{
+    background: url(../../res/images/background/bg_gmenu2.png);
+    background-size: 100%;
+}
+.icon-game-type.icon-game-type2{
+    background: url(../../res/images/background/bg_gmenu1.png);
+    background-size: 100%;
 }
