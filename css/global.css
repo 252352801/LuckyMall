@@ -983,6 +983,9 @@ a{
     background:rgba(0,0,0,0.4);
     z-index:999;
 }
+.modal-overlay.ng-bg{
+   /* background:rgba(0,0,0,0.1);*/
+}
 .modal-overlay.deep{
     background:rgba(0,0,0,0.6);
 }
@@ -3148,7 +3151,7 @@ modal-beforeGame
     transition:all 0.5s;
 }
 @keyframes modalShow{
-    0% {transform:scale(0.75);}
+    0% {transform:scale(0.9);}
     60% {transform:scale(1.02)}
     80% {transform:scale(0.98)}
     100% {transform:scale(1)}

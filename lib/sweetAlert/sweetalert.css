@@ -8,12 +8,13 @@ body.stop-scrolling {
   /* IE8 */
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
   /* IE8 */
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.35)!important;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+    opacity: 1!important;
   display: none;
   z-index: 10000; }
 

@@ -1,7 +1,7 @@
 angular.module('LuckyMall.controllers')
     .controller('ItemCtrl',
-    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer','ShowOffOrdersSer',
-    function ($scope, ItemSer, $state, $stateParams, LoginSer, $rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer,ShowOffOrdersSer) {
+    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer','CartSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer','ShowOffOrdersSer',
+    function ($scope, ItemSer, $state, $stateParams, LoginSer, CartSer,$rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer,ShowOffOrdersSer) {
 
 
         function Item(item_id){
@@ -536,6 +536,24 @@ angular.module('LuckyMall.controllers')
             };
 
             this.tryAction=function(){
+                var orders=CartSer.getData();//获取购物车数据
+                for(var o in orders){
+                    if(orders[o].CommodityId==$this.id){
+                        swal({
+                            title:'该商品已下订单！',
+                            text:'您可以在购物车里找到它',
+                            type:'info',
+                            confirmButtonText: "好的"
+                        });
+                        $this.menuLuckyBuy.show=false;
+                        return;
+                    }
+                }
+
+                $rootScope.paramsOfTryGame.skuId=$this.params.SkuId;
+                $rootScope.paramsOfTryGame.count=$this.params.Count;
+                $rootScope.paramsOfTryGame.specifications=$this.params.Specifications;
+
                 $this.menuLuckyBuy.show=false;
                 $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
                 $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();

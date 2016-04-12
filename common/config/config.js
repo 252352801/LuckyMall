@@ -1455,6 +1455,26 @@ app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woo
     $window.ga('create', 'UA-71031576-1', 'auto');  //UA-71031576-1为key
 
 
+
+
+        $rootScope.paramsOfTryGame={
+            skuId:1,
+            specifications:'',
+            count:1
+        };
+        window.getGameData=function(){
+            return $rootScope.paramsOfTryGame;
+        };
+
+
+
+
+
+
+
+
+
+
         /*=======================
            游戏
          =======================*/
