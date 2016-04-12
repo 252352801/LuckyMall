@@ -148,8 +148,8 @@
                     </div>
                 </div>
                 <div class="bar-btn">
-                    <input  ng-class="{'btn-playGame':item.itemData.status==1,'btn-playGame disabled':item.itemData.status!=1}"  value="试玩练手" type="button" ng-click="item.playFreeGame()" ng-disabled="item.itemData.status!=1"/>
-                    <input ng-if="item.itemData.CommodityType==0" ng-class="{'btn-buy':item.itemData.status==1,'btn-buy disabled':item.itemData.status!=1}" type="button" ng-value="item.btnVal.buyNow.cur"  ng-click="item.createOrder(1)" ng-disabled="item.itemData.status!=1"/>
+
+                    <input ng-if="item.itemData.CommodityType==0" ng-class="{'btn-buy':item.itemData.status==1,'btn-buy disabled':item.itemData.status!=1}" type="button" ng-value="item.btnVal.buyNow.cur"  ng-click="item.luckyBuy()" ng-disabled="item.itemData.status!=1"/>
                     <a class="btn-enterAct" href="/activity/index" ng-if="item.itemData.CommodityType==1">进入擂台</a>
                 </div>
                 <ul class="ul-svc">
@@ -269,6 +269,34 @@
 <!--中部 end-->
 <modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" luckyenergy="luckyEnergy" gamectrl="gameMenu" ></modal-get-discount>
 <modal-game-menu visible="gameMenu.show" gamectrl="gameMenu" ></modal-game-menu>
+
+
+<div class="modal-overlay" ng-show="item.menuLuckyBuy.show">
+    <div class="modal-luckyBuy-menu">
+        <div class="modal-title">
+                请选择幸运购模式
+        </div>
+        <div class="modal-content">
+            <ul>
+               <li  ng-click="item.tryAction()">
+                   <div class="btn-mode btn-mode1">小试牛刀</div>
+                   <p class="menu-describe" ng-click="item.normalAction()">无需定金</p>
+                   <p>获得游戏结果的1/10折扣卡</p>
+               </li>
+                <li  ng-click="item.normalAction()">
+                    <div class="btn-mode btn-mode2">大显身手</div>
+                    <p class="menu-describe">定金/红包：<span class="color-red">￥{{item.itemData.EarnestPrice*item.amount}}</span></p>
+                    <p>获得游戏结果的全额折扣卡</p>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+             <p ng-show="item.itemData.maxPrice>200">提示：目前该商品仅支持《捕鱼游戏》</p>
+        </div>
+        <span class="btn-close txt-no-select" ng-click="item.closeLuckyBuyMenu()">×</span>
+    </div>
+</div>
+
 <introduction></introduction>
 
 <sub-footer></sub-footer>

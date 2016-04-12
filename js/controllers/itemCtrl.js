@@ -33,6 +33,8 @@ angular.module('LuckyMall.controllers')
             this.isModalGetDiscountShow=false;//是否显示“获取折扣”模态框
             this.choices=[];//已选择的规格
             this.primeNumber=[];//个数为属性长度的质数集合
+
+            this.params={};//购买的参数
             this.btnVal={ //按钮文字
                 addToCart: {
                     org:'试玩练手',
@@ -44,6 +46,9 @@ angular.module('LuckyMall.controllers')
                     temp:'正在处理...',
                     cur:'幸运购'
                 }
+            };
+            this.menuLuckyBuy={
+                show:false
             };
             /**
              * 清除某种规格的选项
@@ -481,7 +486,7 @@ angular.module('LuckyMall.controllers')
                 }
             };
             /*下单*/
-            this.createOrder = function (act, callback) { //act : 0加入购物车  1 立即购买
+            this.luckyBuy = function () {
                 if ($this.choices.length <= 0) {
                     swal({
                         title: "该商品处于缺货状态!",
@@ -513,7 +518,7 @@ angular.module('LuckyMall.controllers')
                 }
                 var _type = 0;
 
-                var params = {
+               $this.params = {
                     "Type": _type,
                     "CommodityId": $this.id,
                     "UserId": LoginSer.getData().UserModel.Id,
@@ -525,39 +530,49 @@ angular.module('LuckyMall.controllers')
                     $scope.$emit("show-login-modal");
                     return;
                 }
-                if (act == 0) {
-                    $this.btnVal.addToCart.cur = $this.btnVal.addToCart.temp;
-                } else if (act == 1) {
-                    $this.btnVal.buyNow.cur = $this.btnVal.buyNow.temp;
-                }
-                ItemSer.addToCart(params, function (response, status) {
+
+                $this.menuLuckyBuy.show=true;
+
+            };
+
+            this.tryAction=function(){
+                $this.menuLuckyBuy.show=false;
+                $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
+                $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
+                 if($this.itemData.maxPrice>200){
+                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                 }else{
+                     $scope.gameMenu.show = true;
+                 }
+            };
+            this.normalAction=function(){//正常的流程
+                //$this.btnVal.buyNow.cur = $this.btnVal.buyNow.temp;
+                ItemSer.addToCart($this.params, function (response, status) {
+                    $this.menuLuckyBuy.show=false;
                     if (status == 1) {
                         $scope.$emit('cart-update');
-                        if (act == 0) {
-                            $this.btnVal.addToCart.cur = $this.btnVal.addToCart.org;
-                            callback();
-                        } else if (act == 1) {
-                            var order_id=response.Data.Id;//立即购买的订单
-                            OrderDetailsSer.requestData(order_id,function(response,status){
-                                if(status==1) {
-                                    $scope.showModalGetDisc(response);
-                                    $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;
-                                }
-                            });
-
-                        }
+                        var order_id=response.Data.Id;//立即购买的订单
+                        OrderDetailsSer.requestData(order_id,function(resp,stat){
+                            if(stat==1) {
+                                $scope.showModalGetDisc(resp);
+                               // $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;
+                            }
+                        });
                         $rootScope.woopra.evet.PO.properties.productname=$this.itemData.CommodityName;
                         $rootScope.woopra.track($rootScope.woopra.evet.PO);
 
                     } else if (status == 0) {
-                        $this.btnVal.addToCart.cur = $this.btnVal.addToCart.org;
-                        $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;;
+/*                        $this.btnVal.addToCart.cur = $this.btnVal.addToCart.org;
+                        $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;*/
                         handleErrs(response.Code);
 
                     }else if (status == 2) {
                         handleLoginTimeOut();
                     }
                 });
+            };
+            this.closeLuckyBuyMenu=function(){
+                $this.menuLuckyBuy.show=false;
             };
             this.showBigImgOfSOO=function(index,soo){
                 if(soo.bigImgIndex==index||index==-1){

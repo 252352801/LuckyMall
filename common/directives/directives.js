@@ -1274,7 +1274,7 @@ angular.module('LuckyMall')
 .directive('gameWindow', function ($rootScope,$state,MyOrdersSer,Host,SOTDSvc,$timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'common/templates/iFrame-game.html',
+        templateUrl: 'common/templates/iFrame-game.html?v='+v,
         replace: true,
         link: function (scope, element, attrs) {
 
