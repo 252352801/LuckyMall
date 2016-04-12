@@ -535,21 +535,7 @@ angular.module('LuckyMall.controllers')
 
             };
 
-            this.tryAction=function(){
-                var orders=CartSer.getData();//获取购物车数据
-                for(var o in orders){
-                    if(orders[o].CommodityId==$this.id){
-                        swal({
-                            title:'该商品已下订单！',
-                            text:'您可以在购物车里找到它',
-                            type:'info',
-                            confirmButtonText: "好的"
-                        });
-                        $this.menuLuckyBuy.show=false;
-                        return;
-                    }
-                }
-
+            var enterFreeGame=function(){
                 $rootScope.paramsOfTryGame.skuId=$this.params.SkuId;
                 $rootScope.paramsOfTryGame.count=$this.params.Count;
                 $rootScope.paramsOfTryGame.specifications=$this.params.Specifications;
@@ -557,11 +543,60 @@ angular.module('LuckyMall.controllers')
                 $this.menuLuckyBuy.show=false;
                 $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
                 $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
-                 if($this.itemData.maxPrice>200){
-                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
-                 }else{
-                     $scope.gameMenu.show = true;
-                 }
+                if($this.itemData.maxPrice>200){
+                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                }else{
+                    $scope.gameMenu.show = true;
+                }
+            };
+            this.tryAction=function(){
+                var orders=$rootScope.sp_data_cart;//获取购物车数据
+                for(var o in orders){
+                    if(orders[o].CommodityId==$this.id){
+                        $this.menuLuckyBuy.show=false;
+                        if(orders[o].OrderType==1){
+                            swal({
+                                    title: "已存在免费订单，是否删除继续?",
+                                    text: "同一时间只能有一个免费订单喔!",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    cancelButtonText: '取消',
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm:true,
+                                    showLoaderOnConfirm: true
+                                },
+                                function () {
+                                    CartSer.cancelOrder(orders[o].Id, function (response, status) {
+                                        if (status == 1) {
+                                            $scope.$emit('cart-update');
+                                            enterFreeGame();
+                                        } else {
+                                            swal({
+                                                title: '无法删除该订单！',
+                                                text: '重试一下吧',
+                                                type: 'error',
+                                                confirmButtonText: "好的"
+                                            });
+                                        }
+                                    });
+                                }
+                            );
+
+                        }else{
+                            swal({
+                                title:'该商品已下订单！',
+                                text:'您可以在购物车里找到它',
+                                type:'info',
+                                confirmButtonText: "好的"
+                            });
+                        }
+                        return;
+                    }
+                }
+                enterFreeGame();
+
+
             };
             this.normalAction=function(){//正常的流程
                 //$this.btnVal.buyNow.cur = $this.btnVal.buyNow.temp;

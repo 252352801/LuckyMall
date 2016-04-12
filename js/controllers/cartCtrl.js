@@ -89,15 +89,6 @@ angular.module('LuckyMall.controllers')
                     });
                 }
             };
-            $scope.freePlayGame = function (order_id, comm_id) {
-                ga('send', 'pageview', {
-                    'page': '/enter_freegame',
-                    'title': '进入免费游戏'
-                });
-                var g_url = Host.game + '?orderid=' + order_id + '&from=' + Host.playFrom + '&authorization=' + TokenSer.getToken();
-
-                $scope.openModalBFFP(g_url, order_id, comm_id);
-            };
             /*是否全部勾选*/
             $scope.isCheckedAll = function () {
                 for (var o in $scope.data_cart) {

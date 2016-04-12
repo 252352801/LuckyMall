@@ -188,6 +188,8 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                         if (status == 1) {
                             UserSer.setUserData(RefreshUserDataSer.getData());
                             $cookies.put('Token',TokenSer.getToken());
+                        }else{
+                            clearInterval($scope.refresher);
                         }
                     });
                 }, 300000);
