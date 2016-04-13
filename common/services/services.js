@@ -100,7 +100,12 @@ angular.module('LuckyMall.services', [])
             FBP: {
                 name: 'freebuypurchase',//0元购购买
                 properties: {productname: '', originprice: 0}
+            },
+            FBG: {
+                name: 'freebuygame',//0元购游戏
+                properties: {gamename: '', betin: 0, payout_discount: 0, payout_coupon: 0, productname: ''}
             }
+
 
         };
 

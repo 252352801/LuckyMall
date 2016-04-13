@@ -57,7 +57,7 @@ angular.module('LuckyMall.controllers')
                     $state.go('freeShopping');
                 } else if (banner.PromotionType == 4) {//游戏
                     var auth = '';
-                    $scope.gameMenu.commodityId = ENV == 1 ? 1060328483 : 2494474873;
+                    $scope.gameMenu.commodityId = ENV == 1 ? 2160397663:2494474873;
                     var initGame = function (authorization) {
                         $scope.gameMenu.gameUrl.fingerGuessing = Host.game.fingerGuessing + '?id=' + $scope.gameMenu.commodityId + '&mode=2&from=' + Host.playFrom + '&authorization=' + authorization;
                         $scope.gameMenu.gameUrl.fishing = Host.game.fishing + '?id=' + $scope.gameMenu.commodityId + '&mode=2&from=' + Host.playFrom + '&authorization=' + authorization;
