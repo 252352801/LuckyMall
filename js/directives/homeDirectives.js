@@ -219,7 +219,7 @@ angular.module('LuckyMall')
 
     .directive('grid',function() {
         return {
-            templateUrl: 'common/templates/grid.html',
+            templateUrl: 'common/templates/grid.html?v='+v,
             restrict: 'E',
             replace: true,
             //scope:{
