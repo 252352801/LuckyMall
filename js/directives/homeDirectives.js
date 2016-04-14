@@ -276,6 +276,20 @@ angular.module('LuckyMall')
                             }
                         }
                     }
+                    var ad_count=5;
+                    var ad_arr=[];
+                    for(var i=1;i<ad_count+1;i++){
+                        ad_arr.push(i);
+                    }
+                    for(var i=0;i<ad_arr.length;i++){
+                        var rand=parseInt(Math.random()*ad_count+1);
+                        var temp=ad_arr[i];
+                        ad_arr[i]=ad_arr[rand];
+                        ad_arr[rand]=temp;
+                    }
+                    for(var i=0;i<ad_arr.length;i++){
+                        obj[i].ad=ad_arr[i];
+                    }
                     return obj;
                 };
                 scope.$watch(attrs['griddata'],function(n_val,o_val){

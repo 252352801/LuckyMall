@@ -95,10 +95,10 @@ input:focus{
     position:relative;
 }
 .pull-left{
-    float:left;
+    float:left!important;
 }
 .pull-right{
-    float:right;
+    float:right!important;
 }
 .color-base{
     color:#ff6700;!important;

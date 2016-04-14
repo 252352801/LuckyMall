@@ -428,6 +428,10 @@ app.constant('API',{
     freeShoppingPlayChance:{//0元购游戏僧与次数
         method:'get',
         url:'api/zerodollarshopping/usershoppingcount'
+    },
+    freeShoppingDetails:{
+        method:'get',
+        url:'api/zerodollarshopping/'
     }
 
 });
@@ -1393,6 +1397,25 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             title:'0元购-幸运猫-够抵购好玩'
         })
 
+        .state('fs', {
+            url: '/fs/:item_id/:fs_id',
+            views: {
+                '': {
+                    templateUrl: "templates/fs.html?v="+v,
+                    controller:'FsCtrl'
+                }
+            },
+            resolve: {
+                loadFiles: load([
+                    './js/controllers/fsCtrl.js',
+                    './css/item.css',
+                    './js/services/itemSer.js',
+                    './js/services/freeShoppingSer.js',
+                    './js/directives/itemDirectives.js'
+                ])
+            },
+            title:'0元购-幸运猫-够抵购好玩'
+        })
 
         /*====================
             myLog

@@ -1,4 +1,4 @@
-<div class="floor" ng-style="{'width':'100%'}" ng-repeat="floor in data_grid" id="{{'floor'+$index}}">
+<div class="floor" ng-class="$index<5?'have-ad have-ad'+(floor.ad):''" ng-style="{'width':'100%'}" ng-repeat="floor in data_grid" id="{{'floor'+$index}}">
     <div class="floor-title">
             <h2 >
                 <a ng-href="{{floor.href}}"  ng-bind="floor.name"></a>

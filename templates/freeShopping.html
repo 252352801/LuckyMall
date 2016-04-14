@@ -18,12 +18,12 @@
         <p class="txt-center" style="color:#c34500;line-height: 180px;" ng-show="freeShopping.loading">加载中...</p>
         <ul class="fs_shangpin" ng-show="!freeShopping.loading">
             <li ng-repeat="fs in freeShopping.data">
-                <a href="/item/{{fs.CommodityId}}">
+                <a href="/fs/{{fs.CommodityId}}/{{fs.Id}}">
                     <img ng-src={{imgHost+fs.CommodityImage}} error-src="./res/images/default.png" />
                 </a>
                 <div class="fs_sp_you">
                     <p>
-                        <a href="/item/{{fs.CommodityId}}">
+                        <a href="/fs/{{fs.CommodityId}}/{{fs.Id}}">
                             {{fs.CommodityName}}
                          </a>
                     </p>
