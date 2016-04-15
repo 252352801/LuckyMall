@@ -223,7 +223,14 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                             UserSer.setUserData(RefreshUserDataSer.getData());
                             $scope.simpleData_user.UserModel = UserSer.getUserData();
                             $scope.showName = $scope.simpleData_user.UserModel.NickName ? $scope.simpleData_user.UserModel.NickName : $scope.simpleData_user.UserModel.Mobile;
+                            var data_avatar = angular.fromJson(UserSer.getData().UserModel.Avatar);
+                            if (data_avatar.type == 1) {
+                                $rootScope.avatar = data_avatar.image;
+                            } else {
+                                $rootScope.avatar = data_avatar.image?data_avatar.image:null;
+                            }
                         });
+
                     }
                 });
             });

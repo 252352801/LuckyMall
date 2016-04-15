@@ -1,7 +1,7 @@
 angular.module('LuckyMall.controllers')
     .controller('UserCenterCtrl',
-    ['$scope', 'LoginSer', '$state', '$timeout', 'UserSer', 'TokenSer', '$rootScope',
-        function ($scope, LoginSer, $state, $timeout, UserSer, TokenSer, $rootScope) {
+    ['$scope', 'LoginSer', '$state', '$timeout', 'UserSer', 'TokenSer', '$rootScope','svc','API',
+        function ($scope, LoginSer, $state, $timeout, UserSer, TokenSer, $rootScope,svc,API) {
             if (!TokenSer.getToken()) {
                 $state.go('home');
                 return;
@@ -36,10 +36,53 @@ angular.module('LuckyMall.controllers')
             });
             /* 打开头像编辑*/
             $scope.openMTXX = function () {
+                $scope.modalAvatarPicker.show=false;
                 $timeout(function () {
                     $scope.isMTXXShow = true;
                 });
             };
+
+            $scope.editAvatar=function(){
+                $scope.modalAvatarPicker.show=true;
+            };
+            $scope.closeModalAvatarPicker=function(){
+                $scope.modalAvatarPicker.show=false;
+            };
+
+
+            function initSystemAvatars(){
+                var result=[];
+                for(var i =0;i<26;i++){
+                    result.push({
+                        index:i,
+                        url:$rootScope.imgHost+'/avatar/default/'+(i<10?'0'+i:i)+'.png'
+                    });
+                }
+                return result;
+            }
+            $scope.systemAvatars=initSystemAvatars();
+            console.log($scope.systemAvatars);
+            $scope.modalAvatarPicker={
+                show:false,
+                avatars:initSystemAvatars()
+            };
+
+            $scope.setSystemAvatar=function(index){
+                svc.get(API.setSystemAvatar.url+index,function(response,status){//抢红包次数
+                    if(status==200){
+                       // $rootScope.user.UserModel.
+                        $scope.$emit('user-update');
+                    }
+                });
+                $scope.modalAvatarPicker.show=false;
+
+            };
+
+
+
+
+
+
 
 
         }]);

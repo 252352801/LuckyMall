@@ -10,7 +10,7 @@
         <div class="bar-userInfo-left pull-left">
             <div class="user-head-img">
                 <img ng-src={{avatar!=null?(imgHost+avatar):'./res/images/touxiang.jpg'}} error-src="./res/images/touxiang.jpg" alt="" />
-                <div class="btn-edit-img" btn-edit-avatar="{{avatar!=null?(imgHost+avatar):'./res/images/touxiang.jpg'}}"  ng-click="openMTXX()" img-src="./res/test/headimg.jpg">编辑头像</div>
+                <div class="btn-edit-img"   ng-click="editAvatar()" img-src="./res/test/headimg.jpg">编辑头像</div>
             </div>
             <h1 class="" ng-bind="user.UserModel.NickName" title="{{data_user.UserModel.NickName}}"></h1>
             <small ng-bind=""></small>
@@ -60,7 +60,25 @@
 </div>
 <!--中部 end-->
 
+<div class="modal-overlay" ng-show="modalAvatarPicker.show">
 
+    <div class="modal-avatar">
+        <div class="modal-title">修改头像</div>
+        <div class="modal-body">
+            <p class="color-999">请选择系统默认头像</p>
+            <ul class="over-hidden ul-avatar">
+                <li class="system-avatar" ng-repeat="avatar in modalAvatarPicker.avatars" ng-click="setSystemAvatar(avatar.index)">
+                    <img ng-src="{{avatar.url}}" />
+                </li>
+
+            </ul>
+        </div>
+        <div class="bar-custom-settings txt-no-select" ng-click="openMTXX()" btn-edit-avatar="{{avatar!=null?(imgHost+avatar):'./res/images/touxiang.jpg'}}">
+            <span>自定义头像</span>
+        </div>
+        <span class="btn-close" title="关闭" ng-click="closeModalAvatarPicker()">×</span>
+    </div>
+</div>
 <introduction></introduction>
 <sub-footer></sub-footer>
 <footer></footer>

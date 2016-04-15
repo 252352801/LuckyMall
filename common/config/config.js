@@ -432,6 +432,10 @@ app.constant('API',{
     freeShoppingDetails:{
         method:'get',
         url:'api/zerodollarshopping/'
+    },
+    setSystemAvatar:{
+        method:'get',
+        url:'api/user/defaultavatar/'
     }
 
 });

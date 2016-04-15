@@ -1,13 +1,14 @@
 angular.module('LuckyMall.controllers')
     .controller('SafeAccountCtrl',
-    ['$scope', '$state', '$stateParams', '$timeout', 'UserSer',
-        function ($scope, $state, $stateParams, $timeout, UserSer) {
+    ['$scope','$rootScope','$state', '$stateParams', '$timeout', 'UserSer',
+        function ($scope, $rootScope,$state, $stateParams, $timeout, UserSer) {
             $scope.$emit('changeMenu', 13);
-            $scope.new_nickname = $scope.data_user.UserModel.NickName;
+           $scope.new_nickname = '';
             $scope.nickName_editing = false;
             /* 显示“昵称”编辑框*/
-            $scope.handleNickName = function () {
+            $scope.handleNickName = function (){
                 if ($scope.nickName_editing == false) {
+                    $scope.new_nickname = $rootScope.user.UserModel.NickName;
                     $timeout(function () {
                         $scope.nickName_editing = true;
                     }, 5)
@@ -27,5 +28,6 @@ angular.module('LuckyMall.controllers')
             $scope.showMTXX = function () {
                 $scope.$emit("showMTXX");
             };
+
 
         }]);
