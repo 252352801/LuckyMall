@@ -276,7 +276,7 @@ angular.module('LuckyMall')
                             }
                         }
                     }
-                    var ad_count=5;
+                    var ad_count=obj.length>=5?5:obj.length;
                     var ad_arr=[];
                     for(var i=1;i<ad_count+1;i++){
                         ad_arr.push(i);

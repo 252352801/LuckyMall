@@ -50,10 +50,10 @@ angular.module('LuckyMall.services', [])
             }else {
                 var data_avatar = angular.fromJson(UserSer.getData().UserModel.Avatar);
                 var avatar='';
-                if (data_avatar.type == 1) {
+                if (data_avatar.type == 1||data_avatar.type == 0) {
                     avatar= location.protocol+'//image.xingyunmao.cn'+data_avatar.image;
-                } else {
-                    avatar = location.protocol+'//www.xingyunmao.cn/res/images/touxiang.jpg';
+                } else if(data_avatar.type == 2){
+                    avatar = data_avatar.image;
                 }
                 woopra.identify({
                     email: UserSer.getData().UserModel.Mobile,

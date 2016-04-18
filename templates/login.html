@@ -35,7 +35,7 @@
                 <form class="form-login tab-content" name="form_login" ng-submit="login()" novalidate="novalidate">
                     <p class="input-tips" ng-bind="tips" ng-show="hasInputError"></p>
                     <p>
-                        <input class="input-username" type="text" placeholder="用户名(手机号)" ng-model="username" name="username" required ng-pattern="/^[1][3458]\d{9}$/"
+                        <input class="input-username" type="text" placeholder="用户名(手机号)" ng-model="username" name="username" required ng-pattern="/^[1][0123456789]\d{9}$/"
                                 ng-change="showTips('')"  autocomplete="false"/>
                     </p>
                     <p>
