@@ -4468,3 +4468,11 @@ modal-beforeGame
 }
 /*
 抢红包 end*/
+
+
+
+.ul-img-seo{
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}

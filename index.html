@@ -45,6 +45,8 @@
     <link rel="stylesheet" type="text/css" href="./lib/sweetAlert/sweetalert.css">
 
 
+
+
     <link  rel="stylesheet" type="text/css" href="./css/iconFont/iconfont.css?v=20160418">
     <link  rel="stylesheet" type="text/css" href="./css/global.css?v=20160418">
     <script  type="text/javascript" src="./lib/myfuntion/base.js?v=20160418"></script>
@@ -53,8 +55,28 @@
     <script  type="text/javascript" src="./common/services/services.js?v=20160418"></script>
     <script  type="text/javascript" src="./common/directives/directives.js?v=20160418"></script>
 
+
+
+
+
 </head>
 <body ng-controller="AppCtrl" ng-app="LuckyMall"  id="ng-app">
+
+    <ul class="ul-img-seo">
+        <li>
+            <img src="./res/indexImages/4.jpg" alt="幸运猫商城-够抵购好玩" />
+        </li>
+        <li class="ng-hide">
+            <img src="./res/indexImages/1.png" alt="幸运猫商城-够抵购好玩" />
+        </li>
+        <li class="ng-hide">
+            <img src="./res/indexImages/2.jpg" alt="幸运猫商城-够抵购好玩" />
+        </li>
+        <li class="ng-hide">
+            <img src="./res/indexImages/3.jpg" alt="幸运猫商城-够抵购好玩"/>
+        </li>
+    </ul>
+
     <div ui-view ng-show="!page_loading">
     </div>
     <modal-login ng-show="isLoginModalShow"></modal-login>
@@ -93,5 +115,6 @@
             document.body.appendChild(script);
         }
     })();
+    console.info('test',document.getElementById('test').clientWidth);
 </script>
 </html>

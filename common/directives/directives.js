@@ -732,7 +732,7 @@ angular.module('LuckyMall')
     .directive('requireMobile', function ($timeout) {
         return {
             link: function (scope, element, attrs) {
-                var reg = /^[1][358]\d{9}$/;
+                var reg = /^[1][0123456789]\d{9}$/;
                 element.bind('blur', function () {
                     if (element.val() == ('' | undefined)) {
                         scope[attrs.requireMobile]('请输入收货人的手机号码');
