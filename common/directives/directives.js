@@ -65,7 +65,7 @@ angular.module('LuckyMall')
             },
             controller: function ($scope, $rootScope) {
                 $scope.closeDownloadAppModal=function(){
-                    $rootScope.isModalDownloadAppShow=false;
+                    $rootScope.isDownloadAppModalShow=false;
                     $scope.visible=false;
                 };
             }

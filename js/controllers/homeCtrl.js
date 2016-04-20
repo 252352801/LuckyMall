@@ -86,6 +86,8 @@ angular.module('LuckyMall.controllers')
                         auth = TokenSer.getToken();
                         initGame(auth);
                     }
+                }else if(banner.PromotionType == 6){//砍价
+                    $rootScope.isDownloadAppModalShow=true;
                 }
             };
 

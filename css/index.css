@@ -953,14 +953,14 @@ margin-left: 70px;
     margin-top:-204px;
     animation:modalShow .3s;
     background-color:#fff;
-    background: url(../res/images/freeShopping/pc_tc.png) no-repeat;
+    background: url(../res/images/freeShopping/pc_tc.png) 50% 50% no-repeat;
 }
 .modal-download-app .btn-close{
     width: 182px;
     height: 47px;
     position: absolute;
     left: 116px;
-    top: 334px;
+    top: 330px;
     border: 2px solid transparent;
     cursor: pointer;
 }

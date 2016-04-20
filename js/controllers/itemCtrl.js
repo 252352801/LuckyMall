@@ -596,6 +596,7 @@ angular.module('LuckyMall.controllers')
                 }
                 for (var o in orders) {
                     if (orders[o].OrderType == 1) {
+                        $this.menuLuckyBuy.show = false;
                         swal({
                                 title: "已存在免费订单，是否删除继续?",
                                 text: "同一时间只能有一个免费订单喔!",
@@ -628,7 +629,6 @@ angular.module('LuckyMall.controllers')
                 }
                 //   for(var o in)
                 enterFreeGame();
-
 
             };
             this.normalAction=function(){//正常的流程
