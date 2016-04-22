@@ -1438,11 +1438,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         var cur_host=(ENV===0?Host.develop:Host.public);//##############根据当前环境设置接口主机
         switch(ENV){
             case 0:
-                Host.game.fishing='http://120.24.225.116:9004';
+                Host.game.fishing='http://120.24.225.116:9004/index2.html';
                 Host.game.fingerGuessing='http://120.24.225.116:9005';
                 break;
             case 1:
-                Host.game.fishing=window.location.protocol+'//gamecf.xingyunmao.cn';
+                Host.game.fishing=window.location.protocol+'//gamecf.xingyunmao.cn/index2.html';
                 Host.game.fingerGuessing=window.location.protocol+'//gamefg.xingyunmao.cn';
                 break;
         }
