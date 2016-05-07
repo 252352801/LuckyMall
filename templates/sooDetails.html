@@ -27,7 +27,9 @@
                     <p>
                         <label>买下价格：</label>
                         <span class="font-16 color-org" ng-bind="'￥'+soo_dt.SOOInfo.DiscountPrice">￥10</span>
-                        <span class="line-through color-gray"  ng-bind="'￥'+soo_dt.SOOInfo.RetailPrice">￥100</span>
+                        <span class="line-through color-gray"  ng-bind="'￥'+soo_dt.SOOInfo.RetailPrice" ng-show="soo_dt.SOOInfo.OrderType!=4">￥100</span>
+                        <span class=""
+                              ng-if="soo_dt.SOOInfo.OrderType==4">共砍 <font style="color:#f69c00">￥{{soo_dt.SOOInfo.KJValue}}</font></span>
                     </p>
                     <p>
                         <label>获得折扣：</label>
@@ -53,32 +55,77 @@
             <div class="soo-failureInfo" ng-if="soo_dt.SOOInfo.ShaiDanStatus==2">
                 该晒单未通过审核！原因：<span>{{soo_dt.failureReason}}</span>
             </div>
-            <div class="box-submitInfo">
-                <div class="info-top over-hidden">
-                    <span class="color-gray pull-left" ng-bind="soo_dt.SOOInfo.CreateTime">2016-03-07</span>
-                    <div class="pull-right txt-no-select relative" ng-click="soo_dt.like(soo_dt.SOOInfo)" ng-if="soo_dt.SOOInfo.ShaiDanStatus!=2">
-                        <i class="iconfont lm-heart" ng-style="{'color':soo_dt.SOOInfo.liked?'red':'#999'}"></i>
-                        <span>{{soo_dt.SOOInfo.liked?'已赞':'赞'}}({{soo_dt.SOOInfo.LikeCount}})</span>
+            <div class="box-soo-details">
+                <div class="box-submitInfo">
+                    <div class="info-top over-hidden">
+                        <span class="color-gray pull-left" ng-bind="soo_dt.SOOInfo.CreateTime">2016-03-07</span>
+                        <div class="pull-right txt-no-select relative" ng-click="soo_dt.like(soo_dt.SOOInfo)" ng-if="soo_dt.SOOInfo.ShaiDanStatus!=2">
+                            <i class="iconfont lm-heart" ng-style="{'color':soo_dt.SOOInfo.liked?'red':'#999'}"></i>
+                            <span>{{soo_dt.SOOInfo.liked?'已赞':'赞'}}({{soo_dt.SOOInfo.LikeCount}})</span>
 
+                        </div>
+                    </div>
+                    <div class="info">
+                        <p class="color-666" ng-bind="soo_dt.SOOInfo.Content">
+                            第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~费列罗巧
+                            克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~~费列罗巧克力3粒16条的，以前以为
+                            是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知
+                            道是真的，大家加油好运会降临的。
+                        </p>
+                        <ul class="ul-images">
+                            <li ng-class="{'cur':soo_dt.imgIndex==$index}" ng-repeat="img in soo_dt.SOOInfo.images" ng-click="soo_dt.showImg($index)">
+                                <a style="display:block;width:66px;height:66px;">
+                                    <img real-src={{imgHost+img+'@100w_100h_100Q.jpg'}} temp-src="./res/images/default.png"  />
+                                </a>
+                            </li>
+
+                        </ul>
+                        <div class="soo-dt-bimg">
+                            <img ng-show="!loading" ng-src={{imgHost+soo_dt.SOOInfo.images[soo_dt.imgIndex]}} error-src="./res/images/default.png" style="max-width: 100%" />
+                        </div>
                     </div>
                 </div>
-                <div class="info">
-                    <p class="color-666" ng-bind="soo_dt.SOOInfo.Content">
-                        第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~费列罗巧
-                        克力3粒16条的，以前以为是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈~~费列罗巧克力3粒16条的，以前以为
-                        是骗人的，自己中奖后才知道是真的，大家加油好运会降临的。第一次中奖哈哈～费列罗巧克力3粒16条的，以前以为是骗人的，自己中奖后才知
-                        道是真的，大家加油好运会降临的。
-                    </p>
-                    <ul class="ul-images">
-                        <li ng-class="{'cur':soo_dt.imgIndex==$index}" ng-repeat="img in soo_dt.SOOInfo.images" ng-click="soo_dt.showImg($index)">
-                            <a style="display:block;width:66px;height:66px;">
-                                <img real-src={{imgHost+img+'@100w_100h_100Q.jpg'}} temp-src="./res/images/default.png"  />
-                            </a>
-                        </li>
-
-                    </ul>
-                    <div >
-                        <img ng-show="!loading" ng-src={{imgHost+soo_dt.SOOInfo.images[soo_dt.imgIndex]}} error-src="./res/images/default.png" style="max-width: 100%" />
+                <div class="box-extra">
+                    <div class="box-extra-list" ng-if="soo_dt.SOOInfo.OrderType==4">
+                        <h2 class="font-16">砍价排行榜<small class="font-12 color-gray">（灰色为未生效）</small><span class="color-red font-14">共砍：￥{{soo_dt.SOOInfo.KJValue}}</span></h2>
+                        <table>
+                            <tr>
+                                <th>好友</th>
+                                <th>时间</th>
+                                <th style="width:80px">砍掉价格</th>
+                            </tr>
+                            <tr ng-repeat="rec in soo_dt.kanjiaRecord">
+                                <td>
+                                    <div class="bar-helper">
+                                        <img ng-src="{{rec.HeadImgUrl}}" />
+                                        <p>{{rec.NickName}}</p>
+                                    </div>
+                                </td>
+                                <td class="txt-center color-999">{{rec.CreateTime}}</td>
+                                <td class="txt-center" ng-class="{'color-org':rec.CurrentStatus==1,'color-gray':rec.CurrentStatus!=1}">￥{{rec.DiscountMoney}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="box-extra-list" ng-if="soo_dt.SOOInfo.OrderType!=4">
+                        <h2 class="font-16">更多晒单</h2>
+                        <table>
+                            <tr ng-repeat="soo in soo_dt.otherSOO" >
+                                <td class="other-soo-li">
+                                    <a href="/soo_dt/{{soo.Id}}">
+                                        <div class="bar-shower">
+                                            <img ng-src="{{imgHost+soo.Avatar.image}}" />
+                                            <p>{{soo.Nickname}}</p>
+                                            <p class="disc">获得:<span class="color-org">{{soo.DiscountValue}}折</span></p>
+                                        </div>
+                                        <div class="item-name">
+                                            <span class="color-gray">商品名称：</span>
+                                            {{soo.CommodityName}}
+                                        </div>
+                                        <div></div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

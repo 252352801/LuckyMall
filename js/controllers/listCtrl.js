@@ -13,6 +13,7 @@ angular.module('LuckyMall.controllers')
         $scope.cate=$stateParams.category.split('=')[1];
         if($scope.cate.split('_').length==1){
             $scope.cate_id=$scope.cate;
+            $scope.cate_sub_id=null;
         }else{
             $scope.cate_id=$scope.cate.split('_')[0];
             $scope.cate_sub_id=$scope.cate.split('_')[1];
@@ -110,12 +111,22 @@ angular.module('LuckyMall.controllers')
                         $scope.category = cate;
                         if (cate != null) {
                             $scope.cateName = cate.CategoryName;
+                            if($scope.cate_sub_id!=null){
+                                 for(var o in $scope.data_menu){
+                                     for(var s in $scope.data_menu[o].SubCategories){
+                                         if($scope.data_menu[o].SubCategories[s].Id==$scope.cate_sub_id){
+                                             $scope.sub_cate_name=$scope.data_menu[o].SubCategories[s].CategoryName;
+                                             break;
+                                         }
+                                     }
+                                 }
+                            }
                         }else{
                             $state.go('404');
                             return;
                         }
                         //console.log(cate);
-                        if (cate.FilterModels.length > 0) {
+                        if (cate.SubCategories==null) {
                             $scope.hasSubCate = false;
                             FilterSer.setCategoryData(CategorySer.getCategoryById($scope.params.categoryId));
                             brand_id_param = $scope.cate_id;

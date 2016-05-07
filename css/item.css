@@ -569,12 +569,32 @@ float:left;
     padding: 15px 23px;
     padding-right: 10px;
     height: 66px;
+    position: relative;
 }
 .box-prices .item-price{
     height:66px;
     box-sizing:border-box;
     padding-left:50px;
     position: relative;
+    padding-right:120px;
+}
+.box-prices .comment-link{
+    width:120px;
+    height:66px;
+    position: absolute;
+    left:100%;
+    top:0px;
+    margin-left:-120px;
+    border-left:1px solid #ddd;
+}
+.box-prices .comment-link p{
+    margin-bottom:5px;
+}
+.box-prices .comment-link a:hover{
+    color:inherit;
+}
+.box-prices .comment-link a:hover .site-link{
+    text-decoration: underline;
 }
 .box-prices .item-price1{
     width:50%;

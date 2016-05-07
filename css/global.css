@@ -22,6 +22,9 @@ li{
 .b{
     font-weight:bold;
 }
+.font-12{
+    font-size:12px;
+}
 .font-14{
  font-size:14px;
 }
@@ -3044,15 +3047,15 @@ ul.dynamic li p a:hover{
     background-clip: content-box;
 }
 .window-game2{
-    margin:0 auto;
-    width:432px;
-    height:768px;
+    margin: 0 auto;
+    width: 480px;
+    height: 800px;
     max-height: 100%;
-    background:#fff;
-    position:relative;
-    top:50%;
-    margin-top:-384px;
-    animation:openGame 0.5s;
+    background: #fff;
+    position: relative;
+    top: 50%;
+    margin-top: -400px;
+    animation: openGame 0.5s;
     max-width: 100%;
     border: 10px solid rgba(255,255,255,0.5);
     background-clip: content-box;
@@ -4475,4 +4478,7 @@ modal-beforeGame
     position: absolute;
     z-index: -1;
     opacity: 0;
+}
+.ul-img-seo li{
+    list-style: none;
 }

@@ -11,6 +11,8 @@
                 <a href="/home">全部商品</a>
                 <a class="category-name" ng-bind="cateName" class="cur"
                    href="/list/{{'category='+cate_id}}/0/" ng-show="loaded"></a>
+                <a class="category-name" ng-bind="sub_cate_name" class="cur" ng-if="sub_cate_name"
+                   href="/list/{{'category='+cate_id+'_'+cate_sub_id}}/0/" ng-show="loaded"></a>
             </div>
             <p class="choices" ng-if="hasSelectedBrand()&&!data_brands.isMultiSelected"> <!--品牌已单选选项-->
                 <a ng-repeat="brand in data_brands|filter:{isSelected:true}">

@@ -98,14 +98,17 @@
                                     <li ng-bind="cur_disc<1?(cur_disc>0?(cur_disc*10).toFixed(1)+'折':'免单'):'无折扣'"></li>
                                 </ul>
                             </div>
+                            <div class="comment-link txt-right" ng-if="item.comment.show">
+                                <a href="{{item.comment.href}}" target="=_blank">
+                                    <p>累计评论</p>
+                                    <p class="color-org">{{item.comment.count}}</p>
+                                    <p>评论直达<span class="site-link">{{item.comment.siteName}}</span>
+                                    </p>
+                                </a>
+                            </div>
                         </div>
                         <p class="explain"><span class="color-999">说明：</span>最终以玩游戏赢折扣的<span class="color-org">幸运价</span>为商品成交价</p>
-                       <!-- <div class="item-price item-price2">
 
-
-                            <p class="color-999">说明：</p>
-                            <p class="">最终以玩游戏迎折扣的<span class="color-org">幸运价</span>为商品成交价</p>
-                        </div>-->
                     </div>
 
 

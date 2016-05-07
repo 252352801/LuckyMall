@@ -141,7 +141,8 @@
                 </div>
                 <div class="soo-slider-box" soo-slider="data_soo" ng-style="{'width':data_soo.length*100*2+'%'}">
                     <ul ng-repeat="slier in data_soo" ng-style="{'width':(100/data_soo.length/2)+'%'}">
-                        <li class="li-soo" ng-repeat="soo in slier">
+                        <li class="li-soo" ng-repeat="soo in slier"
+                            ng-class="{'order-type-0':soo.OrderType==0,'order-type-2':soo.OrderType==2,'order-type-3':soo.OrderType==3,'order-type-4':soo.OrderType==4}">
                             <div class="soo-shower">
                                 <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
 
@@ -171,7 +172,8 @@
                         </li>
                     </ul>
                     <ul ng-repeat="slier in data_soo" ng-style="{'width':(100/data_soo.length/2)+'%'}">
-                        <li class="li-soo" ng-repeat="soo in slier">
+                        <li class="li-soo" ng-repeat="soo in slier"
+                            ng-class="{'order-type-0':soo.OrderType==0,'order-type-2':soo.OrderType==2,'order-type-3':soo.OrderType==3,'order-type-4':soo.OrderType==4}">
                             <div class="soo-shower">
                                 <img ng-src={{imgHost+soo.Avatar.image}} error-src="./res/images/touxiang.jpg" />
 

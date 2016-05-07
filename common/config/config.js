@@ -7,6 +7,7 @@ app.constant('Host',{
         fingerGuessing:''//猜拳游戏地址
     }
 });
+app.constant('AUTO_TITLE','幸运猫-幸运帮买单，惊喜每一天');//默认title
 app.constant('ENV',1);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
@@ -436,11 +437,15 @@ app.constant('API',{
     setSystemAvatar:{
         method:'get',
         url:'api/user/defaultavatar/'
+    },
+    KanJiaRecord:{//砍价记录
+        method:'post',
+        url:'api/bargain/bargainrecordviews'
     }
 
 });
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV',
-    function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $cookiesProvider,Host,API,ENV) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$cookiesProvider','Host','API','ENV','AUTO_TITLE',
+    function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $cookiesProvider,Host,API,ENV,AUTO_TITLE) {
     function load(url) {
         for(var i= 0,len=url.length;i<len;i++){
             url[i]+='?v='+v;
@@ -465,7 +470,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'HomeCtrl'
                 }
             },
-            title:'幸运猫-够抵购好玩',
+            title:AUTO_TITLE,
             resolve: {
                 loadFiles: load([
                     './css/index.css',
@@ -984,7 +989,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller:'GuideCtrl'
                 }
             },
-            title:'新手指南-幸运猫-够抵购好玩',
+            title:'新手指南-'+AUTO_TITLE,
             resolve: {
                 loadFiles: load([
                     './css/support.css',
@@ -1360,7 +1365,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     controller: 'PayHandlerCtrl'
                 }
             },
-            title:'正在处理...-幸运猫-够抵购好玩',
+            title:'正在处理...-'+AUTO_TITLE,
             resolve: {
                 loadFiles: load([
                     './js/controllers/payHandlerCtrl.js'
@@ -1370,7 +1375,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         .state('payWin', {
             url: '/payWin',
-            title:'正在处理...-幸运猫-够抵购好玩'
+            title:'正在处理...-'+AUTO_TITLE
         })
 
         .state('404', {
@@ -1380,7 +1385,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     templateUrl: "templates/404.html?v="+v
                 }
             },
-            title:'页面找不到了-幸运猫-够抵购好玩'
+            title:'页面找不到了-'+AUTO_TITLE
         })
 
         .state('freeShopping', {
@@ -1398,7 +1403,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/controllers/freeShoppingCtrl.js'
                 ])
             },
-            title:'0元购-幸运猫-够抵购好玩'
+            title:'0元购-'+AUTO_TITLE
         })
 
         .state('fs', {
@@ -1418,7 +1423,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/directives/itemDirectives.js'
                 ])
             },
-            title:'0元购-幸运猫-够抵购好玩'
+            title:'0元购-'+AUTO_TITLE
         })
 
         /*====================

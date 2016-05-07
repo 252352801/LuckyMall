@@ -2305,6 +2305,21 @@ angular.module('LuckyMall.services', [])
                     .error(function(response,status){
                         callback(response,-1);
                     });
+            },
+            loadKanJiaRecord:function(params,callback){
+                $http({
+                    method: API.KanJiaRecord.method,
+                    url: API.KanJiaRecord.url,
+                    data:params
+                }).success(function (response, status) {
+                    if(status==200&&response){
+                        callback(response,1);
+                    }else{
+                        callback(response,0);
+                    }
+                }).error(function(response, status){
+                    callback(response,-1);
+                });
             }
         };
     })

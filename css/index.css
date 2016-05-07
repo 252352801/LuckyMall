@@ -719,15 +719,52 @@ margin-left: 70px;
 .module-soo .soo-slider-box ul{
     width:20%;
     height:320px;
-    padding:20px 0px 20px 0px;
+    padding:0px;
     float:left;
     overflow: hidden;
 }
 .module-soo .li-soo{
     height:100%;
     width:50%;
-    padding:0px 20px 0px 20px;
+    padding:20px;
     float: left;
+    position: relative;
+    overflow: hidden;
+}
+.module-soo .li-soo:before{
+    content:'';
+    display: block;
+    width:80px;
+    height:80px;
+   background: red;
+    position: absolute;
+    left:-40px;
+    top:-40px;
+    z-index: 2;
+    color:#fff;
+    line-height:130px;
+    text-align: center;
+    transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -webkit-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+}
+.module-soo .li-soo.order-type-0:before{
+    content:'幸运购';
+    background:rgba(255,0,0,0.75);
+}
+.module-soo .li-soo.order-type-2:before{
+    content:'擂台赛';
+    background:rgba(255,0,0,0.75);
+}
+.module-soo .li-soo.order-type-3:before{
+    content:'0元购';
+    background: rgba(71, 184, 45, 0.75);
+}
+.module-soo .li-soo.order-type-4:before{
+    content:'砍价';
+    background: rgba(246, 156, 0, 0.75);
 }
 .module-soo .li-soo:first-child{
     border-right:1px solid #eee;

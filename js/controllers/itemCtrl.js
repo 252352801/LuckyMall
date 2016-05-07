@@ -12,6 +12,12 @@ angular.module('LuckyMall.controllers')
             this.rankingData=[];//排行榜数据
             this.POOData=[];//其他平台的价格
             this.SOOData=[];//晒单数据
+            this.comment={//评论
+                show:false,
+                href:'',
+                count:0,//数量
+                siteName:''//网站名称
+            };
             this.currentPageOfSOO=[];//晒单数据
             this.pageOfSOO={//晒单分页
                 index:0,
@@ -381,6 +387,19 @@ angular.module('LuckyMall.controllers')
                             response[o].sSiteName=response[o].name.length>4?response[o].name.substr(0,4):response[o].name;
                         }
                         $this.POOData=response;//其他平台的价格
+
+                        var comment_res=response[0];//取第一个网站的评论
+                        $this.comment.count=comment_res.commentCount;
+                        $this.comment.siteName=comment_res.name;
+                        if(comment_res.site==0){
+                            $this.comment.href='https://item.m.jd.com/comments/{0}.html'.replace('{0}',comment_res.id);
+                            $this.comment.show=true;
+                        }else if(comment_res.site==2){
+                            $this.comment.href='https://detail.m.tmall.com/item.htm?id={0}'.replace('{0}',comment_res.id);
+                            $this.comment.show=true;
+                        }else{
+                            $this.comment.show=false;
+                        }
                     }
                 });
             };

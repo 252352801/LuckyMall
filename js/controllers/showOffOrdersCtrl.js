@@ -99,6 +99,8 @@ angular.module('LuckyMall.controllers')
                 this.itemData={};
                 this.pageError=false;
                 this.imgIndex=0;
+                this.kanjiaRecord=[];
+                this.otherSOO=[];
                 this.failureReason='';//晒单失败原因
                 this.loadData=function(){
                     $this.loading=true;
@@ -124,6 +126,54 @@ angular.module('LuckyMall.controllers')
                                             $this.failureReason=response;
                                         }
                                     });
+                                }
+
+                                if($this.SOOInfo.OrderType==4){
+                                    var params={
+                                        id: $this.SOOInfo.OrderId,
+                                        pIndex: 0,
+                                        pSize: 30
+                                    };
+                                    ShowOffOrdersSer.loadKanJiaRecord(params,function(response,status){
+                                        if(status==1){
+                                            var time_str='';
+                                            var time={};
+                                            for(var o in response){
+                                                time=new Date(response[o].CreateTime.replace(/-/g,'/'));
+                                                var month=time.getMonth()+1;
+                                                var day=time.getDate();
+                                                var hour=time.getHours();
+                                                var minute=time.getMinutes();
+                                                if(month<10){
+                                                    month='0'+month;
+                                                }
+                                                if(day<10){
+                                                    day='0'+day;
+                                                }
+                                                if(hour<10){
+                                                    hour='0'+hour;
+                                                }
+                                                if(minute<10){
+                                                    minute='0'+minute;
+                                                }
+                                                time_str=month+'-'+day+' '+hour+':'+minute;
+                                                response[o].CreateTime=time_str;
+                                            }
+                                            $this.SOOInfo.KJValue=parseFloat($this.SOOInfo.RetailPrice)-parseFloat($this.SOOInfo.DiscountPrice);
+                                            $this.kanjiaRecord=response;
+                                            console.log(response);
+                                        }
+                                    });
+                                }else{
+                                    var params={
+                                        status:1, pSize:30, pIndex: 0
+                                    };
+                                    ShowOffOrdersSer.requestData(params,function(response,status){
+                                        if(status==1&&response){
+                                            console.log(response);
+                                            $this.otherSOO=response;
+                                        }
+                                    })
                                 }
                         }else{
                             $this.pageError=true;
