@@ -1046,9 +1046,10 @@ float:left;
     color:#999;
 }
 .modal-luckyBuy-menu ul li p.menu-describe{
-    font-size:16px;
-    margin-bottom:8px;
-    color:#333;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+    padding: 0px 40px;
 }
 
 

@@ -1433,7 +1433,7 @@ angular.module('LuckyMall')
                 visible:"=visible",
                 order:"=data",
                 imgHost:'=imghost',
-                luckyEnergy:'=luckyenergy',
+                couponBalance:'=couponbalance',
                 gameMenu:'=gamectrl'
             },
             templateUrl: 'common/templates/modal-getDiscount.html?v='+v,
@@ -1451,7 +1451,7 @@ angular.module('LuckyMall')
 
 
                 $scope.btn_val={
-                    exc_coupon:'使用红包进游戏',
+                    exc_coupon:'使用幸运豆进入游戏',
                     exc_db:'确定抵用'
                 };
                 $scope.energy={
@@ -1709,6 +1709,7 @@ angular.module('LuckyMall')
                     BalanceSvc.requestBalanceInfo(function(response,status){
                         if(status==1){
                             $scope.data_balance=response;
+                            $scope.couponBalance=response.Coupon.Balance;
 
                         }
                     });

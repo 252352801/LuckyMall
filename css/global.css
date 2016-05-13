@@ -69,6 +69,22 @@ img{
     background:url(../res/images/icon_mb_link.png) no-repeat;
     background-position:60px 0px;
 }
+.icon-xyd{
+    display:inline-block;
+    width:32px;
+    height:32px;
+    background: url(../res/icon/xydou.png) center no-repeat;
+    background-size:100%;
+    position: relative;
+}
+.icon-xyd.xs{
+    width:16px;
+    height:16px;
+}
+.icon-xyd.sm{
+    width:24px;
+    height:24px;
+}
 .img-loading.img-loaded{
     opacity:1;
     transition:all .3s;
@@ -3693,7 +3709,7 @@ modal-beforeGame
     content:'';
     width:50px;
     height:50px;
-    background: url(../res/icon/icon_coupon.png);
+    background: url(../res/icon/icon_lk_bean.png);
     position:absolute;
     left:45px;
     top:25px;
@@ -3864,7 +3880,7 @@ modal-beforeGame
     content: '';
     width:50px;
     height:50px;
-    background: url(../res/icon/icon_coupon.png);
+    background: url(../res/icon/icon_lk_bean.png);
     position:absolute;
     left:0px;
     top:3px;
@@ -4319,20 +4335,20 @@ modal-beforeGame
     抢红包 begin
 *======================*/
 .img-btn-getCoupons{
-    width:200px;
-    height:200px;
-    background: url(../res/images/coupon/img_btn_getCoupon.png);
-    background-size:100%;
+    width: 197px;
+    height: 239px;
+    background: url(../res/images/coupon/img_btn_getCoupon.png) center no-repeat;
+    background-size: 80%;
     position: fixed;
-    left:100%;
-    top:100%;
-    margin-left:-210px;
-    margin-top:-210px;
-    z-index:100;
-    cursor:pointer;
+    left: 100%;
+    top: 100%;
+    margin-left: -207px;
+    margin-top: -249px;
+    z-index: 100;
+    cursor: pointer;
     animation: btnCouponAnimation 2s;
     animation-iteration-count: infinite;
-    animation-timing-function:linear;
+    animation-timing-function: linear;
 }
 @keyframes btnCouponAnimation{
     0%{transform:translate(0,0)}
@@ -4369,9 +4385,10 @@ modal-beforeGame
     left:0px;
     top:0px;
     transition:left 0.3s;
+    text-align:center;
 }
 .modal-getCoupons .ul-gc-steps .gc-step1{
-    background: url(../res/images/coupon/gc_step1.png) 61% 0% no-repeat;
+    background: url(../res/images/coupon/gc_step1.png) 50% 0% no-repeat;
 }
 .modal-getCoupons .ul-gc-steps .gc-step2{
     background: url(../res/images/coupon/gc_step2.png) 50% 0% no-repeat;
@@ -4383,37 +4400,47 @@ modal-beforeGame
     background: url(../res/images/coupon/gc_step4.png) 50% 0% no-repeat;
 }
 .modal-getCoupons .ul-gc-steps .btn{
-    display:block;
-    width:242px;
-    height:47px;
-    margin:20px auto 10px auto;
+    width:160px;
+    height:45px;
+    margin:20px 5px 10px 5px;
     border:none;
+    border-radius:45px;
     cursor: pointer;
+    font-size:18px;
+    display: inline
 }
 .modal-getCoupons .ul-gc-steps .box-buttons{
     margin-top:400px;
     overflow: hidden;
 }
 .modal-getCoupons .ul-gc-steps .gc-step2 .box-buttons{
-    margin-top:470px;
-}
-.modal-getCoupons .ul-gc-steps .gc-step3 .box-buttons{
-    margin-left:105px;
+    margin-top:400px;
 }
 .modal-getCoupons .ul-gc-steps .btn.btn-play{
-    background: url(../res/images/coupon/gc_play.png);
+    background: #FBAB00;
+    color:#993C00;
 }
 .modal-getCoupons .ul-gc-steps .gc-step1 .btn-next{
-    background: url(../res/images/coupon/gc_step1_btn.png);
+    background: #DB1C3A;
+    color:#fff;
 }
 .modal-getCoupons .ul-gc-steps .gc-step2 .btn-next{
-    background: url(../res/images/coupon/gc_step2_btn.png);
+    background: #FBAB00;
+    color:#993C00;
+    width:300px;
 }
 .modal-getCoupons .ul-gc-steps .gc-step3 .btn-next{
-    background: url(../res/images/coupon/gc_step3_btn.png);
+    background: #FBAB00;
+    color:#993C00;
+    width:300px
 }
 .modal-getCoupons .ul-gc-steps .gc-step4 .btn-next{
     background: url(../res/images/coupon/gc_step4_btn.png);
+    width:240px;
+}
+.modal-getCoupons .ul-gc-steps .gc-step4 .btn-close{
+    top:10px;
+    margin-left:160px;
 }
 .modal-getCoupons .box-remain-count{
     width:100%;
@@ -4422,9 +4449,27 @@ modal-beforeGame
     font-size:20px;
     position:absolute;
     left:0px;
-    top:210px;
+    top:80px;
     line-height:110px;
-    color:#dc4048;
+    color:#fff;
+}
+.modal-getCoupons .box-tips{
+    width:350px;
+    height:110px;
+    font-size:20px;
+    position:absolute;
+    left:50%;
+    top:110px;
+    margin-left:-175px;
+    color:#fff;
+    font-weight:100;
+    text-align: left;
+    text-indent: 50px;
+    line-height:40px;
+}
+.modal-getCoupons .box-tips span{
+    margin-right:10px;
+    amrgin-left:200px;
 }
 .modal-getCoupons  .box-qrcode-img{
     width:200px;
@@ -4448,23 +4493,28 @@ modal-beforeGame
     text-align: center;
 }
 .modal-getCoupons .box-remain-count span{
-    font-size:64px;
-    color:#d92b46;
+    font-size: 48px;
+    color: #FFD546;
 }
 .modal-getCoupons .box-remain-count span.font-sm{
     font-size:36px;
 }
 .modal-getCoupons .btn-close{
-    display:block;
-    width:34px;
-    height:34px;
-    background: url(../res/images/coupon/btn_close.png);
-    position:absolute;
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url(../res/images/coupon/xyd_close.png) no-repeat;
+    position: absolute;
     z-index: 2;
-    left:50%;
-    top:0px;
-    margin-left:200px;
+    left: 50%;
+    top: 5px;
+    margin-left: 142px;
     cursor: pointer;
+    background-size: 100%;
+    opacity:0.75;
+}
+.modal-getCoupons .btn-close:hover{
+    opacity:1;
 }
 .modal-getCoupons .gc-step5 .btn-close{
     margin-left:120px;

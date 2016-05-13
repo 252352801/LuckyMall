@@ -1,8 +1,7 @@
 <p class="menu-cont-title">
-    <label>我的红包</label>
+    <label>我的幸运豆</label>
     <a class="coupon-balance">
-        余额
-        <span class="color-org" ng-bind="'￥'+balance"></span>
+        <span class="icon-xyd sm" style="top:5px;"></span> <span  class="color-org" ng-bind="balance*100"></span>
     </a>
 </p>
 <ul class="ul-coupon">
@@ -13,10 +12,10 @@
         </div>
         <div class="cont2">
             <p>
-                余额：<span class="color-org large-font">￥{{list.Balance}}</span>
+                余额：<span class="icon-xyd xs"></span><span class="color-org large-font">{{list.Balance*100}}</span>
             </p>
             <p>
-                总额：<span >￥{{list.TotalAmount}}</span>
+                总额：<span class="icon-xyd xs"></span><span >{{list.TotalAmount*100}}</span>
             </p>
         </div>
     </li>

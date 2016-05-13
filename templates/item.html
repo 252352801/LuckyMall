@@ -124,6 +124,10 @@
                         </li>
                     </ul>
                 </div>
+                <p class="color-999 ng-hide" title="玩游戏，赢取惊喜折扣！">
+                    温馨提示：使用<span class="icon-xyd xs"></span><label class="color-red">{{item.itemData.EarnestPrice*item.amount*100}}幸运豆</label>
+                    即可兑换一次游戏赢折扣机会，赶紧行动吧！
+                </p>
                 <ul ng-class="{'pro-property':item.showTips==false,'pro-property unFinish':item.showTips==true}">
                     <p class="tips">请勾选您需要的商品选项：</p>
                         <li ng-repeat="property in item.itemData.Property">
@@ -270,7 +274,7 @@
     </div>
 </div>
 <!--中部 end-->
-<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" luckyenergy="luckyEnergy" gamectrl="gameMenu" ></modal-get-discount>
+<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" couponbalance="coupon_balance" gamectrl="gameMenu" ></modal-get-discount>
 <modal-game-menu visible="gameMenu.show" gamectrl="gameMenu" ></modal-game-menu>
 
 
@@ -281,15 +285,22 @@
         </div>
         <div class="modal-content">
             <ul>
-               <li  ng-click="item.tryAction()">
-                   <div class="btn-mode btn-mode1">小试牛刀</div>
-                   <p class="menu-describe">无需定金</p>
-                   <p>获得游戏结果的1/10折扣卡</p>
-               </li>
+
                 <li  ng-click="item.normalAction()">
                     <div class="btn-mode btn-mode2">大显身手</div>
-                    <p class="menu-describe">定金/红包：<span class="color-red">￥{{item.itemData.EarnestPrice*item.amount}}</span></p>
+                    <p class="menu-describe" ng-if="coupon_balance<(item.itemData.EarnestPrice)*(item.amount)">
+                        预付<span class="color-red">￥{{item.itemData.EarnestPrice*item.amount}}
+                        </span>定金，赠送<span class="color-red">{{item.itemData.EarnestPrice*item.amount*100}}个幸运豆</span>兑换一次游戏机会
+                    </p>
+                    <p class="menu-describe" ng-if="coupon_balance>=item.itemData.EarnestPrice*item.amount">
+                        使用<span class="icon-xyd xs"></span><span class="color-red">{{item.itemData.EarnestPrice*item.amount*100}}幸运豆</span>兑换一次游戏机会
+                    </p>
                     <p>获得游戏结果的全额折扣卡</p>
+                </li>
+                <li  ng-click="item.tryAction()">
+                    <div class="btn-mode btn-mode1">小试牛刀</div>
+                    <p class="menu-describe">无需幸运豆</p>
+                    <p>获得游戏结果的1/10折扣卡</p>
                 </li>
             </ul>
         </div>

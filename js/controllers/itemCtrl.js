@@ -656,7 +656,7 @@ angular.module('LuckyMall.controllers')
                     $this.menuLuckyBuy.show=false;
                     if (status == 1) {
                         $scope.$emit('cart-update');
-                        var order_id=response.Data.Id;//立即购买的订单
+                        var order_id=response.Data.Id;
                         OrderDetailsSer.requestData(order_id,function(resp,stat){
                             if(stat==1) {
                                 $scope.showModalGetDisc(resp);
@@ -700,7 +700,7 @@ angular.module('LuckyMall.controllers')
                 $scope.item.loadData();
             }
         }
-
+        $scope.coupon_balance=0;
         $scope.gameMenu={//游戏菜单
             show:false,
             orderId:'',
@@ -711,10 +711,11 @@ angular.module('LuckyMall.controllers')
             }
         };
 
-
         $scope.showModalGetDisc=function(order){
-            $scope.isModalGetDiscountShow=true;
-            $scope.data_modal_getDisc=order;
+            $timeout(function(){
+                $scope.isModalGetDiscountShow=true;
+                $scope.data_modal_getDisc=order;
+            });
         };
         $scope.goLogin = function () {//跳转登录页面
             $state.go('login');
@@ -724,5 +725,4 @@ angular.module('LuckyMall.controllers')
                 $scope.isLogin = LoginSer.isLogin();
             }, 5);
         });
-
     }]);

@@ -154,9 +154,9 @@
             <label>已付定金：</label>
             <span ng-bind="data_order.EarnestMoney"></span>
         </p>
-        <p ng-if="data_order.EarnestBusinessType==4&&(data_order.EarnestMoney+data_order.CouponMoney)>0">
+        <p ng-if="data_order.EarnestBusinessType==4&&data_order.EarnestMoney>0">
             <label>已抵用：</label>
-            <span ng-bind="(data_order.EarnestMoney+data_order.CouponMoney)"></span>
+            <span ng-bind="'￥'+data_order.EarnestMoney"></span>
         </p>
     </div>
 

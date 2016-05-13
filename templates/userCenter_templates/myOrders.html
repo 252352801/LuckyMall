@@ -49,7 +49,7 @@
                 <p class="cost" ng-bind="'￥'+list.cost" ng-if="curMenu!=1"></p>
                 <p class="cost" ng-bind="'￥'+list.needToPay" ng-if="curMenu==1"></p>
                 <p ng-bind="'（已付定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestBusinessType!=4&&list.EarnestMoney>0"></p>
-                <p ng-bind="'（已抵用：￥'+(list.EarnestMoney+list.CouponMoney)+'）'" ng-if="list.EarnestBusinessType==4&&(list.EarnestMoney+list.CouponMoney)>0"></p>
+                <p ng-bind="'（已抵用：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestBusinessType==4&&list.EarnestMoney>0"></p>
                 <p class="discount">已享用折扣卡<span class="icon-discount"
                                                 ng-bind="list.finalDiscount+'折'"></span></p>
             </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="cont5 pull-left">
                 <div>
-                    <p><a class="btn btn-red" ng-if="list.OrderStatus==4" href="/UCIndex/submitShowOffOrder/{{list.Id}}">晒单抢红包</a></p>
+                    <p><a class="btn btn-red" ng-if="list.OrderStatus==4" href="/UCIndex/submitShowOffOrder/{{list.Id}}">晒单抢幸运豆</a></p>
                     <p><a class="btn btn-org" ng-if="list.OrderStatus==1" ng-click="repay(list)">立即支付</a></p>
 
                     <p><a  class="btn" ng-if="list.OrderStatus==1&&list.EarnestMoney==0" ng-click="removeOrder(list)">取消订单</a></p>

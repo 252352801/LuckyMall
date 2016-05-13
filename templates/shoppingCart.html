@@ -78,9 +78,9 @@
                     <p ng-if="list.EarnestBusinessType==3" class="color-gray">
                         已兑游戏机会
                     </p>
-                    <p ng-if="list.EarnestBusinessType==4&&(list.CouponMoney+list.EarnestMoney)>0">
+                    <p ng-if="list.EarnestBusinessType==4&&list.EarnestMoney>0">
                         已抵用：
-                        <span class="payed" ng-bind="'￥'+(list.CouponMoney+list.EarnestMoney)"></span>
+                        <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
                     </p>
 
                 </div>

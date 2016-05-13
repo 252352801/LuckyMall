@@ -3,24 +3,35 @@
         <ul class="ul-gc-steps">
             <li class="gc-step gc-step1" ng-style="{'left':index==0?'0px':(0-index)*1100+'px'}" ng-show="count>=0">
                 <div class="box-remain-count">
+                    剩余
                     <span ng-bind="count>=0?count:0" ng-class="{'font-sm':count>=100}"></span>
                     <label>次</label>
+                    捕幸运豆机会
                 </div>
                 <div class="box-buttons">
-                    <button class="btn btn-play" ng-click="play()" ng-style="{'opacity':count>0?1:0.5}"></button>
-                    <button class="btn btn-next" ng-click="changeStep(1)"></button>
+                    <button class="btn btn-play" ng-click="play()" ng-style="{'opacity':count>0?1:0.5}">开始捕幸运豆</button>
+                    <button class="btn btn-next" ng-click="changeStep(1)">幸运豆小贴士</button>
                 </div>
                 <span class="btn-close" ng-click="close()"></span>
             </li>
             <li class="gc-step gc-step2" ng-style="{'left':index==1?'0px':(1-index)*1100+'px'}">
+                <div class="box-tips">
+                   <p><span>①</span></span>幸运豆用于兑换游戏机会；</p>
+                   <p><span>②</span>不限量捕到多少给多少。</p>
+                </div>
                 <div class="box-buttons">
-                    <button class="btn btn-next" ng-click="changeStep(2)"></button>
+                    <button class="btn btn-next" ng-click="changeStep(2)">如何获得捕幸运豆机会</button>
                 </div>
                 <span class="btn-close"  ng-click="close()"></span>
             </li>
             <li class="gc-step gc-step3" ng-style="{'left':index==2?'0px':(2-index)*1100+'px'}">
+                <div class="box-tips">
+                    <p><span>①</span></span>新人注册赠送一次；</p>
+                    <p><span>②</span>邀请好友注册赠送一次；</p>
+                    <p><span>③</span>购物晒单成功赠送一次。</p>
+                </div>
                 <div class="box-buttons">
-                    <button class="btn btn-next" ng-click="changeStep(3)" ></button>
+                    <button class="btn btn-next" ng-click="changeStep(3)" >邀请好友捕幸运豆</button>
                 </div>
                 <span class="btn-close"  ng-click="close()"></span>
             </li>

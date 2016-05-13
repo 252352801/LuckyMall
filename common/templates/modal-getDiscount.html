@@ -20,14 +20,14 @@
        </div>
 
        <div class="slider-right content-exchangeEnergy" ng-style="{'left':content_exchange_energy?'0%':'100%','transition':'left 0s'}">
-           <h2 class="modal-title">付红包进游戏
+           <h2 class="modal-title">使用幸运豆进游戏
                <span class="btn-return pull-right " ng-click="closeModal()" style="font-size: 24px" >×</span>
            </h2>
            <table >
                <tr>
                    <th >商品信息</th>
                    <th>数量</th>
-                   <th>需付红包</th>
+                   <th>需付幸运豆</th>
                </tr>
                <tr>
                    <td>
@@ -38,21 +38,21 @@
                        </div>
                    </td>
                    <td class="txt-center" ng-bind="order.Count">20</td>
-                   <td class="txt-center color-org" ng-bind="'￥'+order.earnest_cost">
-
+                   <td class="txt-center color-org" >
+                        <span class="icon-xyd xs"></span>{{order.earnest_cost*100}}
                    </td>
                </tr>
            </table>
            <div class="box-coupon-info">
                <p>
-                   <label>我的红包</label>
+                   <label>我的幸运豆</label>
                </p>
                 <p>
                     可用余额
-                    <span class="color-org" ng-bind="'￥'+data_balance.Coupon.Balance"></span>
+                    <span class="icon-xyd xs"></span><span class="color-org" ng-bind="data_balance.Coupon.Balance*100"></span>
                 </p>
            </div>
-           <p class="tips-coupon-exc">温馨提示：红包有使用期限，请妥善使用！</p>
+           <p class="tips-coupon-exc">温馨提示：幸运豆有使用期限，请妥善使用！</p>
            <div class="txt-center" ng-if="order.EarnestBusinessType==0">
                <button ng-class="{'btn-exc disabled':data_balance.Coupon.Balance<order.earnest_cost,'btn-exc':data_balance.Coupon.Balance>=order.earnest_cost}" ng-click="playWidthCoupon()" ng-bind="btn_val.exc_coupon"></button>
                <!--<button class="btn-cancel" ng-click="hideContentExchangeEnergy()">取消</button>-->
