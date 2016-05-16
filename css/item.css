@@ -1006,12 +1006,12 @@ float:left;
     overflow: hidden;
 }
 .modal-luckyBuy-menu ul li{
-    width:210px;
-    height:210px;
+    width: 220px;
+    height: 220px;
     float: left;
-    border:1px solid #efefef;
+    border: 1px solid #efefef;
     text-align: center;
-    cursor:pointer;
+    cursor: pointer;
 }
 .modal-luckyBuy-menu ul li:hover{
     border-color: #ffcf3d;
@@ -1047,9 +1047,9 @@ float:left;
 }
 .modal-luckyBuy-menu ul li p.menu-describe{
     font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     color: #333;
-    padding: 0px 40px;
+    padding: 0px 10px;
 }
 
 

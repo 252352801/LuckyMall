@@ -1461,11 +1461,41 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
     window.ENV=location.hostname.indexOf('xingyunmao')>=0?1:0;
    /*===================接口配置  end====================*/
 
+        //$httpProvider.interceptors.push('httpInterceptor');
 
     }]);
 
 app.run(['$rootScope', '$location', '$window','$cookies','$http','$timeout','woopraService','Host',
     function($rootScope, $location, $window,$cookies,$http,$timeout,woopraService,Host) {
+
+        /**
+         * 全局请求
+         * @param api API对象
+         * @param callback 回调
+         * @param req_params 请求参数
+         * @param url_params url参数
+         */
+/*        $lm.http = function (arguments,callback) {
+            var cur_host = (ENV === 0 ? Host.develop : Host.public);//##############根据当前环境设置接口主机
+            var url = cur_host + arguments.api.url;
+            if (typeof arguments.urlParams == 'object') {
+                for (var o in arguments.urlParams) {
+                    url = url.replace('{' + o + '}', arguments.urlParams[o]);
+                }
+            }
+            var params={};
+            params.url=url;
+            params.method=arguments.api.method;
+            if(arguments.api.method=='post'){
+                params.data=arguments.data;
+            }
+            $http(params).success(function (response,status) {
+                callback(response,status);
+            }).error(function(response,status){
+                callback(response,status);
+            });
+        };*/
+
 
     /*=======================
         woopra分析
