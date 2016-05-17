@@ -480,7 +480,7 @@ angular.module('LuckyMall.controllers')
                 var initGame=function(authorization){
                     $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + authorization;
                     $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=2&from=' + Host.playFrom+ '&authorization=' + authorization;
-                    if($this.itemData.maxPrice>200) {
+                    if($this.itemData.maxPrice>1000) {
                         $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                     }else{
                         $scope.gameMenu.show = true;
@@ -562,7 +562,7 @@ angular.module('LuckyMall.controllers')
                 $this.menuLuckyBuy.show=false;
                 $scope.gameMenu.gameUrl.fingerGuessing=Host.game.fingerGuessing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
                 $scope.gameMenu.gameUrl.fishing=Host.game.fishing+ '?id=' + $this.id + '&mode=3&from=' + Host.playFrom+ '&authorization=' + TokenSer.getToken();
-                if($this.itemData.maxPrice>200){
+                if($this.itemData.maxPrice>1000){
                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                 }else{
                     $scope.gameMenu.show = true;

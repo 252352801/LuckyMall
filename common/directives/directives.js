@@ -1534,7 +1534,7 @@ angular.module('LuckyMall')
                 }
                 $scope.play=function(){
                     if(($scope.order.EarnestBusinessType==1||$scope.order.EarnestBusinessType==3)&&$scope.energy.isEnough) {
-                            if(parseInt($scope.order.OriginalPrice)>200){//大于两百时直接进入捕鱼游戏
+                            if(parseInt($scope.order.OriginalPrice)>1000){//大于两百时直接进入捕鱼游戏
                                 $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                             }else{
                                 if($scope.gameType==0) {
@@ -1559,7 +1559,7 @@ angular.module('LuckyMall')
                                 });
                                 loadBalanceInfo();
                                 $rootScope.$broadcast('cart-update');
-                                if(parseInt($scope.order.OriginalPrice)>200){
+                                if(parseInt($scope.order.OriginalPrice)>1000){
                                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing, $scope.game_orderId, $scope.game_commodityId);
                                 }else {
                                     $scope.gameMenu.show = true;

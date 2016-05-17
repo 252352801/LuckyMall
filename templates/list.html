@@ -141,9 +141,7 @@
            <!-- <a class="mark-canFree" ng-if="list.IsCanFree" title="玩游戏赢惊喜折扣">可试玩</a>-->
         </li>
     </ul>
-    <div class="list-spinner">
-        <spinner ng-show="!loaded" text="搜索中"></spinner>
-    </div>
+    <p class="loading-text" ng-show="!loaded">正在搜索<span class="dotting"></span></p>
     <div class="tips-no-pro" ng-if="data_list.length<=0">
         暂时没有符合条件的商品喔！
     </div>

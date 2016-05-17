@@ -121,6 +121,7 @@ angular.module('LuckyMall.controllers')
                             } else {
                                 swal({
                                     title: "支付定金失败！",
+                                    text:'定金钱包上限为￥500',
                                     type: "error",
                                     confirmButtonText: "确定"
                                 });
