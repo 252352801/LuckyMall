@@ -12,6 +12,7 @@ angular.module('LuckyMall.controllers')
             this.rankingData=[];//排行榜数据
             this.POOData=[];//其他平台的价格
             this.SOOData=[];//晒单数据
+            this.isExchangeWithEarnest=false;
             this.comment={//评论
                 show:false,
                 href:'',
@@ -652,25 +653,94 @@ angular.module('LuckyMall.controllers')
             };
             this.normalAction=function(){//正常的流程
                 //$this.btnVal.buyNow.cur = $this.btnVal.buyNow.temp;
+                $this.isExchangeWithEarnest=false;
                 ItemSer.addToCart($this.params, function (response, status) {
                     $this.menuLuckyBuy.show=false;
                     if (status == 1) {
                         $scope.$emit('cart-update');
                         var order_id=response.Data.Id;
-                        OrderDetailsSer.requestData(order_id,function(resp,stat){
-                            if(stat==1) {
-                                $scope.showModalGetDisc(resp);
-                               // $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;
-                            }
-                        });
-                        $rootScope.woopra.evet.PO.properties.productname=$this.itemData.CommodityName;
-                        $rootScope.woopra.track($rootScope.woopra.evet.PO);
+                        if($scope.coupon_balance<($this.itemData.EarnestPrice)*($this.amount)){
+                            $state.go('payForEarnest', {params: order_id});
+                        }else{
+                            OrderDetailsSer.requestData(order_id,function(resp,stat){
+                                if(stat==1) {
+                                    $scope.showModalGetDisc(resp);
+                                    // $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;
+                                }
+                            });
+                            $rootScope.woopra.evet.PO.properties.productname=$this.itemData.CommodityName;
+                            $rootScope.woopra.track($rootScope.woopra.evet.PO);
+                        }
 
                     } else if (status == 0) {
-/*                        $this.btnVal.addToCart.cur = $this.btnVal.addToCart.org;
-                        $this.btnVal.buyNow.cur = $this.btnVal.buyNow.org;*/
+
                         handleErrs(response.Code);
 
+                    }else if (status == 2) {
+                        handleLoginTimeOut();
+                    }
+                });
+            };
+            this.exchangeAction=function(){//
+                $this.isExchangeWithEarnest=true;
+                if ($this.choices.length <= 0) {
+                    swal({
+                        title: "该商品处于缺货状态!",
+                        text: '看一看其他的商品吧',
+                        type: "info",
+                        confirmButtonText: "确定"
+                    });
+                    return;
+                }
+                if (!isFinishSelect()) {//如果没有完成选择
+                    $timeout(function () {
+                        $this.showTips = true;
+                    });
+                    return;
+                }
+                if (!LoginSer.isLogin()) {
+                    $scope.$emit("show-login-modal");
+                    return;
+                }
+                if ($this.amount <= 0) {
+                    swal({
+                        title: "购买数量有误!",
+                        text: '请输入正确的商品数量',
+                        type: "error",
+                        confirmButtonText: "确定"
+                    });
+                    $this.amount = 1;
+                    return;
+                }
+                var _type = 0;
+
+                $this.params = {
+                    "Type": _type,
+                    "CommodityId": $this.id,
+                    "UserId": LoginSer.getData().UserModel.Id,
+                    "SkuId": $this.selecedSkuId,
+                    "Count": $this.amount,
+                    "Specifications":  $this.selecedSpecifications
+                };
+                if(LoginSer.getData()==null){
+                    $scope.$emit("show-login-modal");
+                    return;
+                }
+                ItemSer.addToCart($this.params, function (response, status) {
+                    if (status == 1) {
+                        $scope.$emit('cart-update');
+                        var order_id = response.Data.Id;
+                        OrderDetailsSer.requestData(order_id, function (resp, stat) {
+                            if (stat == 1) {
+                                  $scope.showModalGetDisc(resp);
+                            }
+                        });
+                        $rootScope.woopra.evet.PO.properties.productname = $this.itemData.CommodityName;
+                        $rootScope.woopra.track($rootScope.woopra.evet.PO);
+
+
+                    } else if (status == 0) {
+                        handleErrs(response.Code);
                     }else if (status == 2) {
                         handleLoginTimeOut();
                     }

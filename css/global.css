@@ -3663,13 +3663,13 @@ modal-beforeGame
     animation:modalShow .4s;
 }
 .modal-getDisc .modal-title{
-    line-height:40px;
+    line-height:50px;
     border-bottom:1px solid #f0f0f0;
-    font-size:14px;
+    font-size:16px;
     text-indent:20px;
     color:#666;
     font-weight:500;
-    background:#f1f1f1;
+    background:#fff;
 }
 .modal-getDisc .btn-close{
     display: block;
@@ -3691,12 +3691,15 @@ modal-beforeGame
 .modal-getDisc .menu{
     overflow:hidden;
 }
-.modal-getDisc .menu.disabled li{
+.modal-getDisc .menu.disabled li,.modal-getDisc .btn-exc-m.disabled li{
     opacity:0.3;
 }
-.modal-getDisc .menu .disabled{
+.modal-getDisc .menu .disabled,.modal-getDisc .btn-exc-m .disabled{
     opacity:0.3;
 }
+
+
+
 .modal-getDisc .menu.disabled li:last-child{
     opacity: 1;
 }
@@ -4442,8 +4445,8 @@ modal-beforeGame
     margin-top:400px;
     overflow: hidden;
 }
-.modal-getCoupons .ul-gc-steps .gc-step2 .box-buttons{
-    margin-top:400px;
+.modal-getCoupons .ul-gc-steps .gc-step4 .box-buttons{
+    margin-top:405px;
 }
 .modal-getCoupons .ul-gc-steps .btn.btn-play{
     background: #FBAB00;
@@ -4464,12 +4467,13 @@ modal-beforeGame
     width:300px
 }
 .modal-getCoupons .ul-gc-steps .gc-step4 .btn-next{
-    background: url(../res/images/coupon/gc_step4_btn.png);
-    width:240px;
+    width:150px;
+    background: #DA1D3A;
+    color:#fff;
 }
 .modal-getCoupons .ul-gc-steps .gc-step4 .btn-close{
     top:10px;
-    margin-left:160px;
+    margin-left:140px;
 }
 .modal-getCoupons .box-remain-count{
     width:100%;

@@ -1,14 +1,14 @@
 angular.module('LuckyMall.controllers')
     .controller('PayForEarnestCtrl',
     ['$rootScope', '$scope', '$state', '$stateParams', 'CartSer', 'LoginSer', 'UserSer', 'UserSer', '$timeout',
-        'WXPaySer', 'PaymentSer', 'API', 'OrderDetailsSer', 'Host', 'TokenSer', 'RefreshUserDataSer',
-        function ($rootScope, $scope, $state, $stateParams, CartSer, LoginSer, UserSer, UserSer, $timeout, WXPaySer, PaymentSer, API, OrderDetailsSer, Host, TokenSer, RefreshUserDataSer) {
+        'WXPaySer', 'PaymentSer', 'API', 'OrderDetailsSer', 'Host', 'TokenSer', 'RefreshUserDataSer','BalanceSvc',
+        function ($rootScope, $scope, $state, $stateParams, CartSer, LoginSer, UserSer, UserSer, $timeout, WXPaySer, PaymentSer, API, OrderDetailsSer, Host, TokenSer, RefreshUserDataSer,BalanceSvc) {
 
             $scope.isModalWaitingShow = false;
             $scope.isUseBalance = false;//是否使用余额
             $scope.pay_type = 'zhifubao';//支付方式
             $scope.isProtocolShow = false;
-
+            $scope.data_balance={};
 
             loadPageData(loadWallet);//加载本页必须的数据
             /*支付方式切换*/
@@ -29,14 +29,7 @@ angular.module('LuckyMall.controllers')
             /* 支付方式显示*/
             $scope.showPayType = function () {
                 var result = '';
-                /* if($scope.isUseBalance){
-                 if($scope.needToPay()<=0){
-                 result+='喵喵钱包余额';
-                 return result;
-                 }else{
-                 result+='喵喵钱包余额+';
-                 }
-                 };*/
+
                 switch ($scope.pay_type) {
                     case 'zhifubao':
                         result += '支付宝';
@@ -90,53 +83,68 @@ angular.module('LuckyMall.controllers')
                     "Data": angular.toJson(post_data),
                     "UseEarnest": $scope.isUseBalance
                 };
-                $scope.type = 1;//支付类型  0完全用余额支付  1用余额+选择的支付方式支付
-                var newWin;
-                if ($scope.pay_type != 'weixin' && $scope.type == 1) {
+                var newWin={};
+                if ($scope.pay_type != 'weixin') {
                     newWin = window.open('_blank');
                     newWin.location.href = 'http://' + Host.hostname + '/payWin';
                 }
-                PaymentSer.payForEarnest($scope.type, $scope.data_order.Id, param, function (response, status) {
+                PaymentSer.payForEarnest($scope.data_order.Id, param, function (response, status) {
                     if (status == 1) {
-                        if ($scope.type == 1) {
                             if (response != '' && response != null && response != undefined) {
                                 $scope.$emit('cart-update');
                                 $rootScope.$broadcast('orders-update');
-                                setLocalStorageData(response.OutTradeNo);
-                                if ($scope.pay_type == 'weixin') { //如果是微信支付
-                                    $rootScope.game.orderId=$scope.data_order.Id;
-                                    $rootScope.game.commodityId=$scope.commodityId;
-                                    $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
-                                    $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.earnest_cost;
-                                    WXPaySer.setTotalCost($scope.earnest_cost);
-                                    $state.go('WXPay', {trade_id: response.OutTradeNo, type: 0});
-                                } else {
-                                    $timeout(function () {
-                                        $scope.isModalWaitingShow = true;
+                                console.log(response);
+                                if(response.Code=='0X00'){
+                                    localStorage.removeItem('unFinishTradeOfEarnest');
+                                    $rootScope.$broadcast('user-update');
+                                    $rootScope.$broadcast('orders-update');
+                                    {
+                                        $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
+                                        $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.earnest_cost;
+                                        $rootScope.woopra.evet.PE.properties=$rootScope.woopraTempData.payForEarnest.properties;
+                                        $rootScope.woopra.track($rootScope.woopra.evet.PE);
+                                    }
+                                    $state.go('payEarnestSuccess', {order_id: $stateParams.params, commodity_id: $scope.commodityId});
+                                }else if(response.Code=='0X01') {
+                                    setLocalStorageData(response.Data.OutTradeNo);
+                                    if ($scope.pay_type == 'weixin') { //如果是微信支付
+                                        $rootScope.game.orderId = $scope.data_order.Id;
+                                        $rootScope.game.commodityId = $scope.commodityId;
+                                        $rootScope.woopraTempData.payForEarnest.properties.productname = $scope.data_order.CommodityName;
+                                        $rootScope.woopraTempData.payForEarnest.properties.earnest = $scope.data_order.earnest_cost;
+                                        WXPaySer.setTotalCost($scope.earnest_cost);
+                                        $state.go('WXPay', {trade_id: response.Data.OutTradeNo, type: 0});
+                                    } else {
+                                        $timeout(function () {
+                                            $scope.isModalWaitingShow = true;
+                                        });
+                                        newWin.location.href = API.aliPaySubmit.url + response.Data.OutTradeNo;//新窗口地址改变
+                                        pollingTradeStatus(response.Data.OutTradeNo);
+                                        $scope.trade_id = response.Data.OutTradeNo;
+                                    }
+                                }else{
+                                    swal({
+                                        title: response.Msg,
+                                        type: "error",
+                                        confirmButtonText: "确定"
                                     });
-                                    newWin.location.href = API.aliPaySubmit.url + response.OutTradeNo;//新窗口地址改变
-                                    pollingTradeStatus(response.OutTradeNo);
-                                    $scope.trade_id = response.OutTradeNo;
+                                    try{ newWin.close();}catch(err){}
                                 }
                             } else {
                                 swal({
                                     title: "支付定金失败！",
-                                    text:'定金钱包上限为￥500',
                                     type: "error",
                                     confirmButtonText: "确定"
                                 });
-                                newWin.close();
+                                try{ newWin.close();}catch(err){}
                             }
-                        } else {
-                            $state.go('payEarnestSuccess', {order_id: $scope.data_order.Id, commodity_id: $scope.commodityId});
-                        }
                     } else {
                         swal({
                             title: "支付定金失败！",
                             type: "error",
                             confirmButtonText: "确定"
                         });
-                        newWin.close();
+                        try{ newWin.close();}catch(err){}
                     }
                 });
             };
@@ -180,7 +188,7 @@ angular.module('LuckyMall.controllers')
                     if (status == 1) {
                         $scope.data_order = OrderDetailsSer.getData();
                         $scope.commodityId = $scope.data_order.CommodityId;
-                        $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney;//需支付的定金总额
+                       // $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney;//需支付的定金总额
                         callback();
                     }
                 });
@@ -241,18 +249,26 @@ angular.module('LuckyMall.controllers')
             }
 
             function loadWallet() {
-                RefreshUserDataSer.requestUserData(function (resp, status) {
-                    if (status == 1) {
-                        var blc = RefreshUserDataSer.getData().EarnestValue;
-                        $scope.data_balance = (blc >= 0) ? blc : 0;
+                BalanceSvc.requestBalanceInfo(function(response,status){
+                    if(status==1){
+                        console.log(response);
+                        $scope.data_balance=response;
+                        if($scope.data_order.EarnestBusinessType==5) {
+                            $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_order.CouponMoney-$scope.data_balance.Coupon.Balance;//需支付的定金总额
+                        }else{
+                            $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_balance.Coupon.Balance;//需支付的定金总额
+                        }
+                        if($scope.earnest_cost<0){
+                            $scope.earnest_cost=0;
+                        }
                     }
                 });
             }
 
             $scope.needToPay = function () {
                 if ($scope.isUseBalance) {
-                    if ($scope.data_balance <= $scope.earnest_cost) {
-                        return $scope.earnest_cost - $scope.data_balance;
+                    if ($scope.data_balance.Coupon.Balance<= $scope.earnest_cost) {
+                        return $scope.earnest_cost -$scope.data_balance.Coupon.Balance;
                     } else {
                         return 0;
                     }

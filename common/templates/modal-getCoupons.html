@@ -37,7 +37,9 @@
             </li>
             <li class="gc-step gc-step4" ng-style="{'left':index==3?'0px':(3-index)*1100+'px'}">
                 <div class="box-buttons">
-                    <button class="btn btn-next"  ng-click="close()"></button>
+                    <button class="btn btn-play" ng-click="play()" ng-style="{'opacity':count>0?1:0.5}">开始捕幸运豆</button>
+                    <button class="btn btn-next" ng-click="close()">朕知道了</button>
+       <!--             <button class="btn btn-next"  ng-click="close()"></button>-->
                 </div>
                 <span class="btn-close"  ng-click="close()"></span>
             </li>

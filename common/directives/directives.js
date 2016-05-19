@@ -19,7 +19,7 @@ angular.module('LuckyMall')
     .directive('spinner', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/spinner.html',
+            templateUrl: 'common/templates/spinner.html?v='+v,
             replace: true,
             transclude: true,
             link: function (scope, element, attrs) {
@@ -58,7 +58,7 @@ angular.module('LuckyMall')
     .directive('modalDownloadApp', function (svc,API) {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/modal-downloadApp.html',
+            templateUrl: 'common/templates/modal-downloadApp.html?v='+v,
             replace: true,
             scope:{
                 visible:'=visible'
@@ -82,7 +82,7 @@ angular.module('LuckyMall')
     .directive('modalGetCoupons', function (svc,API) {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/modal-getCoupons.html',
+            templateUrl: 'common/templates/modal-getCoupons.html?v='+v,
             scope:{
                 visible:'=',
                 count:'=count'
@@ -126,7 +126,7 @@ angular.module('LuckyMall')
     .directive('modalLogin', function ($state) {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/modal-login.html',
+            templateUrl: 'common/templates/modal-login.html?v='+v,
             replace: true,
             controller: 'LoginCtrl',
             link: function (scope, element, attrs) {
@@ -141,7 +141,7 @@ angular.module('LuckyMall')
     .directive('modalFeedback', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/modal-feedback.html',
+            templateUrl: 'common/templates/modal-feedback.html?v='+v,
             replace: true
         };
     })
@@ -149,7 +149,7 @@ angular.module('LuckyMall')
     .directive('header', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/header.html',
+            templateUrl: 'common/templates/header.html?v='+v,
             replace: true,
             transclude: true,
             controller: function ($scope,$rootScope, LoginSer, $timeout, $rootScope,$state) {
@@ -180,7 +180,7 @@ angular.module('LuckyMall')
     .directive('subHeader', function ($timeout) {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/sub-header.html',
+            templateUrl: 'common/templates/sub-header.html?v='+v,
             replace: true,
             transclude: true,
             controller: function ($rootScope, $scope,$state, LoginSer,CartSer,SearchSer,SOTDSvc) {
@@ -297,7 +297,7 @@ angular.module('LuckyMall')
     .directive('longHeader', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/long-header.html',
+            templateUrl: 'common/templates/long-header.html?v='+v,
             replace: true,
             link: function (scope, element, attrs) {
                 scope.cur_nav = attrs.nav;
@@ -316,7 +316,7 @@ angular.module('LuckyMall')
     .directive('category', function ($state) {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/category.html',
+            templateUrl: 'common/templates/category.html?v='+v,
             replace: true,
             scope:{
 
@@ -403,7 +403,7 @@ angular.module('LuckyMall')
     .directive('hiddenCategory', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/hiddenCategory.html',
+            templateUrl: 'common/templates/hiddenCategory.html?v='+v,
             controller:function($scope,CategorySer,$timeout){
                 $scope.toggleCategory=function(){
                     $scope.showHiddenCategory=!$scope.showHiddenCategory;
@@ -427,7 +427,7 @@ angular.module('LuckyMall')
     .directive('footer', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/footer.html',
+            templateUrl: 'common/templates/footer.html?v='+v,
             replace: true,
             transclude: true,
             link: function (scope, element, attrs) {
@@ -441,7 +441,7 @@ angular.module('LuckyMall')
     .directive('subFooter', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/sub-footer.html',
+            templateUrl: 'common/templates/sub-footer.html?v='+v,
             replace: true,
             transclude: true,
             link: function (scope, element, attrs) {
@@ -454,7 +454,7 @@ angular.module('LuckyMall')
     .directive('introduction', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/introduction.html',
+            templateUrl: 'common/templates/introduction.html?v='+v,
             replace: true,
             transclude: true,
             link: function (scope, element, attrs) {
@@ -467,7 +467,7 @@ angular.module('LuckyMall')
     .directive('asideRight', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/aside-right.html',
+            templateUrl: 'common/templates/aside-right.html?v='+v,
             replace: true,
             transclude: true,
             link: function (scope, element, attrs) {
@@ -809,7 +809,7 @@ angular.module('LuckyMall')
     .directive('loading', function () {
         return {
             restrict: 'E',
-            templateUrl: 'common/templates/loading.html',
+            templateUrl: 'common/templates/loading.html?v='+v,
             replace: true
         }
     })
@@ -1404,7 +1404,7 @@ angular.module('LuckyMall')
         return{
             restrict:'E',
             replace:true,
-            templateUrl:'./common/templates/modal-gameMenu.html',
+            templateUrl:'./common/templates/modal-gameMenu.html?v='+v,
             scope:{
                 visible:"=visible",
                 gameUrl:"=gameurl",
@@ -1434,17 +1434,19 @@ angular.module('LuckyMall')
                 order:"=data",
                 imgHost:'=imghost',
                 couponBalance:'=couponbalance',
-                gameMenu:'=gamectrl'
+                gameMenu:'=gamectrl',
+                isExchangeWithEarnest:'=isexchangewithearnest'
             },
             templateUrl: 'common/templates/modal-getDiscount.html?v='+v,
             controller:function($scope,$rootScope,$state,$timeout,SOTDSvc,RefreshUserDataSer,TokenSer,Host,BalanceSvc,svc,API){
                 $scope.isCheckedWallet=false;
                 $scope.isCheckedCoupon=false;
                 $scope.content_exchange_energy=false;
-                $scope.content_exchange_earnest=false;
                 $scope.content_pay_earnest=false;
                 $scope.use_wallet=0;
                 $scope.use_coupon=0;
+
+                $scope.cancelExchangeWithEarnestAction=window.location.href.indexOf('item')>=0?0:1;//取消抵用时的动作 0关闭 1 返回
 
                 $scope.gameType=-1;//-1  未定义  0没玩过游戏  1捕鱼   2猜拳
 
@@ -1474,14 +1476,16 @@ angular.module('LuckyMall')
                     $scope.content_exchange_energy=true;
                 };
                 $scope.showContentExchangeEarnest=function(){
-                    $scope.content_exchange_earnest=true;
+                    if($scope.order.EarnestBusinessType==0||($scope.order.EarnestBusinessType==4&&$scope.order.EarnestMoney<$scope.order.EarnestPrice*$scope.order.Count)) {
+                        $scope.isExchangeWithEarnest = true;
+                    }
                 };
 
                 $scope.hideContentExchangeEnergy=function(){
                     $scope.content_exchange_energy=false;
                 };
                 $scope.hideContentExchangeEarnest=function(){
-                    $scope.content_exchange_earnest=false;
+                    $scope.isExchangeWithEarnest=false;
                 };
 
                 $scope.closeModal=function(){
@@ -1503,6 +1507,8 @@ angular.module('LuckyMall')
                 };
                 $scope.payEarnest=function(){
                     if($scope.order.EarnestBusinessType==0) {
+                        $state.go('payForEarnest', {params: $scope.order.Id});
+                    }else if($scope.order.EarnestBusinessType==5&&($scope.order.EarnestMoney+$scope.order.CouponMoney)<$scope.order.EarnestPrice*$scope.order.Count){
                         $state.go('payForEarnest', {params: $scope.order.Id});
                     }else{
                         swal({
@@ -1527,7 +1533,7 @@ angular.module('LuckyMall')
                         if (new_val != old_val) {
                             initPage($scope.order);
                             $scope.content_exchange_energy = false;
-                            $scope.content_exchange_earnest = false;
+                           // $scope.isExchangeWithEarnest = false;
                             $scope.content_pay_earnest = false;
                         }
                     });
@@ -1715,9 +1721,6 @@ angular.module('LuckyMall')
                     });
                 }
 
-
-            },
-            link: function (scope, element, attrs) {
 
             }
         };

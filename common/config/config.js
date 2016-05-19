@@ -156,7 +156,7 @@ app.constant('API',{
     },
     payForEarnest: { //支付定金获取能量 后接订单ID
         method:'post',
-        url: 'api/order/payment/'
+        url: 'api/order/blendpayment/'
     },
     updatePassword: { //修改密码
         method:'post',

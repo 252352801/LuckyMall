@@ -157,6 +157,7 @@
                 <div class="bar-btn">
 
                     <input ng-if="item.itemData.CommodityType==0" ng-class="{'btn-buy':item.itemData.status==1,'btn-buy disabled':item.itemData.status!=1}" type="button" ng-value="item.btnVal.buyNow.cur"  ng-click="item.luckyBuy()" ng-disabled="item.itemData.status!=1"/>
+                    <input ng-if="item.itemData.CommodityType==0" ng-class="{'btn-exchange':item.itemData.status==1,'btn-exchange disabled':item.itemData.status!=1}" type="button" ng-value="'抵用购'"  ng-click="item.exchangeAction()" ng-disabled="item.itemData.status!=1"/>
                     <a class="btn-enterAct" href="/activity/index" ng-if="item.itemData.CommodityType==1">进入擂台</a>
                 </div>
                 <ul class="ul-svc">
@@ -274,7 +275,7 @@
     </div>
 </div>
 <!--中部 end-->
-<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" couponbalance="coupon_balance" gamectrl="gameMenu" ></modal-get-discount>
+<modal-get-discount visible="isModalGetDiscountShow" data="data_modal_getDisc" imghost="imgHost" couponbalance="coupon_balance" gamectrl="gameMenu"  isexchangewithearnest="item.isExchangeWithEarnest"></modal-get-discount>
 <modal-game-menu visible="gameMenu.show" gamectrl="gameMenu" ></modal-game-menu>
 
 
@@ -288,10 +289,20 @@
 
                 <li  ng-click="item.normalAction()">
                     <div class="btn-mode btn-mode2">大显身手</div>
-                    <p class="menu-describe" ng-if="coupon_balance<(item.itemData.EarnestPrice)*(item.amount)">
-                        预付<span class="color-red">￥{{item.itemData.EarnestPrice*item.amount}}
+                  <!--  <p class="menu-describe" ng-if="coupon_balance<(item.itemData.EarnestPrice)*(item.amount)">
+                        预付<span class="color-red">￥{{item.itemData.EarnestPrice*item.amount-coupon_balance}}
                         </span>定金，赠送<span class="color-red">{{item.itemData.EarnestPrice*item.amount*100}}个幸运豆</span>兑换一次游戏机会
-                    </p>
+                    </p>-->
+                    <div ng-if="coupon_balance<(item.itemData.EarnestPrice)*(item.amount)">
+                        <p class="menu-describe" >
+                            已有<span class="icon-xyd xs"></span><span class="color-red">{{coupon_balance*100}}</span>，
+                            <span class="color-red">预付￥{{item.itemData.EarnestPrice*item.amount-coupon_balance}}</span>定金,
+                            赠送<span class="icon-xyd xs"></span><span class="color-red">{{100*(item.itemData.EarnestPrice*item.amount-coupon_balance)}}</span>
+                        </p>
+                        <p class="menu-describe" >
+                            合计<span class="icon-xyd xs"></span>{{item.itemData.EarnestPrice*item.amount*100}}兑换一次游戏机会
+                        </p>
+                    </div>
                     <p class="menu-describe" ng-if="coupon_balance>=item.itemData.EarnestPrice*item.amount">
                         使用<span class="icon-xyd xs"></span><span class="color-red">{{item.itemData.EarnestPrice*item.amount*100}}幸运豆</span>兑换一次游戏机会
                     </p>

@@ -3,11 +3,11 @@
        <div class="slider-left">
            <h2 class="modal-title">获取优惠</h2>
 
-           <ul ng-class="{'menu':order.EarnestBusinessType==0,'menu disabled':order.EarnestBusinessType!=0}">
+           <ul class="menu" ng-class="{'disabled':!(order.EarnestBusinessType==0||(order.EarnestBusinessType==5&&(order.EarnestMoney+order.CouponMoney)<order.EarnestPrice*order.Count))}">
                <li class="btn-payForEarnest" ng-click="payEarnest()">
                    付定金进游戏
                </li>
-               <li class="btn-exc-m" ng-click="showContentExchangeEarnest()">
+               <li class="btn-exc-m" ng-click="showContentExchangeEarnest()" ng-class="{'disabled':!(order.EarnestBusinessType==0&&($scope.order.EarnestBusinessType==4&&$scope.order.EarnestMoney<$scope.order.EarnestPrice*$scope.order.Count))}">
                   钱包抵现金
                </li>
            <!--    <li class="btn-purchase" ng-click="purchase()">
@@ -19,7 +19,7 @@
            </ul>
        </div>
 
-       <div class="slider-right content-exchangeEnergy" ng-style="{'left':content_exchange_energy?'100%':'100%','transition':'left 0s'}">
+       <div class="slider-right content-exchangeEnergy" ng-style="{'left':content_exchange_energy?'0%':'100%','transition':'left 0s'}">
            <h2 class="modal-title">使用幸运豆进游戏
                <span class="btn-return pull-right " ng-click="closeModal()" style="font-size: 24px" >×</span>
            </h2>
@@ -61,10 +61,11 @@
                 该订单已获取过优惠，不能重复获取！
            </div>
        </div>
-       <div class="slider-right content-exchangeEarnest" ng-style="{'left':content_exchange_earnest?'0%':'100%','transition':'left 0.3s'}">
+       <div class="slider-right content-exchangeEarnest" ng-style="{'left':isExchangeWithEarnest?'0%':'100%','transition':'left 0.3s'}">
            <h2 class="modal-title">
                钱包抵现金
-               <span class="btn-return pull-right" ng-click="hideContentExchangeEarnest()">返回</span>
+               <span class="btn-return pull-right " ng-if="!cancelExchangeWithEarnestAction" ng-click="closeModal()" style="font-size: 24px" >×</span>
+               <span class="btn-return pull-right"  ng-if="cancelExchangeWithEarnestAction" ng-click="hideContentExchangeEarnest()">返回</span>
            </h2>
            <table >
                <tr>

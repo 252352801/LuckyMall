@@ -37,7 +37,7 @@
                 <img class="brand-img" ng-if="list.Brand.BrandImage!=''" real-src={{imgHost+list.Brand.BrandImage+'@64w_32h_100Q.png'}} alt="" temp-src="./res/images/default.png"   />
                 <a class="brand-name" href="#" ng-bind="list.Brand.BrandName"></a>
                <!-- <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="showModal1(list,list.UnitPrice*list.Count)" ng-if="list.OrderType==0">赢折扣</a>-->
-                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="getDisc(list)" ng-if="list.OrderType==0&&list.EarnestBusinessType!=4">抢折购买</a>
+                <a class="a-forDiscount"  title="点击有惊喜喔" ng-click="getDisc(list)" ng-if="list.OrderType==0&&list.EarnestBusinessType!=4">幸运购</a>
             </div>
             <div class="cart-list-cont">
                 <div class="cont1">
@@ -67,7 +67,6 @@
                             <span class="icon-discount" ng-bind="list.finalDiscount+'折'"></span>
                         </p>
                     </div>
-
                 </div>
                 <div class="cont4">
                     <p class="wait-to-pay" ng-bind="'￥'+list.needToPay"></p>
@@ -82,7 +81,9 @@
                         已抵用：
                         <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
                     </p>
-
+                    <p ng-if="list.EarnestBusinessType==5" class="color-gray">
+                        已兑换<span class="icon-xyd xs"></span><span class="color-org">{{list.CouponMoney*100}}</span>
+                    </p>
                 </div>
                 <div class="cont5">
                     <span ng-if="list.EarnestMoney==0" class="icon-remove" title="从购物车移除该商品" ng-click="removeOrder(list.Id)"></span>

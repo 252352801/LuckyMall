@@ -409,6 +409,7 @@ float:left;
     background:#ec3640;
     border:none;
     color:#fff;
+    margin-right: 15px
 }
 .pro-info .bar-btn input,.pro-info .bar-btn a.btn-enterAct{
  background:#d0170e;
@@ -430,19 +431,18 @@ float:left;
 .pro-info .bar-btn input.btn-buy:hover{
     background:#ff4700;
 }
-.pro-info .bar-btn input.btn-add{
-    background:none;
-    border:1px solid #858585;
+.pro-info .bar-btn input.btn-exchange{
+    background:#ffbf26;
+    border:1px solid transparent;
     margin-left:0px;
-	color: #464646;
+	color: #9a4500;
 }
 
-.pro-info .bar-btn input.btn-add:hover{
-    color:#ff3300;
-    border-color:#ff3300;
+.pro-info .bar-btn input.btn-exchange:hover{
+    background-color:#FFAC21;
 }
 
-.pro-info .bar-btn .btn-playGame.disabled,.pro-info .bar-btn .btn-buy.disabled,.pro-info .bar-btn .btn-add.disabled{
+.pro-info .bar-btn .btn-playGame.disabled,.pro-info .bar-btn .btn-buy.disabled,.pro-info .bar-btn .btn-exchange.disabled{
     background:#ccc !important;
     color:#fff !important;
     border-color:transparent!important;
@@ -959,16 +959,16 @@ float:left;
 
 
 .modal-luckyBuy-menu{
-    width:550px;
-    height:400px;
+    width: 550px;
+    height: 360px;
     background: #fff;
     position: fixed;
-    left:50%;
-    top:50%;
-    margin-left:-250px;
-    margin-top:-200px;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -200px;
     box-sizing: border-box;
-    animation:modalShow .2s;
+    animation: modalShow .2s;
 }
 
 .modal-luckyBuy-menu *{
@@ -999,41 +999,44 @@ float:left;
     text-indent:20px;
     color:#555;
 }
-.modal-luckyBuy-menu .modal-content{
-    padding:30px 40px;
-}
+
+
+
 .modal-luckyBuy-menu ul{
     overflow: hidden;
+    padding: 0px 20px;
 }
 .modal-luckyBuy-menu ul li{
-    width: 220px;
-    height: 220px;
-    float: left;
+    height: 120px;
+
     border: 1px solid #efefef;
-    text-align: center;
     cursor: pointer;
+    padding: 20px 20px 20px 110px;
+    position: relative;
+    margin: 15px auto;
 }
 .modal-luckyBuy-menu ul li:hover{
-    border-color: #ffcf3d;
+    border-color:#eee;
+    background: #fafafa;
 }
-.modal-luckyBuy-menu ul li:first-child{
-    margin-right: 30px;
 
-}
 .modal-luckyBuy-menu .modal-footer{
     color:#999;
     text-indent:42px;
     padding-top: 20px;
 }
 .modal-luckyBuy-menu .btn-mode{
-    width:75px;
-    height:75px;
+    width: 75px;
+    height: 75px;
     border-radius: 10px;
     font-size: 18px;
-    color:#fff;
-    margin:40px auto 20px auto;
+    color: #fff;
     padding: 15px;
-    font-weight:100;
+    font-weight: 100;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    text-align: center;
 }
 .modal-luckyBuy-menu .btn-mode1{
     background: #00A1E9;
@@ -1044,6 +1047,7 @@ float:left;
 .modal-luckyBuy-menu ul li p{
     margin-bottom: 5px;
     color:#999;
+    padding-left:10px;
 }
 .modal-luckyBuy-menu ul li p.menu-describe{
     font-size: 14px;

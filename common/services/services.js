@@ -1551,8 +1551,7 @@ angular.module('LuckyMall.services', [])
                 });
             },
             /* 支付定金*/
-            payForEarnest: function (type, order_id, params, callback) {//type 支付类型 0 喵喵余额支付  1.网上支付
-                if (type != 0) {
+            payForEarnest: function (order_id, params, callback) {//type 支付类型 0 喵喵余额支付  1.网上支付
                     $http({
                         method: API.payForEarnest.method,
                         url: API.payForEarnest.url + order_id,
@@ -1566,20 +1565,6 @@ angular.module('LuckyMall.services', [])
                     }).error(function () {
                         callback('请求失败！', -1);
                     });
-                } else {
-                    $http({
-                        method: API.payEarnestUseBalance.method,
-                        url: API.payEarnestUseBalance.url + order_id
-                    }).success(function (response) {
-                        if (response) {
-                            callback(response, 1);
-                        } else {
-                            callback(response, 0);
-                        }
-                    }).error(function () {
-                        callback('请求失败！', -1);
-                    });
-                }
             },
             getStatusOfTrade: function (trade_id, callback) {
                 var url = API.getTradeStatus.url + trade_id;
