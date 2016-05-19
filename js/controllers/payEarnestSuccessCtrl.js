@@ -1,6 +1,6 @@
 angular.module('LuckyMall.controllers')
     .controller('PayEarnestSuccessCtrl', function ($scope, CartSer,$stateParams, $state,$cookies, $timeout, MyOrdersSer,TokenSer,RefreshUserDataSer,OrderDetailsSer,
-                                           Host,$rootScope) {
+                                           Host,$rootScope,SOTDSvc) {
              var order_id=$stateParams.order_id;
         $scope.data_order=undefined;
         $scope.isEnough=false;
@@ -13,6 +13,12 @@ angular.module('LuckyMall.controllers')
                    if(!auth){
                        $state.go('login');
                    }else {
+                       var tmp_data = {
+                           "from": 'game',
+                           "orders": []
+                       };
+                       tmp_data.orders=[order_id];
+                       SOTDSvc.set(tmp_data);
                        if ($scope.data_order != undefined) {
                              if(parseInt($scope.data_order.OriginalPrice>200)){
                                  $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
@@ -33,8 +39,8 @@ angular.module('LuckyMall.controllers')
 
         $scope.gameMenu={//游戏菜单
             show:false,
-            orderId:'',
-            commodityId:'',
+            orderId:$stateParams.order_id,
+            commodityId:$stateParams.commodity_id,
             gameUrl:{
                 fingerGuessing:'',
                 fishing:''

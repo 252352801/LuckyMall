@@ -93,7 +93,6 @@ angular.module('LuckyMall.controllers')
                             if (response != '' && response != null && response != undefined) {
                                 $scope.$emit('cart-update');
                                 $rootScope.$broadcast('orders-update');
-                                console.log(response);
                                 if(response.Code=='0X00'){
                                     localStorage.removeItem('unFinishTradeOfEarnest');
                                     $rootScope.$broadcast('user-update');
@@ -251,7 +250,6 @@ angular.module('LuckyMall.controllers')
             function loadWallet() {
                 BalanceSvc.requestBalanceInfo(function(response,status){
                     if(status==1){
-                        console.log(response);
                         $scope.data_balance=response;
                         if($scope.data_order.EarnestBusinessType==5) {
                             $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_order.CouponMoney-$scope.data_balance.Coupon.Balance;//需支付的定金总额
