@@ -31,7 +31,7 @@
       <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/config/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.64" vertical-offset="13060" max-vertical-offset="30400">
+            <state vertical-scroll-proportion="-535.04" vertical-offset="0" max-vertical-offset="30400">
               <caret line="704" column="60" selection-start-line="704" selection-start-column="48" selection-end-line="704" selection-end-column="60" />
               <folding />
             </state>
@@ -61,10 +61,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="payForEarnestCtrl.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="payForEarnestCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/payForEarnestCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33295456" vertical-offset="4476" max-vertical-offset="6118">
+            <state vertical-scroll-proportion="-11.72" vertical-offset="4476" max-vertical-offset="6118">
               <caret line="251" column="34" selection-start-line="251" selection-start-column="34" selection-end-line="251" selection-end-column="34" />
               <folding />
             </state>
@@ -111,11 +111,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.423077" vertical-offset="0" max-vertical-offset="2413">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.33252722" vertical-offset="390" max-vertical-offset="2413">
+              <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -185,13 +185,13 @@
         <option value="$PROJECT_DIR$/js/controllers/itemCtrl.js" />
         <option value="$PROJECT_DIR$/templates/shoppingCart.html" />
         <option value="$PROJECT_DIR$/common/templates/modal-getDiscount.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/common/directives/directives.js" />
         <option value="$PROJECT_DIR$/css/global.css" />
         <option value="$PROJECT_DIR$/common/templates/modal-getCoupons.html" />
         <option value="$PROJECT_DIR$/common/config/config.js" />
         <option value="$PROJECT_DIR$/js/controllers/payEarnestSuccessCtrl.js" />
         <option value="$PROJECT_DIR$/js/controllers/payForEarnestCtrl.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -880,22 +880,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.423077" vertical-offset="0" max-vertical-offset="2413">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.64" vertical-offset="13060" max-vertical-offset="30400">
-          <caret line="704" column="60" selection-start-line="704" selection-start-column="48" selection-end-line="704" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/WXPayCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-44.84" vertical-offset="0" max-vertical-offset="1425">
@@ -938,8 +922,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/payForEarnestCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33295456" vertical-offset="4476" max-vertical-offset="6118">
+        <state vertical-scroll-proportion="-11.72" vertical-offset="4476" max-vertical-offset="6118">
           <caret line="251" column="34" selection-start-line="251" selection-start-column="34" selection-end-line="251" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-535.04" vertical-offset="0" max-vertical-offset="30400">
+          <caret line="704" column="60" selection-start-line="704" selection-start-column="48" selection-end-line="704" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33252722" vertical-offset="390" max-vertical-offset="2413">
+          <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
           <folding />
         </state>
       </provider>
