@@ -117,7 +117,7 @@
                     <label>价格参考</label>
                     <ul>
                         <li ng-repeat="p in item.POOData">
-                            <a href={{p.link}} title="{{p.SiteName+'：'+'￥'+p.SpPrice}}" target="_blank">
+                            <a href={{p.link}} title="{{p.sSiteName+'：'+'￥'+p.price}}" target="_blank">
                                 <span ng-bind="p.sSiteName">京东</span>
                                 <em ng-bind="'￥'+p.price"></em>
                             </a>

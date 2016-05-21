@@ -1,3 +1,4 @@
+
 var app = angular.module('LuckyMall', ['LuckyMall.controllers', 'ui.router', 'oc.lazyLoad', 'ngCookies','angularFileUpload']);
 app.constant('Host',{
     develop: "http://120.24.225.116:9000/", //开发服务器

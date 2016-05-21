@@ -557,7 +557,7 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
             $scope.login = function () {
                 if ($scope.form_login.$valid) {
                     $scope.showTips('');
-                    $scope.value_btn = "正在登陆···";
+                    $scope.value_btn = "正在登录···";
                     LoginSer.login($scope.username, $scope.password, function (response, status) {
                         switch (status) {
                             case 1:

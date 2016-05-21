@@ -127,6 +127,23 @@ angular.module('LuckyMall.controllers')
                             }
                         }
                     });
+                }else  if(order.EarnestBusinessType==5&&(order.EarnestMoney+order.CouponMoney>=order.EarnestPrice*order.Count)) {
+                    svc.get(API.gameType.url+order.Id,function(response,status) {
+                        if (status == 200) {
+                            var game_type = response;
+                            if(game_type==0){
+                                if(parseInt(order.OriginalPrice)<=1000) {
+                                    $scope.gameMenu.show = true;
+                                }else{
+                                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing,order.Id,order.CommodityId)
+                                }
+                            }else if(game_type==1){
+                                $rootScope.openGame($scope.gameMenu.gameUrl.fishing,order.Id,order.CommodityId);
+                            }else if(game_type==2){
+                                $rootScope.openGame($scope.gameMenu.gameUrl.fingerGuessing,order.Id,order.CommodityId);
+                            }
+                        }
+                    });
                 }else {
                     $scope.isModalGetDiscountShow = true;
                 }

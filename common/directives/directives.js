@@ -1654,11 +1654,10 @@ angular.module('LuckyMall')
                             $timeout(function () {
                                 $scope.content_exchange_energy = true;
                             })
-                        } else if ($scope.data_balance.Wallet.Balance >= $scope.order.earnest_cost) {
-                            // $scope.payEarnest();
                         } else {
                             $scope.payEarnest();
                         }
+                    }else if($scope.order.EarnestBusinessType==5){
                     }
 
                 }
