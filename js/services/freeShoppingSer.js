@@ -3,8 +3,8 @@
       return {
             requestData: function (params, callback) {
                 $http({
-                    method: API.freeShopping.method,
-                    url: API.freeShopping.url,
+                    method: API.onlineWelfare.method,
+                    url: API.onlineWelfare.url,
                     data: params
                 }).success(function (response,status) {
                     callback(response, status);
@@ -12,16 +12,36 @@
                     callback(response, status);
                 })
             },
-            getFreeShoppingPlayChance:function(callback){
+            getWelfarePlayChance:function(callback){
                 $http({
-                    method: API.freeShoppingPlayChance.method,
-                    url: API.freeShoppingPlayChance.url
+                    method: API.welfarePlayChance.method,
+                    url: API.welfarePlayChance.url
                 }).success(function (response,status) {
                     callback(response, status);
                 }).error(function(response,status){
                     callback(response, status);
                 })
-            }
+            },
+          createOrder:function(id,callback){
+              $http({
+                  method: API.createWelfareOrder.method,
+                  url: API.createWelfareOrder.url+id
+              }).success(function (response,status) {
+                  callback(response, status);
+              }).error(function(response,status){
+                  callback(response, status);
+              })
+          },
+          testCompleteOrder:function(callback){
+              $http({
+                  method: API.testCompleteOrder.method,
+                  url: API.testCompleteOrder.url
+              }).success(function (response,status) {
+                  callback(response, status);
+              }).error(function(response,status){
+                  callback(response, status);
+              })
+          }
 
         };
     })

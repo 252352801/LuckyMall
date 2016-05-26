@@ -63,7 +63,7 @@ angular.module('LuckyMall.controllers')
                     $state.go('brand', {brand_id: banner.TypeId});
                 } else if (banner.PromotionType == 2) {//市场活动
                     $state.go('market', {id: banner.TypeId});
-                } else if (banner.PromotionType == 3) {//0元购
+                } else if (banner.PromotionType == 5||banner.PromotionType == 3) {//福利社
                     $state.go('freeShopping');
                 } else if (banner.PromotionType == 4) {//游戏
                     var auth = '';
@@ -229,7 +229,7 @@ angular.module('LuckyMall.controllers')
                     pSize: 10,
                     pIndex: 0
                 };
-                HomeSer.requestFreeShoppingData(params,function(response,status){
+                HomeSer.requestOnlineWelfare(params,function(response,status){
                     if(status==200&&response){
 
                         var arr=response.Data;

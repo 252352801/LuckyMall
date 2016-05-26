@@ -129,8 +129,8 @@ angular.module('LuckyMall.services')
                     callback(response,status)
                 })
         },
-        requestFreeShoppingData:function(params,callback){
-            $http.post(API.freeShopping.url,params)
+        requestOnlineWelfare:function(params,callback){
+            $http.post(API.onlineWelfare.url,params)
             .success(function(response,status,headers,config){
                 callback(response,status);
             }).error(function(data,status,headers,config){

@@ -570,6 +570,16 @@ angular.module('LuckyMall.controllers', ['LuckyMall.services'])
                                 }
                                 $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('Token');//设置请求头
                                 $rootScope.$broadcast("user-login");
+                                console.log(response);
+                                if(LoginSer.getData().Container.Beans>0){
+                                    swal({
+                                        title:'恭喜您，登陆获得'+LoginSer.getData().Container.Beans*100+'幸运豆！',
+                                        text:'幸运豆可用于玩游戏赢取折扣',
+                                        type:'success',
+                                        confirmButtonText:'确定',
+                                        timer:5000
+                                    });
+                                }
                                 if ($state.current.name == 'login') {
                                     //console.log($rootScope.login_target.state);
                                     if ($rootScope.login_target.state == 'game') {

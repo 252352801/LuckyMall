@@ -80,7 +80,7 @@
 
             <div class="md-fs" ng-if="data_fs.length>0">
                 <div class="md-top">
-                    <h2>0元购<span class="color-base">玩到0元就拿走</span></h2>
+                    <h2>幸运福利社<span class="color-base"></span></h2>
                 </div>
                 <ul fs-slider="data_fs" ng-style="{'width':data_fs.length*220*2+'px'}">
                     <li ng-repeat="fs in data_fs">
@@ -99,8 +99,8 @@
                             </div>
                         </div>
                         <div class="bar-time over-hidden">
-                            <div class="item pull-left color-red font-16">￥{{fs.UnitPrice}}</div>
-                            <div class="item pull-left">0元抢购</div>
+                            <div class="item pull-left color-red font-16"><span class="icon-xyd xs"></span>{{fs.EarnestPrice*50}}</div>
+                            <div class="item pull-left">幸运购</div>
                         </div>
                             <div class="bar-time-down" >
                                     <p>剩余：<span time-down="fs.remainTime" timeovershow="已结束"></span></p>

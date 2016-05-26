@@ -1416,7 +1416,14 @@ angular.module('LuckyMall')
                 };
                 $scope.play=function(game_name){
                     $scope.visible=false;
-                    $rootScope.openGame($scope.gameMenu.gameUrl[game_name],$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
+                    if(typeof $scope.gameMenu.selectAction=='function') {
+                        $scope.gameMenu.selectAction(function(){
+                            $rootScope.$broadcast('cart-update');
+                            $rootScope.openGame($scope.gameMenu.gameUrl[game_name], $scope.gameMenu.orderId, $scope.gameMenu.commodityId);
+                        });
+                    }else{
+                        $rootScope.openGame($scope.gameMenu.gameUrl[game_name], $scope.gameMenu.orderId, $scope.gameMenu.commodityId);
+                    }
                 };
             },
             link:function(scope,element,attrs){

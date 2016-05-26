@@ -9,7 +9,7 @@ app.constant('Host',{
     }
 });
 app.constant('AUTO_TITLE','幸运猫-幸运帮买单，惊喜每一天');//默认title
-app.constant('ENV',1);//当前环境 0开发   1发布
+app.constant('ENV',0);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
@@ -423,17 +423,25 @@ app.constant('API',{
         method:'get',
         url:'api/system/broadcasts'
     },
-    freeShopping:{//0元购数据
+    onlineWelfare:{//获取上线的福利社活动
         method:'post',
-        url:'api/zerodollarshopping/queryonline'
+        url:'api/shoppingwelfare/online'
     },
-    freeShoppingPlayChance:{//0元购游戏僧与次数
+    welfarePlayChance:{//获取用户可玩的次数(福利社活动)
         method:'get',
-        url:'api/zerodollarshopping/usershoppingcount'
+        url:'api/shoppingwelfare/usershoppingcount'
     },
-    freeShoppingDetails:{
+    createWelfareOrder:{
         method:'get',
-        url:'api/zerodollarshopping/'
+        url:'api/shoppingwelfare/createorder/'
+    },
+    welfareDetails:{
+        method:'get',
+        url:'api/shoppingwelfare/'
+    },
+    testCompleteOrder:{
+        method:'get',
+        url:'api/order/existcomplete'
     },
     setSystemAvatar:{
         method:'get',
@@ -1424,7 +1432,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
                     './js/controllers/freeShoppingCtrl.js'
                 ])
             },
-            title:'0元购-'+AUTO_TITLE
+            title:'幸运福利社-'+AUTO_TITLE
         })
 
         .state('fs', {

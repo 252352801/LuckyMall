@@ -5,27 +5,51 @@
     <sub-header nav="fs">
         <category has-sub-category="false"></category>
     </sub-header>
-<div class="fs" style="min-width:1100px; background:#ffbf26; font-size: 14px; padding-bottom: 40px">
+<div class="fs" style="min-width:1100px; background:#5C057A; font-size: 14px; padding-bottom: 40px">
 
-    <div class="fs_banner1"></div>
-    <div class="fs_banner2"></div>
-    <div class="fs_w1100 fs_nrbg">
-        <div class="fs_daojishi">
-            <span class="fs_span1">本轮结束倒计时：</span>
-            <span class="fs_span2" time-down="freeShopping.remainTime" ></span>
-            <span class="fs_span3">每天10:00更新商品</span>
+    <div class="fs_banner">
+        <div class="fs-light">
+
         </div>
-        <p class="txt-center" style="color:#c34500;line-height: 180px;" ng-show="freeShopping.loading">加载中...</p>
+        <div class="fs-img-title">
+
+        </div>
+        <div class="time-down-slf" ng-show="freeShopping.remainTime>0">
+             <div class="hours">
+                  <span class="val">{{freeShopping.time.h}}</span>
+                  <span class="unit">时</span>
+             </div>
+             <div class="minutes">
+                 <span class="val">{{freeShopping.time.m}}</span>
+                 <span class="unit">分</span>
+             </div>
+             <div class="sec">
+                 <span class="val">{{freeShopping.time.s}}</span>
+                 <span class="unit">秒</span>
+             </div>
+        </div>
+        <div class="time-down-slf" ng-show="freeShopping.remainTime<=0">
+            <span style="color:#F79700;font-size:24px;line-height: 30px;font-family: kaiti">已结束!</span>
+        </div>
+        <div class="btn-read-rules ng-hide" btn-scroll-to="999999">查看规则</div>
+    </div>
+    <div class="fs_w1100 fs_nrbg">
+        <p class="txt-center" style="color:#B44EDA;line-height: 180px;" ng-show="freeShopping.loading">加载中...</p>
         <ul class="fs_shangpin" ng-show="!freeShopping.loading">
-            <li ng-repeat="fs in freeShopping.data">
-                <a href="/fs/{{fs.CommodityId}}/{{fs.Id}}">
+            <li ng-repeat="fs in freeShopping.data" ng-class="{'vip':fs.AreaType==1}">
+                <a class="img-container" href="/fs/{{fs.CommodityId}}/{{fs.Id}}">
                     <img ng-src={{imgHost+fs.CommodityImage}} error-src="./res/images/default.png" />
                 </a>
                 <div class="fs_sp_you">
-                    <p>
+                    <p class="txt-nowrap-ellipsis" title="{{fs.CommodityName}}">
                         <a href="/fs/{{fs.CommodityId}}/{{fs.Id}}">
                             {{fs.CommodityName}}
                          </a>
+                    </p>
+                    <p class="unit-price">
+                        <p class="spec">
+                            <font ng-repeat="sp in fs.Specifications">{{sp.value}}</font>
+                        </p>
                     </p>
                     <div class="fs_jdt">
                         <span class="fs_jdt2" ng-style="{'width':(fs.SurplusCount/fs.TotalCount)*100+'%'}"></span>
@@ -35,11 +59,21 @@
                         <span class="float_left">剩余 <i>{{fs.SurplusCount}}</i></span>
                     </div>
                     <div class="fs_bottom">
-                        <span class="fs_lyqg" ng-click="freeShopping.fsPlay(fs)">0元抢购</span>
-                        <span class="fs_praIs">￥{{fs.UnitPrice}}</span>
+                        <div class="price" >
+                            <span class="icon-xyd xs" title="幸运豆"></span>
+                            <span class="cur-xyd">{{fs.EarnestPrice*50}}</span>
+                            <span class="old-xyd">{{fs.EarnestPrice*100}}</span>
+                            <span class="pull-right" style="line-height:34px;">  {{'原价：￥'+fs.UnitPrice}}</span>
+                        </div>
+                        <span class="fs_lyqg" ng-click="freeShopping.fsPlay(fs)">
+                            {{freeShopping.isLoadingChance&&freeShopping.selectedActivity.Id==fs.Id?'处理中':'幸运购'}}
+                            <i ng-if="freeShopping.isLoadingChance&&freeShopping.selectedActivity.Id==fs.Id" class="dotting"></i>
+                        </span>
                     </div>
                 </div>
-                <div ng-class="{'icon-game-type icon-game-type1':fs.OptionalGameType==0||fs.OptionalGameType==1,'icon-game-type icon-game-type2':fs.OptionalGameType==2}"></div>
+                <div  ng-if="fs.OptionalGameType!=0"
+                        ng-class="{'icon-game-type icon-game-type1':fs.OptionalGameType==1,'icon-game-type icon-game-type2':fs.OptionalGameType==2}">
+                </div>
             </li>
         </ul>
         <div class="page txt-no-select" ng-if="freeShopping.page.pageCount>1">
@@ -52,11 +86,10 @@
     </div>
 
     <div class="fs_hdgz">
-        <div>活动规则</div>
-        <p>每个用户每天都有2次机会参与0元抢购；</p>
-        <p>用户参与0购玩游戏将商品价格打到0元时，即可0元购买该商品（无需付款），订单将在购物车保留至活动商品下架时间；</p>
-        <p>商品将在用户下单的3天内发货：</p>
-        <p>该活动由幸运猫保留最终解释权。</p>
+        <p><span>①</span>活动商品只需使用少量的幸运豆（平台补贴其余的幸运豆）即可进入折扣游戏，获得和幸运购同等的折扣机会，用户可用获得的折扣来购买该商品； </p>
+        <p><span>②</span>每天只能参与1次活动，活动中只能使用幸运豆，不接受定金赠送幸运豆；</p>
+        <p><span>③</span>标明参与资格的活动商品，用户需达到相应资格后方可解锁参与；</p>
+        <p><span>④</span>活动的最终解释权归幸运猫商城所有。</p>
     </div>
 </div>
 <modal-game-menu visible="gameMenu.show" gamectrl="gameMenu" ></modal-game-menu>
