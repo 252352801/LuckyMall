@@ -1,0 +1,58 @@
+<header ></header>
+<aside-right></aside-right>
+<sub-header>
+    <category has-sub-category="false"></category>
+</sub-header>
+<!--中部 start-->
+<div class="container childrensday" >
+    <div class="cd-top">
+        <img src="./res/images/childrensday/bg1.jpg"/>
+        <div class="content cd-rules">
+            <p><span>①</span></span>新用户注册送2000幸运豆。幸运豆可用来兑换游戏机会；</p>
+            <p><span>②</span>挑选礼物。可以大人自己挑，但建议与孩子一块，这样礼物会比较合孩子的心意，毕竟是送孩子的礼物，要尊重孩子的选择；</p>
+            <p><span>③</span>玩游戏抵折扣。建议大人小孩一起玩，一起感受游戏的乐趣，促进亲子感情。玩游戏的过程中让孩子知道他这是在努力争取自己想要的东西，不是纯粹的玩。在游戏里玩到任何折扣都可以成交，玩到0元就免费送。（加油哦，祝大家都努力玩到零元免单）。</p>
+        </div>
+    </div>
+    <div class="list content">
+
+        <ul class="pro-list-cont">
+            <li ng-repeat="list in data_list" >
+
+                <a class="a-goodsImg" href="/item/{{list.Id}}" target="_blank" title="">
+                    <!--<img real-src={{imgHost+list.RollingImages[0]}} alt="" temp-src="./res/images/default.png"/>-->
+                    <img lazy-src="{{imgHost+list.RollingImages[0]}}" />
+                    <img src="./res/images/out.png" class="img-so" ng-if="list.Status==4"/>
+                    <!--<span class="mark-canFree" ng-if="list.IsCanFree" title="玩游戏赢惊喜折扣">可试玩</span>-->
+                </a>
+                <div class="goods-info">
+                    <a href="/item/{{list.Id}}" target="_blank" title={{list.CommodityName}}>
+                        <h2 ng-bind="list.CommodityName" ng-class="{'canFree':list.IsCanFree==true}"></h2>
+                    </a>
+                    <p class="price">
+                        <span class="prices" ng-bind="'￥'+list.maxPrice"></span>
+                    </p>
+                </div>
+                <!-- <a class="mark-canFree" ng-if="list.IsCanFree" title="玩游戏赢惊喜折扣">可试玩</a>-->
+            </li>
+        </ul>
+
+
+        <div class="page-index" ng-show="loaded">
+            <div class="prev" ng-click="prevPage()" btn-scroll-to="915"><</div>
+            <div class="indexes">
+            <span ng-class="{'cur':pageIndex==($index+1)}" ng-repeat="p in page"  ng-click=changePage($index+1) btn-scroll-to="915"
+
+                  ng-bind="($index+1==pageIndex-5||$index+1==pageIndex+5)?'...':$index+1"
+                  ng-if="($index+1>=pageIndex-5&&$index+1<=pageIndex+5)"></span>
+            </div>
+            <div class="next" ng-click="nextPage()" btn-scroll-to="915">></div>
+        </div>
+    </div>
+</div>
+
+<!--中部 end-->
+
+
+<introduction></introduction>
+<sub-footer></sub-footer>
+<footer></footer>
