@@ -9,7 +9,7 @@ app.constant('Host',{
     }
 });
 app.constant('AUTO_TITLE','幸运猫-幸运帮买单，惊喜每一天');//默认title
-app.constant('ENV',0);//当前环境 0开发   1发布
+app.constant('ENV',1);//当前环境 0开发   1发布
 app.constant('API',{
     login: {//登陆
         method:'post',
