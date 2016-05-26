@@ -48,10 +48,16 @@
             <div class="cont3 pull-left" >
                 <p class="cost" ng-bind="'￥'+list.cost" ng-if="curMenu!=1"></p>
                 <p class="cost" ng-bind="'￥'+list.needToPay" ng-if="curMenu==1"></p>
-                <p ng-bind="'（已付定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestBusinessType!=4&&list.EarnestMoney>0"></p>
+                <p ng-bind="'（已付定金：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestBusinessType!=4&&list.EarnestBusinessType!=5&&list.EarnestMoney>0"></p>
                 <p ng-bind="'（已抵用：￥'+list.EarnestMoney+'）'" ng-if="list.EarnestBusinessType==4&&list.EarnestMoney>0"></p>
                 <p class="discount">已享用折扣卡<span class="icon-discount"
                                                 ng-bind="list.finalDiscount+'折'"></span></p>
+                <p ng-if="list.EarnestBusinessType==5&&list.EarnestMoney>0" class="color-gray">
+                    已付定金<span class="color-org">￥{{list.EarnestMoney}}</span>
+                </p>
+                <p ng-if="list.EarnestBusinessType==5" class="color-gray">
+                    已兑换<span class="icon-xyd xs"></span><span class="color-org">{{list.CouponMoney*100}}</span>
+                </p>
             </div>
 
             <div class="cont4 pull-left">

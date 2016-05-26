@@ -13,7 +13,8 @@
             <li ng-repeat="banner in data_banner" ng-style="{'opacity':(banner_index==$index)?1:0,transition:'opacity 1s','z-index':(banner_index==$index)?1:0}">
             <!--<li ng-repeat="img in data_banner" ng-style="{left:(100*$index-100*banner_index)+'%',transition:'left 0.3s'}">-->
                 <a  title="" ng-click="actionBanner(banner)">
-                    <img ng-src={{imgHost+banner.ImageData+'@1920w_450h_100Q.jpg'}} alt="" error-src="./res/images/default.png"/>
+                    <img ng-if="banner.PromotionType!=7" ng-src={{imgHost+banner.ImageData+'@1920w_450h_100Q.jpg'}} alt="" error-src="./res/images/default.png"/>
+                    <img ng-if="banner.PromotionType==7" ng-src={{banner.ImageData}} alt="" error-src="./res/images/default.png"/>
                 </a>
             </li>
 

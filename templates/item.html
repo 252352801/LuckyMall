@@ -295,7 +295,7 @@
                     </p>-->
                     <div ng-if="coupon_balance<(item.itemData.EarnestPrice)*(item.amount)">
                         <p class="menu-describe" >
-                            已有<span class="icon-xyd xs"></span><span class="color-red">{{coupon_balance*100}}</span>，
+                            <span ng-show="coupon_balance>0">已有<i class="icon-xyd xs"></i><font class="color-red">{{coupon_balance*100}}</font>，</span>
                             <span class="color-red">预付￥{{item.itemData.EarnestPrice*item.amount-coupon_balance}}</span>定金,
                             赠送<span class="icon-xyd xs"></span><span class="color-red">{{100*(item.itemData.EarnestPrice*item.amount-coupon_balance)}}</span>
                         </p>

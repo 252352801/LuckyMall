@@ -557,3 +557,42 @@
 .search.tips-no-pro .link{
     font-size:14px;
 }
+
+
+/*===================
+   六一儿童节begin
+===================*/
+.childrensday{
+    background-color:#B4ECEB;
+    background-image:url(../res/images/childrensday/bg2.jpg);
+    background-repeat: no-repeat;
+    background-position:center 812px;
+    margin-bottom: 0!important;
+}
+.childrensday .cd-top{
+    width:1920px;
+    height:842px;
+    position:relative;
+    left:50%;
+    top:0px;
+    margin-left:-960px;
+}
+.childrensday .cd-rules{
+    box-sizing: border-box;
+    min-height: 120px;
+    position: relative;
+    left:0px;
+    top:-80px;
+    z-index: 10;
+    padding-left:170px;
+    background: url(../res/images/childrensday/hdgz.png) no-repeat;
+}
+.childrensday .cd-rules p{
+    color:#1E6056;
+    line-height: 26px;
+}
+.childrensday .cd-rules p span{
+    margin-right:10px;
+    font-size:14px;
+}
+/*六一儿童节end*/

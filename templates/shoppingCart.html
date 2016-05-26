@@ -70,7 +70,7 @@
                 </div>
                 <div class="cont4">
                     <p class="wait-to-pay" ng-bind="'￥'+list.needToPay"></p>
-                    <p ng-if="list.EarnestMoney>0&&list.EarnestBusinessType!=4">
+                    <p ng-if="list.EarnestMoney>0&&list.EarnestBusinessType!=4&&list.EarnestBusinessType!=5">
                         已付定金：
                         <span class="payed" ng-bind="'￥'+list.EarnestMoney"></span>
                     </p>

@@ -150,13 +150,19 @@
             <label>实付金额：</label>
             <span class="real-cost" ng-bind="'￥'+(data_order.PayfinalMoney+data_order.EarnestMoney).toFixed(2)"></span>
         </p>
-        <p ng-if="data_order.EarnestBusinessType!=4&&data_order.EarnestMoney>0">
+        <p ng-if="data_order.EarnestBusinessType!=4&&data_order.EarnestBusinessType!=5&&data_order.EarnestMoney>0">
             <label>已付定金：</label>
             <span ng-bind="data_order.EarnestMoney"></span>
         </p>
         <p ng-if="data_order.EarnestBusinessType==4&&data_order.EarnestMoney>0">
             <label>已抵用：</label>
             <span ng-bind="'￥'+data_order.EarnestMoney"></span>
+        </p>
+        <p ng-if="data_order.EarnestBusinessType==5&&data_order.EarnestMoney>0" class="color-gray">
+            已付定金<span class="color-org">￥{{data_order.EarnestMoney}}</span>
+        </p>
+        <p ng-if="data_order.EarnestBusinessType==5" class="color-gray">
+            已兑换<span class="icon-xyd xs"></span><span class="color-org">{{data_order.CouponMoney*100}}</span>
         </p>
     </div>
 

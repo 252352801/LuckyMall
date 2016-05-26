@@ -500,6 +500,26 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             }
 
         })
+        /*列表页*/
+        .state('childrensDay', {
+            url: '/childrensDay/:category/:brands/:filters',
+            views: {
+                '': {
+                    templateUrl: "templates/childrensDay.html?v="+v,
+                    controller: 'ChildrensDayCtrl'
+                }
+            },
+            title:'儿童节专题活动',
+            resolve: {
+                loadFiles: load([
+                    './css/list.css',
+                    './js/controllers/childrensDayCtrl.js',
+                    './js/services/listSer.js',
+                    './js/directives/listDirectives.js'
+                ])
+            }
+
+        })
 
         /*搜索页*/
         .state('search', {

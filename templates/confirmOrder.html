@@ -77,7 +77,7 @@
                 <div class="cont4">
                     <div class="cont-container">
                         <p class="unPay" ng-bind="'￥'+order.needToPay"></p>
-                        <p ng-if="order.EarnestBusinessType!=4&&order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+order.EarnestMoney"></span></p>
+                        <p ng-if="order.EarnestBusinessType!=4&&order.EarnestBusinessType!=5&&order.EarnestMoney>0">已付定金<span class="color-org" ng-bind="'￥'+order.EarnestMoney"></span></p>
                         <p ng-if="order.EarnestBusinessType==4&&(order.CouponMoney+order.EarnestMoney)>0">已抵用<span class="color-org" ng-bind="'￥'+(order.CouponMoney+order.EarnestMoney)"></span></p>
                         <p ng-if="order.EarnestBusinessType==5&&order.EarnestMoney>0" class="color-gray">
                             已付定金<span class="color-org">￥{{order.EarnestMoney}}</span>

@@ -25,12 +25,22 @@ angular.module('LuckyMall.controllers')
             if (HomeSer.getData().banner == null) {
                 HomeSer.requestBannerData(function (response, status) {
                     if (status == 1) {
-                        $scope.data_banner = HomeSer.getData().banner;
+                        $scope.data_banner = [{
+                            PromotionType:7,
+                            TypeId:9,
+                            ImageData:'./res/images/childrensday/banner_childrensday.jpg'
+                        }].concat(HomeSer.getData().banner);
                     }
                 });
             } else {
-                $scope.data_banner = HomeSer.getData().banner;
+                $scope.data_banner = $scope.data_banner = [{
+                    PromotionType:7,
+                    TypeId:9,
+                    ImageData:'./res/images/childrensday/banner_childrensday.jpg'
+                }].concat(HomeSer.getData().banner);
             }
+
+
 
             HomeSer.requestFloorData(function (response, status) {
                 if (status == 200) {
@@ -88,6 +98,12 @@ angular.module('LuckyMall.controllers')
                     }
                 }else if(banner.PromotionType == 6){//砍价
                     $rootScope.isDownloadAppModalShow=true;
+                }else if(banner.PromotionType == 7){//儿童节
+                    $state.go('childrensDay',{
+                        category:'category=71_9',
+                        brands:0,
+                        filters:''
+                    });
                 }
             };
 
