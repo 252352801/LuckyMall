@@ -210,6 +210,13 @@ angular.module('LuckyMall.controllers')
                             FreeShoppingSer.testCompleteOrder(function(resp,stat){
                                 if(stat==200&&resp){
                                     fsPlayAction(fs);
+                                }else{
+                                    swal({
+                                        title:'您需要完成一次幸运购才可参与！',
+                                        type:'error',
+                                        confirmButtonText:'确定',
+                                        timer:5000
+                                    });
                                 }
                             });
                         }else{

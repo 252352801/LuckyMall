@@ -28,10 +28,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="config.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/config/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.36" vertical-offset="0" max-vertical-offset="30951">
+            <state vertical-scroll-proportion="0.23404256" vertical-offset="0" max-vertical-offset="30951">
               <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
               <folding />
             </state>
@@ -83,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.17331813" vertical-offset="171" max-vertical-offset="2413">
+            <state vertical-scroll-proportion="5.428571" vertical-offset="171" max-vertical-offset="2413">
               <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
               <folding />
             </state>
@@ -106,8 +106,8 @@
       <file leaf-file-name="freeShoppingCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/freeShoppingCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.283019" vertical-offset="1521" max-vertical-offset="4655">
-              <caret line="92" column="43" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="43" />
+            <state vertical-scroll-proportion="-10.735849" vertical-offset="3516" max-vertical-offset="4788">
+              <caret line="215" column="53" selection-start-line="215" selection-start-column="53" selection-end-line="215" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -116,7 +116,7 @@
       <file leaf-file-name="freeShoppingSer.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/services/freeShoppingSer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1026">
+            <state vertical-scroll-proportion="-25.84" vertical-offset="0" max-vertical-offset="1026">
               <caret line="34" column="27" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="27" />
               <folding />
             </state>
@@ -126,8 +126,8 @@
       <file leaf-file-name="fsCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/fsCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.72" vertical-offset="12589" max-vertical-offset="15884">
-              <caret line="678" column="66" selection-start-line="678" selection-start-column="66" selection-end-line="678" selection-end-column="66" />
+            <state vertical-scroll-proportion="-22.36" vertical-offset="14356" max-vertical-offset="16017">
+              <caret line="785" column="58" selection-start-line="785" selection-start-column="43" selection-end-line="785" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -190,10 +190,10 @@
         <option value="$PROJECT_DIR$/templates/home.html" />
         <option value="$PROJECT_DIR$/js/services/freeShoppingSer.js" />
         <option value="$PROJECT_DIR$/css/activity/fs_css.css" />
-        <option value="$PROJECT_DIR$/js/controllers/fsCtrl.js" />
-        <option value="$PROJECT_DIR$/js/controllers/freeShoppingCtrl.js" />
         <option value="$PROJECT_DIR$/templates/freeShopping.html" />
         <option value="$PROJECT_DIR$/common/config/config.js" />
+        <option value="$PROJECT_DIR$/js/controllers/fsCtrl.js" />
+        <option value="$PROJECT_DIR$/js/controllers/freeShoppingCtrl.js" />
       </list>
     </option>
   </component>
@@ -1017,34 +1017,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/services/freeShoppingSer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1026">
-          <caret line="34" column="27" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/activity/fs_css.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.88" vertical-offset="3009" max-vertical-offset="5605">
           <caret line="174" column="14" selection-start-line="174" selection-start-column="14" selection-end-line="174" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/controllers/fsCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.72" vertical-offset="12589" max-vertical-offset="15884">
-          <caret line="678" column="66" selection-start-line="678" selection-start-column="66" selection-end-line="678" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/controllers/freeShoppingCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.283019" vertical-offset="1521" max-vertical-offset="4655">
-          <caret line="92" column="43" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -1062,18 +1038,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/config/config.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.36" vertical-offset="0" max-vertical-offset="30951">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        <state vertical-scroll-proportion="5.428571" vertical-offset="171" max-vertical-offset="2413">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/js/services/freeShoppingSer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.17331813" vertical-offset="171" max-vertical-offset="2413">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        <state vertical-scroll-proportion="-25.84" vertical-offset="0" max-vertical-offset="1026">
+          <caret line="34" column="27" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/controllers/fsCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.36" vertical-offset="14356" max-vertical-offset="16017">
+          <caret line="785" column="58" selection-start-line="785" selection-start-column="43" selection-end-line="785" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/controllers/freeShoppingCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.735849" vertical-offset="3516" max-vertical-offset="4788">
+          <caret line="215" column="53" selection-start-line="215" selection-start-column="53" selection-end-line="215" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23404256" vertical-offset="0" max-vertical-offset="30951">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
           <folding />
         </state>
       </provider>
