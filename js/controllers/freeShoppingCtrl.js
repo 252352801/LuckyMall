@@ -160,18 +160,22 @@ angular.module('LuckyMall.controllers')
                                         confirmButtonColor: "#DD6B55",
                                         cancelButtonText: '我再想想',
                                         confirmButtonText: "进入游戏",
-                                        closeOnConfirm: true,
+                                        closeOnConfirm:true,
                                         showLoaderOnConfirm: false
                                     },
                                     function () {
                                         if($this.balance.coupon*2<fs.EarnestPrice){
-                                            swal({
-                                                title: '幸运豆不足！',
-                                                text: '需要'+fs.EarnestPrice*50+'幸运豆',
-                                                type: 'error',
-                                                confirmButtonText: '确定'
-                                            });
+                                            setTimeout(function(){
+                                                swal({
+                                                    title: '幸运豆不足！',
+                                                    text: '需要'+fs.EarnestPrice*50+'幸运豆',
+                                                    type: 'error',
+                                                    confirmButtonText: '确定'
+                                                });
+                                            },300);
                                             return;
+                                        }else{
+
                                         }
                                         $scope.gameMenu.selectAction = function (callback) {
                                             selectGameAction(callback);
@@ -228,7 +232,7 @@ angular.module('LuckyMall.controllers')
                             FreeShoppingSer.testCompleteOrder(function(resp,stat){
                                 if(stat==200&&resp){
                                     fsPlayAction(fs);
-                                }else{
+                                }else if(stat==200&&!resp){
                                     swal({
                                         title:'您需要完成一次幸运购才可参与！',
                                         type:'error',

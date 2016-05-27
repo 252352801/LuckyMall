@@ -47,9 +47,9 @@ angular.module('LuckyMall.controllers')
                     cur:'试玩练手'
                 },
                 buyNow: {
-                    org:'幸运购',
+                    org:'抢福利',
                     temp:'正在处理...',
-                    cur:'幸运购'
+                    cur:'抢福利'
                 }
             };
             this.menuLuckyBuy={
@@ -744,12 +744,15 @@ angular.module('LuckyMall.controllers')
                                 },
                                 function () {
                                     if($this.balance.coupon*2<fs.EarnestPrice){
-                                        swal({
-                                            title: '幸运豆不足！',
-                                            text: '需要'+fs.EarnestPrice*50+'幸运豆',
-                                            type: 'error',
-                                            confirmButtonText: '确定'
-                                        });
+                                        setTimeout(function() {
+                                            swal({
+                                                title: '幸运豆不足！',
+                                                text: '需要' + fs.EarnestPrice * 50 + '幸运豆',
+                                                type: 'error',
+                                                timer: 5000,
+                                                confirmButtonText: '确定'
+                                            });
+                                        },300);
                                         return;
                                     }
                                     $scope.gameMenu.selectAction = function (callback) {
