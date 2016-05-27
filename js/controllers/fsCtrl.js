@@ -743,11 +743,11 @@ angular.module('LuckyMall.controllers')
                                     showLoaderOnConfirm: false
                                 },
                                 function () {
-                                    if($this.balance.coupon*2<fs.EarnestPrice){
+                                    if($this.balance.coupon*100<fs.BeansCount*1){
                                         setTimeout(function() {
                                             swal({
                                                 title: '幸运豆不足！',
-                                                text: '需要' + fs.EarnestPrice * 50 + '幸运豆',
+                                                text: '需要' + fs.BeansCount*1 + '幸运豆',
                                                 type: 'error',
                                                 timer: 5000,
                                                 confirmButtonText: '确定'
