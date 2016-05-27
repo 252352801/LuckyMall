@@ -123,13 +123,13 @@
                             <a class="cur" ng-bind="property.value"></a>
                         </p>
                     </li>
-                    <li>
+                    <li ng-if="item.fs.OptionalGameType!=0">
                         <label>游戏类型</label>
                         <div class="over-hidden" ng-if="item.fs.OptionalGameType==2" style="line-height: 45px;">
                             <img class="pull-left"  src="./res/images/background/bg_gmenu1.png" style="width:22px;height:22px;background: red;border-radius: 3px;margin-top:12px;margin-right: 5px" title="猜拳游戏"/>
                             <span class="pull-left" >猜拳游戏</span>
                         </div>
-                        <div class="over-hidden" ng-if="item.fs.OptionalGameType==0||item.fs.OptionalGameType==1" style="line-height: 45px;">
+                        <div class="over-hidden" ng-if="item.fs.OptionalGameType==1" style="line-height: 45px;">
                             <img class="pull-left"  src="./res/images/background/bg_gmenu2.png" style="width:22px;height:22px;background: red;border-radius: 3px;margin-top:12px;margin-right: 5px" title="捕鱼游戏"/>
                             <span class="pull-left" >捕鱼游戏</span>
                         </div>

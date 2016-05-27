@@ -1,7 +1,7 @@
 angular.module('LuckyMall.controllers')
     .controller('FsCtrl',
-    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer','CartSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer','ShowOffOrdersSer','svc','API','FreeShoppingSer',
-    function ($scope, ItemSer, $state, $stateParams, LoginSer, CartSer,$rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer,ShowOffOrdersSer,svc,API,FreeShoppingSer) {
+    ['$scope', 'ItemSer', '$state', '$stateParams', 'LoginSer','CartSer', '$rootScope', '$timeout', 'TokenSer', 'CategorySer', 'Host','UserSer', 'OrderDetailsSer','ShowOffOrdersSer','svc','API','FreeShoppingSer','BalanceSvc',
+    function ($scope, ItemSer, $state, $stateParams, LoginSer, CartSer,$rootScope, $timeout, TokenSer, CategorySer, Host,UserSer, OrderDetailsSer,ShowOffOrdersSer,svc,API,FreeShoppingSer,BalanceSvc) {
 
 
         function Item(item_id){
@@ -14,6 +14,9 @@ angular.module('LuckyMall.controllers')
             this.SOOData=[];//晒单数据
             this.currentPageOfSOO=[];//晒单数据
             this.fs={};
+            this.balance={
+                coupon:0
+            };
             this.pageOfSOO={//晒单分页
                 index:0,
                 pageSize:10,
@@ -201,6 +204,13 @@ angular.module('LuckyMall.controllers')
                         confirmButtonText: "确定"
                     });
                 }
+            };
+            this.loadBalance=function(){
+                BalanceSvc.requestBalanceInfo(function(response,status){
+                    if(status==1){
+                        $this.balance.coupon=response.Coupon.Balance;
+                    }
+                });
             };
             /**
              * tab切换
@@ -733,6 +743,15 @@ angular.module('LuckyMall.controllers')
                                     showLoaderOnConfirm: false
                                 },
                                 function () {
+                                    if($this.balance.coupon*2<fs.EarnestPrice){
+                                        swal({
+                                            title: '幸运豆不足！',
+                                            text: '需要'+fs.EarnestPrice*50+'幸运豆',
+                                            type: 'error',
+                                            confirmButtonText: '确定'
+                                        });
+                                        return;
+                                    }
                                     $scope.gameMenu.selectAction = function (callback) {
                                         selectGameAction(callback);
                                     };
@@ -807,6 +826,7 @@ angular.module('LuckyMall.controllers')
                 $scope.item = new Item($stateParams.item_id);
                 $scope.item.loadData();
                 $scope.item.loadFsData();
+                $scope.item.loadBalance();
             }
         }
 

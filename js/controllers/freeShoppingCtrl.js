@@ -1,8 +1,8 @@
 
 angular.module('LuckyMall.controllers')
     .controller('FreeShoppingCtrl',
-    ['$scope','$rootScope','FreeShoppingSer','$timeout','Host','TokenSer',
-        function ($scope,$rootScope,FreeShoppingSer,$timeout,Host,TokenSer) {
+    ['$scope','$rootScope','FreeShoppingSer','$timeout','Host','TokenSer','BalanceSvc',
+        function ($scope,$rootScope,FreeShoppingSer,$timeout,Host,TokenSer,BalanceSvc) {
 
             function FreeShopping(){
                 var $this=this;
@@ -11,6 +11,9 @@ angular.module('LuckyMall.controllers')
                 this.selectedActivity={};//当前选择的活动的
                this.remainTime=0;
                 this.data=[];
+                this.balance={
+                    coupon:0
+                };
                 this.page={
                     index:0,
                     pageSize:10000,
@@ -23,7 +26,13 @@ angular.module('LuckyMall.controllers')
                     m:'00',
                     s:'00'
                 };
-                this.timedowmInterval={};
+                this.loadBalance=function(){
+                    BalanceSvc.requestBalanceInfo(function(response,status){
+                        if(status==1){
+                            $this.balance.coupon=response.Coupon.Balance;
+                        }
+                    });
+                };
                 this.loadData=function(pg_index,is_create_pg){//加载数据   pg_index:页码   is_create_pg:是否创建分页
                     var params={
                         pSize: $this.page.pageSize,
@@ -155,6 +164,15 @@ angular.module('LuckyMall.controllers')
                                         showLoaderOnConfirm: false
                                     },
                                     function () {
+                                        if($this.balance.coupon*2<fs.EarnestPrice){
+                                            swal({
+                                                title: '幸运豆不足！',
+                                                text: '需要'+fs.EarnestPrice*50+'幸运豆',
+                                                type: 'error',
+                                                confirmButtonText: '确定'
+                                            });
+                                            return;
+                                        }
                                         $scope.gameMenu.selectAction = function (callback) {
                                             selectGameAction(callback);
                                         };
@@ -230,6 +248,7 @@ angular.module('LuckyMall.controllers')
 
             $scope.freeShopping=new FreeShopping();
             $scope.freeShopping.loadData(0,true);
+            $scope.freeShopping.loadBalance();
             $scope.gameMenu = {//游戏菜单
                 show:false,
                 orderId: '',
