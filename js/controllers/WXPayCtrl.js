@@ -5,7 +5,7 @@ angular.module('LuckyMall.controllers')
             $scope.trade_id = $stateParams.trade_id;
             $scope.type = $stateParams.type;//支付类型   0支付定金  1支付尾款
             $scope.time_over = false;
-            $scope.totalCost = Math.ceil(WXPaySer.getData().totalCost);
+            $scope.totalCost = WXPaySer.getData().totalCost;
             $scope.polling = false;
             getQRCodeData();
             $scope.$on('stop-polling-tradeStatus', function () {

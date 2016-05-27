@@ -187,7 +187,7 @@ angular.module('LuckyMall.controllers')
                     if (status == 1) {
                         $scope.data_order = OrderDetailsSer.getData();
                         $scope.commodityId = $scope.data_order.CommodityId;
-                       // $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney;//需支付的定金总额
+                       // $scope.earnest_cost = parseFloat($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney;//需支付的定金总额
                         callback();
                     }
                 });
@@ -252,9 +252,9 @@ angular.module('LuckyMall.controllers')
                     if(status==1){
                         $scope.data_balance=response;
                         if($scope.data_order.EarnestBusinessType==5) {
-                            $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_order.CouponMoney-$scope.data_balance.Coupon.Balance;//需支付的定金总额
+                            $scope.earnest_cost = parseFloat($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_order.CouponMoney-$scope.data_balance.Coupon.Balance;//需支付的定金总额
                         }else{
-                            $scope.earnest_cost = parseInt($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_balance.Coupon.Balance;//需支付的定金总额
+                            $scope.earnest_cost = parseFloat($scope.data_order.TotalEarnestPrice) - $scope.data_order.EarnestMoney - $scope.data_balance.Coupon.Balance;//需支付的定金总额
                         }
                         if($scope.earnest_cost<0){
                             $scope.earnest_cost=0;

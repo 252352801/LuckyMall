@@ -944,9 +944,9 @@ angular.module('LuckyMall.services', [])
             for (var o in data) {
                 data[o].Specifications = angular.fromJson(data[o].Specifications);//产品规格字符串转换json
                 data[o].imageUrl = data[o].Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-                data[o].orgCost =parseInt(data[o].OriginalPrice);//原价
-                data[o].cost = parseInt(data[o].DiscountPrice);//折后价
-                data[o].needToPay =parseInt(data[o].Unpaid);//待支付
+                data[o].orgCost =parseFloat(data[o].OriginalPrice);//原价
+                data[o].cost = parseFloat(data[o].DiscountPrice);//折后价
+                data[o].needToPay =parseFloat(data[o].Unpaid);//待支付
                 data[o].finalDiscount = data[o].DiscountValue;
                 data[o].isSelected = true;//勾选状态，默认勾选
 
@@ -1206,9 +1206,9 @@ angular.module('LuckyMall.services', [])
                 }catch(err){
 
                 }
-                obj.orgCost = parseInt(obj.OriginalPrice);//原价
-                obj.cost = parseInt(obj.DiscountPrice);//折后价
-                obj.needToPay = parseInt(obj.Unpaid);//待支付
+                obj.orgCost = parseFloat(obj.OriginalPrice);//原价
+                obj.cost = parseFloat(obj.DiscountPrice);//折后价
+                obj.needToPay = parseFloat(obj.Unpaid);//待支付
                 obj.finalDiscount = obj.DiscountValue;
             }
             return data;
@@ -1412,9 +1412,9 @@ angular.module('LuckyMall.services', [])
             data.brandImg = data.Brand ? data.Brand.BrandImage : '';
             data.Specifications = angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl = data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-            data.orgCost =parseInt(data.OriginalPrice);//原价
-            data.cost =parseInt(data.DiscountPrice);//折后价
-            data.needToPay = parseInt(data.Unpaid);//待支付
+            data.orgCost =parseFloat(data.OriginalPrice);//原价
+            data.cost =parseFloat(data.DiscountPrice);//折后价
+            data.needToPay = parseFloat(data.Unpaid);//待支付
             data.finalDiscount = data.DiscountValue;//最终折扣
             if (data.ConsigneeInfo) {
                 try {
@@ -1464,9 +1464,9 @@ angular.module('LuckyMall.services', [])
             data.brandImg = data.Brand ? data.Brand.BrandImage : '';
             data.Specifications = angular.fromJson(data.Specifications);//产品规格字符串转换json
             data.imageUrl = data.Commodity.RollingImages.split('|')[0];//商品图片（取第一张）
-            data.orgCost = parseInt(data.OriginalPrice);//原价
-            data.cost =parseInt(data.DiscountPrice);//折后价
-            data.needToPay = parseInt(data.Unpaid);//待支付
+            data.orgCost = parseFloat(data.OriginalPrice);//原价
+            data.cost =parseFloat(data.DiscountPrice);//折后价
+            data.needToPay = parseFloat(data.Unpaid);//待支付
             data.finalDiscount = data.DiscountValue;//最终折扣
             if (data.ConsigneeInfo) {
                 data.ConsigneeInfo = angular.fromJson(data.ConsigneeInfo);//收货地址

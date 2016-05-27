@@ -115,7 +115,7 @@ angular.module('LuckyMall.controllers')
                         if(status==200){
                             var game_type=response;
                             if(game_type==0){
-                                if(parseInt(order.OriginalPrice)<=1000) {
+                                if(parseFloat(order.OriginalPrice)<=1000) {
                                     $scope.gameMenu.show = true;
                                 }else{
                                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,order.Id,order.CommodityId)
@@ -132,7 +132,7 @@ angular.module('LuckyMall.controllers')
                         if (status == 200) {
                             var game_type = response;
                             if(game_type==0){
-                                if(parseInt(order.OriginalPrice)<=1000) {
+                                if(parseFloat(order.OriginalPrice)<=1000) {
                                     $scope.gameMenu.show = true;
                                 }else{
                                     $rootScope.openGame($scope.gameMenu.gameUrl.fishing,order.Id,order.CommodityId)

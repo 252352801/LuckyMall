@@ -20,14 +20,14 @@ angular.module('LuckyMall.controllers')
                        tmp_data.orders=[order_id];
                        SOTDSvc.set(tmp_data);
                        if ($scope.data_order != undefined) {
-                             if(parseInt($scope.data_order.OriginalPrice>200)){
+                             if(parseFloat($scope.data_order.OriginalPrice>1000)){
                                  $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                              }else{
                                  $scope.gameMenu.show = true;
                              }
                        } else {
                            loadOrderInfo(function () {
-                               if(parseInt($scope.data_order.OriginalPrice>200)){
+                               if(parseFloat($scope.data_order.OriginalPrice>1000)){
                                    $rootScope.openGame($scope.gameMenu.gameUrl.fishing,$scope.gameMenu.orderId,$scope.gameMenu.commodityId);
                                }else{
                                    $scope.gameMenu.show = true;

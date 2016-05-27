@@ -385,7 +385,7 @@ angular.module('LuckyMall.controllers')
             amount+=$scope.data_orders[o].Count;
             cost+=$scope.data_orders[o].needToPay;
             if($scope.data_orders[o].OrderType!=2) {
-                total_earnest += Math.ceil($scope.data_orders[o].UnitPrice * $scope.data_orders[o].EarnestPercent) * $scope.data_orders[o].Count - $scope.data_orders[o].EarnestMoney;
+                total_earnest += parseFloat($scope.data_orders[o].EarnestPrice) * $scope.data_orders[o].Count - $scope.data_orders[o].EarnestMoney;
             }
         }
         $scope.total_amount=amount;//商品总数量
